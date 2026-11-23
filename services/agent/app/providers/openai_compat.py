@@ -59,8 +59,9 @@ class OpenAICompatProvider:
 
     async def stream(self, messages: list[Msg], *, model: str, timeout_ms: int) -> AsyncIterator[str]:
         try:
-            chunks = await self._client.chat.completions.create(
-                model=model, messages=self._messages(messages, None), stream=True, timeout=timeout_ms / 1000)
+            kw: dict[str, Any] = {"model": model, "messages": self._messages(messages, None), "stream": True,
+                                  "timeout": timeout_ms / 1000}
+            chunks: Any = await self._client.chat.completions.create(**kw)
             async for chunk in chunks:
                 if chunk.choices and (delta := chunk.choices[0].delta.content):
                     yield delta

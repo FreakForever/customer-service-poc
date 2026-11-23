@@ -22,7 +22,7 @@ migrate:      ; cd services/agent && uv run alembic upgrade head
 kg-load:      ; cd services/agent && uv run python ../../mock-data/kg/load_kg.py --wipe
 seed: migrate ; uv run --no-project python mock-data/generate.py && cd services/agent && uv run python ../../scripts/seed.py && uv run python ../../mock-data/kg/load_kg.py --wipe && uv run python ../../scripts/seed.py --kb
 test:         ; cd services/agent && uv run pytest -q && pnpm -C apps/web test
-ci:           ; gcloud builds submit --config infra/gcp/cloudbuild.ci.yaml .
+ci:           ; gcloud builds submit --config infra/gcp/cloudbuild.ci.yaml --region asia-south1 --ignore-file=infra/gcp/ci.gcloudignore .
 deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=dev,_TAG=$(TAG) .
 deploy-demo:  ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=demo,_TAG=$(TAG) .
 eval:         ; uv run python eval/run.py --mode all

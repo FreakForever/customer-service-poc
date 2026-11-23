@@ -234,11 +234,11 @@
         "Cloud Build CI trigger green on main",
         "Breaking a REQ reference makes the build fail"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
+      "status": "in_progress",
+      "progress_pct": 80,
+      "started": "2026-11-23",
       "completed": null,
-      "notes": ""
+      "notes": "CI pipeline green on a manual run (build 495a147c); broken REQ reference fails traceability (build 9b925058). Triggers mcs-ci (push main) and mcs-ci-pr created; waiting for the first triggered build on main."
     },
     {
       "id": "BS-07",

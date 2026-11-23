@@ -39,8 +39,10 @@ class AnthropicProvider:
 
         self.name = name
         if via == "vertex":
-            self._client: Any = anthropic.AsyncAnthropicVertex(project_id=project or None, region=region,
-                                                               max_retries=0)
+            kw: dict[str, Any] = {"region": region, "max_retries": 0}
+            if project:  # else the SDK resolves it from ADC / ANTHROPIC_VERTEX_PROJECT_ID
+                kw["project_id"] = project
+            self._client: Any = anthropic.AsyncAnthropicVertex(**kw)
         else:
             self._client = anthropic.AsyncAnthropic(api_key=api_key or None, max_retries=0)
 

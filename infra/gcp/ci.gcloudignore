@@ -1,0 +1,12 @@
+# Upload set for a manual CI run (`make ci`). Unlike .gcloudignore (deploys), CI needs docs/ and mock-data/data/.
+.git
+.env
+.env.*
+**/.venv/
+**/node_modules/
+**/.next/
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+**/.mypy_cache/
+.DS_Store
