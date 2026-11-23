@@ -440,11 +440,11 @@
         "pytest services/agent/tests/unit/test_rules.py",
         "pytest services/agent/tests/security/test_guardrails.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "app/rules/{entities,intents,guardrails,pii,context}.py; real graph nodes normalize/guardrails/rule_layer/safety_handoff/refuse_or_redirect (orchestrator/nodes/rules.py); masking in logs and stored traces. tests/unit/test_rules.py: 28 passed — entity F1 1.0 (tp 128, fp 0, fn 0) on 72 eval items with ids; rule layer p95 0.11 ms (FR-RT-01 needs < 10 ms); exact intents incl. CH-001/003/008. tests/security/test_guardrails.py: 24 passed — all safety items, EM-008 and Hinglish variants → P1 handoff; adversarial items, EM-007, CH-010 refused with no leakage; OOS items + CH-006 redirected; no false alarms on the other eval questions, emails and chat turns; own-company vs other-company; classifier hook; poisoned evidence flagged/neutralized; log scan finds no unmasked phone/email; trace detail masked. Live (make api-dev, real KG/Postgres dictionaries): smoke → safety_handoff P1, injection → refuse, SR id → service.ticket_status T0, election → redirect. Full suite 264 passed. D-029 (safety beats FAQ for Q-045/046; eval harness must accept T4). Gaps: FR-RT-05 'retrieved content treated as data' completes with the answer prompts (BS-15) using neutralize_evidence; kNN OOS class arrives with the router (BS-13); no trained injection classifier (hook only)."
     },
     {
       "id": "BS-13",

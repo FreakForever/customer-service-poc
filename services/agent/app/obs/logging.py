@@ -1,31 +1,21 @@
 """JSON logging (LLD-16, NFR-OBS-02): one JSON object per line with severity, message, component (logger name),
 trace_id, request_id and timestamp, so Cloud Logging parses it as structured logs. Phone numbers, e-mail addresses
-and GSTINs are masked in messages and string fields (FR-RT-06 log masking; BS-12 adds the full PII module).
+and GSTINs are masked in messages and string fields (FR-RT-06, app/rules/pii.py).
 """
 
 import contextvars
 import logging
-import re
 import sys
 from typing import Any, cast
 
 import structlog
 
 from app.obs.tracing import current_trace_id
+from app.rules.pii import mask_pii
+
+__all__ = ["configure_logging", "mask_pii", "request_id_var"]
 
 request_id_var: contextvars.ContextVar[str | None] = contextvars.ContextVar("request_id", default=None)
-
-_PII = [
-    (re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+"), "[email]"),
-    (re.compile(r"\b\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]\b"), "[gstin]"),
-    (re.compile(r"(\+91[-\s]?)?\b\d{5}[-\s]?\d{5}\b"), "[phone]"),
-]
-
-
-def mask_pii(value: str) -> str:
-    for pattern, repl in _PII:
-        value = pattern.sub(repl, value)
-    return value
 
 
 def _mask(_: Any, __: str, event: dict[str, Any]) -> dict[str, Any]:

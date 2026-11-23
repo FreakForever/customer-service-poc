@@ -48,3 +48,15 @@ def _fresh_caches():
     yield
     for f in (get_settings, get_llm, get_embedder):
         f.cache_clear()
+
+
+@pytest.fixture(autouse=True, scope="session")
+def _rule_context():
+    """Rule-layer dictionaries from the mock-data files, so no test needs Neo4j/Postgres for them."""
+    from pathlib import Path
+
+    from app.rules.context import RuleContext, set_rule_context
+
+    set_rule_context(RuleContext.from_files(Path(__file__).resolve().parents[3] / "mock-data" / "data"))
+    yield
+    set_rule_context(None)

@@ -124,7 +124,9 @@ def traced(node: str) -> Callable[[Callable[P, Awaitable[R]]], Callable[P, Await
 
 
 def _json(v: Any) -> str:
-    return json.dumps(v, default=str)
+    from app.rules.pii import mask_deep  # FR-RT-06: traces never store raw phone/email/GSTIN
+
+    return json.dumps(mask_deep(v), default=str)
 
 
 async def save_trace(conn: AsyncConnection, rec: TraceRecorder) -> None:

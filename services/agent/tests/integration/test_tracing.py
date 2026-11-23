@@ -25,8 +25,7 @@ async def test_trace_and_node_spans_are_stored():
     await asyncio.to_thread(subprocess.run, ["uv", "run", "alembic", "-x", f"url={url}", "upgrade", "head"],
                             cwd=AGENT, check=True, capture_output=True, text=True)
     rec = TraceRecorder(mode="debug")
-    final = await run_turn(Envelope(channel="chat", text="AMC status?", meta={"stub": {
-        "rule_intents": [{"name": "amc.status", "confidence": 1.0}]}}), recorder=rec)
+    final = await run_turn(Envelope(channel="chat", text="Is AMC AMC-2025-0014 active?"), recorder=rec)
     engine = create_async_engine(url)
     try:
         async with engine.begin() as conn:

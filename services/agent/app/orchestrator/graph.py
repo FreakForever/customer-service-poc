@@ -14,6 +14,7 @@ from typing import Any, cast
 from langgraph.graph import END, START, StateGraph
 
 from app.obs.tracing import TraceRecorder, span_set, traced
+from app.orchestrator.nodes import rules as rule_nodes
 from app.orchestrator.nodes import stubs
 from app.orchestrator.policies import ChannelPolicy, get_policy
 from app.orchestrator.state import Envelope, TurnState
@@ -30,7 +31,7 @@ TOOL_INTENTS = {"service.create_ticket", "service.ticket_status", "amc.status", 
                 "sales.quote", "complaint"}
 AGENT_INTENTS = {"troubleshoot.error_code", "troubleshoot.symptom", "parts.availability", "parts.compatibility"}
 HANDOFF_INTENTS = {"human", "safety"}
-REDIRECT_INTENTS = {"oos", "smalltalk", "greeting", "thanks"}
+REDIRECT_INTENTS = {"oos", "smalltalk", "greeting", "thanks", "reset"}
 
 
 # ---------- routing (code, not model output) ----------
@@ -143,8 +144,11 @@ def with_budget(name: str, fn: NodeFn) -> NodeFn:
 
 # ---------- graph ----------
 
+REAL_NODES: dict[str, NodeFn] = {**rule_nodes.NODES}    # grows as build steps replace stubs
+
+
 def build_graph(overrides: dict[str, NodeFn] | None = None):
-    impl = {**stubs.NODES, **(overrides or {})}
+    impl = {**stubs.NODES, **REAL_NODES, **(overrides or {})}
     g = StateGraph(TurnState)
     for name, fn in impl.items():
         g.add_node(name, cast(Any, with_budget(name, fn)))
@@ -180,6 +184,11 @@ def default_graph():
     if _default_graph is None:
         _default_graph = build_graph()
     return _default_graph
+
+
+def stub_graph(overrides: dict[str, NodeFn] | None = None):
+    """Every node a stub (wiring tests, debug runs that script the path via env.meta.stub)."""
+    return build_graph({**stubs.NODES, **(overrides or {})})
 
 
 def mermaid(graph=None) -> str:

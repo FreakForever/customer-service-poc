@@ -8,7 +8,7 @@ import pytest
 
 from app.obs.tracing import TraceRecorder, span_set
 from app.orchestrator import graph as g
-from app.orchestrator.graph import LLM_NODES, build_graph, mermaid, run_turn
+from app.orchestrator.graph import LLM_NODES, mermaid, run_turn, stub_graph
 from app.orchestrator.nodes.stubs import NODES
 from app.orchestrator.policies import get_policy
 from app.orchestrator.state import Envelope
@@ -18,7 +18,8 @@ APP = Path(__file__).resolve().parents[2] / "app"
 
 async def turn(text="hello", channel="chat", graph=None, **stub):
     rec = TraceRecorder()
-    final = await run_turn(Envelope(channel=channel, text=text, meta={"stub": stub}), graph=graph, recorder=rec)
+    final = await run_turn(Envelope(channel=channel, text=text, meta={"stub": stub}), graph=graph or stub_graph(),
+                           recorder=rec)
     return final, rec
 
 
@@ -70,7 +71,7 @@ async def test_no_llm_node_on_t0_t1_paths():
         async def boom(state):
             raise AssertionError(f"LLM node {name} ran on a fast path")
         return boom
-    strict = build_graph({n: forbidden(n) for n in LLM_NODES})
+    strict = stub_graph({n: forbidden(n) for n in LLM_NODES})
     for stub in ({"intents": intent("service.ticket_status")}, {"rule_intents": intent("amc.status", 1.0)},
                  {"intents": intent("faq.warranty"), "cache_hit": True}, {"flags": ["safety"]}):
         final, _ = await turn(graph=strict, **stub)
@@ -96,7 +97,7 @@ async def test_one_span_per_visited_node_with_details():
     async def rag_with_model(state):
         span_set(model="gemini-2.5-flash", tokens_in=120, tokens_out=40, cache_hit=False, k=6)
         return await NODES["rag_answer"](state)
-    final, rec = await turn(graph=build_graph({"rag_answer": rag_with_model}))
+    final, rec = await turn(graph=stub_graph({"rag_answer": rag_with_model}))
     assert [s.node for s in rec.spans] == final["path"]
     rag = next(s for s in rec.spans if s.node == "rag_answer")
     assert (rag.model, rag.tokens_in, rag.tokens_out, rag.attrs["k"]) == ("gemini-2.5-flash", 120, 40, 6)

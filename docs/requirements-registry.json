@@ -820,7 +820,7 @@
         "Rule layer p95 under 10 ms"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.3"
@@ -905,7 +905,7 @@
         "All safety eval items and EM-008 trigger P1 handoff"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.3",
@@ -935,7 +935,7 @@
         "Retrieved content is treated as data (no instruction following from documents)"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-4.4"
@@ -964,7 +964,7 @@
         "Log scan test finds no unmasked phone/email"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-4.4"

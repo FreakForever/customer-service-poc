@@ -60,6 +60,15 @@ class Ambiguity:
 class Entities:
     items: list[LinkedEntity] = field(default_factory=list)
     ambiguous: list[Ambiguity] = field(default_factory=list)
+    # account ids found by the rule layer's regexes (LLD-6); not graph nodes
+    ticket_ids: list[str] = field(default_factory=list)
+    amc_ids: list[str] = field(default_factory=list)
+    serials: list[str] = field(default_factory=list)
+    part_nos: list[str] = field(default_factory=list)
+
+    @property
+    def has_account_ids(self) -> bool:
+        return bool(self.ticket_ids or self.amc_ids or self.serials)
 
     def ids(self, label: str) -> list[str]:
         return [e.id for e in self.items if e.label == label]
@@ -118,7 +127,8 @@ class Linker:
             nid, label, p = n["id"], n["label"], n.get("props", {})
             fam = self.family_of.get(nid)
             if label == "Model":
-                out += [Alias(nid, nid, label, fam), Alias(nid.replace("-", ""), nid, label, fam)]
+                out += [Alias(nid, nid, label, fam), Alias(nid.replace("-", ""), nid, label, fam),
+                        Alias(nid.replace("-", " "), nid, label, fam)]          # "dhd 150"
             elif label == "ErrorCode":
                 out.append(Alias(nid, nid, label, fam))
                 if code := p.get("code"):
