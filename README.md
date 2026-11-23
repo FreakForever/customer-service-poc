@@ -17,6 +17,10 @@ Design pack and mock data to start the build. All data is **synthetic** (see `mo
 | `mock-data/` | Deterministic generator + generated data for RAG, KG-RAG, tools, eval, channels, runtime uploads |
 | `DECISIONS.md` | Decision log (mirrors HLD §6–7) |
 
+## Prerequisites (no Docker needed)
+
+`gcloud` CLI with a GCP project, Python 3.12 + `uv`, Node 20 + `pnpm`, Cloud SQL Auth Proxy. All databases and services run on Google Cloud (Cloud SQL, Neo4j AuraDB, Cloud Storage, Vertex AI); images are built by Cloud Build and run on Cloud Run. See LLD §18.
+
 ## Workflow
 
 ```bash

@@ -2,7 +2,7 @@
   "registry": {
     "project": "Matsui customer service — low-latency hybrid multi-agent POC (email + chat)",
     "project_code": "MCS",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "date": "2026-11-23",
     "owner": "Aviral",
     "status": "baseline-draft",
@@ -463,7 +463,7 @@
       "type": "functional",
       "area": "Email",
       "title": "Inbound email ingestion and threading",
-      "statement": "The system shall ingest inbound emails (dev: Mailpit/simulated inbox; later: Gmail API adapter), thread them by Message-ID/In-Reply-To/References and ticket reference in subject.",
+      "statement": "The system shall ingest inbound emails through an adapter interface: a built-in demo mailbox (Postgres-backed inbox/outbox, for dev, tests and offline demos) and a Gmail API adapter (demo mailbox with Pub/Sub push notifications to Cloud Run, replies sent via Gmail API). Messages are threaded by Message-ID/In-Reply-To/References and ticket reference in subject.",
       "priority": "Must",
       "source": "BR-01",
       "acceptance": [
@@ -609,7 +609,7 @@
       "type": "functional",
       "area": "Email",
       "title": "Attachment handling",
-      "statement": "Attachments shall be stored (local disk in dev, GCS in cloud) and listed to the human agent; they are not parsed by AI in this POC.",
+      "statement": "Attachments shall be stored in a GCS bucket (all environments) and listed to the human agent; they are not parsed by AI in this POC.",
       "priority": "Could",
       "source": "Scope decision",
       "acceptance": [
@@ -2139,7 +2139,7 @@
       "priority": "Must",
       "source": "BR-01",
       "acceptance": [
-        "Submitted form appears as email conversation and gets a reply in the Mailpit inbox"
+        "Submitted form appears as an email conversation and its reply is visible in the demo mailbox (or the Gmail demo inbox when enabled)"
       ],
       "verification": "test",
       "status": "proposed",
@@ -2540,7 +2540,7 @@
       "priority": "Must",
       "source": "Security baseline",
       "acceptance": [
-        "Write attempt via Text2Cypher fails at DB level"
+        "Write attempt via Text2Cypher fails at DB level (READ access-mode transaction; read-only user where the Neo4j hosting supports RBAC)"
       ],
       "verification": "test",
       "status": "proposed",
@@ -2706,12 +2706,14 @@
       "id": "NFR-DEP-01",
       "type": "non-functional",
       "area": "Deployment",
-      "title": "Local one-command run and GCP deployment",
-      "statement": "`make up` runs the whole stack locally via Docker Compose; the same images deploy to Google Cloud (Cloud Run, Cloud SQL, Neo4j, GCS).",
+      "title": "GCP-first environments, no local Docker",
+      "statement": "No developer machine needs Docker. Backing services (Cloud SQL Postgres + pgvector, Neo4j, GCS, Secret Manager, Vertex AI) run in a GCP dev project; app processes run natively (or in Cloud Shell / Cloud Workstations) against them; images are built by Cloud Build and deployed to Cloud Run for dev and demo environments.",
       "priority": "Must",
-      "source": "Existing GCP choice for Matsui POCs",
+      "source": "Stakeholder 2026-11-23: no local Docker, keep everything GCP oriented",
       "acceptance": [
-        "Fresh clone to running demo in under 15 minutes locally"
+        "Fresh clone to working dev environment with only gcloud, Python 3.12 (uv) and Node 20 (pnpm) installed",
+        "`make deploy-dev` builds in Cloud Build and serves /healthz on Cloud Run",
+        "Separate dev and demo environments"
       ],
       "verification": "test",
       "status": "proposed",
@@ -2728,6 +2730,36 @@
         ],
         "tests": [
           "TC-NFR-DEP-01"
+        ]
+      }
+    },
+    {
+      "id": "NFR-DEP-02",
+      "type": "non-functional",
+      "area": "Deployment",
+      "title": "Cloud CI/CD",
+      "statement": "CI (lint, type checks, unit and integration tests, secret scan, traceability check) and image builds shall run on Cloud Build triggered from the Git repository; integration tests use ephemeral Postgres/Neo4j containers inside Cloud Build, never on developer machines.",
+      "priority": "Must",
+      "source": "Stakeholder 2026-11-23: GCP oriented",
+      "acceptance": [
+        "Cloud Build CI trigger green on main",
+        "Images pushed to Artifact Registry with commit SHA tags"
+      ],
+      "verification": "test",
+      "status": "proposed",
+      "trace": {
+        "hld": [
+          "HLD-5"
+        ],
+        "lld": [
+          "LLD-17",
+          "LLD-18"
+        ],
+        "build_steps": [
+          "BS-06"
+        ],
+        "tests": [
+          "TC-NFR-DEP-02"
         ]
       }
     },

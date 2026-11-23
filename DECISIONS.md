@@ -14,12 +14,14 @@ Format: `D-nnn | date | status | decision | why | alternatives | affects (REQ / 
 | D-006 | 2026-11-23 | accepted | GraphRAG: templates first, guarded Text2Cypher fallback; KG = product knowledge only | Fast + safe; customer data behind scoped tools | Text2Cypher only | FR-KG-03/04, LLD-9 |
 | D-007 | 2026-11-23 | accepted | Semantic cache only for curated public answers (τ 0.90 chat / 0.92 email) with source-doc invalidation | No stale/personal cache hits | Cache all answers | FR-CA-*, LLD-7 |
 | D-008 | 2026-11-23 | accepted | Sync rule checks everywhere; LLM judge sync for email, async 20% sample for chat | Chat latency vs auditability | Judge every chat turn | FR-VF-*, LLD-11 |
-| D-009 | 2026-11-23 | accepted | Mailpit in dev behind InboundMailAdapter | Real email loop without accounts | Gmail API first | FR-EM-01, LLD-12 |
+| D-009 | 2026-11-23 | superseded by D-016 | Mailpit in dev behind InboundMailAdapter | Real email loop without accounts | Gmail API first | FR-EM-01, LLD-12 |
 | D-010 | 2026-11-23 | accepted | SSE for chat and console live updates | Cloud Run friendly, simple | WebSockets | FR-CH-01, LLD-12 |
 | D-011 | 2026-11-23 | accepted | Postgres job table + worker | Fewer moving parts | Pub/Sub, Celery | LLD-13 |
 | D-012 | 2026-11-23 | accepted | Deterministic synthetic data generator + eval set | Reproducible demos/benchmarks | Hand fixtures | DR-01/02 |
 | D-013 | 2026-11-23 | accepted | Provider-agnostic LLM layer; fast vs strong model per node | Swap after bake-off | Single vendor | NFR-REL-01, LLD-2 |
 | D-014 | 2026-11-23 | accepted | Docs as code: JSON registry + build steps → HTML; CI trace gate | Traceability without manual sync | Hand-edited HTML | NFR-MNT-01 |
+| D-015 | 2026-11-23 | accepted | GCP-first, no local Docker: Cloud SQL + AuraDB Free + GCS + Vertex for dev; native app processes; Cloud Build CI/images; Cloud Run dev + demo | No Docker on the dev machine; dev matches demo platform | Docker Compose locally | NFR-DEP-01/02, HLD-5, LLD-18, BS-01/06/32 |
+| D-016 | 2026-11-23 | accepted | Email adapters: built-in demo mailbox (Postgres) + Gmail API with Pub/Sub push; Mailpit dropped | Needs no Docker; Cloud Run is HTTP-only so an SMTP sink can't run there | Mailpit, SendGrid inbound parse | FR-EM-01, LLD-12, BS-21 |
 
 ## Open decisions
 
@@ -27,11 +29,11 @@ Format: `D-nnn | date | status | decision | why | alternatives | affects (REQ / 
 |---|---|---|---|
 | OD-001 | Matsui brand palette/logo/photography | Placeholder tokens navy #0A2540 / blue #0057A8 | Before BS-22 |
 | OD-002 | LLM provider and models | Vertex AI, configurable | BS-30 |
-| OD-003 | Neo4j hosting on GCP | Compute Engine e2-medium | Before BS-32 |
+| OD-003 | Neo4j hosting for demo env | AuraDB Free in dev; demo TBD (read-only user needs paid tier or self-managed) | Before BS-32 |
 | OD-004 | Embedding model / dimension | Vertex 768 d | Before BS-07 |
 | OD-005 | Reranker | Local cross-encoder | BS-08 |
 | OD-006 | Chat customer identity | Demo persona + optional email OTP | Before BS-20 |
-| OD-007 | Real mailbox for demo | Mailpit only | Before demo |
+| OD-007 | Real mailbox for demo | Demo mailbox; Gmail adapter ready | Before demo |
 | OD-008 | Reply language for Hinglish | English; mirror if Hinglish-only | BS-13 |
 | OD-009 | Japanese support | EN only | After POC review |
 | OD-010 | Shared staff auth with portal POC | Separate | Before BS-32 |

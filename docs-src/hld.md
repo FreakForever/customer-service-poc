@@ -13,12 +13,12 @@ Matsui's customers contact support for FAQs, troubleshooting, ticket/AMC status,
 
 | | In this POC | Later |
 |---|---|---|
-| Channels | Chat widget (SSE), email (Mailpit in dev, Gmail adapter stub), contact form | Voice (STT/TTS on the chat fast path), WhatsApp |
+| Channels | Chat widget (SSE), email (built-in demo mailbox + Gmail API adapter), contact form | Voice (STT/TTS on the chat fast path), WhatsApp |
 | Knowledge | Synthetic manuals, policies, FAQs, catalog, KG; runtime uploads | Real Matsui manuals, ERP/CRM connectors |
 | Users | Customers (demo personas), agents, admins | SSO with Matsui IdP |
 | Attachments | Stored and shown to humans | AI parsing (photos of nameplates, PDFs) |
 
-**Constraints:** Google Cloud target; one developer with Claude Code; all data synthetic and labelled as demo ([DR-03](Requirements.html#DR-03)); the core must be channel-agnostic so voice can reuse it ([BR-05](Requirements.html#BR-05)).
+**Constraints:** Google Cloud for every environment, **no local Docker** (D-015); one developer with Claude Code; all data synthetic and labelled as demo ([DR-03](Requirements.html#DR-03)); the core must be channel-agnostic so voice can reuse it ([BR-05](Requirements.html#BR-05)).
 
 ## 3. Functional architecture {#HLD-3}
 
@@ -63,7 +63,7 @@ flowchart TB
 Each channel has an adapter that converts native input into one **message envelope** (channel, conversation id, customer identity, text, attachments, metadata) and renders the orchestrator's output back into the channel format ([FR-OR-01](Requirements.html#FR-OR-01)).
 
 - **Chat:** the widget opens a session and streams the reply over SSE (status, tokens, citations, quick actions, forms, handoff events) ([FR-CH-01](Requirements.html#FR-CH-01)).
-- **Email:** an `InboundMailAdapter` polls Mailpit in dev (a Gmail API push adapter can be added later). It threads by Message-ID/References and by the ticket reference in the subject ([FR-EM-01](Requirements.html#FR-EM-01)). The help-centre contact form enters the same pipeline ([FR-UI-03](Requirements.html#FR-UI-03)).
+- **Email:** an `InboundMailAdapter` has two implementations: a built-in **demo mailbox** (Postgres inbox/outbox shown in the console) for dev, tests and offline demos, and a **Gmail API** adapter for a real demo inbox (Pub/Sub push notifications to Cloud Run; replies sent through the Gmail API) (D-016). It threads by Message-ID/References and by the ticket reference in the subject ([FR-EM-01](Requirements.html#FR-EM-01)). The help-centre contact form enters the same pipeline ([FR-UI-03](Requirements.html#FR-UI-03)).
 - **Voice (later):** an STT → envelope → orchestrator (chat policy) → TTS adapter; no core changes.
 
 ### 3.2 Orchestrator {#HLD-3.2}
@@ -187,12 +187,14 @@ UI inspiration is Zendesk (clean, neutral, card-based, help-centre search hero, 
 |---|---|---|
 | Web app (help centre, widget, console, admin, analytics) | Next.js (App Router) + TypeScript + Tailwind; NextAuth (Google) | Talks to agent API; SSE client |
 | Agent service (API) | Python 3.12, FastAPI, LangGraph, Pydantic v2 | Orchestrator, tools, retrieval, verifier, chat SSE, admin APIs |
-| Worker | Same codebase, `worker` entrypoint | Ingestion jobs, email polling, async audit, purge |
+| Worker | Same codebase, `worker` entrypoint (Cloud Run service) | Ingestion jobs, Gmail history sync, async audit, purge |
 | LLM / embeddings | Provider interface; default Vertex AI (fast + strong model), fake provider for tests | [NFR-REL-01](Requirements.html#NFR-REL-01), OD-002, OD-004 |
 | Reranker | Cross-encoder (local) behind interface | OD-005 |
-| Relational + vector + FTS + cache + traces | PostgreSQL 16 + pgvector | One database (D-004) |
-| Knowledge graph | Neo4j 5 | D-005, OD-003 |
-| Email (dev) | Mailpit (SMTP sink + REST API + UI) | D-009 |
+| Relational + vector + FTS + cache + traces | Cloud SQL for PostgreSQL 16 + pgvector | One database (D-004) |
+| Knowledge graph | Neo4j 5 — AuraDB Free in dev | D-005, OD-003 |
+| Email | Demo mailbox (Postgres) + Gmail API with Pub/Sub push | D-016 |
+| Files | Cloud Storage bucket | Uploads and attachments in all environments |
+| Build, CI, deploy | Cloud Build → Artifact Registry → Cloud Run | No local Docker (D-015, [NFR-DEP-02](Requirements.html#NFR-DEP-02)) |
 | Observability | Trace/span tables + OpenTelemetry export; JSON logs | [NFR-OBS-01](Requirements.html#NFR-OBS-01), [NFR-OBS-02](Requirements.html#NFR-OBS-02) |
 
 ### 4.2 Data stores {#HLD-4.2}
@@ -204,7 +206,7 @@ UI inspiration is Zendesk (clean, neutral, card-based, help-centre search hero, 
 | Postgres `conv` tables | conversations, messages, handoffs, feedback | Channels, console |
 | Postgres `obs` tables | traces, spans, eval runs | Analytics |
 | Neo4j | Product KG + provenance; KG change requests mirrored in Postgres | GraphRAG (read-only user), ingestion (writer user) |
-| Object storage | Uploaded files, email attachments (local volume → GCS) | Worker, console |
+| Cloud Storage | Uploaded files, email attachments (all environments) | Worker, console |
 
 ### 4.3 Latency budget (chat) {#HLD-4.3}
 
@@ -233,43 +235,48 @@ Email budget is 60 s end to end, which allows the planner, the strong model and 
 
 ## 5. Deployment architecture {#HLD-5}
 
-**Local (default for development and offline demos)** — `make up` ([NFR-DEP-01](Requirements.html#NFR-DEP-01)), `make seed` ([FR-KB-06](Requirements.html#FR-KB-06)):
+Everything runs on Google Cloud; developers need only `gcloud`, Python 3.12 (uv) and Node 20 (pnpm) — **no local Docker** (D-015, [NFR-DEP-01](Requirements.html#NFR-DEP-01)). Two environments share one design: **dev** (cheap tiers, used while building) and **demo** (sized and warmed for presentations). Images are built remotely by Cloud Build ([NFR-DEP-02](Requirements.html#NFR-DEP-02)); `make seed` loads mock data into the dev services ([FR-KB-06](Requirements.html#FR-KB-06)).
+
+**Dev loop (no Docker):**
 
 ```mermaid
 flowchart LR
-  subgraph docker-compose
-    web[web :3000<br/>Next.js] --> api[agent-api :8000<br/>FastAPI]
-    worker[agent-worker] --> pg[(postgres+pgvector :5432)]
-    api --> pg
-    api --> neo[(neo4j :7474/7687)]
-    worker --> neo
-    worker <--> mail[mailpit :8025/1025]
-    api --> mail
+  subgraph Laptop or Cloud Workstation
+    web[pnpm dev :3000] --> api[uvicorn agent-api :8000]
+    wk[python -m app.worker]
+    px[Cloud SQL Auth Proxy]
   end
-  api --> llm[[LLM + embedding provider]]
-  worker --> llm
+  api --> px --> sql[(Cloud SQL Postgres 16<br/>pgvector · mcs / mcs_test)]
+  wk --> px
+  api --> aura[(Neo4j AuraDB Free)]
+  wk --> aura
+  api --> vtx[[Vertex AI]]
+  wk --> gcs[(Cloud Storage)]
+  sm[Secret Manager] -. make env .-> api
+  git[git push] --> cb[Cloud Build CI + image build] --> ar[Artifact Registry] --> run[Cloud Run dev services]
 ```
 
-**Google Cloud:**
+**Demo environment:**
 
 ```mermaid
 flowchart LR
-  user((Customer / agent)) --> lb[Cloud Run: web]
-  lb --> apisvc[Cloud Run: agent-api<br/>min instances 1]
-  apisvc --> sql[(Cloud SQL Postgres 16<br/>pgvector)]
+  user((Customer / agent)) --> webr[Cloud Run: web]
+  webr --> apisvc[Cloud Run: agent-api<br/>min instances 1]
+  apisvc --> sql[(Cloud SQL Postgres 16<br/>pgvector · private IP)]
   apisvc --> neo[(Neo4j: AuraDB or GCE VM · OD-003)]
-  wk[Cloud Run: worker<br/>always-on CPU] --> sql
-  wk --> neo
-  wk --> gcs[(GCS: uploads, attachments)]
-  apisvc --> vtx[[Vertex AI models]]
-  wk --> vtx
-  sch[Cloud Scheduler] --> wk
+  wkr[Cloud Run: worker<br/>always-on CPU] --> sql
+  wkr --> neo
+  wkr --> gcs[(Cloud Storage)]
+  gm[Gmail demo inbox] -->|watch| ps[Pub/Sub] -->|push| apisvc
+  apisvc --> vtx[[Vertex AI]]
+  wkr --> vtx
+  sch[Cloud Scheduler] --> wkr
   sm[Secret Manager] -.-> apisvc
-  sm -.-> wk
-  cb[Cloud Build] --> ar[Artifact Registry] --> lb
+  sm -.-> wkr
+  cb[Cloud Build] --> ar[Artifact Registry] --> webr
 ```
 
-Min instances = 1 on the API to avoid cold starts in demos. The region should be `asia-south1` (Mumbai) for latency to Indian users.
+Region `asia-south1` (Mumbai) for latency to Indian users. Min instances = 1 on the API in demo to avoid cold starts; dev scales to zero to save cost.
 
 ## 6. Important design decisions {#HLD-6}
 
@@ -285,12 +292,14 @@ Mirrored in `DECISIONS.md`. Traceability is enforced in CI ([NFR-MNT-01](Require
 | D-006 | GraphRAG = templates first, guarded Text2Cypher fallback; KG holds product knowledge only | Fast and safe for known patterns; customer data stays behind scoped tools | Text2Cypher only; KG-only answers |
 | D-007 | Semantic cache only for curated public answers (τ = 0.90) with source-doc invalidation | Prevents stale or personal answers being served from cache | Cache all LLM answers |
 | D-008 | Sync rule checks everywhere; LLM judge sync for email, async sampled for chat | Keeps chat latency low while still auditing grounding | Judge on every chat turn |
-| D-009 | Mailpit for dev email behind an adapter interface | Realistic email loop without external accounts | Gmail API from day one |
+| D-009 | ~~Mailpit for dev email~~ — superseded by D-016 | — | — |
 | D-010 | SSE for chat streaming and console live updates | Works on Cloud Run, simple to proxy, enough for one-way streams | WebSockets |
 | D-011 | Postgres job table + worker instead of Pub/Sub | Fewer moving parts for a POC; same interface can move to Cloud Tasks | Pub/Sub, Celery + Redis |
 | D-012 | Deterministic synthetic data generator with an eval set | Reproducible demos and benchmarks; no real customer data | Hand-written fixtures |
 | D-013 | Provider-agnostic LLM layer; fast model for router/T2, strong model for T3/judge | Swap models after the latency/cost bake-off | Hard-wire one vendor |
 | D-014 | Docs as code: JSON registry + build steps → generated HTML with CI trace gate | Traceability without manual sync | Hand-maintained HTML |
+| D-015 | GCP-first, no local Docker: managed dev services (Cloud SQL, AuraDB Free, GCS, Vertex) + native app processes; Cloud Build for CI and images; Cloud Run for dev and demo | Developer has no Docker; keeps dev identical to the demo platform | Docker Compose locally |
+| D-016 | Email via adapter: built-in demo mailbox (Postgres) + Gmail API with Pub/Sub push; Mailpit dropped | Works without Docker; Cloud Run accepts only HTTP so an SMTP sink can't run there | Mailpit, SendGrid inbound parse |
 
 ## 7. Open decisions {#HLD-7}
 
@@ -298,11 +307,11 @@ Mirrored in `DECISIONS.md`. Traceability is enforced in CI ([NFR-MNT-01](Require
 |---|---|---|---|---|
 | OD-001 | Matsui brand palette, logo and photography usage | Brand guide from Matsui · sample from matsuiindia.in | Placeholder tokens (navy `#0A2540`, blue `#0057A8`) | Before BS-22 |
 | OD-002 | LLM provider and models | Vertex Gemini (fast/strong) · Claude via Vertex · mix | Vertex AI, configurable | BS-30 bake-off |
-| OD-003 | Neo4j hosting on GCP | AuraDB Free/Pro · Neo4j Community on Compute Engine | GCE VM (e2-medium) for the demo | Before BS-32 |
+| OD-003 | Neo4j hosting for the demo environment | AuraDB Free/Pro · Neo4j Community on Compute Engine | AuraDB Free in dev; decide demo hosting (RBAC read-only user needs a paid tier or self-managed) | Before BS-32 |
 | OD-004 | Embedding model | Vertex text embeddings (768 d) · multilingual open model (bge-m3) | Vertex 768 d; dimension in config | Before BS-07 |
 | OD-005 | Reranker | Local cross-encoder · Vertex ranking API · none | Local cross-encoder | BS-08 eval |
 | OD-006 | Customer identity in chat | Anonymous + email OTP · demo persona login only | Demo persona + optional email OTP | Before BS-20 |
-| OD-007 | Real mailbox for the live demo | Gmail API on a demo mailbox · Mailpit only | Mailpit only | Before demo |
+| OD-007 | Real mailbox for the live demo | Gmail API on a demo Gmail/Workspace mailbox · demo mailbox only | Demo mailbox; Gmail adapter built in BS-21 | Before demo |
 | OD-008 | Reply language for Hinglish queries | Always English · mirror user | English, mirror if the message is Hinglish only | BS-13 |
 | OD-009 | Japanese support (as in the document portal) | EN only · EN/JA KB answers | EN only | After POC review |
 | OD-010 | Shared staff auth with the document portal POC | Shared Google OAuth client · separate | Separate | Before BS-32 |
@@ -316,7 +325,8 @@ Mirrored in `DECISIONS.md`. Traceability is enforced in CI ([NFR-MNT-01](Require
 | KG extraction errors from uploads | Wrong multi-hop answers | Schema-constrained extraction, confidence threshold, approval queue, provenance for rollback |
 | Synthetic data feels unrealistic to Matsui | Weak demo | Product categories mirror the real range; swap in real manuals early |
 | Scope creep (voice, ERP) | Delays | Voice-ready core but voice out of scope; ERP mocked |
-| Neo4j hosting cost/ops | Budget | Small VM or AuraDB Free for demo; KG is small |
+| Neo4j hosting cost/ops | Budget | AuraDB Free in dev; small VM or AuraDB for demo; KG is small |
+| Dev depends on cloud services | No offline work; small running cost | Smallest tiers, dev scales to zero, FakeProvider for unit tests, budget alert on the project |
 
 ## 9. Traceability {#HLD-9}
 

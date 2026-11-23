@@ -27,7 +27,7 @@ matsui-cs-poc/
 │   ├── app/agents/               # rag_answerer.py, troubleshoot.py, service_request.py, parts.py, sales.py, planner.py
 │   ├── app/tools/                # tickets.py, assets.py, amc.py, parts.py, service_centres.py, leads.py
 │   ├── app/verify/               # coverage.py, consistency.py, judge.py, confidence.py, summary.py
-│   ├── app/channels/             # chat_sse.py, email/{adapter.py, mailpit.py, gmail.py, threading.py, templates/}
+│   ├── app/channels/             # chat_sse.py, email/{adapter.py, demo_mailbox.py, gmail.py, threading.py, templates/}
 │   ├── app/ingest/               # parsers.py, pipeline.py, csv_loaders.py, extraction.py, jobs.py
 │   ├── app/api/                  # chat.py, email.py, console.py, admin.py, analytics.py, demo.py, debug.py
 │   ├── app/obs/                  # tracing.py, logging.py, cost.py
@@ -36,7 +36,8 @@ matsui-cs-poc/
 ├── eval/                         # run.py, judge.py, metrics.py, report.html.j2
 ├── mock-data/                    # generate.py, data/**, upload-samples/**, kg/load_kg.py  (delivered)
 ├── scripts/                      # seed.py, reset.py, demo_emails.py, perf.py
-├── infra/                        # docker-compose.yml, gcp/ (terraform or gcloud scripts)
+├── infra/gcp/                    # bootstrap.sh, env.sh, cloudbuild.ci.yaml, cloudbuild.deploy.yaml, scheduler.sh
+├── services/agent/Dockerfile  apps/web/Dockerfile   # built remotely by Cloud Build, never locally
 ├── docs/  docs-src/  tools/sync_docs.py
 ├── DECISIONS.md  Makefile  .env.example  README.md
 ```
@@ -47,17 +48,19 @@ matsui-cs-poc/
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `DATABASE_URL` | `postgresql+psycopg://mcs:mcs@postgres:5432/mcs` | App role (read/write) |
-| `DATABASE_URL_RO` | `postgresql+psycopg://mcs_ro:mcs_ro@postgres:5432/mcs` | Read-only role for AI-driven reads |
-| `NEO4J_URI` / `NEO4J_USER` / `NEO4J_PASSWORD` | `bolt://neo4j:7687` / `neo4j` / `matsui-demo` | Writer (ingestion) |
-| `NEO4J_RO_USER` / `NEO4J_RO_PASSWORD` | `mcs_reader` | Read-only for GraphRAG/Text2Cypher |
+| `DATABASE_URL` | `postgresql+psycopg://mcs:<secret>@127.0.0.1:5432/mcs` (via Cloud SQL Auth Proxy locally; Cloud SQL connector on Cloud Run) | App role (read/write) |
+| `DATABASE_URL_RO` | same host, role `mcs_ro` | Read-only role for AI-driven reads |
+| `CLOUDSQL_INSTANCE` | `<project>:asia-south1:mcs-dev` | Used by the proxy / Python connector |
+| `NEO4J_URI` / `NEO4J_USER` / `NEO4J_PASSWORD` | `neo4j+s://<id>.databases.neo4j.io` / `neo4j` / from Secret Manager | AuraDB Free in dev |
+| `NEO4J_RO_USER` / `NEO4J_RO_PASSWORD` | empty in dev | Optional read-only user where hosting supports RBAC; READ access mode always enforced |
 | `PROVIDER` | `vertex` (`fake` in tests) | LLM provider |
 | `MODEL_FAST` / `MODEL_STRONG` | set per OD-002 | Router/T2 vs T3/judge |
 | `EMBED_MODEL` / `EMBED_DIM` | per OD-004 / `768` | Embedding model and vector size |
 | `GCP_PROJECT` / `GCP_REGION` | — / `asia-south1` | Vertex + deploy |
-| `MAILPIT_API` / `SMTP_HOST` / `SMTP_PORT` | `http://mailpit:8025` / `mailpit` / `1025` | Dev email |
+| `MAIL_ADAPTER` | `demo` (or `gmail`) | Email adapter |
+| `GMAIL_DELEGATED_USER` / `GMAIL_PUBSUB_TOPIC` / `GMAIL_PUSH_AUDIENCE` | — / `projects/<p>/topics/mcs-gmail` / API URL | Gmail adapter (OAuth token in Secret Manager) |
 | `SUPPORT_ADDRESS` | `support@matsui-demo.example` | Inbound/outbound address |
-| `STORAGE_BACKEND` / `GCS_BUCKET` | `local` / — | Uploads & attachments |
+| `GCS_BUCKET` | `mcs-<env>-uploads` | Uploads & attachments (all environments) |
 | `RETENTION_DAYS` | `30` | Purge horizon |
 | `NEXTAUTH_SECRET` / `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `STAFF_ALLOWLIST` | — | Staff auth |
 
@@ -173,6 +176,9 @@ CREATE TABLE messages (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), conversati
   created_at timestamptz DEFAULT now());
 CREATE TABLE attachments (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), message_id uuid REFERENCES messages ON DELETE CASCADE,
   filename text, mime text, bytes int, storage_uri text);
+CREATE TABLE mailbox_messages (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), box text CHECK (box IN ('inbox','outbox')),
+  message_id text UNIQUE, in_reply_to text, references_ text, from_addr text, to_addr text, subject text,
+  body_text text, body_html text, processed bool DEFAULT false, created_at timestamptz DEFAULT now());  -- demo mailbox (D-016)
 CREATE TABLE feedback (id bigserial PRIMARY KEY, message_id uuid, trace_id uuid, rating smallint, reason text,
   created_at timestamptz DEFAULT now());
 
@@ -400,7 +406,7 @@ async def graph_evidence(q: Query, ents: Entities, mode: Literal["rag", "kg", "h
     return dedupe_and_rank(ev)
 ```
 
-**Text2Cypher guard** ([FR-KG-04](Requirements.html#FR-KG-04), [NFR-SEC-03](Requirements.html#NFR-SEC-03)): prompt includes the schema from LLD-4 and 6 few-shot pairs; output is parsed with a Cypher grammar check; reject if it contains `CREATE|MERGE|DELETE|DETACH|SET|REMOVE|DROP|LOAD CSV|CALL dbms|CALL apoc` or labels/relationships not in the schema; append `LIMIT 50` if missing; run in a read transaction with the `mcs_reader` user and a 2 s timeout; at most one repair attempt on error.
+**Text2Cypher guard** ([FR-KG-04](Requirements.html#FR-KG-04), [NFR-SEC-03](Requirements.html#NFR-SEC-03)): prompt includes the schema from LLD-4 and 6 few-shot pairs; output is parsed with a Cypher grammar check; reject if it contains `CREATE|MERGE|DELETE|DETACH|SET|REMOVE|DROP|LOAD CSV|CALL dbms|CALL apoc` or labels/relationships not in the schema; append `LIMIT 50` if missing; run with `session.execute_read` (READ access mode, so the server rejects writes even on AuraDB Free where custom users aren't available), plus the `mcs_reader` user where RBAC exists, and a 2 s timeout; at most one repair attempt on error.
 
 ## 10. Agents and tools {#LLD-10}
 
@@ -466,12 +472,12 @@ Session state persists in `conversations.state` ([FR-CH-02](Requirements.html#FR
 
 **Email pipeline** ([FR-EM-01](Requirements.html#FR-EM-01)–[FR-EM-06](Requirements.html#FR-EM-06)):
 
-1. `MailpitAdapter.poll()` every 5 s (`GET /api/v1/messages`), or `POST /v1/email/inbound` (simulated / contact form). Idempotency on `Message-ID`.
+1. Inbound via the configured adapter (D-016): **demo mailbox** — `POST /v1/email/inbound` (contact form, `make demo-emails`, console "compose as customer") writes an RFC 822-style message into `mailbox_messages`; **Gmail** — `users.watch` publishes to Pub/Sub, the push subscription calls `POST /v1/email/gmail/push` (OIDC-verified), the worker fetches new messages via `users.history.list`. Idempotency on `Message-ID`; the Gmail watch is renewed daily by Cloud Scheduler.
 2. Threading: `In-Reply-To`/`References` → existing conversation; else `SR-\d{4}-\d{5}` in subject → ticket's conversation; else a new conversation.
 3. Identify the sender: contact email → customer; else domain → customer (lower trust); else unknown.
 4. Strip quoted history and signatures; store attachments → storage, metadata row.
 5. Orchestrate with the `email` policy: decompose → parallel answers → composer → verify (sync judge) → confidence.
-6. Decision: `confidence ≥ auto_send` and no review flags → send via SMTP (Mailpit) and store `delivery=sent`; else store `delivery=draft`, conversation `status=review` ([FR-EM-03](Requirements.html#FR-EM-03)).
+6. Decision: `confidence ≥ auto_send` and no review flags → send via the adapter (demo mailbox outbox row, or Gmail `users.messages.send` in the same thread) and store `delivery=sent`; else store `delivery=draft`, conversation `status=review` ([FR-EM-03](Requirements.html#FR-EM-03)).
 7. Template (`channels/email/templates/reply.html.j2` + `.txt.j2`) ([FR-EM-05](Requirements.html#FR-EM-05)): Matsui header bar, greeting by name, one section per sub-question, numbered steps, footnotes `[1] Dehumidifying dryer manual §E04`, ticket reference, signature "Matsui Customer Care (AI-assisted, reviewed when needed)", demo-data footer. Subject `Re: <original> [SR-2026-00141]` when a ticket exists.
 
 ## 13. Knowledge operations and runtime upload {#LLD-13}
@@ -513,7 +519,9 @@ Base URL `/v1`. Auth: staff routes need a NextAuth session JWT forwarded as `Aut
 | `GET /chat/sessions/{id}/events` | session | Human messages stream | SSE |
 | `POST /chat/sessions/{id}/forms/{form_id}` | session | Submit inline form | `{fields}` → SSE |
 | `POST /feedback` | session/staff | Rate an answer | `{message_id, rating: 1\|-1, reason?}` → `204` |
-| `POST /email/inbound` | public (rate-limited) / internal | Contact form or simulated inbound | `{from, name?, subject, body, serial_no?}` → `{conversation_id}` |
+| `POST /email/inbound` | public (rate-limited) / internal | Contact form or demo-mailbox inbound | `{from, name?, subject, body, serial_no?, in_reply_to?}` → `{conversation_id}` |
+| `POST /email/gmail/push` | Pub/Sub (OIDC) | Gmail change notification | Pub/Sub envelope → `204` (enqueues history sync) |
+| `GET /console/mailbox` | agent | Demo mailbox inbox/outbox view | `?box=inbox\|outbox` → `{items[]}` |
 | `GET /console/conversations` | agent | List by view | `?view=review\|live\|p1\|mine\|all&q=` → `{items[], next}` |
 | `GET /console/conversations/{id}` | agent | Detail | → `{conversation, messages[], customer, assets[], contracts[], tickets[], summary}` |
 | `POST /console/conversations/{id}/takeover` | agent | Start live takeover | → `204` |
@@ -583,30 +591,60 @@ Errors: RFC 7807 JSON `{type, title, status, detail, trace_id}`.
 | Level | Scope | Tooling | Runs in CI |
 |---|---|---|---|
 | Unit | rules, chunker, cache, linker, verifier, tools, confidence | pytest + FakeProvider | yes |
-| Integration | Postgres/Neo4j queries, retrieval, templates, ingestion, uploads | pytest + docker services (testcontainers) | yes |
-| E2E (API) | chat scripts CH-001..010, emails EM-001..010 | pytest + httpx SSE client, Mailpit API | yes (fake provider) and nightly (real provider) |
+| Integration | Postgres/Neo4j queries, retrieval, templates, ingestion, uploads | pytest; locally against the `mcs_test` database on dev Cloud SQL and AuraDB dev; in CI against ephemeral pgvector/Neo4j containers inside Cloud Build | yes |
+| E2E (API) | chat scripts CH-001..010, emails EM-001..010 | pytest + httpx SSE client, demo mailbox API | yes (fake provider) and nightly against Cloud Run dev (real provider) |
 | E2E (UI) | help centre, chat, console, admin, analytics | Playwright | yes |
 | Security | guardrails, scope checks, Text2Cypher guard, RBAC, secret scan | pytest, gitleaks | yes |
+
+CI runs on Cloud Build (`infra/gcp/cloudbuild.ci.yaml`) ([NFR-DEP-02](Requirements.html#NFR-DEP-02)): lint → type-check → unit (FakeProvider) → integration (Postgres `pgvector/pgvector:pg16` and `neo4j:5` started as background containers on the `cloudbuild` network) → gitleaks → `python tools/sync_docs.py --check`. Docker runs only inside Cloud Build, never on developer machines.
 | Eval / perf | benchmark and latency | eval/run.py, scripts/perf.py | manual / nightly |
 
 Each requirement has test id `TC-<REQ-ID>`; tests carry `@pytest.mark.req("FR-KG-03")` so a report can list requirement coverage.
 
 ## 18. Deployment and runbook {#LLD-18}
 
-**Docker Compose services** ([NFR-DEP-01](Requirements.html#NFR-DEP-01)): `postgres` (pgvector/pgvector:pg16, volume, healthcheck), `neo4j` (neo4j:5-community, APOC not required), `mailpit` (axllent/mailpit), `agent-api` (uvicorn, port 8000), `agent-worker`, `web` (port 3000). Makefile:
+**No local Docker** (D-015, [NFR-DEP-01](Requirements.html#NFR-DEP-01)). Prerequisites: `gcloud` CLI (logged in, ADC set), Python 3.12 with `uv`, Node 20 with `pnpm`, the Cloud SQL Auth Proxy binary (`gcloud components install cloud-sql-proxy`). Optional: develop inside Cloud Shell or Cloud Workstations instead of a laptop.
+
+**GCP resources per environment** (`infra/gcp/bootstrap.sh ENV=dev|demo`, idempotent gcloud script; Terraform optional later):
+
+| Resource | dev | demo |
+|---|---|---|
+| APIs enabled | run, sqladmin, artifactregistry, cloudbuild, secretmanager, aiplatform, storage, pubsub, cloudscheduler, gmail | same |
+| Artifact Registry | `mcs` (docker) | shared |
+| Cloud SQL Postgres 16 | `mcs-dev`, smallest shared-core tier, public IP + Auth Proxy, databases `mcs`, `mcs_test`, `vector` extension | `mcs-demo`, dedicated small tier, private IP via Serverless VPC connector |
+| Neo4j | AuraDB Free | per OD-003 |
+| Cloud Storage | `mcs-dev-uploads` | `mcs-demo-uploads` |
+| Secret Manager | DB passwords, Neo4j creds, NextAuth secret, Google OAuth client, Gmail token | same names, demo values |
+| Service accounts | `mcs-api@`, `mcs-worker@` (Cloud SQL client, Vertex user, secret accessor, storage object admin) | same |
+| Cloud Run | `mcs-web`, `mcs-agent-api`, `mcs-agent-worker` (scale to zero) | same, API and worker min 1, CPU always allocated |
+| Pub/Sub + Scheduler | `mcs-gmail` topic (if Gmail enabled) | + jobs: purge (daily), audit (hourly), gmail-watch-renew (daily) |
+| Budget alert | yes | yes |
+
+Region `asia-south1`. Cloud Run services connect to Cloud SQL through the built-in Cloud SQL connector (`--add-cloudsql-instances`).
+
+**Makefile:**
 
 ```makefile
-up: ; docker compose -f infra/docker-compose.yml up -d --build
-migrate: ; docker compose exec agent-api alembic upgrade head
-seed: migrate ; docker compose exec agent-api sh -c "python mock-data/generate.py && python scripts/seed.py && python mock-data/kg/load_kg.py --wipe && python scripts/seed.py --kb"
-test: ; docker compose exec agent-api pytest -q && pnpm -C apps/web test
-eval: ; docker compose exec agent-api python eval/run.py --mode all
-demo-emails: ; docker compose exec agent-api python scripts/demo_emails.py
-demo-upload: ; docker compose exec agent-api python scripts/demo_upload.py mock-data/upload-samples
-docs: ; python tools/sync_docs.py
+bootstrap-gcp: ; ENV=dev bash infra/gcp/bootstrap.sh
+env:          ; bash infra/gcp/env.sh dev > .env          # pulls secrets from Secret Manager into a git-ignored .env
+proxy:        ; cloud-sql-proxy $$CLOUDSQL_INSTANCE --port 5432
+dev:          ; make -j3 proxy api-dev worker-dev web-dev
+api-dev:      ; cd services/agent && uv run uvicorn app.main:app --reload --port 8000
+worker-dev:   ; cd services/agent && uv run python -m app.worker
+web-dev:      ; pnpm -C apps/web dev
+migrate:      ; cd services/agent && uv run alembic upgrade head
+seed: migrate ; uv run python mock-data/generate.py && uv run python scripts/seed.py && uv run python mock-data/kg/load_kg.py --wipe && uv run python scripts/seed.py --kb
+test:         ; cd services/agent && uv run pytest -q && pnpm -C apps/web test
+ci:           ; gcloud builds submit --config infra/gcp/cloudbuild.ci.yaml .
+deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --substitutions=_ENV=dev .
+deploy-demo:  ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --substitutions=_ENV=demo .
+eval:         ; uv run python eval/run.py --mode all
+demo-emails:  ; uv run python scripts/demo_emails.py
+demo-upload:  ; uv run python scripts/demo_upload.py mock-data/upload-samples
+docs:         ; python tools/sync_docs.py
 ```
 
-**Google Cloud** ([NFR-SEC-02](Requirements.html#NFR-SEC-02)): region `asia-south1`; Artifact Registry repo `mcs`; Cloud Run `mcs-web`, `mcs-agent-api` (min 1, concurrency 40, CPU always on for SSE), `mcs-agent-worker` (min 1, no ingress); Cloud SQL Postgres 16 with `vector` extension, private IP via Serverless VPC connector; Neo4j per OD-003; GCS bucket `mcs-uploads-<project>`; Secret Manager for DB/Neo4j/OAuth/NextAuth secrets; Cloud Scheduler → worker endpoints for `purge` (daily) and `audit_sample` (hourly); Cloud Build trigger on `main`. Smoke test: `/healthz`, one chat T1 question, one T3 question, one simulated email.
+**`cloudbuild.deploy.yaml`:** build `services/agent` and `apps/web` images (tag = `$SHORT_SHA`) → push to Artifact Registry → `alembic upgrade head` as a Cloud Run job → `gcloud run deploy` the three services with env from Secret Manager (`--set-secrets`) → smoke test (`/healthz`, one T1 chat question, one T3 question, one demo-mailbox email).
 
 ## 19. Build steps and progress {#LLD-19}
 

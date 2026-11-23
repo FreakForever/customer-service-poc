@@ -84,7 +84,7 @@ td ul{margin:0;padding-left:18px}
 <a class="l2" href="#HLD-7">7. Open decisions</a>
 <a class="l2" href="#HLD-8">8. Risks</a>
 <a class="l2" href="#HLD-9">9. Traceability</a></aside>
-<main><div class="hero"><h1>High-level design</h1><div class="meta">Project MCS · registry v0.1.0 · generated 2026-11-23 · build 5ef13a78 · owner Aviral</div></div>
+<main><div class="hero"><h1>High-level design</h1><div class="meta">Project MCS · registry v0.2.0 · generated 2026-11-23 · build ad551266 · owner Aviral</div></div>
 <h2 id="HLD-1">1. Context and goals</h2>
 <p>Matsui's customers contact support for FAQs, troubleshooting, ticket/AMC status, spare parts and quotes. This POC shows a <strong>low-latency hybrid multi-agent service desk</strong> for <strong>email and chat</strong> that:</p>
 <ol>
@@ -106,7 +106,7 @@ td ul{margin:0;padding-left:18px}
 <tbody>
 <tr>
 <td>Channels</td>
-<td>Chat widget (SSE), email (Mailpit in dev, Gmail adapter stub), contact form</td>
+<td>Chat widget (SSE), email (built-in demo mailbox + Gmail API adapter), contact form</td>
 <td>Voice (STT/TTS on the chat fast path), WhatsApp</td>
 </tr>
 <tr>
@@ -126,7 +126,7 @@ td ul{margin:0;padding-left:18px}
 </tr>
 </tbody>
 </table>
-<p><strong>Constraints:</strong> Google Cloud target; one developer with Claude Code; all data synthetic and labelled as demo (<a href="Requirements.html#DR-03">DR-03</a>); the core must be channel-agnostic so voice can reuse it (<a href="Requirements.html#BR-05">BR-05</a>).</p>
+<p><strong>Constraints:</strong> Google Cloud for every environment, <strong>no local Docker</strong> (D-015); one developer with Claude Code; all data synthetic and labelled as demo (<a href="Requirements.html#DR-03">DR-03</a>); the core must be channel-agnostic so voice can reuse it (<a href="Requirements.html#BR-05">BR-05</a>).</p>
 <h2 id="HLD-3">3. Functional architecture</h2>
 <pre class="mermaid">flowchart TB
   subgraph Channels
@@ -166,7 +166,7 @@ td ul{margin:0;padding-left:18px}
 <p>Each channel has an adapter that converts native input into one <strong>message envelope</strong> (channel, conversation id, customer identity, text, attachments, metadata) and renders the orchestrator's output back into the channel format (<a href="Requirements.html#FR-OR-01">FR-OR-01</a>).</p>
 <ul>
 <li><strong>Chat:</strong> the widget opens a session and streams the reply over SSE (status, tokens, citations, quick actions, forms, handoff events) (<a href="Requirements.html#FR-CH-01">FR-CH-01</a>).</li>
-<li><strong>Email:</strong> an <code>InboundMailAdapter</code> polls Mailpit in dev (a Gmail API push adapter can be added later). It threads by Message-ID/References and by the ticket reference in the subject (<a href="Requirements.html#FR-EM-01">FR-EM-01</a>). The help-centre contact form enters the same pipeline (<a href="Requirements.html#FR-UI-03">FR-UI-03</a>).</li>
+<li><strong>Email:</strong> an <code>InboundMailAdapter</code> has two implementations: a built-in <strong>demo mailbox</strong> (Postgres inbox/outbox shown in the console) for dev, tests and offline demos, and a <strong>Gmail API</strong> adapter for a real demo inbox (Pub/Sub push notifications to Cloud Run; replies sent through the Gmail API) (D-016). It threads by Message-ID/References and by the ticket reference in the subject (<a href="Requirements.html#FR-EM-01">FR-EM-01</a>). The help-centre contact form enters the same pipeline (<a href="Requirements.html#FR-UI-03">FR-UI-03</a>).</li>
 <li><strong>Voice (later):</strong> an STT → envelope → orchestrator (chat policy) → TTS adapter; no core changes.</li>
 </ul>
 <h3 id="HLD-3.2">3.2 Orchestrator</h3>
@@ -422,8 +422,8 @@ td ul{margin:0;padding-left:18px}
 </tr>
 <tr>
 <td>Worker</td>
-<td>Same codebase, <code>worker</code> entrypoint</td>
-<td>Ingestion jobs, email polling, async audit, purge</td>
+<td>Same codebase, <code>worker</code> entrypoint (Cloud Run service)</td>
+<td>Ingestion jobs, Gmail history sync, async audit, purge</td>
 </tr>
 <tr>
 <td>LLM / embeddings</td>
@@ -437,18 +437,28 @@ td ul{margin:0;padding-left:18px}
 </tr>
 <tr>
 <td>Relational + vector + FTS + cache + traces</td>
-<td>PostgreSQL 16 + pgvector</td>
+<td>Cloud SQL for PostgreSQL 16 + pgvector</td>
 <td>One database (D-004)</td>
 </tr>
 <tr>
 <td>Knowledge graph</td>
-<td>Neo4j 5</td>
+<td>Neo4j 5 — AuraDB Free in dev</td>
 <td>D-005, OD-003</td>
 </tr>
 <tr>
-<td>Email (dev)</td>
-<td>Mailpit (SMTP sink + REST API + UI)</td>
-<td>D-009</td>
+<td>Email</td>
+<td>Demo mailbox (Postgres) + Gmail API with Pub/Sub push</td>
+<td>D-016</td>
+</tr>
+<tr>
+<td>Files</td>
+<td>Cloud Storage bucket</td>
+<td>Uploads and attachments in all environments</td>
+</tr>
+<tr>
+<td>Build, CI, deploy</td>
+<td>Cloud Build → Artifact Registry → Cloud Run</td>
+<td>No local Docker (D-015, <a href="Requirements.html#NFR-DEP-02">NFR-DEP-02</a>)</td>
 </tr>
 <tr>
 <td>Observability</td>
@@ -493,8 +503,8 @@ td ul{margin:0;padding-left:18px}
 <td>GraphRAG (read-only user), ingestion (writer user)</td>
 </tr>
 <tr>
-<td>Object storage</td>
-<td>Uploaded files, email attachments (local volume → GCS)</td>
+<td>Cloud Storage</td>
+<td>Uploaded files, email attachments (all environments)</td>
 <td>Worker, console</td>
 </tr>
 </tbody>
@@ -575,37 +585,41 @@ td ul{margin:0;padding-left:18px}
 <li><strong>Privacy:</strong> PII masked in logs (<a href="Requirements.html#FR-RT-06">FR-RT-06</a>); 30-day retention with a purge job (<a href="Requirements.html#NFR-SEC-04">NFR-SEC-04</a>); secrets in <code>.env</code>/Secret Manager (<a href="Requirements.html#NFR-SEC-02">NFR-SEC-02</a>).</li>
 </ul>
 <h2 id="HLD-5">5. Deployment architecture</h2>
-<p><strong>Local (default for development and offline demos)</strong> — <code>make up</code> (<a href="Requirements.html#NFR-DEP-01">NFR-DEP-01</a>), <code>make seed</code> (<a href="Requirements.html#FR-KB-06">FR-KB-06</a>):</p>
+<p>Everything runs on Google Cloud; developers need only <code>gcloud</code>, Python 3.12 (uv) and Node 20 (pnpm) — <strong>no local Docker</strong> (D-015, <a href="Requirements.html#NFR-DEP-01">NFR-DEP-01</a>). Two environments share one design: <strong>dev</strong> (cheap tiers, used while building) and <strong>demo</strong> (sized and warmed for presentations). Images are built remotely by Cloud Build (<a href="Requirements.html#NFR-DEP-02">NFR-DEP-02</a>); <code>make seed</code> loads mock data into the dev services (<a href="Requirements.html#FR-KB-06">FR-KB-06</a>).</p>
+<p><strong>Dev loop (no Docker):</strong></p>
 <pre class="mermaid">flowchart LR
-  subgraph docker-compose
-    web[web :3000&lt;br/&gt;Next.js] --&gt; api[agent-api :8000&lt;br/&gt;FastAPI]
-    worker[agent-worker] --&gt; pg[(postgres+pgvector :5432)]
-    api --&gt; pg
-    api --&gt; neo[(neo4j :7474/7687)]
-    worker --&gt; neo
-    worker &lt;--&gt; mail[mailpit :8025/1025]
-    api --&gt; mail
+  subgraph Laptop or Cloud Workstation
+    web[pnpm dev :3000] --&gt; api[uvicorn agent-api :8000]
+    wk[python -m app.worker]
+    px[Cloud SQL Auth Proxy]
   end
-  api --&gt; llm[[LLM + embedding provider]]
-  worker --&gt; llm
+  api --&gt; px --&gt; sql[(Cloud SQL Postgres 16&lt;br/&gt;pgvector · mcs / mcs_test)]
+  wk --&gt; px
+  api --&gt; aura[(Neo4j AuraDB Free)]
+  wk --&gt; aura
+  api --&gt; vtx[[Vertex AI]]
+  wk --&gt; gcs[(Cloud Storage)]
+  sm[Secret Manager] -. make env .-&gt; api
+  git[git push] --&gt; cb[Cloud Build CI + image build] --&gt; ar[Artifact Registry] --&gt; run[Cloud Run dev services]
 </pre>
-<p><strong>Google Cloud:</strong></p>
+<p><strong>Demo environment:</strong></p>
 <pre class="mermaid">flowchart LR
-  user((Customer / agent)) --&gt; lb[Cloud Run: web]
-  lb --&gt; apisvc[Cloud Run: agent-api&lt;br/&gt;min instances 1]
-  apisvc --&gt; sql[(Cloud SQL Postgres 16&lt;br/&gt;pgvector)]
+  user((Customer / agent)) --&gt; webr[Cloud Run: web]
+  webr --&gt; apisvc[Cloud Run: agent-api&lt;br/&gt;min instances 1]
+  apisvc --&gt; sql[(Cloud SQL Postgres 16&lt;br/&gt;pgvector · private IP)]
   apisvc --&gt; neo[(Neo4j: AuraDB or GCE VM · OD-003)]
-  wk[Cloud Run: worker&lt;br/&gt;always-on CPU] --&gt; sql
-  wk --&gt; neo
-  wk --&gt; gcs[(GCS: uploads, attachments)]
-  apisvc --&gt; vtx[[Vertex AI models]]
-  wk --&gt; vtx
-  sch[Cloud Scheduler] --&gt; wk
+  wkr[Cloud Run: worker&lt;br/&gt;always-on CPU] --&gt; sql
+  wkr --&gt; neo
+  wkr --&gt; gcs[(Cloud Storage)]
+  gm[Gmail demo inbox] --&gt;|watch| ps[Pub/Sub] --&gt;|push| apisvc
+  apisvc --&gt; vtx[[Vertex AI]]
+  wkr --&gt; vtx
+  sch[Cloud Scheduler] --&gt; wkr
   sm[Secret Manager] -.-&gt; apisvc
-  sm -.-&gt; wk
-  cb[Cloud Build] --&gt; ar[Artifact Registry] --&gt; lb
+  sm -.-&gt; wkr
+  cb[Cloud Build] --&gt; ar[Artifact Registry] --&gt; webr
 </pre>
-<p>Min instances = 1 on the API to avoid cold starts in demos. The region should be <code>asia-south1</code> (Mumbai) for latency to Indian users.</p>
+<p>Region <code>asia-south1</code> (Mumbai) for latency to Indian users. Min instances = 1 on the API in demo to avoid cold starts; dev scales to zero to save cost.</p>
 <h2 id="HLD-6">6. Important design decisions</h2>
 <p>Mirrored in <code>DECISIONS.md</code>. Traceability is enforced in CI (<a href="Requirements.html#NFR-MNT-01">NFR-MNT-01</a>).</p>
 <table>
@@ -668,9 +682,9 @@ td ul{margin:0;padding-left:18px}
 </tr>
 <tr>
 <td>D-009</td>
-<td>Mailpit for dev email behind an adapter interface</td>
-<td>Realistic email loop without external accounts</td>
-<td>Gmail API from day one</td>
+<td>~~Mailpit for dev email~~ — superseded by D-016</td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td>D-010</td>
@@ -702,6 +716,18 @@ td ul{margin:0;padding-left:18px}
 <td>Traceability without manual sync</td>
 <td>Hand-maintained HTML</td>
 </tr>
+<tr>
+<td>D-015</td>
+<td>GCP-first, no local Docker: managed dev services (Cloud SQL, AuraDB Free, GCS, Vertex) + native app processes; Cloud Build for CI and images; Cloud Run for dev and demo</td>
+<td>Developer has no Docker; keeps dev identical to the demo platform</td>
+<td>Docker Compose locally</td>
+</tr>
+<tr>
+<td>D-016</td>
+<td>Email via adapter: built-in demo mailbox (Postgres) + Gmail API with Pub/Sub push; Mailpit dropped</td>
+<td>Works without Docker; Cloud Run accepts only HTTP so an SMTP sink can't run there</td>
+<td>Mailpit, SendGrid inbound parse</td>
+</tr>
 </tbody>
 </table>
 <h2 id="HLD-7">7. Open decisions</h2>
@@ -732,9 +758,9 @@ td ul{margin:0;padding-left:18px}
 </tr>
 <tr>
 <td>OD-003</td>
-<td>Neo4j hosting on GCP</td>
+<td>Neo4j hosting for the demo environment</td>
 <td>AuraDB Free/Pro · Neo4j Community on Compute Engine</td>
-<td>GCE VM (e2-medium) for the demo</td>
+<td>AuraDB Free in dev; decide demo hosting (RBAC read-only user needs a paid tier or self-managed)</td>
 <td>Before BS-32</td>
 </tr>
 <tr>
@@ -761,8 +787,8 @@ td ul{margin:0;padding-left:18px}
 <tr>
 <td>OD-007</td>
 <td>Real mailbox for the live demo</td>
-<td>Gmail API on a demo mailbox · Mailpit only</td>
-<td>Mailpit only</td>
+<td>Gmail API on a demo Gmail/Workspace mailbox · demo mailbox only</td>
+<td>Demo mailbox; Gmail adapter built in BS-21</td>
 <td>Before demo</td>
 </tr>
 <tr>
@@ -826,7 +852,12 @@ td ul{margin:0;padding-left:18px}
 <tr>
 <td>Neo4j hosting cost/ops</td>
 <td>Budget</td>
-<td>Small VM or AuraDB Free for demo; KG is small</td>
+<td>AuraDB Free in dev; small VM or AuraDB for demo; KG is small</td>
+</tr>
+<tr>
+<td>Dev depends on cloud services</td>
+<td>No offline work; small running cost</td>
+<td>Smallest tiers, dev scales to zero, FakeProvider for unit tests, budget alert on the project</td>
 </tr>
 </tbody>
 </table>

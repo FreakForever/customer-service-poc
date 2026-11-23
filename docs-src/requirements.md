@@ -23,11 +23,11 @@ Matsui Technologies India Limited sells auxiliary equipment for plastic processi
 
 ## 3. Scope {#REQ-3}
 
-**In scope (this POC):** chat and email channels; hybrid rule + AI orchestration; FAQ caching; RAG and KG-RAG over synthetic Matsui knowledge; verification and handoff; agent console; knowledge admin with runtime upload; analytics; local Docker stack and Google Cloud deployment.
+**In scope (this POC):** chat and email channels; hybrid rule + AI orchestration; FAQ caching; RAG and KG-RAG over synthetic Matsui knowledge; verification and handoff; agent console; knowledge admin with runtime upload; analytics; Google Cloud for every environment (dev and demo), with no local Docker.
 
 **Out of scope (this POC):** voice channel (architecture is voice-ready, see BR-05); payments; real ERP/CRM integration (mocked by Postgres seed data); parsing attachments with AI; Japanese UI; production SLAs.
 
-**Assumptions:** all data is synthetic until Matsui provides real content; Google Cloud is the target platform (same as the document-portal POC); one developer builds with Claude Code using the build steps in the LLD.
+**Assumptions:** all data is synthetic until Matsui provides real content; Google Cloud hosts everything, including development services (same platform as the document-portal POC); the developer has no local Docker; one developer builds with Claude Code using the build steps in the LLD.
 
 ## 4. Requirement registry {#REQ-4}
 
