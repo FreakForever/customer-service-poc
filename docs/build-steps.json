@@ -234,11 +234,11 @@
         "Cloud Build CI trigger green on main",
         "Breaking a REQ reference makes the build fail"
       ],
-      "status": "in_progress",
-      "progress_pct": 80,
+      "status": "done",
+      "progress_pct": 100,
       "started": "2026-11-23",
-      "completed": null,
-      "notes": "CI pipeline green on a manual run (build 495a147c); broken REQ reference fails traceability (build 9b925058). Triggers mcs-ci (push main) and mcs-ci-pr created; waiting for the first triggered build on main."
+      "completed": "2026-11-23",
+      "notes": "infra/gcp/cloudbuild.ci.yaml: traceability, gitleaks, ruff + mypy + 39 unit tests (FakeProvider, offline), eslint + tsc, integration on ephemeral pgvector:pg16 + neo4j:5.26 (KG load 343/1107 OK, 27 passed). Triggers mcs-ci (push ^main$) and mcs-ci-pr (PR ^main$) via connection mcs-github. Verify: triggered build 176740b0 on fb05fcf SUCCESS (all 6 steps); manual build 495a147c SUCCESS; broken REQ reference (BS-06 -> FR-NOPE-99) made build 9b925058 FAIL at traceability. D-022. Gaps: image builds/deploys are still a manual `make deploy-dev` (SHA-tagged), not Git-triggered, so NFR-DEP-02 stays in_progress; CI doesn't build the web app (`next build`) or Docker images."
     },
     {
       "id": "BS-07",

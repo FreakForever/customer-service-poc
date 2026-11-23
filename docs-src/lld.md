@@ -636,6 +636,8 @@ Errors: RFC 7807 JSON `{type, title, status, detail, trace_id}`.
 | Security | guardrails, scope checks, Text2Cypher guard, RBAC, secret scan | pytest, gitleaks | yes |
 
 CI runs on Cloud Build (`infra/gcp/cloudbuild.ci.yaml`) ([NFR-DEP-02](Requirements.html#NFR-DEP-02)): lint → type-check → unit (FakeProvider) → integration (Postgres `pgvector/pgvector:pg16` and `neo4j:5` started as background containers on the `cloudbuild` network) → gitleaks → `python tools/sync_docs.py --check`. Docker runs only inside Cloud Build, never on developer machines.
+
+Implementation notes (BS-06, D-022): triggers `mcs-ci` (push to `main`) and `mcs-ci-pr` (PRs into `main`) on the Cloud Build GitHub connection `mcs-github` (asia-south1), running as `mcs-build`. Steps: `traceability` and `gitleaks` (`detect --no-git`; trigger checkouts have no `.git`) fail fast in parallel with `python` (`uv sync --frozen`, ruff, mypy on `app/`, unit tests) and `web` (eslint `--max-warnings 0`, `tsc --noEmit`); `integration` waits for `pgvector/pgvector:pg16` and `neo4j:5.26` on the `cloudbuild` network, loads the KG and runs `tests/integration` (migrations, seed, templates). `make ci` submits the same config manually with `infra/gcp/ci.gcloudignore` (keeps `docs/` and `mock-data/data/`, which the deploy `.gcloudignore` drops). CI builds no images; images are built and SHA-tagged by `cloudbuild.deploy.yaml`.
 | Eval / perf | benchmark and latency | eval/run.py, scripts/perf.py | manual / nightly |
 
 Each requirement has test id `TC-<REQ-ID>`; tests carry `@pytest.mark.req("FR-KG-03")` so a report can list requirement coverage.

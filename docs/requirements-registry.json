@@ -2686,7 +2686,7 @@
         "CI job 'traceability' green"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-6"
@@ -2746,7 +2746,7 @@
         "Images pushed to Artifact Registry with commit SHA tags"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-5"
