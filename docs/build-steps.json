@@ -369,11 +369,11 @@
       "verify": [
         "pytest services/agent/tests/integration/test_graphrag.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "app/retrieval/graphrag.py (template planner + dependent stage, Text2Cypher fallback, DOCUMENTED_IN chunks, merge/dedupe, modes rag|kg|hybrid), app/kg/verbalize.py (facts with path ids), app/retrieval/evidence.py (Evidence model). tests/integration/test_graphrag.py: 4 passed — all 54 multi_hop items get >= 1 KG path and, for the 24 with gold docs, the manual chunk via DOCUMENTED_IN; every gold_kg_path node appears in the evidence path ids (coverage 1.0); dependent T-STOCK after T-COVER; mode separation; dedupe; Text2Cypher fallback and failure tolerance (RAG still answers). tests/unit/test_graphrag_unit.py: 4 passed. T-COVER returns all top-tied causes (D-027; CHL-A05 pump vs flow switch at 35%), KG template tests updated. Full suite 187 passed. Gaps: planner is rule-based (router intents arrive in BS-13); evidence not yet consumed by an answerer (BS-14/BS-15); no latency budget wiring yet (BS-11 orchestrator)."
     },
     {
       "id": "BS-11",

@@ -119,16 +119,19 @@ async def test_t_parts_and_t_cover_match_catalog(kg):
         for c in ec["causes"]:
             r = await run(kg, "T-PARTS", cause=c["cause_id"], family=fam)
             assert [x["part_no"] for x in r.rows] == sorted(RES[c["resolution_id"]]["parts"])
-        # T-COVER: most likely cause whose resolution needs a part; first part by id
-        with_parts = [c for c in sorted(ec["causes"], key=lambda c: (-c["likelihood"], c["cause_id"])) if RES[c["resolution_id"]]["parts"]]
+        # T-COVER: every part of every cause tied at the top likelihood among causes that need a part (D-027)
+        with_parts = [c for c in ec["causes"] if RES[c["resolution_id"]]["parts"]]
         cover = await run(kg, "T-COVER", model=model, code=ec["code"])
         if not with_parts:
             assert cover.rows == []
             continue
-        part = min(RES[with_parts[0]["resolution_id"]]["parts"])
-        assert cover.rows[0]["part_no"] == part and cover.rows[0]["cause_id"] == with_parts[0]["cause_id"]
-        assert cover.rows[0]["covered_by"] == sorted(COVERS[part])
-        checked_cover += bool(COVERS[part])
+        top = max(c["likelihood"] for c in with_parts)
+        want = sorted((c["cause_id"], p) for c in with_parts if c["likelihood"] == top
+                      for p in RES[c["resolution_id"]]["parts"])
+        assert [(r["cause_id"], r["part_no"]) for r in cover.rows] == want
+        for r in cover.rows:
+            assert r["covered_by"] == sorted(COVERS[r["part_no"]])
+            checked_cover += bool(COVERS[r["part_no"]])
     assert checked_cover > 0   # at least one code exercises a covered part
 
 

@@ -1425,7 +1425,7 @@
         "Multi-hop answers cite at least one KG path and, where available, the manual chunk"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.5"

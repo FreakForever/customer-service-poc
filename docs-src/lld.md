@@ -263,13 +263,15 @@ WITH p, w, s, collect(DISTINCT home.id) AS homes
 RETURN p…, w.id, s.qty AS qty, w.id IN homes AS is_home_warehouse, p.lead_time_days_if_unavailable AS lead_time_days
 ORDER BY is_home_warehouse DESC, qty DESC, w.id;
 
-// T-COVER: is the part for the most likely cause that needs one covered by an AMC plan? (5 hops)
+// T-COVER: are the parts for the most likely cause(s) that need one covered by an AMC plan? (5 hops)
+// Causes tied at the top likelihood are all returned, one row per part (D-027)
 MATCH (m:Model {id:$model})-[:BELONGS_TO]->(f:ProductFamily)
 MATCH (m)-[:CAN_RAISE]->(e:ErrorCode {code:$code})-[c:CAUSED_BY]->(k:Cause)-[rb:RESOLVED_BY]->(r:Resolution)-[:REQUIRES_PART]->(p:SparePart)
 WHERE rb.family = f.id
-WITH m, e, k, c, r, p ORDER BY c.likelihood DESC, k.id, p.id LIMIT 1
+WITH m, e, collect({k:k, c:c, r:r, p:p}) AS cands, max(c.likelihood) AS top
+UNWIND cands AS x WITH ... WHERE x.c.likelihood = top
 OPTIONAL MATCH (a:AMCPlan)-[:COVERS_PART]->(p)
-RETURN p…, k.id, c.likelihood, collect(a.name) AS covered_by;
+RETURN p…, k.id, c.likelihood, collect(a.name) AS covered_by ORDER BY k.id, p.id;
 
 // T-SHARED: error codes in a family that share a cause with a given code
 MATCH (e:ErrorCode {id:$error_id})-[:CAUSED_BY]->(k:Cause)<-[:CAUSED_BY]-(o:ErrorCode)-[:FOR_FAMILY]->(:ProductFamily {id:$family})
@@ -452,6 +454,8 @@ async def graph_evidence(q: Query, ents: Entities, mode: Literal["rag", "kg", "h
 ```
 
 **Text2Cypher guard** ([FR-KG-04](Requirements.html#FR-KG-04), [NFR-SEC-03](Requirements.html#NFR-SEC-03)): prompt includes the schema from LLD-4 and 6 few-shot pairs; output is parsed with a Cypher grammar check; reject if it contains `CREATE|MERGE|DELETE|DETACH|SET|REMOVE|DROP|LOAD CSV|CALL dbms|CALL apoc` or labels/relationships not in the schema; append `LIMIT 50` if missing; run with `session.execute_read` (READ access mode, so the server rejects writes even on AuraDB Free where custom users aren't available), plus the `mcs_reader` user where RBAC exists, and a 2 s timeout; at most one repair attempt on error.
+
+Implementation notes (BS-10, D-027): `app/retrieval/graphrag.py` `graph_evidence(question, entities, mode, deps, intent=None) → GraphEvidence{evidence, plan, errors, timings_ms}`. `choose_templates` maps intent (when the router gives one) and question cues to stage-1 templates: model+error code → T-DIAG; + parts/coverage/stock cues → T-COVER; linked part + city/warehouse → T-STOCK; shared-cause cue → T-SHARED; linked cause → T-PARTS; service-centre cue + city → T-SC. Stage 2 runs dependent templates: T-STOCK for each part T-COVER found (≤ 4) when stock is asked. No template → guarded Text2Cypher (when an LLM is wired). `app/kg/verbalize.py` turns rows into one fact per diagnosis cause (score = likelihood) or one fact per template run, keeping every `path_id`. DOCUMENTED_IN chunks: KG `(ErrorCode)-[:DOCUMENTED_IN]->(Document)` → the active chunk whose `metadata.error_codes` contains the code. `Evidence{id, kind: kg_path|chunk|tool, text, source, score, title, doc_id, anchor, path_ids, metadata}` (`app/retrieval/evidence.py`); `citation` = `kg:<path_id>` or `DOC#anchor`. Merge: KG facts by score (≤ 8), then DOCUMENTED_IN chunks, then retrieved chunks (≤ 6), deduped by id (`also_from` records the second source). A failing leg is recorded in `errors` and the others still return.
 
 Implementation notes (BS-09, D-026): **Linker** (`app/kg/linker.py`) — aliases from graph nodes (`load_graph` from Neo4j, or the seed jsonl): model ids (with/without hyphen), error-code ids, codes and display texts (scoped to the family via `FOR_FAMILY`/`BELONGS_TO`), part numbers, warehouses (`<city> warehouse`, name, id), cities, service centres, AMC plans (`Platinum`, `Comprehensive AMC`, `<tier> plan`; bare "basic" is ignored), family phrases ("dehumidifying dryer", "chiller"; never the ambiguous "dryer"), document ids. Longest match wins; display texts of three characters or fewer match only in upper case, longer ones in lower case only after a cue word (showing, display, error, alarm, code…). Family-scoped mentions resolve with the family of a linked model/part/family, else become an `Ambiguity` (clarifying question). Full-text (`entity_fulltext`, Lucene-escaped, boolean words lower-cased) and then embedding similarity over node names (vectors cached per process) run only when the dictionary found no anchor entity. **Guard** (`app/kg/text2cypher.py` `validate_cypher`) — strings and comments are neutralised before checks; rejects any `CREATE|MERGE|DELETE|DETACH|SET|REMOVE|DROP|LOAD|FOREACH|CALL|USE|SHOW|GRANT|REVOKE|DENY|ALTER|…` (all `CALL`, not only `dbms`/`apoc`), procedure/function namespaces (`apoc.`, `dbms.`, `db.`, `gds.`…), several statements, control characters, labels/relationship types outside LLD-4, variable-length paths without an upper bound ≤ 6; must start with MATCH/OPTIONAL MATCH/WITH/UNWIND and RETURN rows; final LIMIT clamped to 50 or appended. The prompt carries the schema, six few-shot pairs and the linked entity ids as `$parameters` (`entity_params`); output schema `CypherPlan{cypher}`; execution via `read_query` (READ transaction, 2 s); one repair with the guard or database error.
 

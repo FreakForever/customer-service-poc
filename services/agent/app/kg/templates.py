@@ -61,17 +61,20 @@ RETURN p.id AS part_no, p.name AS part, w.id AS warehouse, w.city AS warehouse_c
        w.id IN homes AS is_home_warehouse, p.lead_time_days_if_unavailable AS lead_time_days,
        p.id + '>' + w.id AS path
 ORDER BY is_home_warehouse DESC, qty DESC, warehouse"""),
-    Template("T-COVER", "Is the part for the most likely cause (that needs a part) covered by an AMC plan?",
-             ("model", "code"), """
+    Template("T-COVER", "Are the parts for the most likely cause(s) that need a part covered by an AMC plan? "
+             "Causes tied at the top likelihood are all returned (D-027)", ("model", "code"), """
 MATCH (m:Model {id: $model})-[:BELONGS_TO]->(f:ProductFamily)
 MATCH (m)-[:CAN_RAISE]->(e:ErrorCode {code: $code})-[c:CAUSED_BY]->(k:Cause)-[rb:RESOLVED_BY]->(r:Resolution)
       -[:REQUIRES_PART]->(p:SparePart)
 WHERE rb.family = f.id
-WITH m, e, k, c, r, p ORDER BY c.likelihood DESC, k.id, p.id LIMIT 1
+WITH m, e, collect({k: k, c: c, r: r, p: p}) AS cands, max(c.likelihood) AS top
+UNWIND cands AS x
+WITH m, e, x.k AS k, x.c AS c, x.r AS r, x.p AS p, top WHERE c.likelihood = top
 OPTIONAL MATCH (a:AMCPlan)-[:COVERS_PART]->(p)
 WITH m, e, k, c, r, p, a ORDER BY a.name
 RETURN p.id AS part_no, p.name AS part, k.id AS cause_id, k.name AS cause, c.likelihood AS likelihood,
-       collect(a.name) AS covered_by, m.id + '>' + e.id + '>' + k.id + '>' + r.id + '>' + p.id AS path"""),
+       collect(a.name) AS covered_by, m.id + '>' + e.id + '>' + k.id + '>' + r.id + '>' + p.id AS path
+ORDER BY cause_id, part_no"""),
     Template("T-SHARED", "Error codes in a family that share a cause with a given error code",
              ("error_id", "family"), """
 MATCH (e:ErrorCode {id: $error_id})-[:CAUSED_BY]->(k:Cause)<-[:CAUSED_BY]-(o:ErrorCode)
