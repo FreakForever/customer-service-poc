@@ -2056,7 +2056,7 @@
         "Fresh environment seeded in under 5 minutes"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-5"
@@ -2859,7 +2859,7 @@
         "'Demo data' badge visible in help centre footer and console header"
       ],
       "verification": "inspection",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-2"

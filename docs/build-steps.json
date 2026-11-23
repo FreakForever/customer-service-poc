@@ -169,11 +169,11 @@
         "python mock-data/generate.py && make seed",
         "pytest services/agent/tests/integration/test_seed_counts.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": "DR-01/DR-02 data generator already delivered with the docs."
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-23",
+      "completed": "2026-11-23",
+      "notes": "DR-01/DR-02 data generator already delivered with the docs. `uv run --no-project python mock-data/generate.py` regenerates byte-identical output (git clean). scripts/seed.py: idempotent PK upserts in one transaction; uploaded rows (source/origin != seed) protected; FAQ variants (109) without embeddings; ticket_seq never moves backwards. `make seed` on dev db mcs: customers=30, assets=62, amc_contracts=18, tickets=40, parts_orders=20, models=23, error_codes=44, spare_parts=50, faq_entries=35, faq_variants=109 in 1.2 s. tests/integration/test_seed_counts.py: 5 passed (counts = SUMMARY.json, idempotent re-seed keeps uploaded rows, demo fixtures, sequence, synthetic labels); integration 16 passed, full suite 55 passed. Gaps: KG load joins `make seed` in BS-05, KB docs + FAQ embeddings via `seed.py --kb` in BS-07 (FR-KB-06 stays in_progress); DR-03 UI badges come with the UI steps. Verify used `uv run --no-project` because there's no `python` on PATH."
     },
     {
       "id": "BS-05",

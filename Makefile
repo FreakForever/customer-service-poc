@@ -18,7 +18,8 @@ api-dev:      ; cd services/agent && uv run uvicorn app.main:app --reload --port
 worker-dev:   ; cd services/agent && uv run python -m app.worker
 web-dev:      ; pnpm -C apps/web dev
 migrate:      ; cd services/agent && uv run alembic upgrade head
-seed: migrate ; uv run python mock-data/generate.py && uv run python scripts/seed.py && uv run python mock-data/kg/load_kg.py --wipe && uv run python scripts/seed.py --kb
+# KG load (mock-data/kg/load_kg.py --wipe) joins with BS-05; `seed.py --kb` does real work from BS-07.
+seed: migrate ; uv run --no-project python mock-data/generate.py && cd services/agent && uv run python ../../scripts/seed.py && uv run python ../../scripts/seed.py --kb
 test:         ; cd services/agent && uv run pytest -q && pnpm -C apps/web test
 ci:           ; gcloud builds submit --config infra/gcp/cloudbuild.ci.yaml .
 deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=dev,_TAG=$(TAG) .

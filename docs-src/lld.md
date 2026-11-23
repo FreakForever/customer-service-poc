@@ -531,7 +531,7 @@ Session state persists in `conversations.state` ([FR-CH-02](Requirements.html#FR
 
 Changes with confidence ≥ 0.85 that only add nodes/edges are auto-applied with `source='upload:<doc_id>'`; updates, deletes or lower confidence go to `kg_change_requests` for approval in the admin UI. Deleting a document removes facts whose only source is that document.
 
-**Seed** ([FR-KB-06](Requirements.html#FR-KB-06)): `make seed` = `python mock-data/generate.py && python scripts/seed.py && python mock-data/kg/load_kg.py --wipe && python scripts/seed.py --kb` (ingests `data/kb/docs` and FAQ variants with embeddings).
+**Seed** ([FR-KB-06](Requirements.html#FR-KB-06)): `make seed` = `python mock-data/generate.py && python scripts/seed.py && python mock-data/kg/load_kg.py --wipe && python scripts/seed.py --kb` (ingests `data/kb/docs` and FAQ variants with embeddings). `scripts/seed.py` upserts on primary keys in one transaction (re-runs converge, no duplicates); catalog/FAQ rows whose `source`/`origin` isn't `seed` (runtime uploads) are never overwritten; FAQ variants = question + paraphrases keyed by `normalized`, embedding kept while the text is unchanged; `ticket_seq` is advanced past seeded and runtime tickets, never backwards. Field mapping: `amc_contracts.start/end` → `start_date/end_date`, `spare_parts.lead_time_days_if_unavailable` → `lead_time_days`; `error_codes.applies_to_models` lives only in the KG (`CAN_RAISE`). Until BS-05/BS-07 land, `make seed` runs generate + `seed.py` only (BS-04).
 
 ## 14. API contracts {#LLD-14}
 
