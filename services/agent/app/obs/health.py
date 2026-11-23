@@ -33,9 +33,10 @@ async def check_db(settings: Settings) -> str:
 
 
 async def check_neo4j(settings: Settings) -> str:
-    if not (settings.neo4j_uri and settings.neo4j_password):
+    password = settings.neo4j_password.get_secret_value()
+    if not (settings.neo4j_uri and password):
         return "not_configured"
-    driver = AsyncGraphDatabase.driver(settings.neo4j_uri, auth=(settings.neo4j_user, settings.neo4j_password))
+    driver = AsyncGraphDatabase.driver(settings.neo4j_uri, auth=(settings.neo4j_user, password))
     try:
         async with asyncio.timeout(PROBE_TIMEOUT_S * 2):
             await driver.verify_connectivity()

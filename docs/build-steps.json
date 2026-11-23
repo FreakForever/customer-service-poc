@@ -103,11 +103,11 @@
         "pytest services/agent/tests/unit/test_providers.py",
         "pytest runs fully offline with PROVIDER=fake"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-23",
+      "completed": "2026-11-23",
+      "notes": "Verify: (1) pytest services/agent/tests/unit/test_providers.py -> 26 passed; (2) full suite with PROVIDER=fake -> 39 passed, sockets blocked by tests/conftest.py (offline proven; test_network_is_blocked_in_unit_tests). Delivered: typed Settings (SecretStr secrets, all LLD-2 vars), config/policies.yaml + orchestrator/policies.py (typed, inherits deep-merge), providers/base.py (Msg, Completion, LLM/Embedder protocols, ResilientLLM: per-attempt timeout -> 1 retry -> fallback -> ProviderUnavailable; ResilientEmbedder), adapters vertex.py (google-genai 3.x), anthropic.py (Claude on Vertex or API, SDK 2.x), openai_compat.py (openai 3.x), fake.py; factory in providers/__init__.py. Real .env still loads; /health db=ok neo4j=ok after the SecretStr change. Deviations: D-019. OD-002/OD-004 still open: interim defaults gemini-2.5-flash / gemini-2.5-pro / text-embedding-005 (768 d). Gap: adapters tested with stubbed SDK clients only; no live Vertex/Claude call made yet (first live use in BS-07/BS-13)."
     },
     {
       "id": "BS-03",

@@ -1,0 +1,19 @@
+# Channel policy profiles (LLD-2, FR-OR-04). Loaded by app/orchestrator/policies.py.
+# `inherits` deep-merges the named profile first, then applies the overrides below it.
+chat:
+  budget_ms: {total: 6000, first_token: 2500, status_event: 500}
+  node_timeouts_ms: {router_llm: 900, retrieval: 400, kg: 300, rerank: 250, generate: 4500, tool: 800}
+  allowed_tiers: [T0, T1, T2, T3, T4]
+  verification: {rules: sync, judge: async, judge_sample_rate: 0.2}
+  thresholds: {intent_knn: 0.80, cache_semantic: 0.90, confidence_answer: 0.65}
+  on_low_confidence: handoff
+email:
+  budget_ms: {total: 60000}
+  node_timeouts_ms: {router_llm: 3000, retrieval: 2000, kg: 2000, rerank: 1500, generate: 20000, judge: 10000, tool: 3000}
+  allowed_tiers: [T0, T1, T2, T3, T4]
+  verification: {rules: sync, judge: sync}
+  thresholds: {intent_knn: 0.80, cache_semantic: 0.92, confidence_answer: 0.75, auto_send: 0.80}
+  on_low_confidence: draft_for_review
+voice:   # later; reuses chat with tighter budgets
+  inherits: chat
+  budget_ms: {total: 3000, first_token: 800}

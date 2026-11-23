@@ -55,9 +55,13 @@ matsui-cs-poc/
 | `DB_PASSWORD` | from Secret Manager | Cloud Run only: with `DATABASE_URL` empty the app builds the URL from the `/cloudsql/<CLOUDSQL_INSTANCE>` socket |
 | `NEO4J_URI` / `NEO4J_USER` / `NEO4J_PASSWORD` / `NEO4J_DATABASE` | `neo4j+s://<id>.databases.neo4j.io` / `<id>` / from Secret Manager / `<id>` | AuraDB Free in dev (user and database are named after the instance id) |
 | `NEO4J_RO_USER` / `NEO4J_RO_PASSWORD` | empty in dev | Optional read-only user where hosting supports RBAC; READ access mode always enforced |
-| `PROVIDER` | `vertex` (`fake` in tests) | LLM provider |
-| `MODEL_FAST` / `MODEL_STRONG` | set per OD-002 | Router/T2 vs T3/judge |
-| `EMBED_MODEL` / `EMBED_DIM` | per OD-004 / `768` | Embedding model and vector size |
+| `PROVIDER` | `vertex` (`fake` in tests) | LLM provider: `vertex` (Gemini), `anthropic` (Claude), `openai_compat`, `fake` |
+| `MODEL_FAST` / `MODEL_STRONG` | `gemini-2.5-flash` / `gemini-2.5-pro` until OD-002 closes | Router/T2 vs T3/judge |
+| `FALLBACK_PROVIDER` / `MODEL_FALLBACK` | empty / empty | Fallback after the retry: other provider and/or model (empty provider = same provider, other model) |
+| `EMBED_PROVIDER` / `EMBED_MODEL` / `EMBED_DIM` / `EMBED_TIMEOUT_MS` | empty (= `PROVIDER`; `vertex` when `PROVIDER=anthropic`) / `text-embedding-005` until OD-004 closes / `768` / `3000` | Embeddings |
+| `VERTEX_LOCATION` | empty (= `GCP_REGION`) | Vertex endpoint location; `global` for models not served in the region |
+| `ANTHROPIC_VIA` / `ANTHROPIC_VERTEX_REGION` / `ANTHROPIC_API_KEY` | `vertex` / `global` / — | Claude on Vertex AI (ADC) or the Claude API (key from Secret Manager) |
+| `OPENAI_BASE_URL` / `OPENAI_API_KEY` | — | OpenAI-compatible endpoint |
 | `GCP_PROJECT` / `GCP_REGION` | — / `asia-south1` | Vertex + deploy |
 | `MAIL_ADAPTER` | `demo` (or `gmail`) | Email adapter |
 | `GMAIL_DELEGATED_USER` / `GMAIL_PUBSUB_TOPIC` / `GMAIL_PUSH_AUDIENCE` | — / `projects/<p>/topics/mcs-gmail` / API URL | Gmail adapter (OAuth token in Secret Manager) |
@@ -103,6 +107,16 @@ class Embedder(Protocol):
 # ResilientLLM wraps a primary + fallback: timeout -> 1 retry -> fallback model -> raise ProviderUnavailable
 # FakeProvider: deterministic hash embeddings + scripted completions keyed by prompt id (offline tests)
 ```
+
+Implementation notes (BS-02, D-019):
+
+- `Msg(role, content, prompt_id=None)`. `prompt_id` names the prompt template, and FakeProvider scripts replies by it. `Completion` carries `text, model, provider, input/output_tokens, latency_ms, stop_reason, parsed, attempts, fallback_used`.
+- **Errors:** adapters normalise SDK errors to `ProviderError(transient=…)`. Timeouts, 408/409/429/5xx and network errors are transient. A non-transient error (400/401/403/404, `ProviderRefusal`) skips the retry and goes straight to the fallback. Malformed structured output counts as transient. SDK-level retries are set to 0, so `ResilientLLM` is the only retry layer.
+- **Timeouts:** `timeout_ms` is per attempt; channel budgets (`policies.yaml`) bound the whole turn. For `stream()`, retry and fallback apply only until the first chunk arrives, and `timeout_ms` bounds the time to that first chunk.
+- **Structured output:** Gemini uses `response_schema`, Claude uses `messages.parse(output_format=…)`, and OpenAI-compatible endpoints use JSON mode plus a schema instruction. All three return `Completion.parsed` as the pydantic instance.
+- **Claude:** the adapter never sends `temperature`, because current models reject sampling parameters. Adaptive thinking counts toward `max_tokens`. `ResilientEmbedder` adds a timeout, one retry and an optional same-dimension fallback.
+- **Policies:** `app/orchestrator/policies.py` loads `config/policies.yaml` into typed `ChannelPolicy` objects. `inherits` deep-merges the parent profile, so `voice` keeps chat's node timeouts.
+- **Secrets:** all secret settings are `SecretStr`, so they are masked in `repr`, logs and model dumps ([NFR-SEC-02](Requirements.html#NFR-SEC-02)). Unit tests force `PROVIDER=fake` and block sockets, so the suite provably runs offline.
 
 ## 3. Database schema (Postgres 16 + pgvector) {#LLD-3}
 

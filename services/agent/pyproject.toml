@@ -12,6 +12,10 @@ dependencies = [
     "psycopg[binary]>=3.2",
     "neo4j>=5.26",
     "structlog>=24.4",
+    "google-genai>=3.6,<4",
+    "anthropic[vertex]>=2.12,<3",
+    "openai>=3.57,<4",
+    "pyyaml>=6.0",
 ]
 
 [dependency-groups]
@@ -28,9 +32,13 @@ package = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
-markers = ["req(id): requirement id covered by the test (TC-<REQ-ID>)"]
+markers = [
+    "req(id): requirement id covered by the test (TC-<REQ-ID>)",
+    "network: test needs real network (integration); unit tests are offline",
+]
 
 [tool.ruff]
 line-length = 110
