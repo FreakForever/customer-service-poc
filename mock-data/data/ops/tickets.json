@@ -1,0 +1,822 @@
+[
+  {
+    "id": "SR-2026-00101",
+    "customer_id": "CUST-0005",
+    "serial_no": "MT-GR400-22-00981",
+    "model": "GR-400",
+    "error_code": "RCY-G2",
+    "priority": "P1",
+    "status": "in_progress",
+    "channel": "chat",
+    "opened_at": "2026-10-05T16:19:00+05:30",
+    "assigned_engineer": "Tanvi Shetty",
+    "scheduled_visit": "2026-10-07",
+    "summary": "GR-400 showing INTERLOCK (Safety interlock open)",
+    "history": [
+      {
+        "at": "2026-10-05",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00102",
+    "customer_id": "CUST-0011",
+    "serial_no": "MT-MDH500-25-04269",
+    "model": "MDH-500",
+    "error_code": "MDH-E01",
+    "priority": "P2",
+    "status": "resolved",
+    "channel": "chat",
+    "opened_at": "2026-09-24T10:10:00+05:30",
+    "assigned_engineer": "Meera Gupta",
+    "scheduled_visit": null,
+    "summary": "MDH-500 showing DEW PT (Dew point not reached)",
+    "history": [
+      {
+        "at": "2026-09-24",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00103",
+    "customer_id": "CUST-0019",
+    "serial_no": "MT-VL3-22-01320",
+    "model": "VL-3",
+    "error_code": "CCS-L2",
+    "priority": "P3",
+    "status": "in_progress",
+    "channel": "chat",
+    "opened_at": "2026-11-23T09:14:00+05:30",
+    "assigned_engineer": "Divya Joshi",
+    "scheduled_visit": "2026-11-26",
+    "summary": "VL-3 showing FILTER (Filter clogged)",
+    "history": [
+      {
+        "at": "2026-11-23",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00104",
+    "customer_id": "CUST-0029",
+    "serial_no": "MT-VL1-25-03068",
+    "model": "VL-1",
+    "error_code": "CCS-L1",
+    "priority": "P2",
+    "status": "scheduled",
+    "channel": "chat",
+    "opened_at": "2026-10-11T10:34:00+05:30",
+    "assigned_engineer": "Meera Nair",
+    "scheduled_visit": "2026-10-13",
+    "summary": "VL-1 showing NO MAT (No material conveyed (alarm after 3 cycles))",
+    "history": [
+      {
+        "at": "2026-10-11",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00105",
+    "customer_id": "CUST-0003",
+    "serial_no": "MT-CHL10W-24-00311",
+    "model": "CHL-10W",
+    "error_code": "CHL-A01",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "chat",
+    "opened_at": "2026-11-20T18:47:00+05:30",
+    "assigned_engineer": "Karthik Pillai",
+    "scheduled_visit": "2026-11-16",
+    "summary": "CHL-10W showing HP TRIP (High refrigerant pressure)",
+    "history": [
+      {
+        "at": "2026-11-13",
+        "event": "created"
+      },
+      {
+        "at": "2026-11-14",
+        "event": "assigned to Karthik Pillai"
+      },
+      {
+        "at": "2026-11-16",
+        "event": "visit missed - engineer reassigned"
+      },
+      {
+        "at": "2026-11-21",
+        "event": "customer follow-up email"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00106",
+    "customer_id": "CUST-0011",
+    "serial_no": "MT-MDH500-25-04269",
+    "model": "MDH-500",
+    "error_code": "MDH-E01",
+    "priority": "P3",
+    "status": "scheduled",
+    "channel": "chat",
+    "opened_at": "2026-10-25T17:34:00+05:30",
+    "assigned_engineer": "Lakshmi Bhatia",
+    "scheduled_visit": "2026-10-26",
+    "summary": "MDH-500 showing DEW PT (Dew point not reached)",
+    "history": [
+      {
+        "at": "2026-10-25",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00107",
+    "customer_id": "CUST-0021",
+    "serial_no": "MT-HAD25-22-07906",
+    "model": "HAD-25",
+    "error_code": "HAD-E4",
+    "priority": "P1",
+    "status": "awaiting_parts",
+    "channel": "chat",
+    "opened_at": "2026-10-07T09:05:00+05:30",
+    "assigned_engineer": "Meera Shetty",
+    "scheduled_visit": null,
+    "summary": "HAD-25 showing BL (Blower overload)",
+    "history": [
+      {
+        "at": "2026-10-07",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00108",
+    "customer_id": "CUST-0020",
+    "serial_no": "MT-CHL5A-23-01444",
+    "model": "CHL-5A",
+    "error_code": "CHL-A05",
+    "priority": "P1",
+    "status": "closed",
+    "channel": "email",
+    "opened_at": "2026-10-18T16:33:00+05:30",
+    "assigned_engineer": "Deepa Bhatia",
+    "scheduled_visit": null,
+    "summary": "CHL-5A showing FLOW (No water flow)",
+    "history": [
+      {
+        "at": "2026-10-18",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00109",
+    "customer_id": "CUST-0010",
+    "serial_no": "MT-GR200-24-00233",
+    "model": "GR-200",
+    "error_code": "RCY-G4",
+    "priority": "P1",
+    "status": "new",
+    "channel": "chat",
+    "opened_at": "2026-10-14T14:26:00+05:30",
+    "assigned_engineer": null,
+    "scheduled_visit": null,
+    "summary": "GR-200 showing PHASE (Phase fault)",
+    "history": [
+      {
+        "at": "2026-10-14",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00110",
+    "customer_id": "CUST-0012",
+    "serial_no": "MT-CHL3A-23-09346",
+    "model": "CHL-3A",
+    "error_code": "CHL-A02",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "chat",
+    "opened_at": "2026-09-30T16:18:00+05:30",
+    "assigned_engineer": "Gaurav Desai",
+    "scheduled_visit": "2026-10-03",
+    "summary": "CHL-3A showing LP TRIP (Low refrigerant pressure)",
+    "history": [
+      {
+        "at": "2026-09-30",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00111",
+    "customer_id": "CUST-0003",
+    "serial_no": "MT-DHD100-24-00312",
+    "model": "DHD-100",
+    "error_code": "DHD-E02",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "email",
+    "opened_at": "2026-11-03T15:55:00+05:30",
+    "assigned_engineer": "Harpreet Sharma",
+    "scheduled_visit": "2026-11-06",
+    "summary": "DHD-100 showing PROC OVER TEMP (Process over-temperature)",
+    "history": [
+      {
+        "at": "2026-11-03",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00112",
+    "customer_id": "CUST-0009",
+    "serial_no": "MT-CCS8-24-00077",
+    "model": "CCS-8",
+    "error_code": "CCS-L1",
+    "priority": "P2",
+    "status": "awaiting_parts",
+    "channel": "phone",
+    "opened_at": "2026-11-20T16:40:00+05:30",
+    "assigned_engineer": "Venkat Rao",
+    "scheduled_visit": null,
+    "summary": "CCS-8 station 3 showing NO MAT; hose replacement ordered",
+    "history": [
+      {
+        "at": "2026-11-19",
+        "event": "created"
+      },
+      {
+        "at": "2026-11-20",
+        "event": "engineer visited; hose cracked"
+      },
+      {
+        "at": "2026-11-20",
+        "event": "part MT-CCS-HOSE ordered, ETA 2 days"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00113",
+    "customer_id": "CUST-0008",
+    "serial_no": "MT-CHL5A-22-00146",
+    "model": "CHL-5A",
+    "error_code": "CHL-A03",
+    "priority": "P1",
+    "status": "in_progress",
+    "channel": "phone",
+    "opened_at": "2026-09-25T16:07:00+05:30",
+    "assigned_engineer": "Rohit Agarwal",
+    "scheduled_visit": "2026-09-26",
+    "summary": "CHL-5A showing COMP OL (Compressor overload)",
+    "history": [
+      {
+        "at": "2026-09-25",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00114",
+    "customer_id": "CUST-0024",
+    "serial_no": "MT-MTCW60-21-07882",
+    "model": "MTC-W60",
+    "error_code": "MTC-E05",
+    "priority": "P3",
+    "status": "awaiting_parts",
+    "channel": "email",
+    "opened_at": "2026-10-19T12:53:00+05:30",
+    "assigned_engineer": "Sneha Bhatia",
+    "scheduled_visit": null,
+    "summary": "MTC-W60 showing HEAT SLOW (Slow heat-up)",
+    "history": [
+      {
+        "at": "2026-10-19",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00115",
+    "customer_id": "CUST-0005",
+    "serial_no": "MT-GR400-22-00981",
+    "model": "GR-400",
+    "error_code": "RCY-G4",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "phone",
+    "opened_at": "2026-09-25T13:26:00+05:30",
+    "assigned_engineer": "Venkat Pillai",
+    "scheduled_visit": "2026-09-27",
+    "summary": "GR-400 showing PHASE (Phase fault)",
+    "history": [
+      {
+        "at": "2026-09-25",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00116",
+    "customer_id": "CUST-0009",
+    "serial_no": "MT-DHD300M-24-00078",
+    "model": "DHD-300M",
+    "error_code": "DHD-E10",
+    "priority": "P2",
+    "status": "assigned",
+    "channel": "email",
+    "opened_at": "2026-11-14T13:49:00+05:30",
+    "assigned_engineer": "Shalini Chatterjee",
+    "scheduled_visit": null,
+    "summary": "DHD-300M showing HOPPER LOW (Hopper low material)",
+    "history": [
+      {
+        "at": "2026-11-14",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00117",
+    "customer_id": "CUST-0012",
+    "serial_no": "MT-CHL5A-22-09785",
+    "model": "CHL-5A",
+    "error_code": "CHL-A05",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "phone",
+    "opened_at": "2026-10-02T13:53:00+05:30",
+    "assigned_engineer": "Ritu Shetty",
+    "scheduled_visit": "2026-10-05",
+    "summary": "CHL-5A showing FLOW (No water flow)",
+    "history": [
+      {
+        "at": "2026-10-02",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00118",
+    "customer_id": "CUST-0017",
+    "serial_no": "MT-CHL20W-23-09270",
+    "model": "CHL-20W",
+    "error_code": "CHL-A08",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "chat",
+    "opened_at": "2026-10-20T17:48:00+05:30",
+    "assigned_engineer": "Farhan Desai",
+    "scheduled_visit": "2026-10-22",
+    "summary": "CHL-20W showing SENSOR (Outlet temperature sensor fault)",
+    "history": [
+      {
+        "at": "2026-10-20",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00119",
+    "customer_id": "CUST-0012",
+    "serial_no": "MT-HAD25-26-05573",
+    "model": "HAD-25",
+    "error_code": "HAD-E2",
+    "priority": "P1",
+    "status": "assigned",
+    "channel": "chat",
+    "opened_at": "2026-10-18T09:20:00+05:30",
+    "assigned_engineer": "Sanjay Pillai",
+    "scheduled_visit": null,
+    "summary": "HAD-25 showing SE (Sensor open)",
+    "history": [
+      {
+        "at": "2026-10-18",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00120",
+    "customer_id": "CUST-0024",
+    "serial_no": "MT-MDH500-26-08102",
+    "model": "MDH-500",
+    "error_code": "MDH-E04",
+    "priority": "P3",
+    "status": "assigned",
+    "channel": "email",
+    "opened_at": "2026-10-12T11:32:00+05:30",
+    "assigned_engineer": "Ritu Khan",
+    "scheduled_visit": null,
+    "summary": "MDH-500 showing DPS (Dew point sensor fault)",
+    "history": [
+      {
+        "at": "2026-10-12",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00121",
+    "customer_id": "CUST-0029",
+    "serial_no": "MT-VL1-25-03068",
+    "model": "VL-1",
+    "error_code": "CCS-L4",
+    "priority": "P2",
+    "status": "in_progress",
+    "channel": "phone",
+    "opened_at": "2026-11-17T11:26:00+05:30",
+    "assigned_engineer": "Tanvi Nair",
+    "scheduled_visit": "2026-11-18",
+    "summary": "VL-1 showing VALVE (Station valve fault)",
+    "history": [
+      {
+        "at": "2026-11-17",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00122",
+    "customer_id": "CUST-0017",
+    "serial_no": "MT-CHL10W-22-09976",
+    "model": "CHL-10W",
+    "error_code": "CHL-A06",
+    "priority": "P2",
+    "status": "in_progress",
+    "channel": "chat",
+    "opened_at": "2026-10-15T17:24:00+05:30",
+    "assigned_engineer": "Karthik Pillai",
+    "scheduled_visit": "2026-10-18",
+    "summary": "CHL-10W showing LEVEL (Tank level low)",
+    "history": [
+      {
+        "at": "2026-10-15",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00123",
+    "customer_id": "CUST-0003",
+    "serial_no": "MT-CHL10W-24-00311",
+    "model": "CHL-10W",
+    "error_code": "CHL-A04",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "email",
+    "opened_at": "2026-10-14T10:27:00+05:30",
+    "assigned_engineer": "Sneha Reddy",
+    "scheduled_visit": "2026-10-16",
+    "summary": "CHL-10W showing FREEZE (Anti-freeze protection)",
+    "history": [
+      {
+        "at": "2026-10-14",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00124",
+    "customer_id": "CUST-0007",
+    "serial_no": "MT-HAD50-23-00612",
+    "model": "HAD-50",
+    "error_code": "HAD-E1",
+    "priority": "P1",
+    "status": "closed",
+    "channel": "email",
+    "opened_at": "2026-11-21T13:22:00+05:30",
+    "assigned_engineer": "Neha Chatterjee",
+    "scheduled_visit": null,
+    "summary": "HAD-50 showing OH (Over-temperature)",
+    "history": [
+      {
+        "at": "2026-11-21",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00125",
+    "customer_id": "CUST-0006",
+    "serial_no": "MT-MTCW90-24-00555",
+    "model": "MTC-W90",
+    "error_code": "MTC-E07",
+    "priority": "P1",
+    "status": "closed",
+    "channel": "email",
+    "opened_at": "2026-10-18T11:11:00+05:30",
+    "assigned_engineer": "Anand Agarwal",
+    "scheduled_visit": null,
+    "summary": "MTC-W90 showing PHASE (Phase fault)",
+    "history": [
+      {
+        "at": "2026-10-18",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00126",
+    "customer_id": "CUST-0029",
+    "serial_no": "MT-VL1-25-03068",
+    "model": "VL-1",
+    "error_code": "CCS-L5",
+    "priority": "P2",
+    "status": "in_progress",
+    "channel": "email",
+    "opened_at": "2026-10-11T16:40:00+05:30",
+    "assigned_engineer": "Suresh Bhatia",
+    "scheduled_visit": "2026-10-13",
+    "summary": "VL-1 showing SENSOR (Level sensor fault)",
+    "history": [
+      {
+        "at": "2026-10-11",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00127",
+    "customer_id": "CUST-0023",
+    "serial_no": "MT-MTCW120HP-23-04978",
+    "model": "MTC-W120HP",
+    "error_code": "MTC-E08",
+    "priority": "P1",
+    "status": "resolved",
+    "channel": "phone",
+    "opened_at": "2026-09-27T11:04:00+05:30",
+    "assigned_engineer": "Imran Rao",
+    "scheduled_visit": null,
+    "summary": "MTC-W120HP showing HI PRESS (High pressure)",
+    "history": [
+      {
+        "at": "2026-09-27",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00128",
+    "customer_id": "CUST-0020",
+    "serial_no": "MT-CHL5A-23-01444",
+    "model": "CHL-5A",
+    "error_code": "CHL-A07",
+    "priority": "P1",
+    "status": "in_progress",
+    "channel": "chat",
+    "opened_at": "2026-10-10T12:24:00+05:30",
+    "assigned_engineer": "Tanvi Pillai",
+    "scheduled_visit": "2026-10-11",
+    "summary": "CHL-5A showing PHASE (Phase fault)",
+    "history": [
+      {
+        "at": "2026-10-10",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00129",
+    "customer_id": "CUST-0009",
+    "serial_no": "MT-DHD300M-24-00078",
+    "model": "DHD-300M",
+    "error_code": "DHD-E06",
+    "priority": "P3",
+    "status": "resolved",
+    "channel": "email",
+    "opened_at": "2026-10-18T15:17:00+05:30",
+    "assigned_engineer": "Rohit Shetty",
+    "scheduled_visit": null,
+    "summary": "DHD-300M showing FILTER (Filter clogged)",
+    "history": [
+      {
+        "at": "2026-10-18",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00130",
+    "customer_id": "CUST-0029",
+    "serial_no": "MT-VL1-25-03068",
+    "model": "VL-1",
+    "error_code": "CCS-L5",
+    "priority": "P3",
+    "status": "closed",
+    "channel": "email",
+    "opened_at": "2026-10-07T18:51:00+05:30",
+    "assigned_engineer": "Neha Kulkarni",
+    "scheduled_visit": null,
+    "summary": "VL-1 showing SENSOR (Level sensor fault)",
+    "history": [
+      {
+        "at": "2026-10-07",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00131",
+    "customer_id": "CUST-0022",
+    "serial_no": "MT-CHL20W-22-05198",
+    "model": "CHL-20W",
+    "error_code": "CHL-A05",
+    "priority": "P1",
+    "status": "closed",
+    "channel": "phone",
+    "opened_at": "2026-10-11T11:40:00+05:30",
+    "assigned_engineer": "Sneha Iyer",
+    "scheduled_visit": null,
+    "summary": "CHL-20W showing FLOW (No water flow)",
+    "history": [
+      {
+        "at": "2026-10-11",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00132",
+    "customer_id": "CUST-0011",
+    "serial_no": "MT-MDH500-25-04269",
+    "model": "MDH-500",
+    "error_code": "MDH-E01",
+    "priority": "P2",
+    "status": "resolved",
+    "channel": "email",
+    "opened_at": "2026-10-17T13:20:00+05:30",
+    "assigned_engineer": "Sanjay Chatterjee",
+    "scheduled_visit": null,
+    "summary": "MDH-500 showing DEW PT (Dew point not reached)",
+    "history": [
+      {
+        "at": "2026-10-17",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00133",
+    "customer_id": "CUST-0007",
+    "serial_no": "MT-HAD50-23-00612",
+    "model": "HAD-50",
+    "error_code": "HAD-E2",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "phone",
+    "opened_at": "2026-10-04T17:58:00+05:30",
+    "assigned_engineer": "Suresh Gupta",
+    "scheduled_visit": "2026-10-06",
+    "summary": "HAD-50 showing SE (Sensor open)",
+    "history": [
+      {
+        "at": "2026-10-04",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00134",
+    "customer_id": "CUST-0028",
+    "serial_no": "MT-HAD25-22-09595",
+    "model": "HAD-25",
+    "error_code": "HAD-E3",
+    "priority": "P2",
+    "status": "closed",
+    "channel": "chat",
+    "opened_at": "2026-10-07T10:09:00+05:30",
+    "assigned_engineer": "Nikhil Kulkarni",
+    "scheduled_visit": null,
+    "summary": "HAD-25 showing HE (Heater not heating)",
+    "history": [
+      {
+        "at": "2026-10-07",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00135",
+    "customer_id": "CUST-0029",
+    "serial_no": "MT-VL1-25-03068",
+    "model": "VL-1",
+    "error_code": "CCS-L5",
+    "priority": "P3",
+    "status": "closed",
+    "channel": "email",
+    "opened_at": "2026-10-31T13:34:00+05:30",
+    "assigned_engineer": "Sneha Bhatia",
+    "scheduled_visit": null,
+    "summary": "VL-1 showing SENSOR (Level sensor fault)",
+    "history": [
+      {
+        "at": "2026-10-31",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00136",
+    "customer_id": "CUST-0013",
+    "serial_no": "MT-MTCW60-23-09821",
+    "model": "MTC-W60",
+    "error_code": "MTC-E07",
+    "priority": "P1",
+    "status": "scheduled",
+    "channel": "email",
+    "opened_at": "2026-10-02T12:30:00+05:30",
+    "assigned_engineer": "Rohit Agarwal",
+    "scheduled_visit": "2026-10-05",
+    "summary": "MTC-W60 showing PHASE (Phase fault)",
+    "history": [
+      {
+        "at": "2026-10-02",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00137",
+    "customer_id": "CUST-0012",
+    "serial_no": "MT-CHL5A-22-09785",
+    "model": "CHL-5A",
+    "error_code": "CHL-A04",
+    "priority": "P1",
+    "status": "resolved",
+    "channel": "chat",
+    "opened_at": "2026-10-13T13:41:00+05:30",
+    "assigned_engineer": "Pooja Reddy",
+    "scheduled_visit": null,
+    "summary": "CHL-5A showing FREEZE (Anti-freeze protection)",
+    "history": [
+      {
+        "at": "2026-10-13",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00138",
+    "customer_id": "CUST-0006",
+    "serial_no": "MT-MTCW90-24-00555",
+    "model": "MTC-W90",
+    "error_code": "MTC-E01",
+    "priority": "P1",
+    "status": "new",
+    "channel": "email",
+    "opened_at": "2026-11-04T12:56:00+05:30",
+    "assigned_engineer": null,
+    "scheduled_visit": null,
+    "summary": "MTC-W90 showing LO LEVEL (Low water level)",
+    "history": [
+      {
+        "at": "2026-11-04",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00139",
+    "customer_id": "CUST-0019",
+    "serial_no": "MT-VL3-24-08814",
+    "model": "VL-3",
+    "error_code": "CCS-L4",
+    "priority": "P3",
+    "status": "resolved",
+    "channel": "phone",
+    "opened_at": "2026-10-25T11:56:00+05:30",
+    "assigned_engineer": "Pooja Reddy",
+    "scheduled_visit": null,
+    "summary": "VL-3 showing VALVE (Station valve fault)",
+    "history": [
+      {
+        "at": "2026-10-25",
+        "event": "created"
+      }
+    ]
+  },
+  {
+    "id": "SR-2026-00140",
+    "customer_id": "CUST-0028",
+    "serial_no": "MT-HAD25-22-09595",
+    "model": "HAD-25",
+    "error_code": "HAD-E5",
+    "priority": "P3",
+    "status": "new",
+    "channel": "email",
+    "opened_at": "2026-10-28T16:28:00+05:30",
+    "assigned_engineer": null,
+    "scheduled_visit": null,
+    "summary": "HAD-25 showing LO (Hopper low material)",
+    "history": [
+      {
+        "at": "2026-10-28",
+        "event": "created"
+      }
+    ]
+  }
+]

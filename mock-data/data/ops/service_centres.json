@@ -1,0 +1,158 @@
+[
+  {
+    "id": "SC-NOI",
+    "city": "Noida",
+    "state": "Uttar Pradesh",
+    "region": "North",
+    "warehouse": "WH-NOI",
+    "covers": [
+      "Noida",
+      "Delhi",
+      "Gurugram",
+      "Faridabad",
+      "Ghaziabad",
+      "Greater Noida"
+    ],
+    "technicians": 9
+  },
+  {
+    "id": "SC-LDH",
+    "city": "Ludhiana",
+    "state": "Punjab",
+    "region": "North",
+    "warehouse": "WH-NOI",
+    "covers": [
+      "Ludhiana",
+      "Chandigarh",
+      "Baddi",
+      "Jalandhar"
+    ],
+    "technicians": 3
+  },
+  {
+    "id": "SC-PUN",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "region": "West",
+    "warehouse": "WH-PUN",
+    "covers": [
+      "Pune",
+      "Chakan",
+      "Ranjangaon",
+      "Nashik",
+      "Aurangabad"
+    ],
+    "technicians": 7
+  },
+  {
+    "id": "SC-MUM",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "region": "West",
+    "warehouse": "WH-PUN",
+    "covers": [
+      "Mumbai",
+      "Thane",
+      "Bhiwandi",
+      "Navi Mumbai",
+      "Vapi"
+    ],
+    "technicians": 5
+  },
+  {
+    "id": "SC-AMD",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "region": "West",
+    "warehouse": "WH-AMD",
+    "covers": [
+      "Ahmedabad",
+      "Sanand",
+      "Gandhinagar",
+      "Rajkot"
+    ],
+    "technicians": 4
+  },
+  {
+    "id": "SC-VAD",
+    "city": "Vadodara",
+    "state": "Gujarat",
+    "region": "West",
+    "warehouse": "WH-AMD",
+    "covers": [
+      "Vadodara",
+      "Halol",
+      "Bharuch",
+      "Ankleshwar"
+    ],
+    "technicians": 3
+  },
+  {
+    "id": "SC-CHE",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "region": "South",
+    "warehouse": "WH-CHE",
+    "covers": [
+      "Chennai",
+      "Sriperumbudur",
+      "Oragadam",
+      "Hosur"
+    ],
+    "technicians": 7
+  },
+  {
+    "id": "SC-BLR",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "region": "South",
+    "warehouse": "WH-CHE",
+    "covers": [
+      "Bengaluru",
+      "Bidadi",
+      "Tumakuru",
+      "Mysuru"
+    ],
+    "technicians": 5
+  },
+  {
+    "id": "SC-CBE",
+    "city": "Coimbatore",
+    "state": "Tamil Nadu",
+    "region": "South",
+    "warehouse": "WH-CHE",
+    "covers": [
+      "Coimbatore",
+      "Tiruppur",
+      "Erode"
+    ],
+    "technicians": 2
+  },
+  {
+    "id": "SC-HYD",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "region": "South",
+    "warehouse": "WH-CHE",
+    "covers": [
+      "Hyderabad",
+      "Secunderabad",
+      "Medak"
+    ],
+    "technicians": 3
+  },
+  {
+    "id": "SC-KOL",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "region": "East",
+    "warehouse": "WH-NOI",
+    "covers": [
+      "Kolkata",
+      "Howrah",
+      "Durgapur",
+      "Jamshedpur"
+    ],
+    "technicians": 2
+  }
+]

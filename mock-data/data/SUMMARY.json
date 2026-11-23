@@ -1,0 +1,40 @@
+{
+  "generated_for": "2026-11-23",
+  "seed": 42,
+  "synthetic": true,
+  "counts": {
+    "families": 7,
+    "models": 23,
+    "components": 24,
+    "causes": 34,
+    "error_codes": 44,
+    "resolutions": 75,
+    "spare_parts": 50,
+    "kb_documents": 15,
+    "faqs": 35,
+    "customers": 30,
+    "assets": 62,
+    "amc_contracts": 18,
+    "tickets": 40,
+    "kg_nodes": 343,
+    "kg_edges": 1107,
+    "eval_questions": 183,
+    "sample_emails": 10,
+    "chat_scripts": 10
+  },
+  "eval_by_type": {
+    "faq": 35,
+    "faq_paraphrase": 35,
+    "single_hop": 24,
+    "multi_hop": 54,
+    "aggregation": 4,
+    "comparison": 1,
+    "version_trap": 1,
+    "transactional": 16,
+    "transactional_multi_hop": 1,
+    "safety": 2,
+    "out_of_scope": 3,
+    "adversarial": 3,
+    "requires_upload": 4
+  }
+}

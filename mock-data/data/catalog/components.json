@@ -1,0 +1,207 @@
+[
+  {
+    "id": "CMP-HTR",
+    "name": "Process heater element",
+    "families": [
+      "MTC",
+      "DHD",
+      "HAD"
+    ]
+  },
+  {
+    "id": "CMP-RHTR",
+    "name": "Regeneration heater",
+    "families": [
+      "DHD"
+    ]
+  },
+  {
+    "id": "CMP-SSR",
+    "name": "Solid-state relay (heater)",
+    "families": [
+      "MTC",
+      "DHD",
+      "HAD"
+    ]
+  },
+  {
+    "id": "CMP-TC",
+    "name": "Thermocouple / RTD sensor",
+    "families": [
+      "MTC",
+      "DHD",
+      "HAD",
+      "CHL"
+    ]
+  },
+  {
+    "id": "CMP-PUMP",
+    "name": "Circulation pump",
+    "families": [
+      "MTC",
+      "CHL"
+    ]
+  },
+  {
+    "id": "CMP-BLW",
+    "name": "Process air blower",
+    "families": [
+      "DHD",
+      "HAD",
+      "MDH",
+      "CCS"
+    ]
+  },
+  {
+    "id": "CMP-FLT",
+    "name": "Air / dust filter",
+    "families": [
+      "DHD",
+      "HAD",
+      "MDH",
+      "CCS"
+    ]
+  },
+  {
+    "id": "CMP-ROTOR",
+    "name": "Desiccant rotor",
+    "families": [
+      "DHD"
+    ]
+  },
+  {
+    "id": "CMP-DPS",
+    "name": "Dew point sensor",
+    "families": [
+      "DHD",
+      "MDH"
+    ]
+  },
+  {
+    "id": "CMP-COMP",
+    "name": "Refrigeration compressor",
+    "families": [
+      "CHL",
+      "MDH"
+    ]
+  },
+  {
+    "id": "CMP-COND",
+    "name": "Condenser",
+    "families": [
+      "CHL",
+      "MDH"
+    ]
+  },
+  {
+    "id": "CMP-EVAP",
+    "name": "Evaporator / cooling coil",
+    "families": [
+      "CHL",
+      "MDH"
+    ]
+  },
+  {
+    "id": "CMP-FSW",
+    "name": "Flow switch",
+    "families": [
+      "MTC",
+      "CHL"
+    ]
+  },
+  {
+    "id": "CMP-LSW",
+    "name": "Level switch / float",
+    "families": [
+      "MTC",
+      "CHL"
+    ]
+  },
+  {
+    "id": "CMP-PLC",
+    "name": "Controller board / PLC",
+    "families": [
+      "MTC",
+      "DHD",
+      "HAD",
+      "CHL",
+      "MDH",
+      "CCS",
+      "RCY"
+    ]
+  },
+  {
+    "id": "CMP-SOL",
+    "name": "Solenoid valve",
+    "families": [
+      "MTC",
+      "CHL",
+      "CCS"
+    ]
+  },
+  {
+    "id": "CMP-PHR",
+    "name": "Phase protection relay",
+    "families": [
+      "MTC",
+      "DHD",
+      "CHL",
+      "CCS",
+      "RCY"
+    ]
+  },
+  {
+    "id": "CMP-MOT",
+    "name": "Drive motor",
+    "families": [
+      "RCY",
+      "CCS"
+    ]
+  },
+  {
+    "id": "CMP-BLADE",
+    "name": "Rotor and bed knives",
+    "families": [
+      "RCY"
+    ]
+  },
+  {
+    "id": "CMP-SCR",
+    "name": "Screen",
+    "families": [
+      "RCY"
+    ]
+  },
+  {
+    "id": "CMP-ILK",
+    "name": "Safety interlock switch",
+    "families": [
+      "RCY",
+      "CCS"
+    ]
+  },
+  {
+    "id": "CMP-PROX",
+    "name": "Material level / proximity sensor",
+    "families": [
+      "CCS",
+      "DHD",
+      "HAD"
+    ]
+  },
+  {
+    "id": "CMP-HOSE",
+    "name": "Conveying hose and couplings",
+    "families": [
+      "CCS"
+    ]
+  },
+  {
+    "id": "CMP-PRS",
+    "name": "Pressure switch (HP/LP)",
+    "families": [
+      "CHL",
+      "MTC"
+    ]
+  }
+]

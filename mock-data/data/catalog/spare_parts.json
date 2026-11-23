@@ -1,0 +1,1124 @@
+[
+  {
+    "part_no": "MT-MTC-HTR",
+    "key": "HTR",
+    "name": "Heater element (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 6500,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 1,
+      "WH-PUN": 2,
+      "WH-CHE": 0,
+      "WH-AMD": 6
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-HTR",
+    "key": "HTR",
+    "name": "Heater element (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 7450,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 0,
+      "WH-CHE": 1,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-HAD-HTR",
+    "key": "HTR",
+    "name": "Heater element (Hot air dryer)",
+    "family": "HAD",
+    "fits_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "price_inr": 5200,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 5,
+      "WH-CHE": 0,
+      "WH-AMD": 5
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-RHTR",
+    "key": "RHTR",
+    "name": "Regeneration heater (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 8950,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 4,
+      "WH-PUN": 1,
+      "WH-CHE": 2,
+      "WH-AMD": 3
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MTC-SSR",
+    "key": "SSR",
+    "name": "Solid-state relay 40A (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 2400,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 2,
+      "WH-PUN": 3,
+      "WH-CHE": 0,
+      "WH-AMD": 3
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-SSR",
+    "key": "SSR",
+    "name": "Solid-state relay 40A (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 2750,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 1,
+      "WH-CHE": 5,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-HAD-SSR",
+    "key": "SSR",
+    "name": "Solid-state relay 40A (Hot air dryer)",
+    "family": "HAD",
+    "fits_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "price_inr": 1900,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 1,
+      "WH-PUN": 6,
+      "WH-CHE": 3,
+      "WH-AMD": 6
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MTC-TC",
+    "key": "TC",
+    "name": "Thermocouple type J / RTD PT100 (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 1200,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 13,
+      "WH-CHE": 2,
+      "WH-AMD": 14
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-TC",
+    "key": "TC",
+    "name": "Thermocouple type J / RTD PT100 (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 1400,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 11,
+      "WH-CHE": 3,
+      "WH-AMD": 4
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-HAD-TC",
+    "key": "TC",
+    "name": "Thermocouple type J / RTD PT100 (Hot air dryer)",
+    "family": "HAD",
+    "fits_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "price_inr": 950,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 12,
+      "WH-PUN": 11,
+      "WH-CHE": 0,
+      "WH-AMD": 9
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-TC",
+    "key": "TC",
+    "name": "Thermocouple type J / RTD PT100 (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 1500,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 3,
+      "WH-PUN": 5,
+      "WH-CHE": 11,
+      "WH-AMD": 4
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-FLT",
+    "key": "FLT",
+    "name": "Filter element (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 2050,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 14,
+      "WH-PUN": 1,
+      "WH-CHE": 0,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-HAD-FLT",
+    "key": "FLT",
+    "name": "Filter element (Hot air dryer)",
+    "family": "HAD",
+    "fits_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "price_inr": 1450,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 0,
+      "WH-CHE": 10,
+      "WH-AMD": 6
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MDH-FLT",
+    "key": "FLT",
+    "name": "Filter element (Mold dehumidifier)",
+    "family": "MDH",
+    "fits_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "price_inr": 2000,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 11,
+      "WH-CHE": 5,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CCS-FLT",
+    "key": "FLT",
+    "name": "Filter element (Conveying system)",
+    "family": "CCS",
+    "fits_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "price_inr": 1600,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 9,
+      "WH-PUN": 10,
+      "WH-CHE": 10,
+      "WH-AMD": 4
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-ROTOR",
+    "key": "ROTOR",
+    "name": "Desiccant rotor assembly (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 55200,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 2,
+      "WH-PUN": 1,
+      "WH-CHE": 1,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 23,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-DPS",
+    "key": "DPS",
+    "name": "Dew point sensor (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 25300,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 4,
+      "WH-PUN": 4,
+      "WH-CHE": 0,
+      "WH-AMD": 5
+    },
+    "lead_time_days_if_unavailable": 25,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MDH-DPS",
+    "key": "DPS",
+    "name": "Dew point sensor (Mold dehumidifier)",
+    "family": "MDH",
+    "fits_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "price_inr": 24200,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 1,
+      "WH-PUN": 1,
+      "WH-CHE": 5,
+      "WH-AMD": 6
+    },
+    "lead_time_days_if_unavailable": 26,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-BLW",
+    "key": "BLW",
+    "name": "Blower assembly (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 21300,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 4,
+      "WH-CHE": 0,
+      "WH-AMD": 6
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-HAD-BLW",
+    "key": "BLW",
+    "name": "Blower assembly (Hot air dryer)",
+    "family": "HAD",
+    "fits_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "price_inr": 14800,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 5,
+      "WH-CHE": 6,
+      "WH-AMD": 6
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MDH-BLW",
+    "key": "BLW",
+    "name": "Blower assembly (Mold dehumidifier)",
+    "family": "MDH",
+    "fits_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "price_inr": 20350,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 2,
+      "WH-PUN": 0,
+      "WH-CHE": 5,
+      "WH-AMD": 5
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CCS-BLW",
+    "key": "BLW",
+    "name": "Blower assembly (Conveying system)",
+    "family": "CCS",
+    "fits_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "price_inr": 16650,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 1,
+      "WH-CHE": 0,
+      "WH-AMD": 3
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MTC-PUMP",
+    "key": "PUMP",
+    "name": "Circulation pump (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 21000,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 0,
+      "WH-CHE": 1,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-PUMP",
+    "key": "PUMP",
+    "name": "Circulation pump (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 26250,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 1,
+      "WH-PUN": 5,
+      "WH-CHE": 2,
+      "WH-AMD": 5
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MTC-SEALKIT",
+    "key": "SEALKIT",
+    "name": "Pump mechanical seal kit (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 3200,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 10,
+      "WH-CHE": 4,
+      "WH-AMD": 13
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-SEALKIT",
+    "key": "SEALKIT",
+    "name": "Pump mechanical seal kit (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 4000,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 4,
+      "WH-PUN": 7,
+      "WH-CHE": 11,
+      "WH-AMD": 9
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MTC-DESCALER",
+    "key": "DESCALER",
+    "name": "Descaling agent (20 L) (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 4500,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 4,
+      "WH-PUN": 0,
+      "WH-CHE": 10,
+      "WH-AMD": 10
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-DESCALER",
+    "key": "DESCALER",
+    "name": "Descaling agent (20 L) (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 5600,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 0,
+      "WH-CHE": 4,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MTC-FSW",
+    "key": "FSW",
+    "name": "Flow switch (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 3900,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 5,
+      "WH-CHE": 0,
+      "WH-AMD": 2
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-FSW",
+    "key": "FSW",
+    "name": "Flow switch (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 4900,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 6,
+      "WH-PUN": 5,
+      "WH-CHE": 2,
+      "WH-AMD": 4
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-REFKIT",
+    "key": "REFKIT",
+    "name": "Refrigerant recharge kit (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 11900,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 0,
+      "WH-CHE": 7,
+      "WH-AMD": 14
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MDH-REFKIT",
+    "key": "REFKIT",
+    "name": "Refrigerant recharge kit (Mold dehumidifier)",
+    "family": "MDH",
+    "fits_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "price_inr": 10450,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 11,
+      "WH-PUN": 11,
+      "WH-CHE": 0,
+      "WH-AMD": 6
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-CONTACTOR",
+    "key": "CONTACTOR",
+    "name": "Compressor contactor (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 3500,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 1,
+      "WH-PUN": 0,
+      "WH-CHE": 0,
+      "WH-AMD": 4
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MDH-CONTACTOR",
+    "key": "CONTACTOR",
+    "name": "Compressor contactor (Mold dehumidifier)",
+    "family": "MDH",
+    "fits_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "price_inr": 3100,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 1,
+      "WH-CHE": 5,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CCS-GASKET",
+    "key": "GASKET",
+    "name": "Loader lid gasket (Conveying system)",
+    "family": "CCS",
+    "fits_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "price_inr": 600,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 9,
+      "WH-PUN": 2,
+      "WH-CHE": 14,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CCS-HOSE",
+    "key": "HOSE",
+    "name": "Conveying hose 38 mm (per 5 m) (Conveying system)",
+    "family": "CCS",
+    "fits_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "price_inr": 2350,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 8,
+      "WH-PUN": 0,
+      "WH-CHE": 1,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-RCY-BLADESET",
+    "key": "BLADESET",
+    "name": "Rotor and bed knife set (Recycling granulator)",
+    "family": "RCY",
+    "fits_models": [
+      "GR-200",
+      "GR-400",
+      "GR-600"
+    ],
+    "price_inr": 19800,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 0,
+      "WH-CHE": 4,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 32,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-RCY-SCREEN",
+    "key": "SCREEN",
+    "name": "Granulator screen (Recycling granulator)",
+    "family": "RCY",
+    "fits_models": [
+      "GR-200",
+      "GR-400",
+      "GR-600"
+    ],
+    "price_inr": 8650,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 4,
+      "WH-CHE": 0,
+      "WH-AMD": 1
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MTC-PLC",
+    "key": "PLC",
+    "name": "Controller board (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 26000,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 0,
+      "WH-CHE": 0,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 28,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-DHD-PLC",
+    "key": "PLC",
+    "name": "Controller board (Dehumidifying dryer)",
+    "family": "DHD",
+    "fits_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "price_inr": 29900,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 0,
+      "WH-CHE": 1,
+      "WH-AMD": 1
+    },
+    "lead_time_days_if_unavailable": 30,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-HAD-PLC",
+    "key": "PLC",
+    "name": "Controller board (Hot air dryer)",
+    "family": "HAD",
+    "fits_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "price_inr": 20800,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 4,
+      "WH-CHE": 0,
+      "WH-AMD": 2
+    },
+    "lead_time_days_if_unavailable": 30,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-PLC",
+    "key": "PLC",
+    "name": "Controller board (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 32500,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 5,
+      "WH-PUN": 0,
+      "WH-CHE": 5,
+      "WH-AMD": 3
+    },
+    "lead_time_days_if_unavailable": 24,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MDH-PLC",
+    "key": "PLC",
+    "name": "Controller board (Mold dehumidifier)",
+    "family": "MDH",
+    "fits_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "price_inr": 28600,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 3,
+      "WH-PUN": 0,
+      "WH-CHE": 0,
+      "WH-AMD": 3
+    },
+    "lead_time_days_if_unavailable": 28,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CCS-PLC",
+    "key": "PLC",
+    "name": "Controller board (Conveying system)",
+    "family": "CCS",
+    "fits_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "price_inr": 23400,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 1,
+      "WH-CHE": 0,
+      "WH-AMD": 5
+    },
+    "lead_time_days_if_unavailable": 22,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-RCY-PLC",
+    "key": "PLC",
+    "name": "Controller board (Recycling granulator)",
+    "family": "RCY",
+    "fits_models": [
+      "GR-200",
+      "GR-400",
+      "GR-600"
+    ],
+    "price_inr": 31200,
+    "consumable": false,
+    "source": "imported",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 0,
+      "WH-CHE": 0,
+      "WH-AMD": 1
+    },
+    "lead_time_days_if_unavailable": 35,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-MTC-SOL",
+    "key": "SOL",
+    "name": "Solenoid valve (Mold temperature controller)",
+    "family": "MTC",
+    "fits_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "price_inr": 2900,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 4,
+      "WH-CHE": 6,
+      "WH-AMD": 6
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-SOL",
+    "key": "SOL",
+    "name": "Solenoid valve (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 3600,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 6,
+      "WH-PUN": 3,
+      "WH-CHE": 1,
+      "WH-AMD": 2
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CCS-SOL",
+    "key": "SOL",
+    "name": "Solenoid valve (Conveying system)",
+    "family": "CCS",
+    "fits_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "price_inr": 2600,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 1,
+      "WH-PUN": 2,
+      "WH-CHE": 5,
+      "WH-AMD": 0
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-CHL-HPSW",
+    "key": "HPSW",
+    "name": "High-pressure switch (Chiller)",
+    "family": "CHL",
+    "fits_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "price_inr": 4250,
+    "consumable": false,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 6,
+      "WH-PUN": 3,
+      "WH-CHE": 3,
+      "WH-AMD": 1
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  },
+  {
+    "part_no": "MT-RCY-BELT",
+    "key": "BELT",
+    "name": "Drive belt set (Recycling granulator)",
+    "family": "RCY",
+    "fits_models": [
+      "GR-200",
+      "GR-400",
+      "GR-600"
+    ],
+    "price_inr": 2300,
+    "consumable": true,
+    "source": "domestic",
+    "stock": {
+      "WH-NOI": 0,
+      "WH-PUN": 5,
+      "WH-CHE": 0,
+      "WH-AMD": 3
+    },
+    "lead_time_days_if_unavailable": 3,
+    "synthetic": true
+  }
+]

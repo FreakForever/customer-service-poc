@@ -1,0 +1,343 @@
+{"id": "IND-automotive", "label": "Industry", "props": {"name": "automotive"}}
+{"id": "IND-packaging", "label": "Industry", "props": {"name": "packaging"}}
+{"id": "IND-medical", "label": "Industry", "props": {"name": "medical"}}
+{"id": "IND-appliances", "label": "Industry", "props": {"name": "appliances"}}
+{"id": "IND-electrical", "label": "Industry", "props": {"name": "electrical"}}
+{"id": "IND-household", "label": "Industry", "props": {"name": "household"}}
+{"id": "IND-toys", "label": "Industry", "props": {"name": "toys"}}
+{"id": "MTC", "label": "ProductFamily", "props": {"name": "Mold temperature controller", "summary": "Circulates temperature-controlled water or oil through the mold to hold a stable mold surface temperature."}}
+{"id": "DHD", "label": "ProductFamily", "props": {"name": "Dehumidifying dryer", "summary": "Dries hygroscopic resins (PA, PC, PET, PBT, ABS) with low-dew-point air from a desiccant rotor."}}
+{"id": "HAD", "label": "ProductFamily", "props": {"name": "Hot air dryer", "summary": "Removes surface moisture from non-hygroscopic resins (PP, PE, PS) using heated ambient air."}}
+{"id": "CHL", "label": "ProductFamily", "props": {"name": "Chiller", "summary": "Supplies chilled water to molds and machine oil coolers using a refrigeration circuit."}}
+{"id": "MDH", "label": "ProductFamily", "props": {"name": "Mold dehumidifier", "summary": "Blankets the mold area with dry air to stop condensation when molds run with chilled water."}}
+{"id": "CCS", "label": "ProductFamily", "props": {"name": "Conveying system", "summary": "Vacuum loaders and centralized conveying that move resin from storage or dryers to machines."}}
+{"id": "RCY", "label": "ProductFamily", "props": {"name": "Recycling granulator", "summary": "Beside-the-press and central granulators that regrind sprues, runners and rejects for reuse."}}
+{"id": "MTC-W60", "label": "Model", "props": {"name": "MTC-W60 water mold temperature controller", "spec_medium": "water", "spec_max_temp_c": 95, "spec_heater_kw": 6, "spec_pump_kw": 0.4, "spec_flow_lpm": 30, "spec_power": "415V 3ph 50Hz"}}
+{"id": "MTC-W90", "label": "Model", "props": {"name": "MTC-W90 water mold temperature controller", "spec_medium": "water", "spec_max_temp_c": 95, "spec_heater_kw": 9, "spec_pump_kw": 0.75, "spec_flow_lpm": 45, "spec_power": "415V 3ph 50Hz"}}
+{"id": "MTC-W120HP", "label": "Model", "props": {"name": "MTC-W120HP pressurised water mold temperature controller", "spec_medium": "pressurised water", "spec_max_temp_c": 120, "spec_heater_kw": 12, "spec_pump_kw": 1.1, "spec_flow_lpm": 60, "spec_power": "415V 3ph 50Hz"}}
+{"id": "MTC-O150", "label": "Model", "props": {"name": "MTC-O150 oil mold temperature controller", "spec_medium": "thermal oil", "spec_max_temp_c": 150, "spec_heater_kw": 9, "spec_pump_kw": 0.75, "spec_flow_lpm": 40, "spec_power": "415V 3ph 50Hz"}}
+{"id": "DHD-50", "label": "Model", "props": {"name": "DHD-50 dehumidifying dryer", "spec_throughput_kg_h": 25, "spec_hopper_l": 50, "spec_dew_point_c": -40, "spec_process_heater_kw": 3, "spec_regen_heater_kw": 2.5, "spec_blower_kw": 0.75}}
+{"id": "DHD-100", "label": "Model", "props": {"name": "DHD-100 dehumidifying dryer", "spec_throughput_kg_h": 50, "spec_hopper_l": 100, "spec_dew_point_c": -40, "spec_process_heater_kw": 4.5, "spec_regen_heater_kw": 3, "spec_blower_kw": 1.1}}
+{"id": "DHD-150", "label": "Model", "props": {"name": "DHD-150 dehumidifying dryer", "spec_throughput_kg_h": 75, "spec_hopper_l": 150, "spec_dew_point_c": -40, "spec_process_heater_kw": 6, "spec_regen_heater_kw": 4, "spec_blower_kw": 1.5}}
+{"id": "DHD-300M", "label": "Model", "props": {"name": "DHD-300M multibin dehumidifying dryer", "spec_throughput_kg_h": 150, "spec_hopper_l": 300, "spec_bins": 3, "spec_dew_point_c": -40, "spec_process_heater_kw": 9, "spec_regen_heater_kw": 6, "spec_blower_kw": 2.2}}
+{"id": "HAD-25", "label": "Model", "props": {"name": "HAD-25 hot air dryer", "spec_hopper_kg": 25, "spec_heater_kw": 2.5, "spec_max_temp_c": 150, "spec_blower_kw": 0.18}}
+{"id": "HAD-50", "label": "Model", "props": {"name": "HAD-50 hot air dryer", "spec_hopper_kg": 50, "spec_heater_kw": 3.5, "spec_max_temp_c": 150, "spec_blower_kw": 0.25}}
+{"id": "HAD-100", "label": "Model", "props": {"name": "HAD-100 hot air dryer", "spec_hopper_kg": 100, "spec_heater_kw": 6, "spec_max_temp_c": 150, "spec_blower_kw": 0.37}}
+{"id": "CHL-3A", "label": "Model", "props": {"name": "CHL-3A air-cooled chiller (3 TR)", "spec_cooling_tr": 3, "spec_condenser": "air-cooled", "spec_refrigerant": "R407C", "spec_compressor": "scroll", "spec_tank_l": 60, "spec_outlet_temp_range_c": "7-25"}}
+{"id": "CHL-5A", "label": "Model", "props": {"name": "CHL-5A air-cooled chiller (5 TR)", "spec_cooling_tr": 5, "spec_condenser": "air-cooled", "spec_refrigerant": "R407C", "spec_compressor": "scroll", "spec_tank_l": 100, "spec_outlet_temp_range_c": "7-25"}}
+{"id": "CHL-10W", "label": "Model", "props": {"name": "CHL-10W water-cooled chiller (10 TR)", "spec_cooling_tr": 10, "spec_condenser": "water-cooled", "spec_refrigerant": "R410A", "spec_compressor": "scroll", "spec_tank_l": 200, "spec_outlet_temp_range_c": "7-25"}}
+{"id": "CHL-20W", "label": "Model", "props": {"name": "CHL-20W water-cooled chiller (20 TR)", "spec_cooling_tr": 20, "spec_condenser": "water-cooled", "spec_refrigerant": "R410A", "spec_compressor": "2x scroll", "spec_tank_l": 300, "spec_outlet_temp_range_c": "7-25"}}
+{"id": "MDH-500", "label": "Model", "props": {"name": "MDH-500 mold dehumidifier", "spec_airflow_m3_h": 500, "spec_dew_point_c": -5, "spec_compressor_kw": 1.1}}
+{"id": "MDH-1000", "label": "Model", "props": {"name": "MDH-1000 mold dehumidifier", "spec_airflow_m3_h": 1000, "spec_dew_point_c": -5, "spec_compressor_kw": 2.2}}
+{"id": "VL-1", "label": "Model", "props": {"name": "VL-1 single-phase vacuum hopper loader", "spec_capacity_kg_h": 150, "spec_max_distance_m": 4, "spec_motor": "1ph carbon-brush", "spec_power": "230V 1ph"}}
+{"id": "VL-3", "label": "Model", "props": {"name": "VL-3 three-phase vacuum loader", "spec_capacity_kg_h": 400, "spec_max_distance_m": 15, "spec_blower_kw": 2.2, "spec_power": "415V 3ph"}}
+{"id": "CCS-8", "label": "Model", "props": {"name": "CCS-8 centralized conveying system (8 stations)", "spec_stations": 8, "spec_capacity_kg_h": 900, "spec_max_distance_m": 60, "spec_blower_kw": 5.5, "spec_controller": "PLC with HMI"}}
+{"id": "GR-200", "label": "Model", "props": {"name": "GR-200 beside-the-press granulator", "spec_rotor_width_mm": 200, "spec_capacity_kg_h": 30, "spec_motor_kw": 2.2, "spec_screen_mm": 6}}
+{"id": "GR-400", "label": "Model", "props": {"name": "GR-400 granulator", "spec_rotor_width_mm": 400, "spec_capacity_kg_h": 120, "spec_motor_kw": 7.5, "spec_screen_mm": 8}}
+{"id": "GR-600", "label": "Model", "props": {"name": "GR-600 central granulator", "spec_rotor_width_mm": 600, "spec_capacity_kg_h": 300, "spec_motor_kw": 15, "spec_screen_mm": 10}}
+{"id": "CMP-HTR", "label": "Component", "props": {"name": "Process heater element"}}
+{"id": "CMP-RHTR", "label": "Component", "props": {"name": "Regeneration heater"}}
+{"id": "CMP-SSR", "label": "Component", "props": {"name": "Solid-state relay (heater)"}}
+{"id": "CMP-TC", "label": "Component", "props": {"name": "Thermocouple / RTD sensor"}}
+{"id": "CMP-PUMP", "label": "Component", "props": {"name": "Circulation pump"}}
+{"id": "CMP-BLW", "label": "Component", "props": {"name": "Process air blower"}}
+{"id": "CMP-FLT", "label": "Component", "props": {"name": "Air / dust filter"}}
+{"id": "CMP-ROTOR", "label": "Component", "props": {"name": "Desiccant rotor"}}
+{"id": "CMP-DPS", "label": "Component", "props": {"name": "Dew point sensor"}}
+{"id": "CMP-COMP", "label": "Component", "props": {"name": "Refrigeration compressor"}}
+{"id": "CMP-COND", "label": "Component", "props": {"name": "Condenser"}}
+{"id": "CMP-EVAP", "label": "Component", "props": {"name": "Evaporator / cooling coil"}}
+{"id": "CMP-FSW", "label": "Component", "props": {"name": "Flow switch"}}
+{"id": "CMP-LSW", "label": "Component", "props": {"name": "Level switch / float"}}
+{"id": "CMP-PLC", "label": "Component", "props": {"name": "Controller board / PLC"}}
+{"id": "CMP-SOL", "label": "Component", "props": {"name": "Solenoid valve"}}
+{"id": "CMP-PHR", "label": "Component", "props": {"name": "Phase protection relay"}}
+{"id": "CMP-MOT", "label": "Component", "props": {"name": "Drive motor"}}
+{"id": "CMP-BLADE", "label": "Component", "props": {"name": "Rotor and bed knives"}}
+{"id": "CMP-SCR", "label": "Component", "props": {"name": "Screen"}}
+{"id": "CMP-ILK", "label": "Component", "props": {"name": "Safety interlock switch"}}
+{"id": "CMP-PROX", "label": "Component", "props": {"name": "Material level / proximity sensor"}}
+{"id": "CMP-HOSE", "label": "Component", "props": {"name": "Conveying hose and couplings"}}
+{"id": "CMP-PRS", "label": "Component", "props": {"name": "Pressure switch (HP/LP)"}}
+{"id": "C-HTR-OPEN", "label": "Cause", "props": {"name": "Heater element open circuit", "fixable_by": "technician"}}
+{"id": "C-RHTR-OPEN", "label": "Cause", "props": {"name": "Regeneration heater open circuit", "fixable_by": "technician"}}
+{"id": "C-SSR-FAIL", "label": "Cause", "props": {"name": "Heater solid-state relay failed (shorted or open)", "fixable_by": "technician"}}
+{"id": "C-TC-OPEN", "label": "Cause", "props": {"name": "Temperature sensor open or loose connection", "fixable_by": "technician"}}
+{"id": "C-TC-DRIFT", "label": "Cause", "props": {"name": "Temperature sensor drifted out of calibration", "fixable_by": "technician"}}
+{"id": "C-FLT-CLOG", "label": "Cause", "props": {"name": "Air filter clogged with fines or dust", "fixable_by": "customer"}}
+{"id": "C-ROTOR-DEG", "label": "Cause", "props": {"name": "Desiccant rotor degraded or contaminated", "fixable_by": "technician"}}
+{"id": "C-DPS-FAULT", "label": "Cause", "props": {"name": "Dew point sensor faulty or due for calibration", "fixable_by": "technician"}}
+{"id": "C-BLW-OVL", "label": "Cause", "props": {"name": "Blower motor overload (thermal trip)", "fixable_by": "technician"}}
+{"id": "C-PHASE-LOSS", "label": "Cause", "props": {"name": "Loss of one supply phase", "fixable_by": "customer"}}
+{"id": "C-PHASE-REV", "label": "Cause", "props": {"name": "Supply phase sequence reversed", "fixable_by": "technician"}}
+{"id": "C-LOW-WATER", "label": "Cause", "props": {"name": "Low water level in tank or no make-up water", "fixable_by": "customer"}}
+{"id": "C-PUMP-SEIZED", "label": "Cause", "props": {"name": "Pump seized or impeller jammed", "fixable_by": "technician"}}
+{"id": "C-SCALE", "label": "Cause", "props": {"name": "Scale build-up in mold channels or heat exchanger", "fixable_by": "customer"}}
+{"id": "C-FSW-FAULT", "label": "Cause", "props": {"name": "Flow switch stuck or wiring fault", "fixable_by": "technician"}}
+{"id": "C-REF-LEAK", "label": "Cause", "props": {"name": "Refrigerant leak (low suction pressure)", "fixable_by": "technician"}}
+{"id": "C-COND-DIRTY", "label": "Cause", "props": {"name": "Condenser fins dirty or blocked airflow", "fixable_by": "customer"}}
+{"id": "C-CW-LOW", "label": "Cause", "props": {"name": "Insufficient cooling-tower water to condenser", "fixable_by": "customer"}}
+{"id": "C-AMB-HIGH", "label": "Cause", "props": {"name": "Ambient temperature above rated 45 C", "fixable_by": "customer"}}
+{"id": "C-COMP-OVL", "label": "Cause", "props": {"name": "Compressor overload or locked rotor", "fixable_by": "technician"}}
+{"id": "C-EVAP-FREEZE", "label": "Cause", "props": {"name": "Evaporator freezing due to low setpoint or low flow", "fixable_by": "customer"}}
+{"id": "C-VAC-LEAK", "label": "Cause", "props": {"name": "Vacuum leak at hose, lid gasket or coupling", "fixable_by": "customer"}}
+{"id": "C-HOSE-BLOCK", "label": "Cause", "props": {"name": "Conveying hose blocked by lumps or long strands", "fixable_by": "customer"}}
+{"id": "C-BRIDGE", "label": "Cause", "props": {"name": "Material bridging in hopper or source bin empty", "fixable_by": "customer"}}
+{"id": "C-PROX-DIRTY", "label": "Cause", "props": {"name": "Level sensor dirty or mis-adjusted", "fixable_by": "customer"}}
+{"id": "C-BLADE-DULL", "label": "Cause", "props": {"name": "Blades dull or blade gap too wide", "fixable_by": "technician"}}
+{"id": "C-OVERFEED", "label": "Cause", "props": {"name": "Overfeeding the granulator", "fixable_by": "customer"}}
+{"id": "C-ILK-OPEN", "label": "Cause", "props": {"name": "Safety interlock open (hopper or screen cradle not locked)", "fixable_by": "customer"}}
+{"id": "C-SCR-CLOG", "label": "Cause", "props": {"name": "Screen clogged", "fixable_by": "customer"}}
+{"id": "C-PLC-COMM", "label": "Cause", "props": {"name": "Controller communication fault or corrupted parameters", "fixable_by": "technician"}}
+{"id": "C-SOL-STUCK", "label": "Cause", "props": {"name": "Solenoid valve stuck", "fixable_by": "technician"}}
+{"id": "C-HP-TRIP", "label": "Cause", "props": {"name": "High-pressure switch tripped", "fixable_by": "technician"}}
+{"id": "C-SETPOINT", "label": "Cause", "props": {"name": "Setpoint or recipe entered incorrectly", "fixable_by": "customer"}}
+{"id": "C-MOT-OVL", "label": "Cause", "props": {"name": "Drive motor overload", "fixable_by": "technician"}}
+{"id": "MTC-E01", "label": "ErrorCode", "props": {"name": "E01 Low water level", "code": "E01", "display_text": "LO LEVEL", "severity": "critical", "safety_stop": true}}
+{"id": "MTC-E02", "label": "ErrorCode", "props": {"name": "E02 Over-temperature", "code": "E02", "display_text": "OVER TEMP", "severity": "critical", "safety_stop": true}}
+{"id": "MTC-E03", "label": "ErrorCode", "props": {"name": "E03 Temperature sensor open", "code": "E03", "display_text": "SENSOR OPEN", "severity": "critical", "safety_stop": true}}
+{"id": "MTC-E04", "label": "ErrorCode", "props": {"name": "E04 Pump overload", "code": "E04", "display_text": "PUMP OL", "severity": "critical", "safety_stop": true}}
+{"id": "MTC-E05", "label": "ErrorCode", "props": {"name": "E05 Slow heat-up", "code": "E05", "display_text": "HEAT SLOW", "severity": "warning", "safety_stop": false}}
+{"id": "MTC-E06", "label": "ErrorCode", "props": {"name": "E06 Low flow", "code": "E06", "display_text": "LOW FLOW", "severity": "warning", "safety_stop": false}}
+{"id": "MTC-E07", "label": "ErrorCode", "props": {"name": "E07 Phase fault", "code": "E07", "display_text": "PHASE", "severity": "critical", "safety_stop": true}}
+{"id": "MTC-E08", "label": "ErrorCode", "props": {"name": "E08 High pressure", "code": "E08", "display_text": "HI PRESS", "severity": "critical", "safety_stop": true}}
+{"id": "DHD-E01", "label": "ErrorCode", "props": {"name": "E01 Process temperature low", "code": "E01", "display_text": "PROC TEMP LO", "severity": "warning", "safety_stop": false}}
+{"id": "DHD-E02", "label": "ErrorCode", "props": {"name": "E02 Process over-temperature", "code": "E02", "display_text": "PROC OVER TEMP", "severity": "critical", "safety_stop": true}}
+{"id": "DHD-E03", "label": "ErrorCode", "props": {"name": "E03 Regeneration temperature low", "code": "E03", "display_text": "REGEN TEMP LO", "severity": "warning", "safety_stop": false}}
+{"id": "DHD-E04", "label": "ErrorCode", "props": {"name": "E04 Dew point high", "code": "E04", "display_text": "DEW PT HIGH", "severity": "warning", "safety_stop": false}}
+{"id": "DHD-E05", "label": "ErrorCode", "props": {"name": "E05 Blower overload", "code": "E05", "display_text": "BLOWER OL", "severity": "critical", "safety_stop": true}}
+{"id": "DHD-E06", "label": "ErrorCode", "props": {"name": "E06 Filter clogged", "code": "E06", "display_text": "FILTER", "severity": "info", "safety_stop": false}}
+{"id": "DHD-E07", "label": "ErrorCode", "props": {"name": "E07 Sensor open", "code": "E07", "display_text": "SENSOR OPEN", "severity": "critical", "safety_stop": true}}
+{"id": "DHD-E08", "label": "ErrorCode", "props": {"name": "E08 Phase fault", "code": "E08", "display_text": "PHASE", "severity": "critical", "safety_stop": true}}
+{"id": "DHD-E10", "label": "ErrorCode", "props": {"name": "E10 Hopper low material", "code": "E10", "display_text": "HOPPER LOW", "severity": "info", "safety_stop": false}}
+{"id": "HAD-E1", "label": "ErrorCode", "props": {"name": "E1 Over-temperature", "code": "E1", "display_text": "OH", "severity": "critical", "safety_stop": true}}
+{"id": "HAD-E2", "label": "ErrorCode", "props": {"name": "E2 Sensor open", "code": "E2", "display_text": "SE", "severity": "critical", "safety_stop": true}}
+{"id": "HAD-E3", "label": "ErrorCode", "props": {"name": "E3 Heater not heating", "code": "E3", "display_text": "HE", "severity": "warning", "safety_stop": false}}
+{"id": "HAD-E4", "label": "ErrorCode", "props": {"name": "E4 Blower overload", "code": "E4", "display_text": "BL", "severity": "critical", "safety_stop": true}}
+{"id": "HAD-E5", "label": "ErrorCode", "props": {"name": "E5 Hopper low material", "code": "E5", "display_text": "LO", "severity": "info", "safety_stop": false}}
+{"id": "CHL-A01", "label": "ErrorCode", "props": {"name": "A01 High refrigerant pressure", "code": "A01", "display_text": "HP TRIP", "severity": "critical", "safety_stop": true}}
+{"id": "CHL-A02", "label": "ErrorCode", "props": {"name": "A02 Low refrigerant pressure", "code": "A02", "display_text": "LP TRIP", "severity": "critical", "safety_stop": true}}
+{"id": "CHL-A03", "label": "ErrorCode", "props": {"name": "A03 Compressor overload", "code": "A03", "display_text": "COMP OL", "severity": "critical", "safety_stop": true}}
+{"id": "CHL-A04", "label": "ErrorCode", "props": {"name": "A04 Anti-freeze protection", "code": "A04", "display_text": "FREEZE", "severity": "critical", "safety_stop": true}}
+{"id": "CHL-A05", "label": "ErrorCode", "props": {"name": "A05 No water flow", "code": "A05", "display_text": "FLOW", "severity": "critical", "safety_stop": true}}
+{"id": "CHL-A06", "label": "ErrorCode", "props": {"name": "A06 Tank level low", "code": "A06", "display_text": "LEVEL", "severity": "warning", "safety_stop": false}}
+{"id": "CHL-A07", "label": "ErrorCode", "props": {"name": "A07 Phase fault", "code": "A07", "display_text": "PHASE", "severity": "critical", "safety_stop": true}}
+{"id": "CHL-A08", "label": "ErrorCode", "props": {"name": "A08 Outlet temperature sensor fault", "code": "A08", "display_text": "SENSOR", "severity": "critical", "safety_stop": true}}
+{"id": "MDH-E01", "label": "ErrorCode", "props": {"name": "E01 Dew point not reached", "code": "E01", "display_text": "DEW PT", "severity": "warning", "safety_stop": false}}
+{"id": "MDH-E02", "label": "ErrorCode", "props": {"name": "E02 Coil frosting", "code": "E02", "display_text": "FROST", "severity": "warning", "safety_stop": false}}
+{"id": "MDH-E03", "label": "ErrorCode", "props": {"name": "E03 Compressor overload", "code": "E03", "display_text": "COMP OL", "severity": "critical", "safety_stop": true}}
+{"id": "MDH-E04", "label": "ErrorCode", "props": {"name": "E04 Dew point sensor fault", "code": "E04", "display_text": "DPS", "severity": "warning", "safety_stop": false}}
+{"id": "CCS-L1", "label": "ErrorCode", "props": {"name": "L1 No material conveyed (alarm after 3 cycles)", "code": "L1", "display_text": "NO MAT", "severity": "warning", "safety_stop": false}}
+{"id": "CCS-L2", "label": "ErrorCode", "props": {"name": "L2 Filter clogged", "code": "L2", "display_text": "FILTER", "severity": "warning", "safety_stop": false}}
+{"id": "CCS-L3", "label": "ErrorCode", "props": {"name": "L3 Blower / motor overload", "code": "L3", "display_text": "MOTOR OL", "severity": "critical", "safety_stop": true}}
+{"id": "CCS-L4", "label": "ErrorCode", "props": {"name": "L4 Station valve fault", "code": "L4", "display_text": "VALVE", "severity": "warning", "safety_stop": false}}
+{"id": "CCS-L5", "label": "ErrorCode", "props": {"name": "L5 Level sensor fault", "code": "L5", "display_text": "SENSOR", "severity": "info", "safety_stop": false}}
+{"id": "CCS-L6", "label": "ErrorCode", "props": {"name": "L6 Phase fault", "code": "L6", "display_text": "PHASE", "severity": "critical", "safety_stop": true}}
+{"id": "RCY-G1", "label": "ErrorCode", "props": {"name": "G1 Motor overload", "code": "G1", "display_text": "MOTOR OL", "severity": "critical", "safety_stop": true}}
+{"id": "RCY-G2", "label": "ErrorCode", "props": {"name": "G2 Safety interlock open", "code": "G2", "display_text": "INTERLOCK", "severity": "critical", "safety_stop": true}}
+{"id": "RCY-G3", "label": "ErrorCode", "props": {"name": "G3 Low output / fines", "code": "G3", "display_text": "LOW OUTPUT", "severity": "warning", "safety_stop": false}}
+{"id": "RCY-G4", "label": "ErrorCode", "props": {"name": "G4 Phase fault", "code": "G4", "display_text": "PHASE", "severity": "critical", "safety_stop": true}}
+{"id": "R-MTC-C-LOW-WATER", "label": "Resolution", "props": {"name": "Open make-up water valve, check float; top up tank to the marked level.", "steps": "Open make-up water valve, check float; top up tank to the marked level.", "est_minutes": 10, "performed_by": "customer", "family": "MTC"}}
+{"id": "R-MTC-C-FSW-FAULT", "label": "Resolution", "props": {"name": "Check flow switch paddle and wiring; replace flow switch.", "steps": "Check flow switch paddle and wiring; replace flow switch.", "est_minutes": 30, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-MTC-C-SOL-STUCK", "label": "Resolution", "props": {"name": "Check coil voltage; clean or replace solenoid valve.", "steps": "Check coil voltage; clean or replace solenoid valve.", "est_minutes": 30, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-MTC-C-SSR-FAIL", "label": "Resolution", "props": {"name": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.", "steps": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.", "est_minutes": 30, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-MTC-C-TC-DRIFT", "label": "Resolution", "props": {"name": "Compare against reference thermometer; recalibrate offset or replace sensor.", "steps": "Compare against reference thermometer; recalibrate offset or replace sensor.", "est_minutes": 30, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-MTC-C-SETPOINT", "label": "Resolution", "props": {"name": "Check setpoint, material recipe and units on the HMI; restore recommended values", "steps": "Check setpoint, material recipe and units on the HMI; restore recommended values.", "est_minutes": 5, "performed_by": "customer", "family": "MTC"}}
+{"id": "R-MTC-C-TC-OPEN", "label": "Resolution", "props": {"name": "Re-seat sensor connector; if reading still open, replace thermocouple.", "steps": "Re-seat sensor connector; if reading still open, replace thermocouple.", "est_minutes": 20, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-MTC-C-PLC-COMM", "label": "Resolution", "props": {"name": "Power-cycle unit; reload default parameters; if fault persists replace controlle", "steps": "Power-cycle unit; reload default parameters; if fault persists replace controller board.", "est_minutes": 60, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-MTC-C-PUMP-SEIZED", "label": "Resolution", "props": {"name": "Isolate power, rotate shaft manually; clear debris or replace pump seal kit / pu", "steps": "Isolate power, rotate shaft manually; clear debris or replace pump seal kit / pump.", "est_minutes": 90, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-MTC-C-SCALE", "label": "Resolution", "props": {"name": "Descale mold channels and unit with a descaling pump and approved descaling agen", "steps": "Descale mold channels and unit with a descaling pump and approved descaling agent; fit water treatment.", "est_minutes": 120, "performed_by": "customer", "family": "MTC"}}
+{"id": "R-MTC-C-PHASE-LOSS", "label": "Resolution", "props": {"name": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "est_minutes": 15, "performed_by": "customer", "family": "MTC"}}
+{"id": "R-MTC-C-HTR-OPEN", "label": "Resolution", "props": {"name": "Isolate power, measure heater resistance; replace heater element if open.", "steps": "Isolate power, measure heater resistance; replace heater element if open.", "est_minutes": 60, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-MTC-C-PHASE-REV", "label": "Resolution", "props": {"name": "Swap any two incoming phases at the main terminal (qualified electrician only).", "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).", "est_minutes": 20, "performed_by": "technician", "family": "MTC"}}
+{"id": "R-DHD-C-HTR-OPEN", "label": "Resolution", "props": {"name": "Isolate power, measure heater resistance; replace heater element if open.", "steps": "Isolate power, measure heater resistance; replace heater element if open.", "est_minutes": 60, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-SSR-FAIL", "label": "Resolution", "props": {"name": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.", "steps": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.", "est_minutes": 30, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-TC-DRIFT", "label": "Resolution", "props": {"name": "Compare against reference thermometer; recalibrate offset or replace sensor.", "steps": "Compare against reference thermometer; recalibrate offset or replace sensor.", "est_minutes": 30, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-SETPOINT", "label": "Resolution", "props": {"name": "Check setpoint, material recipe and units on the HMI; restore recommended values", "steps": "Check setpoint, material recipe and units on the HMI; restore recommended values.", "est_minutes": 5, "performed_by": "customer", "family": "DHD"}}
+{"id": "R-DHD-C-RHTR-OPEN", "label": "Resolution", "props": {"name": "Isolate power, check regeneration heater resistance; replace if open.", "steps": "Isolate power, check regeneration heater resistance; replace if open.", "est_minutes": 75, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-TC-OPEN", "label": "Resolution", "props": {"name": "Re-seat sensor connector; if reading still open, replace thermocouple.", "steps": "Re-seat sensor connector; if reading still open, replace thermocouple.", "est_minutes": 20, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-ROTOR-DEG", "label": "Resolution", "props": {"name": "Inspect rotor for discoloration or oil contamination; replace desiccant rotor.", "steps": "Inspect rotor for discoloration or oil contamination; replace desiccant rotor.", "est_minutes": 120, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-FLT-CLOG", "label": "Resolution", "props": {"name": "Stop blower, remove filter, clean with compressed air from clean side or replace", "steps": "Stop blower, remove filter, clean with compressed air from clean side or replace if torn.", "est_minutes": 10, "performed_by": "customer", "family": "DHD"}}
+{"id": "R-DHD-C-DPS-FAULT", "label": "Resolution", "props": {"name": "Verify against portable dew point meter; recalibrate or replace dew point sensor", "steps": "Verify against portable dew point meter; recalibrate or replace dew point sensor.", "est_minutes": 45, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-BLW-OVL", "label": "Resolution", "props": {"name": "Reset overload after cooling; check filter and duct for blockage; check motor cu", "steps": "Reset overload after cooling; check filter and duct for blockage; check motor current; replace blower if current high.", "est_minutes": 40, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-PHASE-LOSS", "label": "Resolution", "props": {"name": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "est_minutes": 15, "performed_by": "customer", "family": "DHD"}}
+{"id": "R-DHD-C-PROX-DIRTY", "label": "Resolution", "props": {"name": "Clean sensor face; adjust sensitivity screw until LED switches with material.", "steps": "Clean sensor face; adjust sensitivity screw until LED switches with material.", "est_minutes": 10, "performed_by": "customer", "family": "DHD"}}
+{"id": "R-DHD-C-PLC-COMM", "label": "Resolution", "props": {"name": "Power-cycle unit; reload default parameters; if fault persists replace controlle", "steps": "Power-cycle unit; reload default parameters; if fault persists replace controller board.", "est_minutes": 60, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-PHASE-REV", "label": "Resolution", "props": {"name": "Swap any two incoming phases at the main terminal (qualified electrician only).", "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).", "est_minutes": 20, "performed_by": "technician", "family": "DHD"}}
+{"id": "R-DHD-C-BRIDGE", "label": "Resolution", "props": {"name": "Refill source bin; agitate hopper; consider anti-bridging insert.", "steps": "Refill source bin; agitate hopper; consider anti-bridging insert.", "est_minutes": 10, "performed_by": "customer", "family": "DHD"}}
+{"id": "R-HAD-C-SSR-FAIL", "label": "Resolution", "props": {"name": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.", "steps": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.", "est_minutes": 30, "performed_by": "technician", "family": "HAD"}}
+{"id": "R-HAD-C-TC-DRIFT", "label": "Resolution", "props": {"name": "Compare against reference thermometer; recalibrate offset or replace sensor.", "steps": "Compare against reference thermometer; recalibrate offset or replace sensor.", "est_minutes": 30, "performed_by": "technician", "family": "HAD"}}
+{"id": "R-HAD-C-TC-OPEN", "label": "Resolution", "props": {"name": "Re-seat sensor connector; if reading still open, replace thermocouple.", "steps": "Re-seat sensor connector; if reading still open, replace thermocouple.", "est_minutes": 20, "performed_by": "technician", "family": "HAD"}}
+{"id": "R-HAD-C-HTR-OPEN", "label": "Resolution", "props": {"name": "Isolate power, measure heater resistance; replace heater element if open.", "steps": "Isolate power, measure heater resistance; replace heater element if open.", "est_minutes": 60, "performed_by": "technician", "family": "HAD"}}
+{"id": "R-HAD-C-BLW-OVL", "label": "Resolution", "props": {"name": "Reset overload after cooling; check filter and duct for blockage; check motor cu", "steps": "Reset overload after cooling; check filter and duct for blockage; check motor current; replace blower if current high.", "est_minutes": 40, "performed_by": "technician", "family": "HAD"}}
+{"id": "R-HAD-C-FLT-CLOG", "label": "Resolution", "props": {"name": "Stop blower, remove filter, clean with compressed air from clean side or replace", "steps": "Stop blower, remove filter, clean with compressed air from clean side or replace if torn.", "est_minutes": 10, "performed_by": "customer", "family": "HAD"}}
+{"id": "R-HAD-C-BRIDGE", "label": "Resolution", "props": {"name": "Refill source bin; agitate hopper; consider anti-bridging insert.", "steps": "Refill source bin; agitate hopper; consider anti-bridging insert.", "est_minutes": 10, "performed_by": "customer", "family": "HAD"}}
+{"id": "R-HAD-C-PROX-DIRTY", "label": "Resolution", "props": {"name": "Clean sensor face; adjust sensitivity screw until LED switches with material.", "steps": "Clean sensor face; adjust sensitivity screw until LED switches with material.", "est_minutes": 10, "performed_by": "customer", "family": "HAD"}}
+{"id": "R-CHL-C-COND-DIRTY", "label": "Resolution", "props": {"name": "Clean condenser fins with low-pressure air or water; ensure 1 m clearance around", "steps": "Clean condenser fins with low-pressure air or water; ensure 1 m clearance around unit.", "est_minutes": 30, "performed_by": "customer", "family": "CHL"}}
+{"id": "R-CHL-C-CW-LOW", "label": "Resolution", "props": {"name": "Check cooling tower pump, strainer and valves; ensure rated condenser water flow", "steps": "Check cooling tower pump, strainer and valves; ensure rated condenser water flow.", "est_minutes": 30, "performed_by": "customer", "family": "CHL"}}
+{"id": "R-CHL-C-AMB-HIGH", "label": "Resolution", "props": {"name": "Improve ventilation or relocate unit; reduce load until ambient is within rating", "steps": "Improve ventilation or relocate unit; reduce load until ambient is within rating.", "est_minutes": 30, "performed_by": "customer", "family": "CHL"}}
+{"id": "R-CHL-C-HP-TRIP", "label": "Resolution", "props": {"name": "Find root cause (dirty condenser / low water flow) before resetting HP switch.", "steps": "Find root cause (dirty condenser / low water flow) before resetting HP switch.", "est_minutes": 30, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-CHL-C-REF-LEAK", "label": "Resolution", "props": {"name": "Leak test with detector, repair joint, vacuum and recharge refrigerant per namep", "steps": "Leak test with detector, repair joint, vacuum and recharge refrigerant per nameplate.", "est_minutes": 240, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-CHL-C-EVAP-FREEZE", "label": "Resolution", "props": {"name": "Raise setpoint above 7 C, check flow; add glycol for sub-10 C operation.", "steps": "Raise setpoint above 7 C, check flow; add glycol for sub-10 C operation.", "est_minutes": 30, "performed_by": "customer", "family": "CHL"}}
+{"id": "R-CHL-C-COMP-OVL", "label": "Resolution", "props": {"name": "Check supply voltage and compressor current; reset overload; replace contactor o", "steps": "Check supply voltage and compressor current; reset overload; replace contactor or compressor if faulty.", "est_minutes": 180, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-CHL-C-PHASE-LOSS", "label": "Resolution", "props": {"name": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "est_minutes": 15, "performed_by": "customer", "family": "CHL"}}
+{"id": "R-CHL-C-FSW-FAULT", "label": "Resolution", "props": {"name": "Check flow switch paddle and wiring; replace flow switch.", "steps": "Check flow switch paddle and wiring; replace flow switch.", "est_minutes": 30, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-CHL-C-PUMP-SEIZED", "label": "Resolution", "props": {"name": "Isolate power, rotate shaft manually; clear debris or replace pump seal kit / pu", "steps": "Isolate power, rotate shaft manually; clear debris or replace pump seal kit / pump.", "est_minutes": 90, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-CHL-C-LOW-WATER", "label": "Resolution", "props": {"name": "Open make-up water valve, check float; top up tank to the marked level.", "steps": "Open make-up water valve, check float; top up tank to the marked level.", "est_minutes": 10, "performed_by": "customer", "family": "CHL"}}
+{"id": "R-CHL-C-SOL-STUCK", "label": "Resolution", "props": {"name": "Check coil voltage; clean or replace solenoid valve.", "steps": "Check coil voltage; clean or replace solenoid valve.", "est_minutes": 30, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-CHL-C-PHASE-REV", "label": "Resolution", "props": {"name": "Swap any two incoming phases at the main terminal (qualified electrician only).", "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).", "est_minutes": 20, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-CHL-C-TC-OPEN", "label": "Resolution", "props": {"name": "Re-seat sensor connector; if reading still open, replace thermocouple.", "steps": "Re-seat sensor connector; if reading still open, replace thermocouple.", "est_minutes": 20, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-CHL-C-PLC-COMM", "label": "Resolution", "props": {"name": "Power-cycle unit; reload default parameters; if fault persists replace controlle", "steps": "Power-cycle unit; reload default parameters; if fault persists replace controller board.", "est_minutes": 60, "performed_by": "technician", "family": "CHL"}}
+{"id": "R-MDH-C-COND-DIRTY", "label": "Resolution", "props": {"name": "Clean condenser fins with low-pressure air or water; ensure 1 m clearance around", "steps": "Clean condenser fins with low-pressure air or water; ensure 1 m clearance around unit.", "est_minutes": 30, "performed_by": "customer", "family": "MDH"}}
+{"id": "R-MDH-C-FLT-CLOG", "label": "Resolution", "props": {"name": "Stop blower, remove filter, clean with compressed air from clean side or replace", "steps": "Stop blower, remove filter, clean with compressed air from clean side or replace if torn.", "est_minutes": 10, "performed_by": "customer", "family": "MDH"}}
+{"id": "R-MDH-C-REF-LEAK", "label": "Resolution", "props": {"name": "Leak test with detector, repair joint, vacuum and recharge refrigerant per namep", "steps": "Leak test with detector, repair joint, vacuum and recharge refrigerant per nameplate.", "est_minutes": 240, "performed_by": "technician", "family": "MDH"}}
+{"id": "R-MDH-C-EVAP-FREEZE", "label": "Resolution", "props": {"name": "Raise setpoint above 7 C, check flow; add glycol for sub-10 C operation.", "steps": "Raise setpoint above 7 C, check flow; add glycol for sub-10 C operation.", "est_minutes": 30, "performed_by": "customer", "family": "MDH"}}
+{"id": "R-MDH-C-COMP-OVL", "label": "Resolution", "props": {"name": "Check supply voltage and compressor current; reset overload; replace contactor o", "steps": "Check supply voltage and compressor current; reset overload; replace contactor or compressor if faulty.", "est_minutes": 180, "performed_by": "technician", "family": "MDH"}}
+{"id": "R-MDH-C-AMB-HIGH", "label": "Resolution", "props": {"name": "Improve ventilation or relocate unit; reduce load until ambient is within rating", "steps": "Improve ventilation or relocate unit; reduce load until ambient is within rating.", "est_minutes": 30, "performed_by": "customer", "family": "MDH"}}
+{"id": "R-MDH-C-DPS-FAULT", "label": "Resolution", "props": {"name": "Verify against portable dew point meter; recalibrate or replace dew point sensor", "steps": "Verify against portable dew point meter; recalibrate or replace dew point sensor.", "est_minutes": 45, "performed_by": "technician", "family": "MDH"}}
+{"id": "R-CCS-C-BRIDGE", "label": "Resolution", "props": {"name": "Refill source bin; agitate hopper; consider anti-bridging insert.", "steps": "Refill source bin; agitate hopper; consider anti-bridging insert.", "est_minutes": 10, "performed_by": "customer", "family": "CCS"}}
+{"id": "R-CCS-C-VAC-LEAK", "label": "Resolution", "props": {"name": "Check hose clamps, lid gasket and couplings; replace gasket or hose if cracked.", "steps": "Check hose clamps, lid gasket and couplings; replace gasket or hose if cracked.", "est_minutes": 15, "performed_by": "customer", "family": "CCS"}}
+{"id": "R-CCS-C-HOSE-BLOCK", "label": "Resolution", "props": {"name": "Disconnect hose and clear blockage; fit lump screen at pick-up.", "steps": "Disconnect hose and clear blockage; fit lump screen at pick-up.", "est_minutes": 15, "performed_by": "customer", "family": "CCS"}}
+{"id": "R-CCS-C-FLT-CLOG", "label": "Resolution", "props": {"name": "Stop blower, remove filter, clean with compressed air from clean side or replace", "steps": "Stop blower, remove filter, clean with compressed air from clean side or replace if torn.", "est_minutes": 10, "performed_by": "customer", "family": "CCS"}}
+{"id": "R-CCS-C-BLW-OVL", "label": "Resolution", "props": {"name": "Reset overload after cooling; check filter and duct for blockage; check motor cu", "steps": "Reset overload after cooling; check filter and duct for blockage; check motor current; replace blower if current high.", "est_minutes": 40, "performed_by": "technician", "family": "CCS"}}
+{"id": "R-CCS-C-SOL-STUCK", "label": "Resolution", "props": {"name": "Check coil voltage; clean or replace solenoid valve.", "steps": "Check coil voltage; clean or replace solenoid valve.", "est_minutes": 30, "performed_by": "technician", "family": "CCS"}}
+{"id": "R-CCS-C-PLC-COMM", "label": "Resolution", "props": {"name": "Power-cycle unit; reload default parameters; if fault persists replace controlle", "steps": "Power-cycle unit; reload default parameters; if fault persists replace controller board.", "est_minutes": 60, "performed_by": "technician", "family": "CCS"}}
+{"id": "R-CCS-C-PROX-DIRTY", "label": "Resolution", "props": {"name": "Clean sensor face; adjust sensitivity screw until LED switches with material.", "steps": "Clean sensor face; adjust sensitivity screw until LED switches with material.", "est_minutes": 10, "performed_by": "customer", "family": "CCS"}}
+{"id": "R-CCS-C-PHASE-REV", "label": "Resolution", "props": {"name": "Swap any two incoming phases at the main terminal (qualified electrician only).", "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).", "est_minutes": 20, "performed_by": "technician", "family": "CCS"}}
+{"id": "R-CCS-C-PHASE-LOSS", "label": "Resolution", "props": {"name": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "est_minutes": 15, "performed_by": "customer", "family": "CCS"}}
+{"id": "R-RCY-C-OVERFEED", "label": "Resolution", "props": {"name": "Reduce feed rate; feed parts gradually; let motor cool before restart.", "steps": "Reduce feed rate; feed parts gradually; let motor cool before restart.", "est_minutes": 5, "performed_by": "customer", "family": "RCY"}}
+{"id": "R-RCY-C-BLADE-DULL", "label": "Resolution", "props": {"name": "Re-sharpen or replace rotor and bed knives; reset blade gap to 0.2-0.3 mm.", "steps": "Re-sharpen or replace rotor and bed knives; reset blade gap to 0.2-0.3 mm.", "est_minutes": 120, "performed_by": "technician", "family": "RCY"}}
+{"id": "R-RCY-C-MOT-OVL", "label": "Resolution", "props": {"name": "Check motor current and belts; reset overload; replace motor bearings if noisy.", "steps": "Check motor current and belts; reset overload; replace motor bearings if noisy.", "est_minutes": 90, "performed_by": "technician", "family": "RCY"}}
+{"id": "R-RCY-C-ILK-OPEN", "label": "Resolution", "props": {"name": "Close and lock hopper and screen cradle until interlock clicks; never bypass int", "steps": "Close and lock hopper and screen cradle until interlock clicks; never bypass interlocks.", "est_minutes": 5, "performed_by": "customer", "family": "RCY"}}
+{"id": "R-RCY-C-SCR-CLOG", "label": "Resolution", "props": {"name": "Isolate and lock out, open cradle and clean screen; replace if holes are damaged", "steps": "Isolate and lock out, open cradle and clean screen; replace if holes are damaged.", "est_minutes": 20, "performed_by": "customer", "family": "RCY"}}
+{"id": "R-RCY-C-PHASE-REV", "label": "Resolution", "props": {"name": "Swap any two incoming phases at the main terminal (qualified electrician only).", "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).", "est_minutes": 20, "performed_by": "technician", "family": "RCY"}}
+{"id": "R-RCY-C-PHASE-LOSS", "label": "Resolution", "props": {"name": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.", "est_minutes": 15, "performed_by": "customer", "family": "RCY"}}
+{"id": "WH-NOI", "label": "Warehouse", "props": {"name": "Noida central warehouse", "city": "Noida", "region": "North"}}
+{"id": "WH-PUN", "label": "Warehouse", "props": {"name": "Pune regional warehouse", "city": "Pune", "region": "West"}}
+{"id": "WH-CHE", "label": "Warehouse", "props": {"name": "Chennai regional warehouse", "city": "Chennai", "region": "South"}}
+{"id": "WH-AMD", "label": "Warehouse", "props": {"name": "Ahmedabad regional warehouse", "city": "Ahmedabad", "region": "West"}}
+{"id": "MT-MTC-HTR", "label": "SparePart", "props": {"name": "Heater element (Mold temperature controller)", "price_inr": 6500, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-DHD-HTR", "label": "SparePart", "props": {"name": "Heater element (Dehumidifying dryer)", "price_inr": 7450, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-HAD-HTR", "label": "SparePart", "props": {"name": "Heater element (Hot air dryer)", "price_inr": 5200, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-DHD-RHTR", "label": "SparePart", "props": {"name": "Regeneration heater (Dehumidifying dryer)", "price_inr": 8950, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MTC-SSR", "label": "SparePart", "props": {"name": "Solid-state relay 40A (Mold temperature controller)", "price_inr": 2400, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-DHD-SSR", "label": "SparePart", "props": {"name": "Solid-state relay 40A (Dehumidifying dryer)", "price_inr": 2750, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-HAD-SSR", "label": "SparePart", "props": {"name": "Solid-state relay 40A (Hot air dryer)", "price_inr": 1900, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MTC-TC", "label": "SparePart", "props": {"name": "Thermocouple type J / RTD PT100 (Mold temperature controller)", "price_inr": 1200, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-DHD-TC", "label": "SparePart", "props": {"name": "Thermocouple type J / RTD PT100 (Dehumidifying dryer)", "price_inr": 1400, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-HAD-TC", "label": "SparePart", "props": {"name": "Thermocouple type J / RTD PT100 (Hot air dryer)", "price_inr": 950, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-TC", "label": "SparePart", "props": {"name": "Thermocouple type J / RTD PT100 (Chiller)", "price_inr": 1500, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-DHD-FLT", "label": "SparePart", "props": {"name": "Filter element (Dehumidifying dryer)", "price_inr": 2050, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-HAD-FLT", "label": "SparePart", "props": {"name": "Filter element (Hot air dryer)", "price_inr": 1450, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MDH-FLT", "label": "SparePart", "props": {"name": "Filter element (Mold dehumidifier)", "price_inr": 2000, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CCS-FLT", "label": "SparePart", "props": {"name": "Filter element (Conveying system)", "price_inr": 1600, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-DHD-ROTOR", "label": "SparePart", "props": {"name": "Desiccant rotor assembly (Dehumidifying dryer)", "price_inr": 55200, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 23}}
+{"id": "MT-DHD-DPS", "label": "SparePart", "props": {"name": "Dew point sensor (Dehumidifying dryer)", "price_inr": 25300, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 25}}
+{"id": "MT-MDH-DPS", "label": "SparePart", "props": {"name": "Dew point sensor (Mold dehumidifier)", "price_inr": 24200, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 26}}
+{"id": "MT-DHD-BLW", "label": "SparePart", "props": {"name": "Blower assembly (Dehumidifying dryer)", "price_inr": 21300, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-HAD-BLW", "label": "SparePart", "props": {"name": "Blower assembly (Hot air dryer)", "price_inr": 14800, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MDH-BLW", "label": "SparePart", "props": {"name": "Blower assembly (Mold dehumidifier)", "price_inr": 20350, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CCS-BLW", "label": "SparePart", "props": {"name": "Blower assembly (Conveying system)", "price_inr": 16650, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MTC-PUMP", "label": "SparePart", "props": {"name": "Circulation pump (Mold temperature controller)", "price_inr": 21000, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-PUMP", "label": "SparePart", "props": {"name": "Circulation pump (Chiller)", "price_inr": 26250, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MTC-SEALKIT", "label": "SparePart", "props": {"name": "Pump mechanical seal kit (Mold temperature controller)", "price_inr": 3200, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-SEALKIT", "label": "SparePart", "props": {"name": "Pump mechanical seal kit (Chiller)", "price_inr": 4000, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MTC-DESCALER", "label": "SparePart", "props": {"name": "Descaling agent (20 L) (Mold temperature controller)", "price_inr": 4500, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-DESCALER", "label": "SparePart", "props": {"name": "Descaling agent (20 L) (Chiller)", "price_inr": 5600, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MTC-FSW", "label": "SparePart", "props": {"name": "Flow switch (Mold temperature controller)", "price_inr": 3900, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-FSW", "label": "SparePart", "props": {"name": "Flow switch (Chiller)", "price_inr": 4900, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-REFKIT", "label": "SparePart", "props": {"name": "Refrigerant recharge kit (Chiller)", "price_inr": 11900, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MDH-REFKIT", "label": "SparePart", "props": {"name": "Refrigerant recharge kit (Mold dehumidifier)", "price_inr": 10450, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-CONTACTOR", "label": "SparePart", "props": {"name": "Compressor contactor (Chiller)", "price_inr": 3500, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MDH-CONTACTOR", "label": "SparePart", "props": {"name": "Compressor contactor (Mold dehumidifier)", "price_inr": 3100, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CCS-GASKET", "label": "SparePart", "props": {"name": "Loader lid gasket (Conveying system)", "price_inr": 600, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CCS-HOSE", "label": "SparePart", "props": {"name": "Conveying hose 38 mm (per 5 m) (Conveying system)", "price_inr": 2350, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-RCY-BLADESET", "label": "SparePart", "props": {"name": "Rotor and bed knife set (Recycling granulator)", "price_inr": 19800, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 32}}
+{"id": "MT-RCY-SCREEN", "label": "SparePart", "props": {"name": "Granulator screen (Recycling granulator)", "price_inr": 8650, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-MTC-PLC", "label": "SparePart", "props": {"name": "Controller board (Mold temperature controller)", "price_inr": 26000, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 28}}
+{"id": "MT-DHD-PLC", "label": "SparePart", "props": {"name": "Controller board (Dehumidifying dryer)", "price_inr": 29900, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 30}}
+{"id": "MT-HAD-PLC", "label": "SparePart", "props": {"name": "Controller board (Hot air dryer)", "price_inr": 20800, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 30}}
+{"id": "MT-CHL-PLC", "label": "SparePart", "props": {"name": "Controller board (Chiller)", "price_inr": 32500, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 24}}
+{"id": "MT-MDH-PLC", "label": "SparePart", "props": {"name": "Controller board (Mold dehumidifier)", "price_inr": 28600, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 28}}
+{"id": "MT-CCS-PLC", "label": "SparePart", "props": {"name": "Controller board (Conveying system)", "price_inr": 23400, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 22}}
+{"id": "MT-RCY-PLC", "label": "SparePart", "props": {"name": "Controller board (Recycling granulator)", "price_inr": 31200, "consumable": false, "source": "imported", "lead_time_days_if_unavailable": 35}}
+{"id": "MT-MTC-SOL", "label": "SparePart", "props": {"name": "Solenoid valve (Mold temperature controller)", "price_inr": 2900, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-SOL", "label": "SparePart", "props": {"name": "Solenoid valve (Chiller)", "price_inr": 3600, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CCS-SOL", "label": "SparePart", "props": {"name": "Solenoid valve (Conveying system)", "price_inr": 2600, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-CHL-HPSW", "label": "SparePart", "props": {"name": "High-pressure switch (Chiller)", "price_inr": 4250, "consumable": false, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "MT-RCY-BELT", "label": "SparePart", "props": {"name": "Drive belt set (Recycling granulator)", "price_inr": 2300, "consumable": true, "source": "domestic", "lead_time_days_if_unavailable": 3}}
+{"id": "SC-NOI", "label": "ServiceCentre", "props": {"name": "Noida service centre", "city": "Noida", "state": "Uttar Pradesh", "technicians": 9}}
+{"id": "CITY-noida", "label": "City", "props": {"name": "Noida"}}
+{"id": "CITY-delhi", "label": "City", "props": {"name": "Delhi"}}
+{"id": "CITY-gurugram", "label": "City", "props": {"name": "Gurugram"}}
+{"id": "CITY-faridabad", "label": "City", "props": {"name": "Faridabad"}}
+{"id": "CITY-ghaziabad", "label": "City", "props": {"name": "Ghaziabad"}}
+{"id": "CITY-greater-noida", "label": "City", "props": {"name": "Greater Noida"}}
+{"id": "SC-LDH", "label": "ServiceCentre", "props": {"name": "Ludhiana service centre", "city": "Ludhiana", "state": "Punjab", "technicians": 3}}
+{"id": "CITY-ludhiana", "label": "City", "props": {"name": "Ludhiana"}}
+{"id": "CITY-chandigarh", "label": "City", "props": {"name": "Chandigarh"}}
+{"id": "CITY-baddi", "label": "City", "props": {"name": "Baddi"}}
+{"id": "CITY-jalandhar", "label": "City", "props": {"name": "Jalandhar"}}
+{"id": "SC-PUN", "label": "ServiceCentre", "props": {"name": "Pune service centre", "city": "Pune", "state": "Maharashtra", "technicians": 7}}
+{"id": "CITY-pune", "label": "City", "props": {"name": "Pune"}}
+{"id": "CITY-chakan", "label": "City", "props": {"name": "Chakan"}}
+{"id": "CITY-ranjangaon", "label": "City", "props": {"name": "Ranjangaon"}}
+{"id": "CITY-nashik", "label": "City", "props": {"name": "Nashik"}}
+{"id": "CITY-aurangabad", "label": "City", "props": {"name": "Aurangabad"}}
+{"id": "SC-MUM", "label": "ServiceCentre", "props": {"name": "Mumbai service centre", "city": "Mumbai", "state": "Maharashtra", "technicians": 5}}
+{"id": "CITY-mumbai", "label": "City", "props": {"name": "Mumbai"}}
+{"id": "CITY-thane", "label": "City", "props": {"name": "Thane"}}
+{"id": "CITY-bhiwandi", "label": "City", "props": {"name": "Bhiwandi"}}
+{"id": "CITY-navi-mumbai", "label": "City", "props": {"name": "Navi Mumbai"}}
+{"id": "CITY-vapi", "label": "City", "props": {"name": "Vapi"}}
+{"id": "SC-AMD", "label": "ServiceCentre", "props": {"name": "Ahmedabad service centre", "city": "Ahmedabad", "state": "Gujarat", "technicians": 4}}
+{"id": "CITY-ahmedabad", "label": "City", "props": {"name": "Ahmedabad"}}
+{"id": "CITY-sanand", "label": "City", "props": {"name": "Sanand"}}
+{"id": "CITY-gandhinagar", "label": "City", "props": {"name": "Gandhinagar"}}
+{"id": "CITY-rajkot", "label": "City", "props": {"name": "Rajkot"}}
+{"id": "SC-VAD", "label": "ServiceCentre", "props": {"name": "Vadodara service centre", "city": "Vadodara", "state": "Gujarat", "technicians": 3}}
+{"id": "CITY-vadodara", "label": "City", "props": {"name": "Vadodara"}}
+{"id": "CITY-halol", "label": "City", "props": {"name": "Halol"}}
+{"id": "CITY-bharuch", "label": "City", "props": {"name": "Bharuch"}}
+{"id": "CITY-ankleshwar", "label": "City", "props": {"name": "Ankleshwar"}}
+{"id": "SC-CHE", "label": "ServiceCentre", "props": {"name": "Chennai service centre", "city": "Chennai", "state": "Tamil Nadu", "technicians": 7}}
+{"id": "CITY-chennai", "label": "City", "props": {"name": "Chennai"}}
+{"id": "CITY-sriperumbudur", "label": "City", "props": {"name": "Sriperumbudur"}}
+{"id": "CITY-oragadam", "label": "City", "props": {"name": "Oragadam"}}
+{"id": "CITY-hosur", "label": "City", "props": {"name": "Hosur"}}
+{"id": "SC-BLR", "label": "ServiceCentre", "props": {"name": "Bengaluru service centre", "city": "Bengaluru", "state": "Karnataka", "technicians": 5}}
+{"id": "CITY-bengaluru", "label": "City", "props": {"name": "Bengaluru"}}
+{"id": "CITY-bidadi", "label": "City", "props": {"name": "Bidadi"}}
+{"id": "CITY-tumakuru", "label": "City", "props": {"name": "Tumakuru"}}
+{"id": "CITY-mysuru", "label": "City", "props": {"name": "Mysuru"}}
+{"id": "SC-CBE", "label": "ServiceCentre", "props": {"name": "Coimbatore service centre", "city": "Coimbatore", "state": "Tamil Nadu", "technicians": 2}}
+{"id": "CITY-coimbatore", "label": "City", "props": {"name": "Coimbatore"}}
+{"id": "CITY-tiruppur", "label": "City", "props": {"name": "Tiruppur"}}
+{"id": "CITY-erode", "label": "City", "props": {"name": "Erode"}}
+{"id": "SC-HYD", "label": "ServiceCentre", "props": {"name": "Hyderabad service centre", "city": "Hyderabad", "state": "Telangana", "technicians": 3}}
+{"id": "CITY-hyderabad", "label": "City", "props": {"name": "Hyderabad"}}
+{"id": "CITY-secunderabad", "label": "City", "props": {"name": "Secunderabad"}}
+{"id": "CITY-medak", "label": "City", "props": {"name": "Medak"}}
+{"id": "SC-KOL", "label": "ServiceCentre", "props": {"name": "Kolkata service centre", "city": "Kolkata", "state": "West Bengal", "technicians": 2}}
+{"id": "CITY-kolkata", "label": "City", "props": {"name": "Kolkata"}}
+{"id": "CITY-howrah", "label": "City", "props": {"name": "Howrah"}}
+{"id": "CITY-durgapur", "label": "City", "props": {"name": "Durgapur"}}
+{"id": "CITY-jamshedpur", "label": "City", "props": {"name": "Jamshedpur"}}
+{"id": "DOC-POL-WARRANTY-V1", "label": "Document", "props": {"name": "Product warranty policy (v1, superseded)", "doc_type": "policy", "version": "1.0", "status": "superseded", "effective_from": "2023-04-01"}}
+{"id": "DOC-POL-WARRANTY-V2", "label": "Document", "props": {"name": "Product warranty policy (v2)", "doc_type": "policy", "version": "2.0", "status": "active", "effective_from": "2025-04-01"}}
+{"id": "DOC-POL-AMC", "label": "Document", "props": {"name": "Annual maintenance contract (AMC) plans", "doc_type": "policy", "version": "3.1", "status": "active", "effective_from": "2025-04-01"}}
+{"id": "DOC-POL-SLA", "label": "Document", "props": {"name": "Service SLA and escalation policy", "doc_type": "policy", "version": "2.0", "status": "active", "effective_from": "2025-04-01"}}
+{"id": "DOC-POL-PARTS", "label": "Document", "props": {"name": "Spare parts ordering, shipping and returns", "doc_type": "policy", "version": "1.4", "status": "active", "effective_from": "2025-04-01"}}
+{"id": "DOC-POL-INSTALL", "label": "Document", "props": {"name": "Installation and commissioning guide", "doc_type": "guide", "version": "1.2", "status": "active", "effective_from": "2024-07-01"}}
+{"id": "DOC-POL-SAFETY", "label": "Document", "props": {"name": "General safety instructions", "doc_type": "guide", "version": "1.0", "status": "active", "effective_from": "2024-01-01"}}
+{"id": "DOC-CO-OVERVIEW", "label": "Document", "props": {"name": "Company and contact overview (demo)", "doc_type": "company", "version": "1.0", "status": "active", "effective_from": "2025-01-01"}}
+{"id": "DOC-MAN-MTC", "label": "Document", "props": {"name": "Mold temperature controller manual (demo)", "doc_type": "manual", "version": "1.0", "status": "active", "effective_from": "2024-01-01"}}
+{"id": "DOC-MAN-DHD", "label": "Document", "props": {"name": "Dehumidifying dryer manual (demo)", "doc_type": "manual", "version": "1.0", "status": "active", "effective_from": "2024-01-01"}}
+{"id": "DOC-MAN-HAD", "label": "Document", "props": {"name": "Hot air dryer manual (demo)", "doc_type": "manual", "version": "1.0", "status": "active", "effective_from": "2024-01-01"}}
+{"id": "DOC-MAN-CHL", "label": "Document", "props": {"name": "Chiller manual (demo)", "doc_type": "manual", "version": "1.0", "status": "active", "effective_from": "2024-01-01"}}
+{"id": "DOC-MAN-MDH", "label": "Document", "props": {"name": "Mold dehumidifier manual (demo)", "doc_type": "manual", "version": "1.0", "status": "active", "effective_from": "2024-01-01"}}
+{"id": "DOC-MAN-CCS", "label": "Document", "props": {"name": "Conveying system manual (demo)", "doc_type": "manual", "version": "1.0", "status": "active", "effective_from": "2024-01-01"}}
+{"id": "DOC-MAN-RCY", "label": "Document", "props": {"name": "Recycling granulator manual (demo)", "doc_type": "manual", "version": "1.0", "status": "active", "effective_from": "2024-01-01"}}
+{"id": "AMC-PLAN-BASIC", "label": "AMCPlan", "props": {"name": "Basic AMC", "response_hours": 72}}
+{"id": "AMC-PLAN-COMPREHENSIVE", "label": "AMCPlan", "props": {"name": "Comprehensive AMC", "response_hours": 48}}
+{"id": "AMC-PLAN-PLATINUM", "label": "AMCPlan", "props": {"name": "Platinum AMC", "response_hours": 24}}

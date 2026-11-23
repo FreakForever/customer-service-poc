@@ -1,0 +1,258 @@
+[
+  {
+    "id": "AMC-2025-0001",
+    "customer_id": "CUST-0001",
+    "plan": "Comprehensive",
+    "start": "2025-07-01",
+    "end": "2026-06-30",
+    "status": "expired",
+    "serials": [
+      "MT-DHD150-23-00417",
+      "MT-MTCW90-23-00418"
+    ],
+    "visits_used": 3,
+    "price_inr": 20000
+  },
+  {
+    "id": "AMC-2026-0002",
+    "customer_id": "CUST-0003",
+    "plan": "Platinum",
+    "start": "2026-02-20",
+    "end": "2027-02-19",
+    "status": "active",
+    "serials": [
+      "MT-CHL10W-24-00311",
+      "MT-DHD100-24-00312"
+    ],
+    "visits_used": 4,
+    "price_inr": 27000
+  },
+  {
+    "id": "AMC-2026-0003",
+    "customer_id": "CUST-0005",
+    "plan": "Basic",
+    "start": "2026-01-10",
+    "end": "2027-01-09",
+    "status": "active",
+    "serials": [
+      "MT-GR400-22-00981"
+    ],
+    "visits_used": 2,
+    "price_inr": 28000
+  },
+  {
+    "id": "AMC-2026-0004",
+    "customer_id": "CUST-0007",
+    "plan": "Comprehensive",
+    "start": "2026-04-01",
+    "end": "2027-03-31",
+    "status": "active",
+    "serials": [
+      "MT-HAD50-23-00612"
+    ],
+    "visits_used": 2,
+    "price_inr": 122000
+  },
+  {
+    "id": "AMC-2025-0014",
+    "customer_id": "CUST-0008",
+    "plan": "Comprehensive",
+    "start": "2025-11-04",
+    "end": "2026-11-03",
+    "status": "grace",
+    "serials": [
+      "MT-DHD100-22-00145",
+      "MT-CHL5A-22-00146"
+    ],
+    "visits_used": 1,
+    "price_inr": 63000
+  },
+  {
+    "id": "AMC-2025-0006",
+    "customer_id": "CUST-0009",
+    "plan": "Platinum",
+    "start": "2025-05-18",
+    "end": "2026-05-17",
+    "status": "expired",
+    "serials": [
+      "MT-CCS8-24-00077",
+      "MT-DHD300M-24-00078"
+    ],
+    "visits_used": 3,
+    "price_inr": 81000
+  },
+  {
+    "id": "AMC-2026-0007",
+    "customer_id": "CUST-0012",
+    "plan": "Basic",
+    "start": "2026-09-15",
+    "end": "2027-09-14",
+    "status": "active",
+    "serials": [
+      "MT-HAD25-26-05573",
+      "MT-CHL3A-23-09346",
+      "MT-CHL5A-22-09785"
+    ],
+    "visits_used": 2,
+    "price_inr": 129000
+  },
+  {
+    "id": "AMC-2025-0008",
+    "customer_id": "CUST-0013",
+    "plan": "Basic",
+    "start": "2025-12-08",
+    "end": "2026-12-07",
+    "status": "active",
+    "serials": [
+      "MT-VL3-25-05173",
+      "MT-MTCW90-22-08144",
+      "MT-MTCW60-23-09821",
+      "MT-GR400-22-04228"
+    ],
+    "visits_used": 2,
+    "price_inr": 159000
+  },
+  {
+    "id": "AMC-2026-0009",
+    "customer_id": "CUST-0014",
+    "plan": "Platinum",
+    "start": "2026-01-07",
+    "end": "2027-01-06",
+    "status": "active",
+    "serials": [
+      "MT-GR400-22-03851",
+      "MT-CCS8-23-05930",
+      "MT-CHL5A-23-01006",
+      "MT-HAD50-25-04443"
+    ],
+    "visits_used": 1,
+    "price_inr": 39000
+  },
+  {
+    "id": "AMC-2026-0010",
+    "customer_id": "CUST-0015",
+    "plan": "Comprehensive",
+    "start": "2026-01-05",
+    "end": "2027-01-04",
+    "status": "active",
+    "serials": [
+      "MT-MTCW120HP-22-04848",
+      "MT-GR400-24-04680",
+      "MT-DHD150-25-01400"
+    ],
+    "visits_used": 3,
+    "price_inr": 144000
+  },
+  {
+    "id": "AMC-2026-0011",
+    "customer_id": "CUST-0016",
+    "plan": "Platinum",
+    "start": "2026-02-21",
+    "end": "2027-02-20",
+    "status": "active",
+    "serials": [
+      "MT-MTCO150-22-07965"
+    ],
+    "visits_used": 0,
+    "price_inr": 134000
+  },
+  {
+    "id": "AMC-2025-0012",
+    "customer_id": "CUST-0017",
+    "plan": "Basic",
+    "start": "2025-12-22",
+    "end": "2026-12-21",
+    "status": "active",
+    "serials": [
+      "MT-CHL20W-23-09270",
+      "MT-CHL10W-22-09976",
+      "MT-CHL20W-25-08777"
+    ],
+    "visits_used": 2,
+    "price_inr": 78000
+  },
+  {
+    "id": "AMC-2025-0013",
+    "customer_id": "CUST-0018",
+    "plan": "Basic",
+    "start": "2025-11-17",
+    "end": "2026-11-16",
+    "status": "grace",
+    "serials": [
+      "MT-DHD50-25-04788"
+    ],
+    "visits_used": 3,
+    "price_inr": 124000
+  },
+  {
+    "id": "AMC-2026-0014",
+    "customer_id": "CUST-0019",
+    "plan": "Platinum",
+    "start": "2026-02-07",
+    "end": "2027-02-06",
+    "status": "active",
+    "serials": [
+      "MT-VL3-22-01320",
+      "MT-VL3-24-08814",
+      "MT-MTCW60-24-05892",
+      "MT-CHL5A-22-07865"
+    ],
+    "visits_used": 3,
+    "price_inr": 60000
+  },
+  {
+    "id": "AMC-2026-0015",
+    "customer_id": "CUST-0020",
+    "plan": "Comprehensive",
+    "start": "2026-09-05",
+    "end": "2027-09-04",
+    "status": "active",
+    "serials": [
+      "MT-CHL5A-23-01444"
+    ],
+    "visits_used": 2,
+    "price_inr": 72000
+  },
+  {
+    "id": "AMC-2026-0016",
+    "customer_id": "CUST-0025",
+    "plan": "Comprehensive",
+    "start": "2026-05-31",
+    "end": "2027-05-30",
+    "status": "active",
+    "serials": [
+      "MT-HAD100-25-02419",
+      "MT-HAD25-24-04995",
+      "MT-CHL20W-23-07209"
+    ],
+    "visits_used": 2,
+    "price_inr": 160000
+  },
+  {
+    "id": "AMC-2025-0017",
+    "customer_id": "CUST-0026",
+    "plan": "Basic",
+    "start": "2025-11-25",
+    "end": "2026-11-24",
+    "status": "active",
+    "serials": [
+      "MT-DHD300M-22-07658"
+    ],
+    "visits_used": 0,
+    "price_inr": 93000
+  },
+  {
+    "id": "AMC-2026-0018",
+    "customer_id": "CUST-0027",
+    "plan": "Platinum",
+    "start": "2026-02-05",
+    "end": "2027-02-04",
+    "status": "active",
+    "serials": [
+      "MT-HAD50-23-07046",
+      "MT-MDH500-23-09698"
+    ],
+    "visits_used": 1,
+    "price_inr": 98000
+  }
+]

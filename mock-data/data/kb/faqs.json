@@ -1,0 +1,391 @@
+[
+  {
+    "id": "FAQ-001",
+    "category": "warranty",
+    "question": "What is the warranty period on Matsui equipment?",
+    "paraphrases": [
+      "how long is the warranty",
+      "warranty kitna hai machine pe",
+      "is my dryer still under warranty after 1 year"
+    ],
+    "answer": "Standard warranty is 12 months from commissioning or 18 months from dispatch, whichever is earlier. Desiccant rotors have a separate 24-month warranty against delamination.",
+    "source_doc": "DOC-POL-WARRANTY-V2"
+  },
+  {
+    "id": "FAQ-002",
+    "category": "warranty",
+    "question": "Are filters and thermocouples covered under warranty?",
+    "paraphrases": [
+      "does warranty cover consumables",
+      "filter replacement free under warranty?"
+    ],
+    "answer": "No. Filters, gaskets, thermocouples, belts, hoses, descaling agent and refrigerant top-ups are consumables and are not covered by warranty. They are included in Comprehensive and Platinum AMC plans.",
+    "source_doc": "DOC-POL-WARRANTY-V2"
+  },
+  {
+    "id": "FAQ-003",
+    "category": "warranty",
+    "question": "How do I make a warranty claim?",
+    "paraphrases": [
+      "warranty claim process",
+      "how to claim warranty"
+    ],
+    "answer": "Raise a service request by email or chat with the machine serial number, the error code shown, and a photo of the nameplate. Warranty is confirmed against the commissioning report.",
+    "source_doc": "DOC-POL-WARRANTY-V2"
+  },
+  {
+    "id": "FAQ-004",
+    "category": "warranty",
+    "question": "Is travel charged for warranty repairs?",
+    "paraphrases": [
+      "will you charge travel for warranty visit",
+      "my plant is far from service centre, warranty visit charges?"
+    ],
+    "answer": "Labour and travel are free within 150 km of the nearest service centre. Beyond 150 km, travel is charged at the published rate.",
+    "source_doc": "DOC-POL-WARRANTY-V2"
+  },
+  {
+    "id": "FAQ-005",
+    "category": "amc",
+    "question": "What AMC plans do you offer?",
+    "paraphrases": [
+      "amc options",
+      "annual maintenance contract plans",
+      "difference between basic and comprehensive amc"
+    ],
+    "answer": "Three plans: Basic (2 preventive visits, 72 h response), Comprehensive (4 visits, unlimited breakdown visits, consumables included, 48 h response) and Platinum (4 visits, most parts included, 24 h response).",
+    "source_doc": "DOC-POL-AMC"
+  },
+  {
+    "id": "FAQ-006",
+    "category": "amc",
+    "question": "How much does an AMC cost?",
+    "paraphrases": [
+      "amc price",
+      "amc charges per year"
+    ],
+    "answer": "AMC is priced as a percentage of the machine's current list price per year: Basic 4%, Comprehensive 7%, Platinum 10%. Sites with 5 or more machines get 10% off.",
+    "source_doc": "DOC-POL-AMC"
+  },
+  {
+    "id": "FAQ-007",
+    "category": "amc",
+    "question": "My AMC expired last week. Can I renew it?",
+    "paraphrases": [
+      "renew lapsed amc",
+      "amc expired what to do"
+    ],
+    "answer": "Yes. A lapsed AMC can be renewed within 30 days of expiry without an inspection. After 30 days an inspection visit is required.",
+    "source_doc": "DOC-POL-AMC"
+  },
+  {
+    "id": "FAQ-008",
+    "category": "amc",
+    "question": "Does Platinum AMC cover the desiccant rotor?",
+    "paraphrases": [
+      "is rotor included in platinum",
+      "platinum amc compressor covered?"
+    ],
+    "answer": "No. Platinum covers parts except the desiccant rotor, compressor and controller board. Those get a 15% discount on Comprehensive and are chargeable on Platinum and Basic.",
+    "source_doc": "DOC-POL-AMC"
+  },
+  {
+    "id": "FAQ-009",
+    "category": "service",
+    "question": "What is your response time for a breakdown?",
+    "paraphrases": [
+      "how fast will engineer come",
+      "machine stopped how soon can someone visit",
+      "sla for breakdown"
+    ],
+    "answer": "Production-stopped (P1) issues get a first response within 1 hour and an on-site visit within 24 hours in service-centre cities (48 hours elsewhere). Platinum AMC customers get 24-hour on-site within 150 km of a service centre.",
+    "source_doc": "DOC-POL-SLA"
+  },
+  {
+    "id": "FAQ-010",
+    "category": "service",
+    "question": "What are your business hours?",
+    "paraphrases": [
+      "office timings",
+      "are you open on sunday"
+    ],
+    "answer": "Monday to Saturday, 09:00–18:00 IST. The P1 breakdown line is available 24x7.",
+    "source_doc": "DOC-POL-SLA"
+  },
+  {
+    "id": "FAQ-011",
+    "category": "service",
+    "question": "How do I escalate a service complaint?",
+    "paraphrases": [
+      "escalate ticket",
+      "engineer not responding who to contact"
+    ],
+    "answer": "Tickets escalate to the regional service manager if the SLA is breached by 4 hours, and to the head of service in Noida if breached by 24 hours or if you request escalation twice. Reply on your ticket asking to escalate.",
+    "source_doc": "DOC-POL-SLA"
+  },
+  {
+    "id": "FAQ-012",
+    "category": "service",
+    "question": "Where are your service centres?",
+    "paraphrases": [
+      "service centre list",
+      "do you have service in Hyderabad",
+      "nearest service center"
+    ],
+    "answer": "Noida, Ludhiana, Pune, Mumbai, Ahmedabad, Vadodara, Chennai, Bengaluru, Coimbatore, Hyderabad and Kolkata.",
+    "source_doc": "DOC-CO-OVERVIEW"
+  },
+  {
+    "id": "FAQ-013",
+    "category": "parts",
+    "question": "How long does spare part delivery take?",
+    "paraphrases": [
+      "spare part delivery time",
+      "when will i get the part"
+    ],
+    "answer": "In-stock parts at your regional warehouse dispatch the same business day if confirmed before 14:00 IST. Inter-warehouse transfers add 2–3 business days; imported parts take 3–5 weeks.",
+    "source_doc": "DOC-POL-PARTS"
+  },
+  {
+    "id": "FAQ-014",
+    "category": "parts",
+    "question": "Is shipping free for spare parts?",
+    "paraphrases": [
+      "courier charges for parts",
+      "shipping cost"
+    ],
+    "answer": "Shipping is free for orders above INR 25,000. Below that a flat INR 450 courier charge applies. Next-day express in service-centre cities costs INR 900.",
+    "source_doc": "DOC-POL-PARTS"
+  },
+  {
+    "id": "FAQ-015",
+    "category": "parts",
+    "question": "Can I return a spare part I ordered by mistake?",
+    "paraphrases": [
+      "return spare part",
+      "wrong part ordered refund"
+    ],
+    "answer": "Unused parts in original packing can be returned within 15 days with a 10% restocking fee. Installed electrical parts (controller boards, SSRs, sensors) cannot be returned.",
+    "source_doc": "DOC-POL-PARTS"
+  },
+  {
+    "id": "FAQ-016",
+    "category": "parts",
+    "question": "What details do I need to order a spare part?",
+    "paraphrases": [
+      "how to order spares",
+      "spare part order process"
+    ],
+    "answer": "Share the machine model and serial number so the part can be matched to the machine's bill of materials. You'll receive a proforma invoice to confirm.",
+    "source_doc": "DOC-POL-PARTS"
+  },
+  {
+    "id": "FAQ-017",
+    "category": "installation",
+    "question": "Is installation and commissioning free?",
+    "paraphrases": [
+      "commissioning charges",
+      "installation cost"
+    ],
+    "answer": "Commissioning is free within 150 km of a service centre. The signed commissioning report starts your warranty.",
+    "source_doc": "DOC-POL-INSTALL"
+  },
+  {
+    "id": "FAQ-018",
+    "category": "installation",
+    "question": "What power supply do Matsui machines need?",
+    "paraphrases": [
+      "voltage requirement",
+      "power supply for dryer"
+    ],
+    "answer": "Most machines need a stable 415 V 3-phase 50 Hz supply (±10%) with proper earthing. The VL-1 loader runs on 230 V single phase.",
+    "source_doc": "DOC-POL-INSTALL"
+  },
+  {
+    "id": "FAQ-019",
+    "category": "installation",
+    "question": "What water quality is needed for chillers and MTCs?",
+    "paraphrases": [
+      "water hardness for chiller",
+      "can i use borewell water in mtc"
+    ],
+    "answer": "Use treated water with hardness below 50 ppm. Untreated water causes scale, which is not covered by warranty.",
+    "source_doc": "DOC-POL-INSTALL"
+  },
+  {
+    "id": "FAQ-020",
+    "category": "process",
+    "question": "What drying temperature should I use for nylon (PA66)?",
+    "paraphrases": [
+      "pa66 drying temp",
+      "nylon drying time"
+    ],
+    "answer": "Starting point for PA6/PA66 in a dehumidifying dryer: 80 C for 4–6 hours. Always check the resin supplier's datasheet.",
+    "source_doc": "DOC-POL-INSTALL"
+  },
+  {
+    "id": "FAQ-021",
+    "category": "process",
+    "question": "Can I dry PC in a hot air dryer?",
+    "paraphrases": [
+      "polycarbonate hot air dryer",
+      "pc drying which dryer"
+    ],
+    "answer": "No. PC is hygroscopic and needs a dehumidifying dryer: about 120 C for 3–4 hours. Hot air dryers are for surface moisture on non-hygroscopic resins like PP and PE.",
+    "source_doc": "DOC-POL-INSTALL"
+  },
+  {
+    "id": "FAQ-022",
+    "category": "process",
+    "question": "What is the difference between a hot air dryer and a dehumidifying dryer?",
+    "paraphrases": [
+      "hot air vs dehumidifying dryer",
+      "which dryer should i buy"
+    ],
+    "answer": "Hot air dryers heat ambient air and remove surface moisture from non-hygroscopic resins. Dehumidifying dryers use a desiccant rotor to make air at about -40 C dew point, removing moisture absorbed inside hygroscopic resins like PA, PC, PET and PBT.",
+    "source_doc": "DOC-MAN-DHD"
+  },
+  {
+    "id": "FAQ-023",
+    "category": "safety",
+    "question": "My machine is smoking. What should I do?",
+    "paraphrases": [
+      "burning smell from dryer",
+      "sparks from panel"
+    ],
+    "answer": "Switch off and isolate the main power immediately, keep people away, and call the 24x7 breakdown line. Do not attempt repairs. This is handled as a P1 safety issue.",
+    "source_doc": "DOC-POL-SAFETY"
+  },
+  {
+    "id": "FAQ-024",
+    "category": "safety",
+    "question": "Can I bypass the granulator interlock to clear a jam faster?",
+    "paraphrases": [
+      "bypass interlock",
+      "disable safety switch granulator"
+    ],
+    "answer": "No. Never bypass safety interlocks. Isolate and lock out power, then open the chamber to clear the jam.",
+    "source_doc": "DOC-POL-SAFETY"
+  },
+  {
+    "id": "FAQ-025",
+    "category": "product",
+    "question": "What products does Matsui India offer?",
+    "paraphrases": [
+      "product range",
+      "what do you sell"
+    ],
+    "answer": "Mold temperature controllers, dehumidifying and hot air dryers, chillers, mold dehumidifiers, conveying systems and recycling granulators, plus industry, recycling, powder, re-pelletizing and medical plastics solutions.",
+    "source_doc": "DOC-CO-OVERVIEW"
+  },
+  {
+    "id": "FAQ-026",
+    "category": "product",
+    "question": "Do you make oil-type mold temperature controllers?",
+    "paraphrases": [
+      "oil mtc",
+      "mtc above 120 degree"
+    ],
+    "answer": "Yes. The MTC-O150 is an oil-type unit rated up to 150 C. Water units go up to 95 C, and the pressurised MTC-W120HP goes up to 120 C.",
+    "source_doc": "DOC-MAN-MTC"
+  },
+  {
+    "id": "FAQ-027",
+    "category": "product",
+    "question": "Which chiller size do I need?",
+    "paraphrases": [
+      "chiller sizing",
+      "how many TR chiller for my machine"
+    ],
+    "answer": "It depends on your machines' heat load. Our range covers 3 TR and 5 TR air-cooled and 10 TR and 20 TR water-cooled. Share your machine tonnage and materials and our sales team will size it.",
+    "source_doc": "DOC-MAN-CHL"
+  },
+  {
+    "id": "FAQ-028",
+    "category": "account",
+    "question": "How do I check the status of my service ticket?",
+    "paraphrases": [
+      "ticket status",
+      "where is my complaint"
+    ],
+    "answer": "Share your ticket number (for example SR-2026-00123) in chat or reply to the ticket email and we'll give you the latest status.",
+    "source_doc": "DOC-POL-SLA"
+  },
+  {
+    "id": "FAQ-029",
+    "category": "account",
+    "question": "How do I update my company's contact person?",
+    "paraphrases": [
+      "change contact email",
+      "update phone number in records"
+    ],
+    "answer": "Email support from your registered company address with the new contact's name, email and phone. Changes are verified before updating.",
+    "source_doc": "DOC-CO-OVERVIEW"
+  },
+  {
+    "id": "FAQ-030",
+    "category": "maintenance",
+    "question": "How often should I clean the dryer filter?",
+    "paraphrases": [
+      "filter cleaning frequency",
+      "dryer filter maintenance"
+    ],
+    "answer": "Check the process filter weekly and clean it with compressed air from the clean side; more often with dusty regrind. Replace if torn. A clogged filter raises dew point and can trip the blower.",
+    "source_doc": "DOC-MAN-DHD"
+  },
+  {
+    "id": "FAQ-031",
+    "category": "maintenance",
+    "question": "How often should I descale my mold temperature controller?",
+    "paraphrases": [
+      "descaling frequency mtc",
+      "scale in mold channels"
+    ],
+    "answer": "With treated water, descale every 6–12 months; with hard water, every 3 months. Use a descaling pump and an approved agent.",
+    "source_doc": "DOC-MAN-MTC"
+  },
+  {
+    "id": "FAQ-032",
+    "category": "maintenance",
+    "question": "When should the desiccant rotor be replaced?",
+    "paraphrases": [
+      "rotor life",
+      "desiccant change interval"
+    ],
+    "answer": "Typically every 3–5 years depending on hours and contamination. Replace if dew point stays above -20 C after the filter and regeneration heater have been checked.",
+    "source_doc": "DOC-MAN-DHD"
+  },
+  {
+    "id": "FAQ-033",
+    "category": "sales",
+    "question": "How do I get a quotation for a new machine?",
+    "paraphrases": [
+      "price of dhd-150",
+      "need quote for chiller"
+    ],
+    "answer": "Share the machine you're interested in, your material, throughput and plant location. Our sales team will send a quotation within 2 business days.",
+    "source_doc": "DOC-CO-OVERVIEW"
+  },
+  {
+    "id": "FAQ-034",
+    "category": "sales",
+    "question": "Do you offer demo or trial units?",
+    "paraphrases": [
+      "trial machine",
+      "demo unit available"
+    ],
+    "answer": "Trial units can be arranged for some dryers and granulators depending on availability. Our sales team will confirm.",
+    "source_doc": "DOC-CO-OVERVIEW"
+  },
+  {
+    "id": "FAQ-035",
+    "category": "general",
+    "question": "Do you support customers outside India?",
+    "paraphrases": [
+      "export service",
+      "service in bangladesh"
+    ],
+    "answer": "This desk supports customers in India. For other countries, we'll connect you with the regional Matsui office.",
+    "source_doc": "DOC-CO-OVERVIEW"
+  }
+]

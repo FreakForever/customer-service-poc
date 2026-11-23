@@ -1,0 +1,572 @@
+[
+  {
+    "id": "CUST-0001",
+    "company": "Aarav Polymers",
+    "demo_label": "synthetic company",
+    "industry": "automotive",
+    "city": "Pune",
+    "service_centre": "SC-PUN",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Rohit Sharma",
+        "email": "rohit.sharma@demo-aarav-polymers.example",
+        "phone": "+91-90000-000010",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-aarav-polymers.example",
+    "created_at": "2024-11-17"
+  },
+  {
+    "id": "CUST-0002",
+    "company": "Kaveri Packaging",
+    "demo_label": "synthetic company",
+    "industry": "packaging",
+    "city": "Chakan",
+    "service_centre": "SC-PUN",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Priya Iyer",
+        "email": "priya.iyer@demo-kaveri-packaging.example",
+        "phone": "+91-90000-000020",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-kaveri-packaging.example",
+    "created_at": "2025-09-20"
+  },
+  {
+    "id": "CUST-0003",
+    "company": "Orion Auto Components",
+    "demo_label": "synthetic company",
+    "industry": "automotive",
+    "city": "Chennai",
+    "service_centre": "SC-CHE",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Anand Patel",
+        "email": "anand.patel@demo-orion-auto-components.example",
+        "phone": "+91-90000-000030",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-orion-auto-components.example",
+    "created_at": "2025-12-04"
+  },
+  {
+    "id": "CUST-0004",
+    "company": "Lotus Medi-Plast",
+    "demo_label": "synthetic company",
+    "industry": "medical",
+    "city": "Coimbatore",
+    "service_centre": "SC-CBE",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Sneha Nair",
+        "email": "sneha.nair@demo-lotus-medi-plast.example",
+        "phone": "+91-90000-000040",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-lotus-medi-plast.example",
+    "created_at": "2024-04-11"
+  },
+  {
+    "id": "CUST-0005",
+    "company": "Trident Industries",
+    "demo_label": "synthetic company",
+    "industry": "household",
+    "city": "Ludhiana",
+    "service_centre": "SC-LDH",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Vikram Singh",
+        "email": "vikram.singh@demo-trident-industries.example",
+        "phone": "+91-90000-000050",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-trident-industries.example",
+    "created_at": "2025-08-19"
+  },
+  {
+    "id": "CUST-0006",
+    "company": "Deccan Technoplast",
+    "demo_label": "synthetic company",
+    "industry": "appliances",
+    "city": "Hyderabad",
+    "service_centre": "SC-HYD",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Kavya Reddy",
+        "email": "kavya.reddy@demo-deccan-technoplast.example",
+        "phone": "+91-90000-000060",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-deccan-technoplast.example",
+    "created_at": "2024-05-05"
+  },
+  {
+    "id": "CUST-0007",
+    "company": "Sahyadri Moulding Works",
+    "demo_label": "synthetic company",
+    "industry": "packaging",
+    "city": "Mumbai",
+    "service_centre": "SC-MUM",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Arjun Menon",
+        "email": "arjun.menon@demo-sahyadri-moulding-works.example",
+        "phone": "+91-90000-000070",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-sahyadri-moulding-works.example",
+    "created_at": "2024-12-12"
+  },
+  {
+    "id": "CUST-0008",
+    "company": "Navkar Precision Plastics",
+    "demo_label": "synthetic company",
+    "industry": "electrical",
+    "city": "Ahmedabad",
+    "service_centre": "SC-AMD",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Meera Joshi",
+        "email": "meera.joshi@demo-navkar-precision-plastics.example",
+        "phone": "+91-90000-000080",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-navkar-precision-plastics.example",
+    "created_at": "2022-11-13"
+  },
+  {
+    "id": "CUST-0009",
+    "company": "Indus Polymers",
+    "demo_label": "synthetic company",
+    "industry": "automotive",
+    "city": "Gurugram",
+    "service_centre": "SC-NOI",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Suresh Rao",
+        "email": "suresh.rao@demo-indus-polymers.example",
+        "phone": "+91-90000-000090",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-indus-polymers.example",
+    "created_at": "2024-01-14"
+  },
+  {
+    "id": "CUST-0010",
+    "company": "Vihaan Technoplast",
+    "demo_label": "synthetic company",
+    "industry": "electrical",
+    "city": "Bengaluru",
+    "service_centre": "SC-BLR",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Farhan Khan",
+        "email": "farhan.khan@demo-vihaan-technoplast.example",
+        "phone": "+91-90000-000100",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-vihaan-technoplast.example",
+    "created_at": "2024-11-07"
+  },
+  {
+    "id": "CUST-0011",
+    "company": "Deccan Plastomoulds",
+    "demo_label": "synthetic company",
+    "industry": "appliances",
+    "city": "Jalandhar",
+    "service_centre": "SC-LDH",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Neha Joshi",
+        "email": "neha.joshi@demo-deccan-plastomoulds.example",
+        "phone": "+91-90000-000110",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-deccan-plastomoulds.example",
+    "created_at": "2025-01-26"
+  },
+  {
+    "id": "CUST-0012",
+    "company": "Nilgiri Precision Plastics",
+    "demo_label": "synthetic company",
+    "industry": "medical",
+    "city": "Jamshedpur",
+    "service_centre": "SC-KOL",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Kavya Shetty",
+        "email": "kavya.shetty@demo-nilgiri-precision-plastics.example",
+        "phone": "+91-90000-000120",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-nilgiri-precision-plastics.example",
+    "created_at": "2024-11-10"
+  },
+  {
+    "id": "CUST-0013",
+    "company": "Konark Industries",
+    "demo_label": "synthetic company",
+    "industry": "medical",
+    "city": "Bidadi",
+    "service_centre": "SC-BLR",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Manoj Khan",
+        "email": "manoj.khan@demo-konark-industries.example",
+        "phone": "+91-90000-000130",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-konark-industries.example",
+    "created_at": "2025-08-25"
+  },
+  {
+    "id": "CUST-0014",
+    "company": "Narmada Precision Plastics",
+    "demo_label": "synthetic company",
+    "industry": "household",
+    "city": "Kolkata",
+    "service_centre": "SC-KOL",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Karthik Bhatia",
+        "email": "karthik.bhatia@demo-narmada-precision-plastics.example",
+        "phone": "+91-90000-000140",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-narmada-precision-plastics.example",
+    "created_at": "2023-11-15"
+  },
+  {
+    "id": "CUST-0015",
+    "company": "Pinnacle Industries",
+    "demo_label": "synthetic company",
+    "industry": "toys",
+    "city": "Tiruppur",
+    "service_centre": "SC-CBE",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Nikhil Patel",
+        "email": "nikhil.patel@demo-pinnacle-industries.example",
+        "phone": "+91-90000-000150",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-pinnacle-industries.example",
+    "created_at": "2023-10-18"
+  },
+  {
+    "id": "CUST-0016",
+    "company": "Bluepeak Precision Plastics",
+    "demo_label": "synthetic company",
+    "industry": "appliances",
+    "city": "Chandigarh",
+    "service_centre": "SC-LDH",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Priya Verma",
+        "email": "priya.verma@demo-bluepeak-precision-plastics.example",
+        "phone": "+91-90000-000160",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-bluepeak-precision-plastics.example",
+    "created_at": "2024-12-13"
+  },
+  {
+    "id": "CUST-0017",
+    "company": "Narmada Injection Systems",
+    "demo_label": "synthetic company",
+    "industry": "medical",
+    "city": "Tiruppur",
+    "service_centre": "SC-CBE",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Nikhil Mehta",
+        "email": "nikhil.mehta@demo-narmada-injection-systems.example",
+        "phone": "+91-90000-000170",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-narmada-injection-systems.example",
+    "created_at": "2023-08-19"
+  },
+  {
+    "id": "CUST-0018",
+    "company": "Lotus Auto Components",
+    "demo_label": "synthetic company",
+    "industry": "packaging",
+    "city": "Halol",
+    "service_centre": "SC-VAD",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Anand Chatterjee",
+        "email": "anand.chatterjee@demo-lotus-auto-components.example",
+        "phone": "+91-90000-000180",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-lotus-auto-components.example",
+    "created_at": "2024-01-24"
+  },
+  {
+    "id": "CUST-0019",
+    "company": "Vasundhara Precision Plastics",
+    "demo_label": "synthetic company",
+    "industry": "toys",
+    "city": "Kolkata",
+    "service_centre": "SC-KOL",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Manoj Kulkarni",
+        "email": "manoj.kulkarni@demo-vasundhara-precision-plastics.example",
+        "phone": "+91-90000-000190",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-vasundhara-precision-plastics.example",
+    "created_at": "2023-08-12"
+  },
+  {
+    "id": "CUST-0020",
+    "company": "Everline Injection Systems",
+    "demo_label": "synthetic company",
+    "industry": "toys",
+    "city": "Chakan",
+    "service_centre": "SC-PUN",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Imran Gupta",
+        "email": "imran.gupta@demo-everline-injection-systems.example",
+        "phone": "+91-90000-000200",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-everline-injection-systems.example",
+    "created_at": "2026-01-25"
+  },
+  {
+    "id": "CUST-0021",
+    "company": "Meridian Auto Components",
+    "demo_label": "synthetic company",
+    "industry": "toys",
+    "city": "Hosur",
+    "service_centre": "SC-CHE",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Deepa Iyer",
+        "email": "deepa.iyer@demo-meridian-auto-components.example",
+        "phone": "+91-90000-000210",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-meridian-auto-components.example",
+    "created_at": "2026-03-05"
+  },
+  {
+    "id": "CUST-0022",
+    "company": "Nilgiri Plastomoulds",
+    "demo_label": "synthetic company",
+    "industry": "packaging",
+    "city": "Rajkot",
+    "service_centre": "SC-AMD",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Divya Reddy",
+        "email": "divya.reddy@demo-nilgiri-plastomoulds.example",
+        "phone": "+91-90000-000220",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-nilgiri-plastomoulds.example",
+    "created_at": "2023-02-07"
+  },
+  {
+    "id": "CUST-0023",
+    "company": "Omkar Medi-Plast",
+    "demo_label": "synthetic company",
+    "industry": "electrical",
+    "city": "Jamshedpur",
+    "service_centre": "SC-KOL",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Shalini Reddy",
+        "email": "shalini.reddy@demo-omkar-medi-plast.example",
+        "phone": "+91-90000-000230",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-omkar-medi-plast.example",
+    "created_at": "2023-03-05"
+  },
+  {
+    "id": "CUST-0024",
+    "company": "Sunrise Auto Components",
+    "demo_label": "synthetic company",
+    "industry": "appliances",
+    "city": "Bengaluru",
+    "service_centre": "SC-BLR",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Kavya Mehta",
+        "email": "kavya.mehta@demo-sunrise-auto-components.example",
+        "phone": "+91-90000-000240",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-sunrise-auto-components.example",
+    "created_at": "2024-10-31"
+  },
+  {
+    "id": "CUST-0025",
+    "company": "Meridian Medi-Plast",
+    "demo_label": "synthetic company",
+    "industry": "packaging",
+    "city": "Ranjangaon",
+    "service_centre": "SC-PUN",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Lakshmi Singh",
+        "email": "lakshmi.singh@demo-meridian-medi-plast.example",
+        "phone": "+91-90000-000250",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-meridian-medi-plast.example",
+    "created_at": "2024-05-11"
+  },
+  {
+    "id": "CUST-0026",
+    "company": "Aarav Industries",
+    "demo_label": "synthetic company",
+    "industry": "appliances",
+    "city": "Delhi",
+    "service_centre": "SC-NOI",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Deepa Pillai",
+        "email": "deepa.pillai@demo-aarav-industries.example",
+        "phone": "+91-90000-000260",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-aarav-industries.example",
+    "created_at": "2023-11-02"
+  },
+  {
+    "id": "CUST-0027",
+    "company": "Orion Medi-Plast",
+    "demo_label": "synthetic company",
+    "industry": "medical",
+    "city": "Vadodara",
+    "service_centre": "SC-VAD",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Neha Bhatia",
+        "email": "neha.bhatia@demo-orion-medi-plast.example",
+        "phone": "+91-90000-000270",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-orion-medi-plast.example",
+    "created_at": "2024-10-30"
+  },
+  {
+    "id": "CUST-0028",
+    "company": "Sahyadri Industries",
+    "demo_label": "synthetic company",
+    "industry": "automotive",
+    "city": "Vadodara",
+    "service_centre": "SC-VAD",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Venkat Singh",
+        "email": "venkat.singh@demo-sahyadri-industries.example",
+        "phone": "+91-90000-000280",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-sahyadri-industries.example",
+    "created_at": "2024-09-08"
+  },
+  {
+    "id": "CUST-0029",
+    "company": "Narmada Packaging",
+    "demo_label": "synthetic company",
+    "industry": "toys",
+    "city": "Aurangabad",
+    "service_centre": "SC-PUN",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Lakshmi Reddy",
+        "email": "lakshmi.reddy@demo-narmada-packaging.example",
+        "phone": "+91-90000-000290",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-narmada-packaging.example",
+    "created_at": "2026-04-12"
+  },
+  {
+    "id": "CUST-0030",
+    "company": "Ganga Injection Systems",
+    "demo_label": "synthetic company",
+    "industry": "household",
+    "city": "Medak",
+    "service_centre": "SC-HYD",
+    "gstin": null,
+    "contacts": [
+      {
+        "name": "Priya Nair",
+        "email": "priya.nair@demo-ganga-injection-systems.example",
+        "phone": "+91-90000-000300",
+        "role": "maintenance head"
+      }
+    ],
+    "email_domain": "demo-ganga-injection-systems.example",
+    "created_at": "2025-07-06"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "WH-NOI",
+    "name": "Noida central warehouse",
+    "city": "Noida",
+    "region": "North"
+  },
+  {
+    "id": "WH-PUN",
+    "name": "Pune regional warehouse",
+    "city": "Pune",
+    "region": "West"
+  },
+  {
+    "id": "WH-CHE",
+    "name": "Chennai regional warehouse",
+    "city": "Chennai",
+    "region": "South"
+  },
+  {
+    "id": "WH-AMD",
+    "name": "Ahmedabad regional warehouse",
+    "city": "Ahmedabad",
+    "region": "West"
+  }
+]

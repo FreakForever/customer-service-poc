@@ -1,0 +1,1107 @@
+{"src": "MTC", "type": "USED_IN", "dst": "IND-automotive", "props": {}}
+{"src": "MTC", "type": "USED_IN", "dst": "IND-appliances", "props": {}}
+{"src": "MTC", "type": "USED_IN", "dst": "IND-packaging", "props": {}}
+{"src": "MTC", "type": "USED_IN", "dst": "IND-medical", "props": {}}
+{"src": "DHD", "type": "USED_IN", "dst": "IND-automotive", "props": {}}
+{"src": "DHD", "type": "USED_IN", "dst": "IND-electrical", "props": {}}
+{"src": "DHD", "type": "USED_IN", "dst": "IND-medical", "props": {}}
+{"src": "DHD", "type": "USED_IN", "dst": "IND-packaging", "props": {}}
+{"src": "HAD", "type": "USED_IN", "dst": "IND-packaging", "props": {}}
+{"src": "HAD", "type": "USED_IN", "dst": "IND-household", "props": {}}
+{"src": "HAD", "type": "USED_IN", "dst": "IND-toys", "props": {}}
+{"src": "CHL", "type": "USED_IN", "dst": "IND-automotive", "props": {}}
+{"src": "CHL", "type": "USED_IN", "dst": "IND-packaging", "props": {}}
+{"src": "CHL", "type": "USED_IN", "dst": "IND-appliances", "props": {}}
+{"src": "CHL", "type": "USED_IN", "dst": "IND-medical", "props": {}}
+{"src": "MDH", "type": "USED_IN", "dst": "IND-packaging", "props": {}}
+{"src": "MDH", "type": "USED_IN", "dst": "IND-medical", "props": {}}
+{"src": "CCS", "type": "USED_IN", "dst": "IND-automotive", "props": {}}
+{"src": "CCS", "type": "USED_IN", "dst": "IND-packaging", "props": {}}
+{"src": "CCS", "type": "USED_IN", "dst": "IND-appliances", "props": {}}
+{"src": "CCS", "type": "USED_IN", "dst": "IND-electrical", "props": {}}
+{"src": "RCY", "type": "USED_IN", "dst": "IND-packaging", "props": {}}
+{"src": "RCY", "type": "USED_IN", "dst": "IND-automotive", "props": {}}
+{"src": "RCY", "type": "USED_IN", "dst": "IND-household", "props": {}}
+{"src": "MTC-W60", "type": "BELONGS_TO", "dst": "MTC", "props": {}}
+{"src": "MTC-W90", "type": "BELONGS_TO", "dst": "MTC", "props": {}}
+{"src": "MTC-W120HP", "type": "BELONGS_TO", "dst": "MTC", "props": {}}
+{"src": "MTC-O150", "type": "BELONGS_TO", "dst": "MTC", "props": {}}
+{"src": "DHD-50", "type": "BELONGS_TO", "dst": "DHD", "props": {}}
+{"src": "DHD-100", "type": "BELONGS_TO", "dst": "DHD", "props": {}}
+{"src": "DHD-150", "type": "BELONGS_TO", "dst": "DHD", "props": {}}
+{"src": "DHD-300M", "type": "BELONGS_TO", "dst": "DHD", "props": {}}
+{"src": "HAD-25", "type": "BELONGS_TO", "dst": "HAD", "props": {}}
+{"src": "HAD-50", "type": "BELONGS_TO", "dst": "HAD", "props": {}}
+{"src": "HAD-100", "type": "BELONGS_TO", "dst": "HAD", "props": {}}
+{"src": "CHL-3A", "type": "BELONGS_TO", "dst": "CHL", "props": {}}
+{"src": "CHL-5A", "type": "BELONGS_TO", "dst": "CHL", "props": {}}
+{"src": "CHL-10W", "type": "BELONGS_TO", "dst": "CHL", "props": {}}
+{"src": "CHL-20W", "type": "BELONGS_TO", "dst": "CHL", "props": {}}
+{"src": "MDH-500", "type": "BELONGS_TO", "dst": "MDH", "props": {}}
+{"src": "MDH-1000", "type": "BELONGS_TO", "dst": "MDH", "props": {}}
+{"src": "VL-1", "type": "BELONGS_TO", "dst": "CCS", "props": {}}
+{"src": "VL-3", "type": "BELONGS_TO", "dst": "CCS", "props": {}}
+{"src": "CCS-8", "type": "BELONGS_TO", "dst": "CCS", "props": {}}
+{"src": "GR-200", "type": "BELONGS_TO", "dst": "RCY", "props": {}}
+{"src": "GR-400", "type": "BELONGS_TO", "dst": "RCY", "props": {}}
+{"src": "GR-600", "type": "BELONGS_TO", "dst": "RCY", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-HTR", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-HTR", "props": {}}
+{"src": "HAD", "type": "HAS_COMPONENT", "dst": "CMP-HTR", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-RHTR", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-SSR", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-SSR", "props": {}}
+{"src": "HAD", "type": "HAS_COMPONENT", "dst": "CMP-SSR", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-TC", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-TC", "props": {}}
+{"src": "HAD", "type": "HAS_COMPONENT", "dst": "CMP-TC", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-TC", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-PUMP", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-PUMP", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-BLW", "props": {}}
+{"src": "HAD", "type": "HAS_COMPONENT", "dst": "CMP-BLW", "props": {}}
+{"src": "MDH", "type": "HAS_COMPONENT", "dst": "CMP-BLW", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-BLW", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-FLT", "props": {}}
+{"src": "HAD", "type": "HAS_COMPONENT", "dst": "CMP-FLT", "props": {}}
+{"src": "MDH", "type": "HAS_COMPONENT", "dst": "CMP-FLT", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-FLT", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-ROTOR", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-DPS", "props": {}}
+{"src": "MDH", "type": "HAS_COMPONENT", "dst": "CMP-DPS", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-COMP", "props": {}}
+{"src": "MDH", "type": "HAS_COMPONENT", "dst": "CMP-COMP", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-COND", "props": {}}
+{"src": "MDH", "type": "HAS_COMPONENT", "dst": "CMP-COND", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-EVAP", "props": {}}
+{"src": "MDH", "type": "HAS_COMPONENT", "dst": "CMP-EVAP", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-FSW", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-FSW", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-LSW", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-LSW", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-PLC", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-PLC", "props": {}}
+{"src": "HAD", "type": "HAS_COMPONENT", "dst": "CMP-PLC", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-PLC", "props": {}}
+{"src": "MDH", "type": "HAS_COMPONENT", "dst": "CMP-PLC", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-PLC", "props": {}}
+{"src": "RCY", "type": "HAS_COMPONENT", "dst": "CMP-PLC", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-SOL", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-SOL", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-SOL", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-PHR", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-PHR", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-PHR", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-PHR", "props": {}}
+{"src": "RCY", "type": "HAS_COMPONENT", "dst": "CMP-PHR", "props": {}}
+{"src": "RCY", "type": "HAS_COMPONENT", "dst": "CMP-MOT", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-MOT", "props": {}}
+{"src": "RCY", "type": "HAS_COMPONENT", "dst": "CMP-BLADE", "props": {}}
+{"src": "RCY", "type": "HAS_COMPONENT", "dst": "CMP-SCR", "props": {}}
+{"src": "RCY", "type": "HAS_COMPONENT", "dst": "CMP-ILK", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-ILK", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-PROX", "props": {}}
+{"src": "DHD", "type": "HAS_COMPONENT", "dst": "CMP-PROX", "props": {}}
+{"src": "HAD", "type": "HAS_COMPONENT", "dst": "CMP-PROX", "props": {}}
+{"src": "CCS", "type": "HAS_COMPONENT", "dst": "CMP-HOSE", "props": {}}
+{"src": "CHL", "type": "HAS_COMPONENT", "dst": "CMP-PRS", "props": {}}
+{"src": "MTC", "type": "HAS_COMPONENT", "dst": "CMP-PRS", "props": {}}
+{"src": "C-HTR-OPEN", "type": "AFFECTS", "dst": "CMP-HTR", "props": {}}
+{"src": "C-RHTR-OPEN", "type": "AFFECTS", "dst": "CMP-RHTR", "props": {}}
+{"src": "C-SSR-FAIL", "type": "AFFECTS", "dst": "CMP-SSR", "props": {}}
+{"src": "C-TC-OPEN", "type": "AFFECTS", "dst": "CMP-TC", "props": {}}
+{"src": "C-TC-DRIFT", "type": "AFFECTS", "dst": "CMP-TC", "props": {}}
+{"src": "C-FLT-CLOG", "type": "AFFECTS", "dst": "CMP-FLT", "props": {}}
+{"src": "C-ROTOR-DEG", "type": "AFFECTS", "dst": "CMP-ROTOR", "props": {}}
+{"src": "C-DPS-FAULT", "type": "AFFECTS", "dst": "CMP-DPS", "props": {}}
+{"src": "C-BLW-OVL", "type": "AFFECTS", "dst": "CMP-BLW", "props": {}}
+{"src": "C-PHASE-LOSS", "type": "AFFECTS", "dst": "CMP-PHR", "props": {}}
+{"src": "C-PHASE-REV", "type": "AFFECTS", "dst": "CMP-PHR", "props": {}}
+{"src": "C-LOW-WATER", "type": "AFFECTS", "dst": "CMP-LSW", "props": {}}
+{"src": "C-PUMP-SEIZED", "type": "AFFECTS", "dst": "CMP-PUMP", "props": {}}
+{"src": "C-SCALE", "type": "AFFECTS", "dst": "CMP-PUMP", "props": {}}
+{"src": "C-FSW-FAULT", "type": "AFFECTS", "dst": "CMP-FSW", "props": {}}
+{"src": "C-REF-LEAK", "type": "AFFECTS", "dst": "CMP-COMP", "props": {}}
+{"src": "C-COND-DIRTY", "type": "AFFECTS", "dst": "CMP-COND", "props": {}}
+{"src": "C-CW-LOW", "type": "AFFECTS", "dst": "CMP-COND", "props": {}}
+{"src": "C-AMB-HIGH", "type": "AFFECTS", "dst": "CMP-COND", "props": {}}
+{"src": "C-COMP-OVL", "type": "AFFECTS", "dst": "CMP-COMP", "props": {}}
+{"src": "C-EVAP-FREEZE", "type": "AFFECTS", "dst": "CMP-EVAP", "props": {}}
+{"src": "C-VAC-LEAK", "type": "AFFECTS", "dst": "CMP-HOSE", "props": {}}
+{"src": "C-HOSE-BLOCK", "type": "AFFECTS", "dst": "CMP-HOSE", "props": {}}
+{"src": "C-BRIDGE", "type": "AFFECTS", "dst": "CMP-PROX", "props": {}}
+{"src": "C-PROX-DIRTY", "type": "AFFECTS", "dst": "CMP-PROX", "props": {}}
+{"src": "C-BLADE-DULL", "type": "AFFECTS", "dst": "CMP-BLADE", "props": {}}
+{"src": "C-OVERFEED", "type": "AFFECTS", "dst": "CMP-MOT", "props": {}}
+{"src": "C-ILK-OPEN", "type": "AFFECTS", "dst": "CMP-ILK", "props": {}}
+{"src": "C-SCR-CLOG", "type": "AFFECTS", "dst": "CMP-SCR", "props": {}}
+{"src": "C-PLC-COMM", "type": "AFFECTS", "dst": "CMP-PLC", "props": {}}
+{"src": "C-SOL-STUCK", "type": "AFFECTS", "dst": "CMP-SOL", "props": {}}
+{"src": "C-HP-TRIP", "type": "AFFECTS", "dst": "CMP-PRS", "props": {}}
+{"src": "C-SETPOINT", "type": "AFFECTS", "dst": "CMP-PLC", "props": {}}
+{"src": "C-MOT-OVL", "type": "AFFECTS", "dst": "CMP-MOT", "props": {}}
+{"src": "MTC-E01", "type": "FOR_FAMILY", "dst": "MTC", "props": {}}
+{"src": "MTC-E01", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MTC", "props": {}}
+{"src": "MTC-W60", "type": "CAN_RAISE", "dst": "MTC-E01", "props": {}}
+{"src": "MTC-W90", "type": "CAN_RAISE", "dst": "MTC-E01", "props": {}}
+{"src": "MTC-W120HP", "type": "CAN_RAISE", "dst": "MTC-E01", "props": {}}
+{"src": "MTC-O150", "type": "CAN_RAISE", "dst": "MTC-E01", "props": {}}
+{"src": "MTC-E01", "type": "CAUSED_BY", "dst": "C-LOW-WATER", "props": {"likelihood": 0.7, "family": "MTC"}}
+{"src": "MTC-E01", "type": "CAUSED_BY", "dst": "C-FSW-FAULT", "props": {"likelihood": 0.2, "family": "MTC"}}
+{"src": "MTC-E01", "type": "CAUSED_BY", "dst": "C-SOL-STUCK", "props": {"likelihood": 0.1, "family": "MTC"}}
+{"src": "MTC-E02", "type": "FOR_FAMILY", "dst": "MTC", "props": {}}
+{"src": "MTC-E02", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MTC", "props": {}}
+{"src": "MTC-W60", "type": "CAN_RAISE", "dst": "MTC-E02", "props": {}}
+{"src": "MTC-W90", "type": "CAN_RAISE", "dst": "MTC-E02", "props": {}}
+{"src": "MTC-W120HP", "type": "CAN_RAISE", "dst": "MTC-E02", "props": {}}
+{"src": "MTC-O150", "type": "CAN_RAISE", "dst": "MTC-E02", "props": {}}
+{"src": "MTC-E02", "type": "CAUSED_BY", "dst": "C-SSR-FAIL", "props": {"likelihood": 0.5, "family": "MTC"}}
+{"src": "MTC-E02", "type": "CAUSED_BY", "dst": "C-TC-DRIFT", "props": {"likelihood": 0.3, "family": "MTC"}}
+{"src": "MTC-E02", "type": "CAUSED_BY", "dst": "C-SETPOINT", "props": {"likelihood": 0.2, "family": "MTC"}}
+{"src": "MTC-E03", "type": "FOR_FAMILY", "dst": "MTC", "props": {}}
+{"src": "MTC-E03", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MTC", "props": {}}
+{"src": "MTC-W60", "type": "CAN_RAISE", "dst": "MTC-E03", "props": {}}
+{"src": "MTC-W90", "type": "CAN_RAISE", "dst": "MTC-E03", "props": {}}
+{"src": "MTC-W120HP", "type": "CAN_RAISE", "dst": "MTC-E03", "props": {}}
+{"src": "MTC-O150", "type": "CAN_RAISE", "dst": "MTC-E03", "props": {}}
+{"src": "MTC-E03", "type": "CAUSED_BY", "dst": "C-TC-OPEN", "props": {"likelihood": 0.9, "family": "MTC"}}
+{"src": "MTC-E03", "type": "CAUSED_BY", "dst": "C-PLC-COMM", "props": {"likelihood": 0.1, "family": "MTC"}}
+{"src": "MTC-E04", "type": "FOR_FAMILY", "dst": "MTC", "props": {}}
+{"src": "MTC-E04", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MTC", "props": {}}
+{"src": "MTC-W60", "type": "CAN_RAISE", "dst": "MTC-E04", "props": {}}
+{"src": "MTC-W90", "type": "CAN_RAISE", "dst": "MTC-E04", "props": {}}
+{"src": "MTC-W120HP", "type": "CAN_RAISE", "dst": "MTC-E04", "props": {}}
+{"src": "MTC-O150", "type": "CAN_RAISE", "dst": "MTC-E04", "props": {}}
+{"src": "MTC-E04", "type": "CAUSED_BY", "dst": "C-PUMP-SEIZED", "props": {"likelihood": 0.5, "family": "MTC"}}
+{"src": "MTC-E04", "type": "CAUSED_BY", "dst": "C-SCALE", "props": {"likelihood": 0.35, "family": "MTC"}}
+{"src": "MTC-E04", "type": "CAUSED_BY", "dst": "C-PHASE-LOSS", "props": {"likelihood": 0.15, "family": "MTC"}}
+{"src": "MTC-E05", "type": "FOR_FAMILY", "dst": "MTC", "props": {}}
+{"src": "MTC-E05", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MTC", "props": {}}
+{"src": "MTC-W60", "type": "CAN_RAISE", "dst": "MTC-E05", "props": {}}
+{"src": "MTC-W90", "type": "CAN_RAISE", "dst": "MTC-E05", "props": {}}
+{"src": "MTC-W120HP", "type": "CAN_RAISE", "dst": "MTC-E05", "props": {}}
+{"src": "MTC-O150", "type": "CAN_RAISE", "dst": "MTC-E05", "props": {}}
+{"src": "MTC-E05", "type": "CAUSED_BY", "dst": "C-HTR-OPEN", "props": {"likelihood": 0.5, "family": "MTC"}}
+{"src": "MTC-E05", "type": "CAUSED_BY", "dst": "C-SSR-FAIL", "props": {"likelihood": 0.3, "family": "MTC"}}
+{"src": "MTC-E05", "type": "CAUSED_BY", "dst": "C-SCALE", "props": {"likelihood": 0.2, "family": "MTC"}}
+{"src": "MTC-E06", "type": "FOR_FAMILY", "dst": "MTC", "props": {}}
+{"src": "MTC-E06", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MTC", "props": {}}
+{"src": "MTC-W60", "type": "CAN_RAISE", "dst": "MTC-E06", "props": {}}
+{"src": "MTC-W90", "type": "CAN_RAISE", "dst": "MTC-E06", "props": {}}
+{"src": "MTC-W120HP", "type": "CAN_RAISE", "dst": "MTC-E06", "props": {}}
+{"src": "MTC-O150", "type": "CAN_RAISE", "dst": "MTC-E06", "props": {}}
+{"src": "MTC-E06", "type": "CAUSED_BY", "dst": "C-SCALE", "props": {"likelihood": 0.6, "family": "MTC"}}
+{"src": "MTC-E06", "type": "CAUSED_BY", "dst": "C-FSW-FAULT", "props": {"likelihood": 0.25, "family": "MTC"}}
+{"src": "MTC-E06", "type": "CAUSED_BY", "dst": "C-PUMP-SEIZED", "props": {"likelihood": 0.15, "family": "MTC"}}
+{"src": "MTC-E07", "type": "FOR_FAMILY", "dst": "MTC", "props": {}}
+{"src": "MTC-E07", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MTC", "props": {}}
+{"src": "MTC-W60", "type": "CAN_RAISE", "dst": "MTC-E07", "props": {}}
+{"src": "MTC-W90", "type": "CAN_RAISE", "dst": "MTC-E07", "props": {}}
+{"src": "MTC-W120HP", "type": "CAN_RAISE", "dst": "MTC-E07", "props": {}}
+{"src": "MTC-O150", "type": "CAN_RAISE", "dst": "MTC-E07", "props": {}}
+{"src": "MTC-E07", "type": "CAUSED_BY", "dst": "C-PHASE-REV", "props": {"likelihood": 0.6, "family": "MTC"}}
+{"src": "MTC-E07", "type": "CAUSED_BY", "dst": "C-PHASE-LOSS", "props": {"likelihood": 0.4, "family": "MTC"}}
+{"src": "MTC-E08", "type": "FOR_FAMILY", "dst": "MTC", "props": {}}
+{"src": "MTC-E08", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MTC", "props": {}}
+{"src": "MTC-W60", "type": "CAN_RAISE", "dst": "MTC-E08", "props": {}}
+{"src": "MTC-W90", "type": "CAN_RAISE", "dst": "MTC-E08", "props": {}}
+{"src": "MTC-W120HP", "type": "CAN_RAISE", "dst": "MTC-E08", "props": {}}
+{"src": "MTC-O150", "type": "CAN_RAISE", "dst": "MTC-E08", "props": {}}
+{"src": "MTC-E08", "type": "CAUSED_BY", "dst": "C-SCALE", "props": {"likelihood": 0.5, "family": "MTC"}}
+{"src": "MTC-E08", "type": "CAUSED_BY", "dst": "C-SOL-STUCK", "props": {"likelihood": 0.3, "family": "MTC"}}
+{"src": "MTC-E08", "type": "CAUSED_BY", "dst": "C-SETPOINT", "props": {"likelihood": 0.2, "family": "MTC"}}
+{"src": "DHD-E01", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E01", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E01", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E01", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E01", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E01", "props": {}}
+{"src": "DHD-E01", "type": "CAUSED_BY", "dst": "C-HTR-OPEN", "props": {"likelihood": 0.5, "family": "DHD"}}
+{"src": "DHD-E01", "type": "CAUSED_BY", "dst": "C-SSR-FAIL", "props": {"likelihood": 0.3, "family": "DHD"}}
+{"src": "DHD-E01", "type": "CAUSED_BY", "dst": "C-TC-DRIFT", "props": {"likelihood": 0.2, "family": "DHD"}}
+{"src": "DHD-E02", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E02", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E02", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E02", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E02", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E02", "props": {}}
+{"src": "DHD-E02", "type": "CAUSED_BY", "dst": "C-SSR-FAIL", "props": {"likelihood": 0.55, "family": "DHD"}}
+{"src": "DHD-E02", "type": "CAUSED_BY", "dst": "C-TC-DRIFT", "props": {"likelihood": 0.25, "family": "DHD"}}
+{"src": "DHD-E02", "type": "CAUSED_BY", "dst": "C-SETPOINT", "props": {"likelihood": 0.2, "family": "DHD"}}
+{"src": "DHD-E03", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E03", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E03", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E03", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E03", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E03", "props": {}}
+{"src": "DHD-E03", "type": "CAUSED_BY", "dst": "C-RHTR-OPEN", "props": {"likelihood": 0.6, "family": "DHD"}}
+{"src": "DHD-E03", "type": "CAUSED_BY", "dst": "C-SSR-FAIL", "props": {"likelihood": 0.25, "family": "DHD"}}
+{"src": "DHD-E03", "type": "CAUSED_BY", "dst": "C-TC-OPEN", "props": {"likelihood": 0.15, "family": "DHD"}}
+{"src": "DHD-E04", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E04", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E04", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E04", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E04", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E04", "props": {}}
+{"src": "DHD-E04", "type": "CAUSED_BY", "dst": "C-ROTOR-DEG", "props": {"likelihood": 0.4, "family": "DHD"}}
+{"src": "DHD-E04", "type": "CAUSED_BY", "dst": "C-RHTR-OPEN", "props": {"likelihood": 0.25, "family": "DHD"}}
+{"src": "DHD-E04", "type": "CAUSED_BY", "dst": "C-FLT-CLOG", "props": {"likelihood": 0.2, "family": "DHD"}}
+{"src": "DHD-E04", "type": "CAUSED_BY", "dst": "C-DPS-FAULT", "props": {"likelihood": 0.15, "family": "DHD"}}
+{"src": "DHD-E05", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E05", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E05", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E05", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E05", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E05", "props": {}}
+{"src": "DHD-E05", "type": "CAUSED_BY", "dst": "C-BLW-OVL", "props": {"likelihood": 0.6, "family": "DHD"}}
+{"src": "DHD-E05", "type": "CAUSED_BY", "dst": "C-FLT-CLOG", "props": {"likelihood": 0.3, "family": "DHD"}}
+{"src": "DHD-E05", "type": "CAUSED_BY", "dst": "C-PHASE-LOSS", "props": {"likelihood": 0.1, "family": "DHD"}}
+{"src": "DHD-E06", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E06", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E06", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E06", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E06", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E06", "props": {}}
+{"src": "DHD-E06", "type": "CAUSED_BY", "dst": "C-FLT-CLOG", "props": {"likelihood": 0.9, "family": "DHD"}}
+{"src": "DHD-E06", "type": "CAUSED_BY", "dst": "C-PROX-DIRTY", "props": {"likelihood": 0.1, "family": "DHD"}}
+{"src": "DHD-E07", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E07", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E07", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E07", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E07", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E07", "props": {}}
+{"src": "DHD-E07", "type": "CAUSED_BY", "dst": "C-TC-OPEN", "props": {"likelihood": 0.85, "family": "DHD"}}
+{"src": "DHD-E07", "type": "CAUSED_BY", "dst": "C-PLC-COMM", "props": {"likelihood": 0.15, "family": "DHD"}}
+{"src": "DHD-E08", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E08", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E08", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E08", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E08", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E08", "props": {}}
+{"src": "DHD-E08", "type": "CAUSED_BY", "dst": "C-PHASE-REV", "props": {"likelihood": 0.6, "family": "DHD"}}
+{"src": "DHD-E08", "type": "CAUSED_BY", "dst": "C-PHASE-LOSS", "props": {"likelihood": 0.4, "family": "DHD"}}
+{"src": "DHD-E10", "type": "FOR_FAMILY", "dst": "DHD", "props": {}}
+{"src": "DHD-E10", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-DHD", "props": {}}
+{"src": "DHD-50", "type": "CAN_RAISE", "dst": "DHD-E10", "props": {}}
+{"src": "DHD-100", "type": "CAN_RAISE", "dst": "DHD-E10", "props": {}}
+{"src": "DHD-150", "type": "CAN_RAISE", "dst": "DHD-E10", "props": {}}
+{"src": "DHD-300M", "type": "CAN_RAISE", "dst": "DHD-E10", "props": {}}
+{"src": "DHD-E10", "type": "CAUSED_BY", "dst": "C-BRIDGE", "props": {"likelihood": 0.7, "family": "DHD"}}
+{"src": "DHD-E10", "type": "CAUSED_BY", "dst": "C-PROX-DIRTY", "props": {"likelihood": 0.3, "family": "DHD"}}
+{"src": "HAD-E1", "type": "FOR_FAMILY", "dst": "HAD", "props": {}}
+{"src": "HAD-E1", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-HAD", "props": {}}
+{"src": "HAD-25", "type": "CAN_RAISE", "dst": "HAD-E1", "props": {}}
+{"src": "HAD-50", "type": "CAN_RAISE", "dst": "HAD-E1", "props": {}}
+{"src": "HAD-100", "type": "CAN_RAISE", "dst": "HAD-E1", "props": {}}
+{"src": "HAD-E1", "type": "CAUSED_BY", "dst": "C-SSR-FAIL", "props": {"likelihood": 0.6, "family": "HAD"}}
+{"src": "HAD-E1", "type": "CAUSED_BY", "dst": "C-TC-DRIFT", "props": {"likelihood": 0.4, "family": "HAD"}}
+{"src": "HAD-E2", "type": "FOR_FAMILY", "dst": "HAD", "props": {}}
+{"src": "HAD-E2", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-HAD", "props": {}}
+{"src": "HAD-25", "type": "CAN_RAISE", "dst": "HAD-E2", "props": {}}
+{"src": "HAD-50", "type": "CAN_RAISE", "dst": "HAD-E2", "props": {}}
+{"src": "HAD-100", "type": "CAN_RAISE", "dst": "HAD-E2", "props": {}}
+{"src": "HAD-E2", "type": "CAUSED_BY", "dst": "C-TC-OPEN", "props": {"likelihood": 1.0, "family": "HAD"}}
+{"src": "HAD-E3", "type": "FOR_FAMILY", "dst": "HAD", "props": {}}
+{"src": "HAD-E3", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-HAD", "props": {}}
+{"src": "HAD-25", "type": "CAN_RAISE", "dst": "HAD-E3", "props": {}}
+{"src": "HAD-50", "type": "CAN_RAISE", "dst": "HAD-E3", "props": {}}
+{"src": "HAD-100", "type": "CAN_RAISE", "dst": "HAD-E3", "props": {}}
+{"src": "HAD-E3", "type": "CAUSED_BY", "dst": "C-HTR-OPEN", "props": {"likelihood": 0.6, "family": "HAD"}}
+{"src": "HAD-E3", "type": "CAUSED_BY", "dst": "C-SSR-FAIL", "props": {"likelihood": 0.4, "family": "HAD"}}
+{"src": "HAD-E4", "type": "FOR_FAMILY", "dst": "HAD", "props": {}}
+{"src": "HAD-E4", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-HAD", "props": {}}
+{"src": "HAD-25", "type": "CAN_RAISE", "dst": "HAD-E4", "props": {}}
+{"src": "HAD-50", "type": "CAN_RAISE", "dst": "HAD-E4", "props": {}}
+{"src": "HAD-100", "type": "CAN_RAISE", "dst": "HAD-E4", "props": {}}
+{"src": "HAD-E4", "type": "CAUSED_BY", "dst": "C-BLW-OVL", "props": {"likelihood": 0.6, "family": "HAD"}}
+{"src": "HAD-E4", "type": "CAUSED_BY", "dst": "C-FLT-CLOG", "props": {"likelihood": 0.4, "family": "HAD"}}
+{"src": "HAD-E5", "type": "FOR_FAMILY", "dst": "HAD", "props": {}}
+{"src": "HAD-E5", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-HAD", "props": {}}
+{"src": "HAD-25", "type": "CAN_RAISE", "dst": "HAD-E5", "props": {}}
+{"src": "HAD-50", "type": "CAN_RAISE", "dst": "HAD-E5", "props": {}}
+{"src": "HAD-100", "type": "CAN_RAISE", "dst": "HAD-E5", "props": {}}
+{"src": "HAD-E5", "type": "CAUSED_BY", "dst": "C-BRIDGE", "props": {"likelihood": 0.6, "family": "HAD"}}
+{"src": "HAD-E5", "type": "CAUSED_BY", "dst": "C-PROX-DIRTY", "props": {"likelihood": 0.4, "family": "HAD"}}
+{"src": "CHL-A01", "type": "FOR_FAMILY", "dst": "CHL", "props": {}}
+{"src": "CHL-A01", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CHL", "props": {}}
+{"src": "CHL-3A", "type": "CAN_RAISE", "dst": "CHL-A01", "props": {}}
+{"src": "CHL-5A", "type": "CAN_RAISE", "dst": "CHL-A01", "props": {}}
+{"src": "CHL-10W", "type": "CAN_RAISE", "dst": "CHL-A01", "props": {}}
+{"src": "CHL-20W", "type": "CAN_RAISE", "dst": "CHL-A01", "props": {}}
+{"src": "CHL-A01", "type": "CAUSED_BY", "dst": "C-COND-DIRTY", "props": {"likelihood": 0.4, "family": "CHL"}}
+{"src": "CHL-A01", "type": "CAUSED_BY", "dst": "C-CW-LOW", "props": {"likelihood": 0.3, "family": "CHL"}}
+{"src": "CHL-A01", "type": "CAUSED_BY", "dst": "C-AMB-HIGH", "props": {"likelihood": 0.2, "family": "CHL"}}
+{"src": "CHL-A01", "type": "CAUSED_BY", "dst": "C-HP-TRIP", "props": {"likelihood": 0.1, "family": "CHL"}}
+{"src": "CHL-A02", "type": "FOR_FAMILY", "dst": "CHL", "props": {}}
+{"src": "CHL-A02", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CHL", "props": {}}
+{"src": "CHL-3A", "type": "CAN_RAISE", "dst": "CHL-A02", "props": {}}
+{"src": "CHL-5A", "type": "CAN_RAISE", "dst": "CHL-A02", "props": {}}
+{"src": "CHL-10W", "type": "CAN_RAISE", "dst": "CHL-A02", "props": {}}
+{"src": "CHL-20W", "type": "CAN_RAISE", "dst": "CHL-A02", "props": {}}
+{"src": "CHL-A02", "type": "CAUSED_BY", "dst": "C-REF-LEAK", "props": {"likelihood": 0.7, "family": "CHL"}}
+{"src": "CHL-A02", "type": "CAUSED_BY", "dst": "C-EVAP-FREEZE", "props": {"likelihood": 0.3, "family": "CHL"}}
+{"src": "CHL-A03", "type": "FOR_FAMILY", "dst": "CHL", "props": {}}
+{"src": "CHL-A03", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CHL", "props": {}}
+{"src": "CHL-3A", "type": "CAN_RAISE", "dst": "CHL-A03", "props": {}}
+{"src": "CHL-5A", "type": "CAN_RAISE", "dst": "CHL-A03", "props": {}}
+{"src": "CHL-10W", "type": "CAN_RAISE", "dst": "CHL-A03", "props": {}}
+{"src": "CHL-20W", "type": "CAN_RAISE", "dst": "CHL-A03", "props": {}}
+{"src": "CHL-A03", "type": "CAUSED_BY", "dst": "C-COMP-OVL", "props": {"likelihood": 0.5, "family": "CHL"}}
+{"src": "CHL-A03", "type": "CAUSED_BY", "dst": "C-PHASE-LOSS", "props": {"likelihood": 0.3, "family": "CHL"}}
+{"src": "CHL-A03", "type": "CAUSED_BY", "dst": "C-COND-DIRTY", "props": {"likelihood": 0.2, "family": "CHL"}}
+{"src": "CHL-A04", "type": "FOR_FAMILY", "dst": "CHL", "props": {}}
+{"src": "CHL-A04", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CHL", "props": {}}
+{"src": "CHL-3A", "type": "CAN_RAISE", "dst": "CHL-A04", "props": {}}
+{"src": "CHL-5A", "type": "CAN_RAISE", "dst": "CHL-A04", "props": {}}
+{"src": "CHL-10W", "type": "CAN_RAISE", "dst": "CHL-A04", "props": {}}
+{"src": "CHL-20W", "type": "CAN_RAISE", "dst": "CHL-A04", "props": {}}
+{"src": "CHL-A04", "type": "CAUSED_BY", "dst": "C-EVAP-FREEZE", "props": {"likelihood": 0.7, "family": "CHL"}}
+{"src": "CHL-A04", "type": "CAUSED_BY", "dst": "C-FSW-FAULT", "props": {"likelihood": 0.3, "family": "CHL"}}
+{"src": "CHL-A05", "type": "FOR_FAMILY", "dst": "CHL", "props": {}}
+{"src": "CHL-A05", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CHL", "props": {}}
+{"src": "CHL-3A", "type": "CAN_RAISE", "dst": "CHL-A05", "props": {}}
+{"src": "CHL-5A", "type": "CAN_RAISE", "dst": "CHL-A05", "props": {}}
+{"src": "CHL-10W", "type": "CAN_RAISE", "dst": "CHL-A05", "props": {}}
+{"src": "CHL-20W", "type": "CAN_RAISE", "dst": "CHL-A05", "props": {}}
+{"src": "CHL-A05", "type": "CAUSED_BY", "dst": "C-PUMP-SEIZED", "props": {"likelihood": 0.35, "family": "CHL"}}
+{"src": "CHL-A05", "type": "CAUSED_BY", "dst": "C-FSW-FAULT", "props": {"likelihood": 0.35, "family": "CHL"}}
+{"src": "CHL-A05", "type": "CAUSED_BY", "dst": "C-LOW-WATER", "props": {"likelihood": 0.3, "family": "CHL"}}
+{"src": "CHL-A06", "type": "FOR_FAMILY", "dst": "CHL", "props": {}}
+{"src": "CHL-A06", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CHL", "props": {}}
+{"src": "CHL-3A", "type": "CAN_RAISE", "dst": "CHL-A06", "props": {}}
+{"src": "CHL-5A", "type": "CAN_RAISE", "dst": "CHL-A06", "props": {}}
+{"src": "CHL-10W", "type": "CAN_RAISE", "dst": "CHL-A06", "props": {}}
+{"src": "CHL-20W", "type": "CAN_RAISE", "dst": "CHL-A06", "props": {}}
+{"src": "CHL-A06", "type": "CAUSED_BY", "dst": "C-LOW-WATER", "props": {"likelihood": 0.8, "family": "CHL"}}
+{"src": "CHL-A06", "type": "CAUSED_BY", "dst": "C-SOL-STUCK", "props": {"likelihood": 0.2, "family": "CHL"}}
+{"src": "CHL-A07", "type": "FOR_FAMILY", "dst": "CHL", "props": {}}
+{"src": "CHL-A07", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CHL", "props": {}}
+{"src": "CHL-3A", "type": "CAN_RAISE", "dst": "CHL-A07", "props": {}}
+{"src": "CHL-5A", "type": "CAN_RAISE", "dst": "CHL-A07", "props": {}}
+{"src": "CHL-10W", "type": "CAN_RAISE", "dst": "CHL-A07", "props": {}}
+{"src": "CHL-20W", "type": "CAN_RAISE", "dst": "CHL-A07", "props": {}}
+{"src": "CHL-A07", "type": "CAUSED_BY", "dst": "C-PHASE-REV", "props": {"likelihood": 0.6, "family": "CHL"}}
+{"src": "CHL-A07", "type": "CAUSED_BY", "dst": "C-PHASE-LOSS", "props": {"likelihood": 0.4, "family": "CHL"}}
+{"src": "CHL-A08", "type": "FOR_FAMILY", "dst": "CHL", "props": {}}
+{"src": "CHL-A08", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CHL", "props": {}}
+{"src": "CHL-3A", "type": "CAN_RAISE", "dst": "CHL-A08", "props": {}}
+{"src": "CHL-5A", "type": "CAN_RAISE", "dst": "CHL-A08", "props": {}}
+{"src": "CHL-10W", "type": "CAN_RAISE", "dst": "CHL-A08", "props": {}}
+{"src": "CHL-20W", "type": "CAN_RAISE", "dst": "CHL-A08", "props": {}}
+{"src": "CHL-A08", "type": "CAUSED_BY", "dst": "C-TC-OPEN", "props": {"likelihood": 0.8, "family": "CHL"}}
+{"src": "CHL-A08", "type": "CAUSED_BY", "dst": "C-PLC-COMM", "props": {"likelihood": 0.2, "family": "CHL"}}
+{"src": "MDH-E01", "type": "FOR_FAMILY", "dst": "MDH", "props": {}}
+{"src": "MDH-E01", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MDH", "props": {}}
+{"src": "MDH-500", "type": "CAN_RAISE", "dst": "MDH-E01", "props": {}}
+{"src": "MDH-1000", "type": "CAN_RAISE", "dst": "MDH-E01", "props": {}}
+{"src": "MDH-E01", "type": "CAUSED_BY", "dst": "C-COND-DIRTY", "props": {"likelihood": 0.35, "family": "MDH"}}
+{"src": "MDH-E01", "type": "CAUSED_BY", "dst": "C-FLT-CLOG", "props": {"likelihood": 0.35, "family": "MDH"}}
+{"src": "MDH-E01", "type": "CAUSED_BY", "dst": "C-REF-LEAK", "props": {"likelihood": 0.3, "family": "MDH"}}
+{"src": "MDH-E02", "type": "FOR_FAMILY", "dst": "MDH", "props": {}}
+{"src": "MDH-E02", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MDH", "props": {}}
+{"src": "MDH-500", "type": "CAN_RAISE", "dst": "MDH-E02", "props": {}}
+{"src": "MDH-1000", "type": "CAN_RAISE", "dst": "MDH-E02", "props": {}}
+{"src": "MDH-E02", "type": "CAUSED_BY", "dst": "C-EVAP-FREEZE", "props": {"likelihood": 0.7, "family": "MDH"}}
+{"src": "MDH-E02", "type": "CAUSED_BY", "dst": "C-FLT-CLOG", "props": {"likelihood": 0.3, "family": "MDH"}}
+{"src": "MDH-E03", "type": "FOR_FAMILY", "dst": "MDH", "props": {}}
+{"src": "MDH-E03", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MDH", "props": {}}
+{"src": "MDH-500", "type": "CAN_RAISE", "dst": "MDH-E03", "props": {}}
+{"src": "MDH-1000", "type": "CAN_RAISE", "dst": "MDH-E03", "props": {}}
+{"src": "MDH-E03", "type": "CAUSED_BY", "dst": "C-COMP-OVL", "props": {"likelihood": 0.6, "family": "MDH"}}
+{"src": "MDH-E03", "type": "CAUSED_BY", "dst": "C-AMB-HIGH", "props": {"likelihood": 0.4, "family": "MDH"}}
+{"src": "MDH-E04", "type": "FOR_FAMILY", "dst": "MDH", "props": {}}
+{"src": "MDH-E04", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-MDH", "props": {}}
+{"src": "MDH-500", "type": "CAN_RAISE", "dst": "MDH-E04", "props": {}}
+{"src": "MDH-1000", "type": "CAN_RAISE", "dst": "MDH-E04", "props": {}}
+{"src": "MDH-E04", "type": "CAUSED_BY", "dst": "C-DPS-FAULT", "props": {"likelihood": 1.0, "family": "MDH"}}
+{"src": "CCS-L1", "type": "FOR_FAMILY", "dst": "CCS", "props": {}}
+{"src": "CCS-L1", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CCS", "props": {}}
+{"src": "VL-1", "type": "CAN_RAISE", "dst": "CCS-L1", "props": {}}
+{"src": "VL-3", "type": "CAN_RAISE", "dst": "CCS-L1", "props": {}}
+{"src": "CCS-8", "type": "CAN_RAISE", "dst": "CCS-L1", "props": {}}
+{"src": "CCS-L1", "type": "CAUSED_BY", "dst": "C-BRIDGE", "props": {"likelihood": 0.4, "family": "CCS"}}
+{"src": "CCS-L1", "type": "CAUSED_BY", "dst": "C-VAC-LEAK", "props": {"likelihood": 0.3, "family": "CCS"}}
+{"src": "CCS-L1", "type": "CAUSED_BY", "dst": "C-HOSE-BLOCK", "props": {"likelihood": 0.3, "family": "CCS"}}
+{"src": "CCS-L2", "type": "FOR_FAMILY", "dst": "CCS", "props": {}}
+{"src": "CCS-L2", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CCS", "props": {}}
+{"src": "VL-1", "type": "CAN_RAISE", "dst": "CCS-L2", "props": {}}
+{"src": "VL-3", "type": "CAN_RAISE", "dst": "CCS-L2", "props": {}}
+{"src": "CCS-8", "type": "CAN_RAISE", "dst": "CCS-L2", "props": {}}
+{"src": "CCS-L2", "type": "CAUSED_BY", "dst": "C-FLT-CLOG", "props": {"likelihood": 1.0, "family": "CCS"}}
+{"src": "CCS-L3", "type": "FOR_FAMILY", "dst": "CCS", "props": {}}
+{"src": "CCS-L3", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CCS", "props": {}}
+{"src": "VL-1", "type": "CAN_RAISE", "dst": "CCS-L3", "props": {}}
+{"src": "VL-3", "type": "CAN_RAISE", "dst": "CCS-L3", "props": {}}
+{"src": "CCS-8", "type": "CAN_RAISE", "dst": "CCS-L3", "props": {}}
+{"src": "CCS-L3", "type": "CAUSED_BY", "dst": "C-BLW-OVL", "props": {"likelihood": 0.6, "family": "CCS"}}
+{"src": "CCS-L3", "type": "CAUSED_BY", "dst": "C-FLT-CLOG", "props": {"likelihood": 0.4, "family": "CCS"}}
+{"src": "CCS-L4", "type": "FOR_FAMILY", "dst": "CCS", "props": {}}
+{"src": "CCS-L4", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CCS", "props": {}}
+{"src": "VL-1", "type": "CAN_RAISE", "dst": "CCS-L4", "props": {}}
+{"src": "VL-3", "type": "CAN_RAISE", "dst": "CCS-L4", "props": {}}
+{"src": "CCS-8", "type": "CAN_RAISE", "dst": "CCS-L4", "props": {}}
+{"src": "CCS-L4", "type": "CAUSED_BY", "dst": "C-SOL-STUCK", "props": {"likelihood": 0.8, "family": "CCS"}}
+{"src": "CCS-L4", "type": "CAUSED_BY", "dst": "C-PLC-COMM", "props": {"likelihood": 0.2, "family": "CCS"}}
+{"src": "CCS-L5", "type": "FOR_FAMILY", "dst": "CCS", "props": {}}
+{"src": "CCS-L5", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CCS", "props": {}}
+{"src": "VL-1", "type": "CAN_RAISE", "dst": "CCS-L5", "props": {}}
+{"src": "VL-3", "type": "CAN_RAISE", "dst": "CCS-L5", "props": {}}
+{"src": "CCS-8", "type": "CAN_RAISE", "dst": "CCS-L5", "props": {}}
+{"src": "CCS-L5", "type": "CAUSED_BY", "dst": "C-PROX-DIRTY", "props": {"likelihood": 1.0, "family": "CCS"}}
+{"src": "CCS-L6", "type": "FOR_FAMILY", "dst": "CCS", "props": {}}
+{"src": "CCS-L6", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-CCS", "props": {}}
+{"src": "VL-1", "type": "CAN_RAISE", "dst": "CCS-L6", "props": {}}
+{"src": "VL-3", "type": "CAN_RAISE", "dst": "CCS-L6", "props": {}}
+{"src": "CCS-8", "type": "CAN_RAISE", "dst": "CCS-L6", "props": {}}
+{"src": "CCS-L6", "type": "CAUSED_BY", "dst": "C-PHASE-REV", "props": {"likelihood": 0.6, "family": "CCS"}}
+{"src": "CCS-L6", "type": "CAUSED_BY", "dst": "C-PHASE-LOSS", "props": {"likelihood": 0.4, "family": "CCS"}}
+{"src": "RCY-G1", "type": "FOR_FAMILY", "dst": "RCY", "props": {}}
+{"src": "RCY-G1", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-RCY", "props": {}}
+{"src": "GR-200", "type": "CAN_RAISE", "dst": "RCY-G1", "props": {}}
+{"src": "GR-400", "type": "CAN_RAISE", "dst": "RCY-G1", "props": {}}
+{"src": "GR-600", "type": "CAN_RAISE", "dst": "RCY-G1", "props": {}}
+{"src": "RCY-G1", "type": "CAUSED_BY", "dst": "C-OVERFEED", "props": {"likelihood": 0.4, "family": "RCY"}}
+{"src": "RCY-G1", "type": "CAUSED_BY", "dst": "C-BLADE-DULL", "props": {"likelihood": 0.35, "family": "RCY"}}
+{"src": "RCY-G1", "type": "CAUSED_BY", "dst": "C-MOT-OVL", "props": {"likelihood": 0.25, "family": "RCY"}}
+{"src": "RCY-G2", "type": "FOR_FAMILY", "dst": "RCY", "props": {}}
+{"src": "RCY-G2", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-RCY", "props": {}}
+{"src": "GR-200", "type": "CAN_RAISE", "dst": "RCY-G2", "props": {}}
+{"src": "GR-400", "type": "CAN_RAISE", "dst": "RCY-G2", "props": {}}
+{"src": "GR-600", "type": "CAN_RAISE", "dst": "RCY-G2", "props": {}}
+{"src": "RCY-G2", "type": "CAUSED_BY", "dst": "C-ILK-OPEN", "props": {"likelihood": 1.0, "family": "RCY"}}
+{"src": "RCY-G3", "type": "FOR_FAMILY", "dst": "RCY", "props": {}}
+{"src": "RCY-G3", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-RCY", "props": {}}
+{"src": "GR-200", "type": "CAN_RAISE", "dst": "RCY-G3", "props": {}}
+{"src": "GR-400", "type": "CAN_RAISE", "dst": "RCY-G3", "props": {}}
+{"src": "GR-600", "type": "CAN_RAISE", "dst": "RCY-G3", "props": {}}
+{"src": "RCY-G3", "type": "CAUSED_BY", "dst": "C-BLADE-DULL", "props": {"likelihood": 0.6, "family": "RCY"}}
+{"src": "RCY-G3", "type": "CAUSED_BY", "dst": "C-SCR-CLOG", "props": {"likelihood": 0.4, "family": "RCY"}}
+{"src": "RCY-G4", "type": "FOR_FAMILY", "dst": "RCY", "props": {}}
+{"src": "RCY-G4", "type": "DOCUMENTED_IN", "dst": "DOC-MAN-RCY", "props": {}}
+{"src": "GR-200", "type": "CAN_RAISE", "dst": "RCY-G4", "props": {}}
+{"src": "GR-400", "type": "CAN_RAISE", "dst": "RCY-G4", "props": {}}
+{"src": "GR-600", "type": "CAN_RAISE", "dst": "RCY-G4", "props": {}}
+{"src": "RCY-G4", "type": "CAUSED_BY", "dst": "C-PHASE-REV", "props": {"likelihood": 0.6, "family": "RCY"}}
+{"src": "RCY-G4", "type": "CAUSED_BY", "dst": "C-PHASE-LOSS", "props": {"likelihood": 0.4, "family": "RCY"}}
+{"src": "C-LOW-WATER", "type": "RESOLVED_BY", "dst": "R-MTC-C-LOW-WATER", "props": {"family": "MTC"}}
+{"src": "C-FSW-FAULT", "type": "RESOLVED_BY", "dst": "R-MTC-C-FSW-FAULT", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-FSW-FAULT", "type": "REQUIRES_PART", "dst": "MT-MTC-FSW", "props": {}}
+{"src": "C-SOL-STUCK", "type": "RESOLVED_BY", "dst": "R-MTC-C-SOL-STUCK", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-SOL-STUCK", "type": "REQUIRES_PART", "dst": "MT-MTC-SOL", "props": {}}
+{"src": "C-SSR-FAIL", "type": "RESOLVED_BY", "dst": "R-MTC-C-SSR-FAIL", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-SSR-FAIL", "type": "REQUIRES_PART", "dst": "MT-MTC-SSR", "props": {}}
+{"src": "C-TC-DRIFT", "type": "RESOLVED_BY", "dst": "R-MTC-C-TC-DRIFT", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-TC-DRIFT", "type": "REQUIRES_PART", "dst": "MT-MTC-TC", "props": {}}
+{"src": "C-SETPOINT", "type": "RESOLVED_BY", "dst": "R-MTC-C-SETPOINT", "props": {"family": "MTC"}}
+{"src": "C-TC-OPEN", "type": "RESOLVED_BY", "dst": "R-MTC-C-TC-OPEN", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-TC-OPEN", "type": "REQUIRES_PART", "dst": "MT-MTC-TC", "props": {}}
+{"src": "C-PLC-COMM", "type": "RESOLVED_BY", "dst": "R-MTC-C-PLC-COMM", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-PLC-COMM", "type": "REQUIRES_PART", "dst": "MT-MTC-PLC", "props": {}}
+{"src": "C-PUMP-SEIZED", "type": "RESOLVED_BY", "dst": "R-MTC-C-PUMP-SEIZED", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-PUMP-SEIZED", "type": "REQUIRES_PART", "dst": "MT-MTC-PUMP", "props": {}}
+{"src": "R-MTC-C-PUMP-SEIZED", "type": "REQUIRES_PART", "dst": "MT-MTC-SEALKIT", "props": {}}
+{"src": "C-SCALE", "type": "RESOLVED_BY", "dst": "R-MTC-C-SCALE", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-SCALE", "type": "REQUIRES_PART", "dst": "MT-MTC-DESCALER", "props": {}}
+{"src": "C-PHASE-LOSS", "type": "RESOLVED_BY", "dst": "R-MTC-C-PHASE-LOSS", "props": {"family": "MTC"}}
+{"src": "C-HTR-OPEN", "type": "RESOLVED_BY", "dst": "R-MTC-C-HTR-OPEN", "props": {"family": "MTC"}}
+{"src": "R-MTC-C-HTR-OPEN", "type": "REQUIRES_PART", "dst": "MT-MTC-HTR", "props": {}}
+{"src": "C-PHASE-REV", "type": "RESOLVED_BY", "dst": "R-MTC-C-PHASE-REV", "props": {"family": "MTC"}}
+{"src": "C-HTR-OPEN", "type": "RESOLVED_BY", "dst": "R-DHD-C-HTR-OPEN", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-HTR-OPEN", "type": "REQUIRES_PART", "dst": "MT-DHD-HTR", "props": {}}
+{"src": "C-SSR-FAIL", "type": "RESOLVED_BY", "dst": "R-DHD-C-SSR-FAIL", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-SSR-FAIL", "type": "REQUIRES_PART", "dst": "MT-DHD-SSR", "props": {}}
+{"src": "C-TC-DRIFT", "type": "RESOLVED_BY", "dst": "R-DHD-C-TC-DRIFT", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-TC-DRIFT", "type": "REQUIRES_PART", "dst": "MT-DHD-TC", "props": {}}
+{"src": "C-SETPOINT", "type": "RESOLVED_BY", "dst": "R-DHD-C-SETPOINT", "props": {"family": "DHD"}}
+{"src": "C-RHTR-OPEN", "type": "RESOLVED_BY", "dst": "R-DHD-C-RHTR-OPEN", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-RHTR-OPEN", "type": "REQUIRES_PART", "dst": "MT-DHD-RHTR", "props": {}}
+{"src": "C-TC-OPEN", "type": "RESOLVED_BY", "dst": "R-DHD-C-TC-OPEN", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-TC-OPEN", "type": "REQUIRES_PART", "dst": "MT-DHD-TC", "props": {}}
+{"src": "C-ROTOR-DEG", "type": "RESOLVED_BY", "dst": "R-DHD-C-ROTOR-DEG", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-ROTOR-DEG", "type": "REQUIRES_PART", "dst": "MT-DHD-ROTOR", "props": {}}
+{"src": "C-FLT-CLOG", "type": "RESOLVED_BY", "dst": "R-DHD-C-FLT-CLOG", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-FLT-CLOG", "type": "REQUIRES_PART", "dst": "MT-DHD-FLT", "props": {}}
+{"src": "C-DPS-FAULT", "type": "RESOLVED_BY", "dst": "R-DHD-C-DPS-FAULT", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-DPS-FAULT", "type": "REQUIRES_PART", "dst": "MT-DHD-DPS", "props": {}}
+{"src": "C-BLW-OVL", "type": "RESOLVED_BY", "dst": "R-DHD-C-BLW-OVL", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-BLW-OVL", "type": "REQUIRES_PART", "dst": "MT-DHD-BLW", "props": {}}
+{"src": "C-PHASE-LOSS", "type": "RESOLVED_BY", "dst": "R-DHD-C-PHASE-LOSS", "props": {"family": "DHD"}}
+{"src": "C-PROX-DIRTY", "type": "RESOLVED_BY", "dst": "R-DHD-C-PROX-DIRTY", "props": {"family": "DHD"}}
+{"src": "C-PLC-COMM", "type": "RESOLVED_BY", "dst": "R-DHD-C-PLC-COMM", "props": {"family": "DHD"}}
+{"src": "R-DHD-C-PLC-COMM", "type": "REQUIRES_PART", "dst": "MT-DHD-PLC", "props": {}}
+{"src": "C-PHASE-REV", "type": "RESOLVED_BY", "dst": "R-DHD-C-PHASE-REV", "props": {"family": "DHD"}}
+{"src": "C-BRIDGE", "type": "RESOLVED_BY", "dst": "R-DHD-C-BRIDGE", "props": {"family": "DHD"}}
+{"src": "C-SSR-FAIL", "type": "RESOLVED_BY", "dst": "R-HAD-C-SSR-FAIL", "props": {"family": "HAD"}}
+{"src": "R-HAD-C-SSR-FAIL", "type": "REQUIRES_PART", "dst": "MT-HAD-SSR", "props": {}}
+{"src": "C-TC-DRIFT", "type": "RESOLVED_BY", "dst": "R-HAD-C-TC-DRIFT", "props": {"family": "HAD"}}
+{"src": "R-HAD-C-TC-DRIFT", "type": "REQUIRES_PART", "dst": "MT-HAD-TC", "props": {}}
+{"src": "C-TC-OPEN", "type": "RESOLVED_BY", "dst": "R-HAD-C-TC-OPEN", "props": {"family": "HAD"}}
+{"src": "R-HAD-C-TC-OPEN", "type": "REQUIRES_PART", "dst": "MT-HAD-TC", "props": {}}
+{"src": "C-HTR-OPEN", "type": "RESOLVED_BY", "dst": "R-HAD-C-HTR-OPEN", "props": {"family": "HAD"}}
+{"src": "R-HAD-C-HTR-OPEN", "type": "REQUIRES_PART", "dst": "MT-HAD-HTR", "props": {}}
+{"src": "C-BLW-OVL", "type": "RESOLVED_BY", "dst": "R-HAD-C-BLW-OVL", "props": {"family": "HAD"}}
+{"src": "R-HAD-C-BLW-OVL", "type": "REQUIRES_PART", "dst": "MT-HAD-BLW", "props": {}}
+{"src": "C-FLT-CLOG", "type": "RESOLVED_BY", "dst": "R-HAD-C-FLT-CLOG", "props": {"family": "HAD"}}
+{"src": "R-HAD-C-FLT-CLOG", "type": "REQUIRES_PART", "dst": "MT-HAD-FLT", "props": {}}
+{"src": "C-BRIDGE", "type": "RESOLVED_BY", "dst": "R-HAD-C-BRIDGE", "props": {"family": "HAD"}}
+{"src": "C-PROX-DIRTY", "type": "RESOLVED_BY", "dst": "R-HAD-C-PROX-DIRTY", "props": {"family": "HAD"}}
+{"src": "C-COND-DIRTY", "type": "RESOLVED_BY", "dst": "R-CHL-C-COND-DIRTY", "props": {"family": "CHL"}}
+{"src": "C-CW-LOW", "type": "RESOLVED_BY", "dst": "R-CHL-C-CW-LOW", "props": {"family": "CHL"}}
+{"src": "C-AMB-HIGH", "type": "RESOLVED_BY", "dst": "R-CHL-C-AMB-HIGH", "props": {"family": "CHL"}}
+{"src": "C-HP-TRIP", "type": "RESOLVED_BY", "dst": "R-CHL-C-HP-TRIP", "props": {"family": "CHL"}}
+{"src": "R-CHL-C-HP-TRIP", "type": "REQUIRES_PART", "dst": "MT-CHL-HPSW", "props": {}}
+{"src": "C-REF-LEAK", "type": "RESOLVED_BY", "dst": "R-CHL-C-REF-LEAK", "props": {"family": "CHL"}}
+{"src": "R-CHL-C-REF-LEAK", "type": "REQUIRES_PART", "dst": "MT-CHL-REFKIT", "props": {}}
+{"src": "C-EVAP-FREEZE", "type": "RESOLVED_BY", "dst": "R-CHL-C-EVAP-FREEZE", "props": {"family": "CHL"}}
+{"src": "C-COMP-OVL", "type": "RESOLVED_BY", "dst": "R-CHL-C-COMP-OVL", "props": {"family": "CHL"}}
+{"src": "R-CHL-C-COMP-OVL", "type": "REQUIRES_PART", "dst": "MT-CHL-CONTACTOR", "props": {}}
+{"src": "C-PHASE-LOSS", "type": "RESOLVED_BY", "dst": "R-CHL-C-PHASE-LOSS", "props": {"family": "CHL"}}
+{"src": "C-FSW-FAULT", "type": "RESOLVED_BY", "dst": "R-CHL-C-FSW-FAULT", "props": {"family": "CHL"}}
+{"src": "R-CHL-C-FSW-FAULT", "type": "REQUIRES_PART", "dst": "MT-CHL-FSW", "props": {}}
+{"src": "C-PUMP-SEIZED", "type": "RESOLVED_BY", "dst": "R-CHL-C-PUMP-SEIZED", "props": {"family": "CHL"}}
+{"src": "R-CHL-C-PUMP-SEIZED", "type": "REQUIRES_PART", "dst": "MT-CHL-PUMP", "props": {}}
+{"src": "R-CHL-C-PUMP-SEIZED", "type": "REQUIRES_PART", "dst": "MT-CHL-SEALKIT", "props": {}}
+{"src": "C-LOW-WATER", "type": "RESOLVED_BY", "dst": "R-CHL-C-LOW-WATER", "props": {"family": "CHL"}}
+{"src": "C-SOL-STUCK", "type": "RESOLVED_BY", "dst": "R-CHL-C-SOL-STUCK", "props": {"family": "CHL"}}
+{"src": "R-CHL-C-SOL-STUCK", "type": "REQUIRES_PART", "dst": "MT-CHL-SOL", "props": {}}
+{"src": "C-PHASE-REV", "type": "RESOLVED_BY", "dst": "R-CHL-C-PHASE-REV", "props": {"family": "CHL"}}
+{"src": "C-TC-OPEN", "type": "RESOLVED_BY", "dst": "R-CHL-C-TC-OPEN", "props": {"family": "CHL"}}
+{"src": "R-CHL-C-TC-OPEN", "type": "REQUIRES_PART", "dst": "MT-CHL-TC", "props": {}}
+{"src": "C-PLC-COMM", "type": "RESOLVED_BY", "dst": "R-CHL-C-PLC-COMM", "props": {"family": "CHL"}}
+{"src": "R-CHL-C-PLC-COMM", "type": "REQUIRES_PART", "dst": "MT-CHL-PLC", "props": {}}
+{"src": "C-COND-DIRTY", "type": "RESOLVED_BY", "dst": "R-MDH-C-COND-DIRTY", "props": {"family": "MDH"}}
+{"src": "C-FLT-CLOG", "type": "RESOLVED_BY", "dst": "R-MDH-C-FLT-CLOG", "props": {"family": "MDH"}}
+{"src": "R-MDH-C-FLT-CLOG", "type": "REQUIRES_PART", "dst": "MT-MDH-FLT", "props": {}}
+{"src": "C-REF-LEAK", "type": "RESOLVED_BY", "dst": "R-MDH-C-REF-LEAK", "props": {"family": "MDH"}}
+{"src": "R-MDH-C-REF-LEAK", "type": "REQUIRES_PART", "dst": "MT-MDH-REFKIT", "props": {}}
+{"src": "C-EVAP-FREEZE", "type": "RESOLVED_BY", "dst": "R-MDH-C-EVAP-FREEZE", "props": {"family": "MDH"}}
+{"src": "C-COMP-OVL", "type": "RESOLVED_BY", "dst": "R-MDH-C-COMP-OVL", "props": {"family": "MDH"}}
+{"src": "R-MDH-C-COMP-OVL", "type": "REQUIRES_PART", "dst": "MT-MDH-CONTACTOR", "props": {}}
+{"src": "C-AMB-HIGH", "type": "RESOLVED_BY", "dst": "R-MDH-C-AMB-HIGH", "props": {"family": "MDH"}}
+{"src": "C-DPS-FAULT", "type": "RESOLVED_BY", "dst": "R-MDH-C-DPS-FAULT", "props": {"family": "MDH"}}
+{"src": "R-MDH-C-DPS-FAULT", "type": "REQUIRES_PART", "dst": "MT-MDH-DPS", "props": {}}
+{"src": "C-BRIDGE", "type": "RESOLVED_BY", "dst": "R-CCS-C-BRIDGE", "props": {"family": "CCS"}}
+{"src": "C-VAC-LEAK", "type": "RESOLVED_BY", "dst": "R-CCS-C-VAC-LEAK", "props": {"family": "CCS"}}
+{"src": "R-CCS-C-VAC-LEAK", "type": "REQUIRES_PART", "dst": "MT-CCS-GASKET", "props": {}}
+{"src": "R-CCS-C-VAC-LEAK", "type": "REQUIRES_PART", "dst": "MT-CCS-HOSE", "props": {}}
+{"src": "C-HOSE-BLOCK", "type": "RESOLVED_BY", "dst": "R-CCS-C-HOSE-BLOCK", "props": {"family": "CCS"}}
+{"src": "C-FLT-CLOG", "type": "RESOLVED_BY", "dst": "R-CCS-C-FLT-CLOG", "props": {"family": "CCS"}}
+{"src": "R-CCS-C-FLT-CLOG", "type": "REQUIRES_PART", "dst": "MT-CCS-FLT", "props": {}}
+{"src": "C-BLW-OVL", "type": "RESOLVED_BY", "dst": "R-CCS-C-BLW-OVL", "props": {"family": "CCS"}}
+{"src": "R-CCS-C-BLW-OVL", "type": "REQUIRES_PART", "dst": "MT-CCS-BLW", "props": {}}
+{"src": "C-SOL-STUCK", "type": "RESOLVED_BY", "dst": "R-CCS-C-SOL-STUCK", "props": {"family": "CCS"}}
+{"src": "R-CCS-C-SOL-STUCK", "type": "REQUIRES_PART", "dst": "MT-CCS-SOL", "props": {}}
+{"src": "C-PLC-COMM", "type": "RESOLVED_BY", "dst": "R-CCS-C-PLC-COMM", "props": {"family": "CCS"}}
+{"src": "R-CCS-C-PLC-COMM", "type": "REQUIRES_PART", "dst": "MT-CCS-PLC", "props": {}}
+{"src": "C-PROX-DIRTY", "type": "RESOLVED_BY", "dst": "R-CCS-C-PROX-DIRTY", "props": {"family": "CCS"}}
+{"src": "C-PHASE-REV", "type": "RESOLVED_BY", "dst": "R-CCS-C-PHASE-REV", "props": {"family": "CCS"}}
+{"src": "C-PHASE-LOSS", "type": "RESOLVED_BY", "dst": "R-CCS-C-PHASE-LOSS", "props": {"family": "CCS"}}
+{"src": "C-OVERFEED", "type": "RESOLVED_BY", "dst": "R-RCY-C-OVERFEED", "props": {"family": "RCY"}}
+{"src": "C-BLADE-DULL", "type": "RESOLVED_BY", "dst": "R-RCY-C-BLADE-DULL", "props": {"family": "RCY"}}
+{"src": "R-RCY-C-BLADE-DULL", "type": "REQUIRES_PART", "dst": "MT-RCY-BLADESET", "props": {}}
+{"src": "C-MOT-OVL", "type": "RESOLVED_BY", "dst": "R-RCY-C-MOT-OVL", "props": {"family": "RCY"}}
+{"src": "R-RCY-C-MOT-OVL", "type": "REQUIRES_PART", "dst": "MT-RCY-BELT", "props": {}}
+{"src": "C-ILK-OPEN", "type": "RESOLVED_BY", "dst": "R-RCY-C-ILK-OPEN", "props": {"family": "RCY"}}
+{"src": "C-SCR-CLOG", "type": "RESOLVED_BY", "dst": "R-RCY-C-SCR-CLOG", "props": {"family": "RCY"}}
+{"src": "R-RCY-C-SCR-CLOG", "type": "REQUIRES_PART", "dst": "MT-RCY-SCREEN", "props": {}}
+{"src": "C-PHASE-REV", "type": "RESOLVED_BY", "dst": "R-RCY-C-PHASE-REV", "props": {"family": "RCY"}}
+{"src": "C-PHASE-LOSS", "type": "RESOLVED_BY", "dst": "R-RCY-C-PHASE-LOSS", "props": {"family": "RCY"}}
+{"src": "MT-MTC-HTR", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-HTR", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-HTR", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-HTR", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-HTR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 1}}
+{"src": "MT-MTC-HTR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 2}}
+{"src": "MT-MTC-HTR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-MTC-HTR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 6}}
+{"src": "MT-DHD-HTR", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-HTR", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-HTR", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-HTR", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-HTR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-DHD-HTR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-DHD-HTR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 1}}
+{"src": "MT-DHD-HTR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-HAD-HTR", "type": "FITS", "dst": "HAD-25", "props": {}}
+{"src": "MT-HAD-HTR", "type": "FITS", "dst": "HAD-50", "props": {}}
+{"src": "MT-HAD-HTR", "type": "FITS", "dst": "HAD-100", "props": {}}
+{"src": "MT-HAD-HTR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-HAD-HTR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 5}}
+{"src": "MT-HAD-HTR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-HAD-HTR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 5}}
+{"src": "MT-DHD-RHTR", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-RHTR", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-RHTR", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-RHTR", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-RHTR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 4}}
+{"src": "MT-DHD-RHTR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 1}}
+{"src": "MT-DHD-RHTR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 2}}
+{"src": "MT-DHD-RHTR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 3}}
+{"src": "MT-MTC-SSR", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-SSR", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-SSR", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-SSR", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-SSR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 2}}
+{"src": "MT-MTC-SSR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 3}}
+{"src": "MT-MTC-SSR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-MTC-SSR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 3}}
+{"src": "MT-DHD-SSR", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-SSR", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-SSR", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-SSR", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-SSR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-DHD-SSR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 1}}
+{"src": "MT-DHD-SSR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 5}}
+{"src": "MT-DHD-SSR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-HAD-SSR", "type": "FITS", "dst": "HAD-25", "props": {}}
+{"src": "MT-HAD-SSR", "type": "FITS", "dst": "HAD-50", "props": {}}
+{"src": "MT-HAD-SSR", "type": "FITS", "dst": "HAD-100", "props": {}}
+{"src": "MT-HAD-SSR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 1}}
+{"src": "MT-HAD-SSR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 6}}
+{"src": "MT-HAD-SSR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 3}}
+{"src": "MT-HAD-SSR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 6}}
+{"src": "MT-MTC-TC", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-TC", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-TC", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-TC", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-TC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-MTC-TC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 13}}
+{"src": "MT-MTC-TC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 2}}
+{"src": "MT-MTC-TC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 14}}
+{"src": "MT-DHD-TC", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-TC", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-TC", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-TC", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-TC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-DHD-TC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 11}}
+{"src": "MT-DHD-TC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 3}}
+{"src": "MT-DHD-TC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 4}}
+{"src": "MT-HAD-TC", "type": "FITS", "dst": "HAD-25", "props": {}}
+{"src": "MT-HAD-TC", "type": "FITS", "dst": "HAD-50", "props": {}}
+{"src": "MT-HAD-TC", "type": "FITS", "dst": "HAD-100", "props": {}}
+{"src": "MT-HAD-TC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 12}}
+{"src": "MT-HAD-TC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 11}}
+{"src": "MT-HAD-TC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-HAD-TC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 9}}
+{"src": "MT-CHL-TC", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-TC", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-TC", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-TC", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-TC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 3}}
+{"src": "MT-CHL-TC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 5}}
+{"src": "MT-CHL-TC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 11}}
+{"src": "MT-CHL-TC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 4}}
+{"src": "MT-DHD-FLT", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-FLT", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-FLT", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-FLT", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-FLT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 14}}
+{"src": "MT-DHD-FLT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 1}}
+{"src": "MT-DHD-FLT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-DHD-FLT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-HAD-FLT", "type": "FITS", "dst": "HAD-25", "props": {}}
+{"src": "MT-HAD-FLT", "type": "FITS", "dst": "HAD-50", "props": {}}
+{"src": "MT-HAD-FLT", "type": "FITS", "dst": "HAD-100", "props": {}}
+{"src": "MT-HAD-FLT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-HAD-FLT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-HAD-FLT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 10}}
+{"src": "MT-HAD-FLT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 6}}
+{"src": "MT-MDH-FLT", "type": "FITS", "dst": "MDH-500", "props": {}}
+{"src": "MT-MDH-FLT", "type": "FITS", "dst": "MDH-1000", "props": {}}
+{"src": "MT-MDH-FLT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-MDH-FLT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 11}}
+{"src": "MT-MDH-FLT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 5}}
+{"src": "MT-MDH-FLT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-CCS-FLT", "type": "FITS", "dst": "VL-1", "props": {}}
+{"src": "MT-CCS-FLT", "type": "FITS", "dst": "VL-3", "props": {}}
+{"src": "MT-CCS-FLT", "type": "FITS", "dst": "CCS-8", "props": {}}
+{"src": "MT-CCS-FLT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 9}}
+{"src": "MT-CCS-FLT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 10}}
+{"src": "MT-CCS-FLT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 10}}
+{"src": "MT-CCS-FLT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 4}}
+{"src": "MT-DHD-ROTOR", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-ROTOR", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-ROTOR", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-ROTOR", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-ROTOR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 2}}
+{"src": "MT-DHD-ROTOR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 1}}
+{"src": "MT-DHD-ROTOR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 1}}
+{"src": "MT-DHD-ROTOR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-DHD-DPS", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-DPS", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-DPS", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-DPS", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-DPS", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 4}}
+{"src": "MT-DHD-DPS", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 4}}
+{"src": "MT-DHD-DPS", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-DHD-DPS", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 5}}
+{"src": "MT-MDH-DPS", "type": "FITS", "dst": "MDH-500", "props": {}}
+{"src": "MT-MDH-DPS", "type": "FITS", "dst": "MDH-1000", "props": {}}
+{"src": "MT-MDH-DPS", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 1}}
+{"src": "MT-MDH-DPS", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 1}}
+{"src": "MT-MDH-DPS", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 5}}
+{"src": "MT-MDH-DPS", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 6}}
+{"src": "MT-DHD-BLW", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-BLW", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-BLW", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-BLW", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-BLW", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-DHD-BLW", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 4}}
+{"src": "MT-DHD-BLW", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-DHD-BLW", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 6}}
+{"src": "MT-HAD-BLW", "type": "FITS", "dst": "HAD-25", "props": {}}
+{"src": "MT-HAD-BLW", "type": "FITS", "dst": "HAD-50", "props": {}}
+{"src": "MT-HAD-BLW", "type": "FITS", "dst": "HAD-100", "props": {}}
+{"src": "MT-HAD-BLW", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-HAD-BLW", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 5}}
+{"src": "MT-HAD-BLW", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 6}}
+{"src": "MT-HAD-BLW", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 6}}
+{"src": "MT-MDH-BLW", "type": "FITS", "dst": "MDH-500", "props": {}}
+{"src": "MT-MDH-BLW", "type": "FITS", "dst": "MDH-1000", "props": {}}
+{"src": "MT-MDH-BLW", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 2}}
+{"src": "MT-MDH-BLW", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-MDH-BLW", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 5}}
+{"src": "MT-MDH-BLW", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 5}}
+{"src": "MT-CCS-BLW", "type": "FITS", "dst": "VL-1", "props": {}}
+{"src": "MT-CCS-BLW", "type": "FITS", "dst": "VL-3", "props": {}}
+{"src": "MT-CCS-BLW", "type": "FITS", "dst": "CCS-8", "props": {}}
+{"src": "MT-CCS-BLW", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-CCS-BLW", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 1}}
+{"src": "MT-CCS-BLW", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-CCS-BLW", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 3}}
+{"src": "MT-MTC-PUMP", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-PUMP", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-PUMP", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-PUMP", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-PUMP", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-MTC-PUMP", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-MTC-PUMP", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 1}}
+{"src": "MT-MTC-PUMP", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-CHL-PUMP", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-PUMP", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-PUMP", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-PUMP", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-PUMP", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 1}}
+{"src": "MT-CHL-PUMP", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 5}}
+{"src": "MT-CHL-PUMP", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 2}}
+{"src": "MT-CHL-PUMP", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 5}}
+{"src": "MT-MTC-SEALKIT", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-SEALKIT", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-SEALKIT", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-SEALKIT", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-SEALKIT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-MTC-SEALKIT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 10}}
+{"src": "MT-MTC-SEALKIT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 4}}
+{"src": "MT-MTC-SEALKIT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 13}}
+{"src": "MT-CHL-SEALKIT", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-SEALKIT", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-SEALKIT", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-SEALKIT", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-SEALKIT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 4}}
+{"src": "MT-CHL-SEALKIT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 7}}
+{"src": "MT-CHL-SEALKIT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 11}}
+{"src": "MT-CHL-SEALKIT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 9}}
+{"src": "MT-MTC-DESCALER", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-DESCALER", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-DESCALER", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-DESCALER", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-DESCALER", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 4}}
+{"src": "MT-MTC-DESCALER", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-MTC-DESCALER", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 10}}
+{"src": "MT-MTC-DESCALER", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 10}}
+{"src": "MT-CHL-DESCALER", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-DESCALER", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-DESCALER", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-DESCALER", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-DESCALER", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-CHL-DESCALER", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-CHL-DESCALER", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 4}}
+{"src": "MT-CHL-DESCALER", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-MTC-FSW", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-FSW", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-FSW", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-FSW", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-FSW", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-MTC-FSW", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 5}}
+{"src": "MT-MTC-FSW", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-MTC-FSW", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 2}}
+{"src": "MT-CHL-FSW", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-FSW", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-FSW", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-FSW", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-FSW", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 6}}
+{"src": "MT-CHL-FSW", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 5}}
+{"src": "MT-CHL-FSW", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 2}}
+{"src": "MT-CHL-FSW", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 4}}
+{"src": "MT-CHL-REFKIT", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-REFKIT", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-REFKIT", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-REFKIT", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-REFKIT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-CHL-REFKIT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-CHL-REFKIT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 7}}
+{"src": "MT-CHL-REFKIT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 14}}
+{"src": "MT-MDH-REFKIT", "type": "FITS", "dst": "MDH-500", "props": {}}
+{"src": "MT-MDH-REFKIT", "type": "FITS", "dst": "MDH-1000", "props": {}}
+{"src": "MT-MDH-REFKIT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 11}}
+{"src": "MT-MDH-REFKIT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 11}}
+{"src": "MT-MDH-REFKIT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-MDH-REFKIT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 6}}
+{"src": "MT-CHL-CONTACTOR", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-CONTACTOR", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-CONTACTOR", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-CONTACTOR", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-CONTACTOR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 1}}
+{"src": "MT-CHL-CONTACTOR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-CHL-CONTACTOR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-CHL-CONTACTOR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 4}}
+{"src": "MT-MDH-CONTACTOR", "type": "FITS", "dst": "MDH-500", "props": {}}
+{"src": "MT-MDH-CONTACTOR", "type": "FITS", "dst": "MDH-1000", "props": {}}
+{"src": "MT-MDH-CONTACTOR", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-MDH-CONTACTOR", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 1}}
+{"src": "MT-MDH-CONTACTOR", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 5}}
+{"src": "MT-MDH-CONTACTOR", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-CCS-GASKET", "type": "FITS", "dst": "VL-1", "props": {}}
+{"src": "MT-CCS-GASKET", "type": "FITS", "dst": "VL-3", "props": {}}
+{"src": "MT-CCS-GASKET", "type": "FITS", "dst": "CCS-8", "props": {}}
+{"src": "MT-CCS-GASKET", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 9}}
+{"src": "MT-CCS-GASKET", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 2}}
+{"src": "MT-CCS-GASKET", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 14}}
+{"src": "MT-CCS-GASKET", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-CCS-HOSE", "type": "FITS", "dst": "VL-1", "props": {}}
+{"src": "MT-CCS-HOSE", "type": "FITS", "dst": "VL-3", "props": {}}
+{"src": "MT-CCS-HOSE", "type": "FITS", "dst": "CCS-8", "props": {}}
+{"src": "MT-CCS-HOSE", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 8}}
+{"src": "MT-CCS-HOSE", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-CCS-HOSE", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 1}}
+{"src": "MT-CCS-HOSE", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-RCY-BLADESET", "type": "FITS", "dst": "GR-200", "props": {}}
+{"src": "MT-RCY-BLADESET", "type": "FITS", "dst": "GR-400", "props": {}}
+{"src": "MT-RCY-BLADESET", "type": "FITS", "dst": "GR-600", "props": {}}
+{"src": "MT-RCY-BLADESET", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-RCY-BLADESET", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-RCY-BLADESET", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 4}}
+{"src": "MT-RCY-BLADESET", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-RCY-SCREEN", "type": "FITS", "dst": "GR-200", "props": {}}
+{"src": "MT-RCY-SCREEN", "type": "FITS", "dst": "GR-400", "props": {}}
+{"src": "MT-RCY-SCREEN", "type": "FITS", "dst": "GR-600", "props": {}}
+{"src": "MT-RCY-SCREEN", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-RCY-SCREEN", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 4}}
+{"src": "MT-RCY-SCREEN", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-RCY-SCREEN", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 1}}
+{"src": "MT-MTC-PLC", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-PLC", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-PLC", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-PLC", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-PLC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-MTC-PLC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-MTC-PLC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-MTC-PLC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-DHD-PLC", "type": "FITS", "dst": "DHD-50", "props": {}}
+{"src": "MT-DHD-PLC", "type": "FITS", "dst": "DHD-100", "props": {}}
+{"src": "MT-DHD-PLC", "type": "FITS", "dst": "DHD-150", "props": {}}
+{"src": "MT-DHD-PLC", "type": "FITS", "dst": "DHD-300M", "props": {}}
+{"src": "MT-DHD-PLC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-DHD-PLC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-DHD-PLC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 1}}
+{"src": "MT-DHD-PLC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 1}}
+{"src": "MT-HAD-PLC", "type": "FITS", "dst": "HAD-25", "props": {}}
+{"src": "MT-HAD-PLC", "type": "FITS", "dst": "HAD-50", "props": {}}
+{"src": "MT-HAD-PLC", "type": "FITS", "dst": "HAD-100", "props": {}}
+{"src": "MT-HAD-PLC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-HAD-PLC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 4}}
+{"src": "MT-HAD-PLC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-HAD-PLC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 2}}
+{"src": "MT-CHL-PLC", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-PLC", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-PLC", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-PLC", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-PLC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 5}}
+{"src": "MT-CHL-PLC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-CHL-PLC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 5}}
+{"src": "MT-CHL-PLC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 3}}
+{"src": "MT-MDH-PLC", "type": "FITS", "dst": "MDH-500", "props": {}}
+{"src": "MT-MDH-PLC", "type": "FITS", "dst": "MDH-1000", "props": {}}
+{"src": "MT-MDH-PLC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 3}}
+{"src": "MT-MDH-PLC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-MDH-PLC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-MDH-PLC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 3}}
+{"src": "MT-CCS-PLC", "type": "FITS", "dst": "VL-1", "props": {}}
+{"src": "MT-CCS-PLC", "type": "FITS", "dst": "VL-3", "props": {}}
+{"src": "MT-CCS-PLC", "type": "FITS", "dst": "CCS-8", "props": {}}
+{"src": "MT-CCS-PLC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-CCS-PLC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 1}}
+{"src": "MT-CCS-PLC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-CCS-PLC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 5}}
+{"src": "MT-RCY-PLC", "type": "FITS", "dst": "GR-200", "props": {}}
+{"src": "MT-RCY-PLC", "type": "FITS", "dst": "GR-400", "props": {}}
+{"src": "MT-RCY-PLC", "type": "FITS", "dst": "GR-600", "props": {}}
+{"src": "MT-RCY-PLC", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-RCY-PLC", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 0}}
+{"src": "MT-RCY-PLC", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-RCY-PLC", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 1}}
+{"src": "MT-MTC-SOL", "type": "FITS", "dst": "MTC-W60", "props": {}}
+{"src": "MT-MTC-SOL", "type": "FITS", "dst": "MTC-W90", "props": {}}
+{"src": "MT-MTC-SOL", "type": "FITS", "dst": "MTC-W120HP", "props": {}}
+{"src": "MT-MTC-SOL", "type": "FITS", "dst": "MTC-O150", "props": {}}
+{"src": "MT-MTC-SOL", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-MTC-SOL", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 4}}
+{"src": "MT-MTC-SOL", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 6}}
+{"src": "MT-MTC-SOL", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 6}}
+{"src": "MT-CHL-SOL", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-SOL", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-SOL", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-SOL", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-SOL", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 6}}
+{"src": "MT-CHL-SOL", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 3}}
+{"src": "MT-CHL-SOL", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 1}}
+{"src": "MT-CHL-SOL", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 2}}
+{"src": "MT-CCS-SOL", "type": "FITS", "dst": "VL-1", "props": {}}
+{"src": "MT-CCS-SOL", "type": "FITS", "dst": "VL-3", "props": {}}
+{"src": "MT-CCS-SOL", "type": "FITS", "dst": "CCS-8", "props": {}}
+{"src": "MT-CCS-SOL", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 1}}
+{"src": "MT-CCS-SOL", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 2}}
+{"src": "MT-CCS-SOL", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 5}}
+{"src": "MT-CCS-SOL", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 0}}
+{"src": "MT-CHL-HPSW", "type": "FITS", "dst": "CHL-3A", "props": {}}
+{"src": "MT-CHL-HPSW", "type": "FITS", "dst": "CHL-5A", "props": {}}
+{"src": "MT-CHL-HPSW", "type": "FITS", "dst": "CHL-10W", "props": {}}
+{"src": "MT-CHL-HPSW", "type": "FITS", "dst": "CHL-20W", "props": {}}
+{"src": "MT-CHL-HPSW", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 6}}
+{"src": "MT-CHL-HPSW", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 3}}
+{"src": "MT-CHL-HPSW", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 3}}
+{"src": "MT-CHL-HPSW", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 1}}
+{"src": "MT-RCY-BELT", "type": "FITS", "dst": "GR-200", "props": {}}
+{"src": "MT-RCY-BELT", "type": "FITS", "dst": "GR-400", "props": {}}
+{"src": "MT-RCY-BELT", "type": "FITS", "dst": "GR-600", "props": {}}
+{"src": "MT-RCY-BELT", "type": "STOCKED_AT", "dst": "WH-NOI", "props": {"qty": 0}}
+{"src": "MT-RCY-BELT", "type": "STOCKED_AT", "dst": "WH-PUN", "props": {"qty": 5}}
+{"src": "MT-RCY-BELT", "type": "STOCKED_AT", "dst": "WH-CHE", "props": {"qty": 0}}
+{"src": "MT-RCY-BELT", "type": "STOCKED_AT", "dst": "WH-AMD", "props": {"qty": 3}}
+{"src": "SC-NOI", "type": "SUPPLIED_BY", "dst": "WH-NOI", "props": {}}
+{"src": "SC-NOI", "type": "COVERS", "dst": "CITY-noida", "props": {}}
+{"src": "SC-NOI", "type": "COVERS", "dst": "CITY-delhi", "props": {}}
+{"src": "SC-NOI", "type": "COVERS", "dst": "CITY-gurugram", "props": {}}
+{"src": "SC-NOI", "type": "COVERS", "dst": "CITY-faridabad", "props": {}}
+{"src": "SC-NOI", "type": "COVERS", "dst": "CITY-ghaziabad", "props": {}}
+{"src": "SC-NOI", "type": "COVERS", "dst": "CITY-greater-noida", "props": {}}
+{"src": "SC-LDH", "type": "SUPPLIED_BY", "dst": "WH-NOI", "props": {}}
+{"src": "SC-LDH", "type": "COVERS", "dst": "CITY-ludhiana", "props": {}}
+{"src": "SC-LDH", "type": "COVERS", "dst": "CITY-chandigarh", "props": {}}
+{"src": "SC-LDH", "type": "COVERS", "dst": "CITY-baddi", "props": {}}
+{"src": "SC-LDH", "type": "COVERS", "dst": "CITY-jalandhar", "props": {}}
+{"src": "SC-PUN", "type": "SUPPLIED_BY", "dst": "WH-PUN", "props": {}}
+{"src": "SC-PUN", "type": "COVERS", "dst": "CITY-pune", "props": {}}
+{"src": "SC-PUN", "type": "COVERS", "dst": "CITY-chakan", "props": {}}
+{"src": "SC-PUN", "type": "COVERS", "dst": "CITY-ranjangaon", "props": {}}
+{"src": "SC-PUN", "type": "COVERS", "dst": "CITY-nashik", "props": {}}
+{"src": "SC-PUN", "type": "COVERS", "dst": "CITY-aurangabad", "props": {}}
+{"src": "SC-MUM", "type": "SUPPLIED_BY", "dst": "WH-PUN", "props": {}}
+{"src": "SC-MUM", "type": "COVERS", "dst": "CITY-mumbai", "props": {}}
+{"src": "SC-MUM", "type": "COVERS", "dst": "CITY-thane", "props": {}}
+{"src": "SC-MUM", "type": "COVERS", "dst": "CITY-bhiwandi", "props": {}}
+{"src": "SC-MUM", "type": "COVERS", "dst": "CITY-navi-mumbai", "props": {}}
+{"src": "SC-MUM", "type": "COVERS", "dst": "CITY-vapi", "props": {}}
+{"src": "SC-AMD", "type": "SUPPLIED_BY", "dst": "WH-AMD", "props": {}}
+{"src": "SC-AMD", "type": "COVERS", "dst": "CITY-ahmedabad", "props": {}}
+{"src": "SC-AMD", "type": "COVERS", "dst": "CITY-sanand", "props": {}}
+{"src": "SC-AMD", "type": "COVERS", "dst": "CITY-gandhinagar", "props": {}}
+{"src": "SC-AMD", "type": "COVERS", "dst": "CITY-rajkot", "props": {}}
+{"src": "SC-VAD", "type": "SUPPLIED_BY", "dst": "WH-AMD", "props": {}}
+{"src": "SC-VAD", "type": "COVERS", "dst": "CITY-vadodara", "props": {}}
+{"src": "SC-VAD", "type": "COVERS", "dst": "CITY-halol", "props": {}}
+{"src": "SC-VAD", "type": "COVERS", "dst": "CITY-bharuch", "props": {}}
+{"src": "SC-VAD", "type": "COVERS", "dst": "CITY-ankleshwar", "props": {}}
+{"src": "SC-CHE", "type": "SUPPLIED_BY", "dst": "WH-CHE", "props": {}}
+{"src": "SC-CHE", "type": "COVERS", "dst": "CITY-chennai", "props": {}}
+{"src": "SC-CHE", "type": "COVERS", "dst": "CITY-sriperumbudur", "props": {}}
+{"src": "SC-CHE", "type": "COVERS", "dst": "CITY-oragadam", "props": {}}
+{"src": "SC-CHE", "type": "COVERS", "dst": "CITY-hosur", "props": {}}
+{"src": "SC-BLR", "type": "SUPPLIED_BY", "dst": "WH-CHE", "props": {}}
+{"src": "SC-BLR", "type": "COVERS", "dst": "CITY-bengaluru", "props": {}}
+{"src": "SC-BLR", "type": "COVERS", "dst": "CITY-bidadi", "props": {}}
+{"src": "SC-BLR", "type": "COVERS", "dst": "CITY-tumakuru", "props": {}}
+{"src": "SC-BLR", "type": "COVERS", "dst": "CITY-mysuru", "props": {}}
+{"src": "SC-CBE", "type": "SUPPLIED_BY", "dst": "WH-CHE", "props": {}}
+{"src": "SC-CBE", "type": "COVERS", "dst": "CITY-coimbatore", "props": {}}
+{"src": "SC-CBE", "type": "COVERS", "dst": "CITY-tiruppur", "props": {}}
+{"src": "SC-CBE", "type": "COVERS", "dst": "CITY-erode", "props": {}}
+{"src": "SC-HYD", "type": "SUPPLIED_BY", "dst": "WH-CHE", "props": {}}
+{"src": "SC-HYD", "type": "COVERS", "dst": "CITY-hyderabad", "props": {}}
+{"src": "SC-HYD", "type": "COVERS", "dst": "CITY-secunderabad", "props": {}}
+{"src": "SC-HYD", "type": "COVERS", "dst": "CITY-medak", "props": {}}
+{"src": "SC-KOL", "type": "SUPPLIED_BY", "dst": "WH-NOI", "props": {}}
+{"src": "SC-KOL", "type": "COVERS", "dst": "CITY-kolkata", "props": {}}
+{"src": "SC-KOL", "type": "COVERS", "dst": "CITY-howrah", "props": {}}
+{"src": "SC-KOL", "type": "COVERS", "dst": "CITY-durgapur", "props": {}}
+{"src": "SC-KOL", "type": "COVERS", "dst": "CITY-jamshedpur", "props": {}}
+{"src": "DOC-POL-WARRANTY-V2", "type": "SUPERSEDES", "dst": "DOC-POL-WARRANTY-V1", "props": {}}
+{"src": "DOC-MAN-MTC", "type": "DESCRIBES", "dst": "MTC", "props": {}}
+{"src": "DOC-MAN-DHD", "type": "DESCRIBES", "dst": "DHD", "props": {}}
+{"src": "DOC-MAN-HAD", "type": "DESCRIBES", "dst": "HAD", "props": {}}
+{"src": "DOC-MAN-CHL", "type": "DESCRIBES", "dst": "CHL", "props": {}}
+{"src": "DOC-MAN-MDH", "type": "DESCRIBES", "dst": "MDH", "props": {}}
+{"src": "DOC-MAN-CCS", "type": "DESCRIBES", "dst": "CCS", "props": {}}
+{"src": "DOC-MAN-RCY", "type": "DESCRIBES", "dst": "RCY", "props": {}}
+{"src": "AMC-PLAN-BASIC", "type": "DESCRIBED_IN", "dst": "DOC-POL-AMC", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "DESCRIBED_IN", "dst": "DOC-POL-AMC", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-MTC-TC", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-DHD-TC", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-HAD-TC", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-CHL-TC", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-DHD-FLT", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-HAD-FLT", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-MDH-FLT", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-CCS-FLT", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-MTC-SEALKIT", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-CHL-SEALKIT", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-MTC-DESCALER", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-CHL-DESCALER", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-CHL-REFKIT", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-MDH-REFKIT", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-CCS-GASKET", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-CCS-HOSE", "props": {}}
+{"src": "AMC-PLAN-COMPREHENSIVE", "type": "COVERS_PART", "dst": "MT-RCY-BELT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "DESCRIBED_IN", "dst": "DOC-POL-AMC", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MTC-HTR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-DHD-HTR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-HAD-HTR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-DHD-RHTR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MTC-SSR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-DHD-SSR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-HAD-SSR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MTC-TC", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-DHD-TC", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-HAD-TC", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-TC", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-DHD-FLT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-HAD-FLT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MDH-FLT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CCS-FLT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-DHD-DPS", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MDH-DPS", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-DHD-BLW", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-HAD-BLW", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MDH-BLW", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CCS-BLW", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MTC-PUMP", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-PUMP", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MTC-SEALKIT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-SEALKIT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MTC-DESCALER", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-DESCALER", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MTC-FSW", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-FSW", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-REFKIT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MDH-REFKIT", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-CONTACTOR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MDH-CONTACTOR", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CCS-GASKET", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CCS-HOSE", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-RCY-BLADESET", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-RCY-SCREEN", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-MTC-SOL", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-SOL", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CCS-SOL", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-CHL-HPSW", "props": {}}
+{"src": "AMC-PLAN-PLATINUM", "type": "COVERS_PART", "dst": "MT-RCY-BELT", "props": {}}

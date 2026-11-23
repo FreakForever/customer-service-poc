@@ -1,0 +1,1325 @@
+[
+  {
+    "id": "MTC-E01",
+    "family": "MTC",
+    "code": "E01",
+    "title": "Low water level",
+    "display_text": "LO LEVEL",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-LOW-WATER",
+        "likelihood": 0.7,
+        "resolution_id": "R-MTC-C-LOW-WATER"
+      },
+      {
+        "cause_id": "C-FSW-FAULT",
+        "likelihood": 0.2,
+        "resolution_id": "R-MTC-C-FSW-FAULT"
+      },
+      {
+        "cause_id": "C-SOL-STUCK",
+        "likelihood": 0.1,
+        "resolution_id": "R-MTC-C-SOL-STUCK"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MTC",
+    "synthetic": true
+  },
+  {
+    "id": "MTC-E02",
+    "family": "MTC",
+    "code": "E02",
+    "title": "Over-temperature",
+    "display_text": "OVER TEMP",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-SSR-FAIL",
+        "likelihood": 0.5,
+        "resolution_id": "R-MTC-C-SSR-FAIL"
+      },
+      {
+        "cause_id": "C-TC-DRIFT",
+        "likelihood": 0.3,
+        "resolution_id": "R-MTC-C-TC-DRIFT"
+      },
+      {
+        "cause_id": "C-SETPOINT",
+        "likelihood": 0.2,
+        "resolution_id": "R-MTC-C-SETPOINT"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MTC",
+    "synthetic": true
+  },
+  {
+    "id": "MTC-E03",
+    "family": "MTC",
+    "code": "E03",
+    "title": "Temperature sensor open",
+    "display_text": "SENSOR OPEN",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-TC-OPEN",
+        "likelihood": 0.9,
+        "resolution_id": "R-MTC-C-TC-OPEN"
+      },
+      {
+        "cause_id": "C-PLC-COMM",
+        "likelihood": 0.1,
+        "resolution_id": "R-MTC-C-PLC-COMM"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MTC",
+    "synthetic": true
+  },
+  {
+    "id": "MTC-E04",
+    "family": "MTC",
+    "code": "E04",
+    "title": "Pump overload",
+    "display_text": "PUMP OL",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-PUMP-SEIZED",
+        "likelihood": 0.5,
+        "resolution_id": "R-MTC-C-PUMP-SEIZED"
+      },
+      {
+        "cause_id": "C-SCALE",
+        "likelihood": 0.35,
+        "resolution_id": "R-MTC-C-SCALE"
+      },
+      {
+        "cause_id": "C-PHASE-LOSS",
+        "likelihood": 0.15,
+        "resolution_id": "R-MTC-C-PHASE-LOSS"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MTC",
+    "synthetic": true
+  },
+  {
+    "id": "MTC-E05",
+    "family": "MTC",
+    "code": "E05",
+    "title": "Slow heat-up",
+    "display_text": "HEAT SLOW",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-HTR-OPEN",
+        "likelihood": 0.5,
+        "resolution_id": "R-MTC-C-HTR-OPEN"
+      },
+      {
+        "cause_id": "C-SSR-FAIL",
+        "likelihood": 0.3,
+        "resolution_id": "R-MTC-C-SSR-FAIL"
+      },
+      {
+        "cause_id": "C-SCALE",
+        "likelihood": 0.2,
+        "resolution_id": "R-MTC-C-SCALE"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MTC",
+    "synthetic": true
+  },
+  {
+    "id": "MTC-E06",
+    "family": "MTC",
+    "code": "E06",
+    "title": "Low flow",
+    "display_text": "LOW FLOW",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-SCALE",
+        "likelihood": 0.6,
+        "resolution_id": "R-MTC-C-SCALE"
+      },
+      {
+        "cause_id": "C-FSW-FAULT",
+        "likelihood": 0.25,
+        "resolution_id": "R-MTC-C-FSW-FAULT"
+      },
+      {
+        "cause_id": "C-PUMP-SEIZED",
+        "likelihood": 0.15,
+        "resolution_id": "R-MTC-C-PUMP-SEIZED"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MTC",
+    "synthetic": true
+  },
+  {
+    "id": "MTC-E07",
+    "family": "MTC",
+    "code": "E07",
+    "title": "Phase fault",
+    "display_text": "PHASE",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-PHASE-REV",
+        "likelihood": 0.6,
+        "resolution_id": "R-MTC-C-PHASE-REV"
+      },
+      {
+        "cause_id": "C-PHASE-LOSS",
+        "likelihood": 0.4,
+        "resolution_id": "R-MTC-C-PHASE-LOSS"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MTC",
+    "synthetic": true
+  },
+  {
+    "id": "MTC-E08",
+    "family": "MTC",
+    "code": "E08",
+    "title": "High pressure",
+    "display_text": "HI PRESS",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "MTC-W60",
+      "MTC-W90",
+      "MTC-W120HP",
+      "MTC-O150"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-SCALE",
+        "likelihood": 0.5,
+        "resolution_id": "R-MTC-C-SCALE"
+      },
+      {
+        "cause_id": "C-SOL-STUCK",
+        "likelihood": 0.3,
+        "resolution_id": "R-MTC-C-SOL-STUCK"
+      },
+      {
+        "cause_id": "C-SETPOINT",
+        "likelihood": 0.2,
+        "resolution_id": "R-MTC-C-SETPOINT"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MTC",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E01",
+    "family": "DHD",
+    "code": "E01",
+    "title": "Process temperature low",
+    "display_text": "PROC TEMP LO",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-HTR-OPEN",
+        "likelihood": 0.5,
+        "resolution_id": "R-DHD-C-HTR-OPEN"
+      },
+      {
+        "cause_id": "C-SSR-FAIL",
+        "likelihood": 0.3,
+        "resolution_id": "R-DHD-C-SSR-FAIL"
+      },
+      {
+        "cause_id": "C-TC-DRIFT",
+        "likelihood": 0.2,
+        "resolution_id": "R-DHD-C-TC-DRIFT"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E02",
+    "family": "DHD",
+    "code": "E02",
+    "title": "Process over-temperature",
+    "display_text": "PROC OVER TEMP",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-SSR-FAIL",
+        "likelihood": 0.55,
+        "resolution_id": "R-DHD-C-SSR-FAIL"
+      },
+      {
+        "cause_id": "C-TC-DRIFT",
+        "likelihood": 0.25,
+        "resolution_id": "R-DHD-C-TC-DRIFT"
+      },
+      {
+        "cause_id": "C-SETPOINT",
+        "likelihood": 0.2,
+        "resolution_id": "R-DHD-C-SETPOINT"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E03",
+    "family": "DHD",
+    "code": "E03",
+    "title": "Regeneration temperature low",
+    "display_text": "REGEN TEMP LO",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-RHTR-OPEN",
+        "likelihood": 0.6,
+        "resolution_id": "R-DHD-C-RHTR-OPEN"
+      },
+      {
+        "cause_id": "C-SSR-FAIL",
+        "likelihood": 0.25,
+        "resolution_id": "R-DHD-C-SSR-FAIL"
+      },
+      {
+        "cause_id": "C-TC-OPEN",
+        "likelihood": 0.15,
+        "resolution_id": "R-DHD-C-TC-OPEN"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E04",
+    "family": "DHD",
+    "code": "E04",
+    "title": "Dew point high",
+    "display_text": "DEW PT HIGH",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-ROTOR-DEG",
+        "likelihood": 0.4,
+        "resolution_id": "R-DHD-C-ROTOR-DEG"
+      },
+      {
+        "cause_id": "C-RHTR-OPEN",
+        "likelihood": 0.25,
+        "resolution_id": "R-DHD-C-RHTR-OPEN"
+      },
+      {
+        "cause_id": "C-FLT-CLOG",
+        "likelihood": 0.2,
+        "resolution_id": "R-DHD-C-FLT-CLOG"
+      },
+      {
+        "cause_id": "C-DPS-FAULT",
+        "likelihood": 0.15,
+        "resolution_id": "R-DHD-C-DPS-FAULT"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E05",
+    "family": "DHD",
+    "code": "E05",
+    "title": "Blower overload",
+    "display_text": "BLOWER OL",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-BLW-OVL",
+        "likelihood": 0.6,
+        "resolution_id": "R-DHD-C-BLW-OVL"
+      },
+      {
+        "cause_id": "C-FLT-CLOG",
+        "likelihood": 0.3,
+        "resolution_id": "R-DHD-C-FLT-CLOG"
+      },
+      {
+        "cause_id": "C-PHASE-LOSS",
+        "likelihood": 0.1,
+        "resolution_id": "R-DHD-C-PHASE-LOSS"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E06",
+    "family": "DHD",
+    "code": "E06",
+    "title": "Filter clogged",
+    "display_text": "FILTER",
+    "severity": "info",
+    "safety_stop": false,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-FLT-CLOG",
+        "likelihood": 0.9,
+        "resolution_id": "R-DHD-C-FLT-CLOG"
+      },
+      {
+        "cause_id": "C-PROX-DIRTY",
+        "likelihood": 0.1,
+        "resolution_id": "R-DHD-C-PROX-DIRTY"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E07",
+    "family": "DHD",
+    "code": "E07",
+    "title": "Sensor open",
+    "display_text": "SENSOR OPEN",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-TC-OPEN",
+        "likelihood": 0.85,
+        "resolution_id": "R-DHD-C-TC-OPEN"
+      },
+      {
+        "cause_id": "C-PLC-COMM",
+        "likelihood": 0.15,
+        "resolution_id": "R-DHD-C-PLC-COMM"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E08",
+    "family": "DHD",
+    "code": "E08",
+    "title": "Phase fault",
+    "display_text": "PHASE",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-PHASE-REV",
+        "likelihood": 0.6,
+        "resolution_id": "R-DHD-C-PHASE-REV"
+      },
+      {
+        "cause_id": "C-PHASE-LOSS",
+        "likelihood": 0.4,
+        "resolution_id": "R-DHD-C-PHASE-LOSS"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "DHD-E10",
+    "family": "DHD",
+    "code": "E10",
+    "title": "Hopper low material",
+    "display_text": "HOPPER LOW",
+    "severity": "info",
+    "safety_stop": false,
+    "applies_to_models": [
+      "DHD-50",
+      "DHD-100",
+      "DHD-150",
+      "DHD-300M"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-BRIDGE",
+        "likelihood": 0.7,
+        "resolution_id": "R-DHD-C-BRIDGE"
+      },
+      {
+        "cause_id": "C-PROX-DIRTY",
+        "likelihood": 0.3,
+        "resolution_id": "R-DHD-C-PROX-DIRTY"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-DHD",
+    "synthetic": true
+  },
+  {
+    "id": "HAD-E1",
+    "family": "HAD",
+    "code": "E1",
+    "title": "Over-temperature",
+    "display_text": "OH",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-SSR-FAIL",
+        "likelihood": 0.6,
+        "resolution_id": "R-HAD-C-SSR-FAIL"
+      },
+      {
+        "cause_id": "C-TC-DRIFT",
+        "likelihood": 0.4,
+        "resolution_id": "R-HAD-C-TC-DRIFT"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-HAD",
+    "synthetic": true
+  },
+  {
+    "id": "HAD-E2",
+    "family": "HAD",
+    "code": "E2",
+    "title": "Sensor open",
+    "display_text": "SE",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-TC-OPEN",
+        "likelihood": 1.0,
+        "resolution_id": "R-HAD-C-TC-OPEN"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-HAD",
+    "synthetic": true
+  },
+  {
+    "id": "HAD-E3",
+    "family": "HAD",
+    "code": "E3",
+    "title": "Heater not heating",
+    "display_text": "HE",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-HTR-OPEN",
+        "likelihood": 0.6,
+        "resolution_id": "R-HAD-C-HTR-OPEN"
+      },
+      {
+        "cause_id": "C-SSR-FAIL",
+        "likelihood": 0.4,
+        "resolution_id": "R-HAD-C-SSR-FAIL"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-HAD",
+    "synthetic": true
+  },
+  {
+    "id": "HAD-E4",
+    "family": "HAD",
+    "code": "E4",
+    "title": "Blower overload",
+    "display_text": "BL",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-BLW-OVL",
+        "likelihood": 0.6,
+        "resolution_id": "R-HAD-C-BLW-OVL"
+      },
+      {
+        "cause_id": "C-FLT-CLOG",
+        "likelihood": 0.4,
+        "resolution_id": "R-HAD-C-FLT-CLOG"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-HAD",
+    "synthetic": true
+  },
+  {
+    "id": "HAD-E5",
+    "family": "HAD",
+    "code": "E5",
+    "title": "Hopper low material",
+    "display_text": "LO",
+    "severity": "info",
+    "safety_stop": false,
+    "applies_to_models": [
+      "HAD-25",
+      "HAD-50",
+      "HAD-100"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-BRIDGE",
+        "likelihood": 0.6,
+        "resolution_id": "R-HAD-C-BRIDGE"
+      },
+      {
+        "cause_id": "C-PROX-DIRTY",
+        "likelihood": 0.4,
+        "resolution_id": "R-HAD-C-PROX-DIRTY"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-HAD",
+    "synthetic": true
+  },
+  {
+    "id": "CHL-A01",
+    "family": "CHL",
+    "code": "A01",
+    "title": "High refrigerant pressure",
+    "display_text": "HP TRIP",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-COND-DIRTY",
+        "likelihood": 0.4,
+        "resolution_id": "R-CHL-C-COND-DIRTY"
+      },
+      {
+        "cause_id": "C-CW-LOW",
+        "likelihood": 0.3,
+        "resolution_id": "R-CHL-C-CW-LOW"
+      },
+      {
+        "cause_id": "C-AMB-HIGH",
+        "likelihood": 0.2,
+        "resolution_id": "R-CHL-C-AMB-HIGH"
+      },
+      {
+        "cause_id": "C-HP-TRIP",
+        "likelihood": 0.1,
+        "resolution_id": "R-CHL-C-HP-TRIP"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CHL",
+    "synthetic": true
+  },
+  {
+    "id": "CHL-A02",
+    "family": "CHL",
+    "code": "A02",
+    "title": "Low refrigerant pressure",
+    "display_text": "LP TRIP",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-REF-LEAK",
+        "likelihood": 0.7,
+        "resolution_id": "R-CHL-C-REF-LEAK"
+      },
+      {
+        "cause_id": "C-EVAP-FREEZE",
+        "likelihood": 0.3,
+        "resolution_id": "R-CHL-C-EVAP-FREEZE"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CHL",
+    "synthetic": true
+  },
+  {
+    "id": "CHL-A03",
+    "family": "CHL",
+    "code": "A03",
+    "title": "Compressor overload",
+    "display_text": "COMP OL",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-COMP-OVL",
+        "likelihood": 0.5,
+        "resolution_id": "R-CHL-C-COMP-OVL"
+      },
+      {
+        "cause_id": "C-PHASE-LOSS",
+        "likelihood": 0.3,
+        "resolution_id": "R-CHL-C-PHASE-LOSS"
+      },
+      {
+        "cause_id": "C-COND-DIRTY",
+        "likelihood": 0.2,
+        "resolution_id": "R-CHL-C-COND-DIRTY"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CHL",
+    "synthetic": true
+  },
+  {
+    "id": "CHL-A04",
+    "family": "CHL",
+    "code": "A04",
+    "title": "Anti-freeze protection",
+    "display_text": "FREEZE",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-EVAP-FREEZE",
+        "likelihood": 0.7,
+        "resolution_id": "R-CHL-C-EVAP-FREEZE"
+      },
+      {
+        "cause_id": "C-FSW-FAULT",
+        "likelihood": 0.3,
+        "resolution_id": "R-CHL-C-FSW-FAULT"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CHL",
+    "synthetic": true
+  },
+  {
+    "id": "CHL-A05",
+    "family": "CHL",
+    "code": "A05",
+    "title": "No water flow",
+    "display_text": "FLOW",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-PUMP-SEIZED",
+        "likelihood": 0.35,
+        "resolution_id": "R-CHL-C-PUMP-SEIZED"
+      },
+      {
+        "cause_id": "C-FSW-FAULT",
+        "likelihood": 0.35,
+        "resolution_id": "R-CHL-C-FSW-FAULT"
+      },
+      {
+        "cause_id": "C-LOW-WATER",
+        "likelihood": 0.3,
+        "resolution_id": "R-CHL-C-LOW-WATER"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CHL",
+    "synthetic": true
+  },
+  {
+    "id": "CHL-A06",
+    "family": "CHL",
+    "code": "A06",
+    "title": "Tank level low",
+    "display_text": "LEVEL",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-LOW-WATER",
+        "likelihood": 0.8,
+        "resolution_id": "R-CHL-C-LOW-WATER"
+      },
+      {
+        "cause_id": "C-SOL-STUCK",
+        "likelihood": 0.2,
+        "resolution_id": "R-CHL-C-SOL-STUCK"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CHL",
+    "synthetic": true
+  },
+  {
+    "id": "CHL-A07",
+    "family": "CHL",
+    "code": "A07",
+    "title": "Phase fault",
+    "display_text": "PHASE",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-PHASE-REV",
+        "likelihood": 0.6,
+        "resolution_id": "R-CHL-C-PHASE-REV"
+      },
+      {
+        "cause_id": "C-PHASE-LOSS",
+        "likelihood": 0.4,
+        "resolution_id": "R-CHL-C-PHASE-LOSS"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CHL",
+    "synthetic": true
+  },
+  {
+    "id": "CHL-A08",
+    "family": "CHL",
+    "code": "A08",
+    "title": "Outlet temperature sensor fault",
+    "display_text": "SENSOR",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "CHL-3A",
+      "CHL-5A",
+      "CHL-10W",
+      "CHL-20W"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-TC-OPEN",
+        "likelihood": 0.8,
+        "resolution_id": "R-CHL-C-TC-OPEN"
+      },
+      {
+        "cause_id": "C-PLC-COMM",
+        "likelihood": 0.2,
+        "resolution_id": "R-CHL-C-PLC-COMM"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CHL",
+    "synthetic": true
+  },
+  {
+    "id": "MDH-E01",
+    "family": "MDH",
+    "code": "E01",
+    "title": "Dew point not reached",
+    "display_text": "DEW PT",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-COND-DIRTY",
+        "likelihood": 0.35,
+        "resolution_id": "R-MDH-C-COND-DIRTY"
+      },
+      {
+        "cause_id": "C-FLT-CLOG",
+        "likelihood": 0.35,
+        "resolution_id": "R-MDH-C-FLT-CLOG"
+      },
+      {
+        "cause_id": "C-REF-LEAK",
+        "likelihood": 0.3,
+        "resolution_id": "R-MDH-C-REF-LEAK"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MDH",
+    "synthetic": true
+  },
+  {
+    "id": "MDH-E02",
+    "family": "MDH",
+    "code": "E02",
+    "title": "Coil frosting",
+    "display_text": "FROST",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-EVAP-FREEZE",
+        "likelihood": 0.7,
+        "resolution_id": "R-MDH-C-EVAP-FREEZE"
+      },
+      {
+        "cause_id": "C-FLT-CLOG",
+        "likelihood": 0.3,
+        "resolution_id": "R-MDH-C-FLT-CLOG"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MDH",
+    "synthetic": true
+  },
+  {
+    "id": "MDH-E03",
+    "family": "MDH",
+    "code": "E03",
+    "title": "Compressor overload",
+    "display_text": "COMP OL",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-COMP-OVL",
+        "likelihood": 0.6,
+        "resolution_id": "R-MDH-C-COMP-OVL"
+      },
+      {
+        "cause_id": "C-AMB-HIGH",
+        "likelihood": 0.4,
+        "resolution_id": "R-MDH-C-AMB-HIGH"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MDH",
+    "synthetic": true
+  },
+  {
+    "id": "MDH-E04",
+    "family": "MDH",
+    "code": "E04",
+    "title": "Dew point sensor fault",
+    "display_text": "DPS",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "MDH-500",
+      "MDH-1000"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-DPS-FAULT",
+        "likelihood": 1.0,
+        "resolution_id": "R-MDH-C-DPS-FAULT"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-MDH",
+    "synthetic": true
+  },
+  {
+    "id": "CCS-L1",
+    "family": "CCS",
+    "code": "L1",
+    "title": "No material conveyed (alarm after 3 cycles)",
+    "display_text": "NO MAT",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-BRIDGE",
+        "likelihood": 0.4,
+        "resolution_id": "R-CCS-C-BRIDGE"
+      },
+      {
+        "cause_id": "C-VAC-LEAK",
+        "likelihood": 0.3,
+        "resolution_id": "R-CCS-C-VAC-LEAK"
+      },
+      {
+        "cause_id": "C-HOSE-BLOCK",
+        "likelihood": 0.3,
+        "resolution_id": "R-CCS-C-HOSE-BLOCK"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CCS",
+    "synthetic": true
+  },
+  {
+    "id": "CCS-L2",
+    "family": "CCS",
+    "code": "L2",
+    "title": "Filter clogged",
+    "display_text": "FILTER",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-FLT-CLOG",
+        "likelihood": 1.0,
+        "resolution_id": "R-CCS-C-FLT-CLOG"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CCS",
+    "synthetic": true
+  },
+  {
+    "id": "CCS-L3",
+    "family": "CCS",
+    "code": "L3",
+    "title": "Blower / motor overload",
+    "display_text": "MOTOR OL",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-BLW-OVL",
+        "likelihood": 0.6,
+        "resolution_id": "R-CCS-C-BLW-OVL"
+      },
+      {
+        "cause_id": "C-FLT-CLOG",
+        "likelihood": 0.4,
+        "resolution_id": "R-CCS-C-FLT-CLOG"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CCS",
+    "synthetic": true
+  },
+  {
+    "id": "CCS-L4",
+    "family": "CCS",
+    "code": "L4",
+    "title": "Station valve fault",
+    "display_text": "VALVE",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-SOL-STUCK",
+        "likelihood": 0.8,
+        "resolution_id": "R-CCS-C-SOL-STUCK"
+      },
+      {
+        "cause_id": "C-PLC-COMM",
+        "likelihood": 0.2,
+        "resolution_id": "R-CCS-C-PLC-COMM"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CCS",
+    "synthetic": true
+  },
+  {
+    "id": "CCS-L5",
+    "family": "CCS",
+    "code": "L5",
+    "title": "Level sensor fault",
+    "display_text": "SENSOR",
+    "severity": "info",
+    "safety_stop": false,
+    "applies_to_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-PROX-DIRTY",
+        "likelihood": 1.0,
+        "resolution_id": "R-CCS-C-PROX-DIRTY"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CCS",
+    "synthetic": true
+  },
+  {
+    "id": "CCS-L6",
+    "family": "CCS",
+    "code": "L6",
+    "title": "Phase fault",
+    "display_text": "PHASE",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "VL-1",
+      "VL-3",
+      "CCS-8"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-PHASE-REV",
+        "likelihood": 0.6,
+        "resolution_id": "R-CCS-C-PHASE-REV"
+      },
+      {
+        "cause_id": "C-PHASE-LOSS",
+        "likelihood": 0.4,
+        "resolution_id": "R-CCS-C-PHASE-LOSS"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-CCS",
+    "synthetic": true
+  },
+  {
+    "id": "RCY-G1",
+    "family": "RCY",
+    "code": "G1",
+    "title": "Motor overload",
+    "display_text": "MOTOR OL",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "GR-200",
+      "GR-400",
+      "GR-600"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-OVERFEED",
+        "likelihood": 0.4,
+        "resolution_id": "R-RCY-C-OVERFEED"
+      },
+      {
+        "cause_id": "C-BLADE-DULL",
+        "likelihood": 0.35,
+        "resolution_id": "R-RCY-C-BLADE-DULL"
+      },
+      {
+        "cause_id": "C-MOT-OVL",
+        "likelihood": 0.25,
+        "resolution_id": "R-RCY-C-MOT-OVL"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-RCY",
+    "synthetic": true
+  },
+  {
+    "id": "RCY-G2",
+    "family": "RCY",
+    "code": "G2",
+    "title": "Safety interlock open",
+    "display_text": "INTERLOCK",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "GR-200",
+      "GR-400",
+      "GR-600"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-ILK-OPEN",
+        "likelihood": 1.0,
+        "resolution_id": "R-RCY-C-ILK-OPEN"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-RCY",
+    "synthetic": true
+  },
+  {
+    "id": "RCY-G3",
+    "family": "RCY",
+    "code": "G3",
+    "title": "Low output / fines",
+    "display_text": "LOW OUTPUT",
+    "severity": "warning",
+    "safety_stop": false,
+    "applies_to_models": [
+      "GR-200",
+      "GR-400",
+      "GR-600"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-BLADE-DULL",
+        "likelihood": 0.6,
+        "resolution_id": "R-RCY-C-BLADE-DULL"
+      },
+      {
+        "cause_id": "C-SCR-CLOG",
+        "likelihood": 0.4,
+        "resolution_id": "R-RCY-C-SCR-CLOG"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-RCY",
+    "synthetic": true
+  },
+  {
+    "id": "RCY-G4",
+    "family": "RCY",
+    "code": "G4",
+    "title": "Phase fault",
+    "display_text": "PHASE",
+    "severity": "critical",
+    "safety_stop": true,
+    "applies_to_models": [
+      "GR-200",
+      "GR-400",
+      "GR-600"
+    ],
+    "causes": [
+      {
+        "cause_id": "C-PHASE-REV",
+        "likelihood": 0.6,
+        "resolution_id": "R-RCY-C-PHASE-REV"
+      },
+      {
+        "cause_id": "C-PHASE-LOSS",
+        "likelihood": 0.4,
+        "resolution_id": "R-RCY-C-PHASE-LOSS"
+      }
+    ],
+    "manual_doc_id": "DOC-MAN-RCY",
+    "synthetic": true
+  }
+]

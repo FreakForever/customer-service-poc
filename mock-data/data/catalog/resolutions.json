@@ -1,0 +1,770 @@
+[
+  {
+    "id": "R-MTC-C-LOW-WATER",
+    "family": "MTC",
+    "cause_id": "C-LOW-WATER",
+    "steps": "Open make-up water valve, check float; top up tank to the marked level.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-MTC-C-FSW-FAULT",
+    "family": "MTC",
+    "cause_id": "C-FSW-FAULT",
+    "steps": "Check flow switch paddle and wiring; replace flow switch.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MTC-FSW"
+    ]
+  },
+  {
+    "id": "R-MTC-C-SOL-STUCK",
+    "family": "MTC",
+    "cause_id": "C-SOL-STUCK",
+    "steps": "Check coil voltage; clean or replace solenoid valve.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MTC-SOL"
+    ]
+  },
+  {
+    "id": "R-MTC-C-SSR-FAIL",
+    "family": "MTC",
+    "cause_id": "C-SSR-FAIL",
+    "steps": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MTC-SSR"
+    ]
+  },
+  {
+    "id": "R-MTC-C-TC-DRIFT",
+    "family": "MTC",
+    "cause_id": "C-TC-DRIFT",
+    "steps": "Compare against reference thermometer; recalibrate offset or replace sensor.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MTC-TC"
+    ]
+  },
+  {
+    "id": "R-MTC-C-SETPOINT",
+    "family": "MTC",
+    "cause_id": "C-SETPOINT",
+    "steps": "Check setpoint, material recipe and units on the HMI; restore recommended values.",
+    "est_minutes": 5,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-MTC-C-TC-OPEN",
+    "family": "MTC",
+    "cause_id": "C-TC-OPEN",
+    "steps": "Re-seat sensor connector; if reading still open, replace thermocouple.",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MTC-TC"
+    ]
+  },
+  {
+    "id": "R-MTC-C-PLC-COMM",
+    "family": "MTC",
+    "cause_id": "C-PLC-COMM",
+    "steps": "Power-cycle unit; reload default parameters; if fault persists replace controller board.",
+    "est_minutes": 60,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MTC-PLC"
+    ]
+  },
+  {
+    "id": "R-MTC-C-PUMP-SEIZED",
+    "family": "MTC",
+    "cause_id": "C-PUMP-SEIZED",
+    "steps": "Isolate power, rotate shaft manually; clear debris or replace pump seal kit / pump.",
+    "est_minutes": 90,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MTC-PUMP",
+      "MT-MTC-SEALKIT"
+    ]
+  },
+  {
+    "id": "R-MTC-C-SCALE",
+    "family": "MTC",
+    "cause_id": "C-SCALE",
+    "steps": "Descale mold channels and unit with a descaling pump and approved descaling agent; fit water treatment.",
+    "est_minutes": 120,
+    "performed_by": "customer",
+    "parts": [
+      "MT-MTC-DESCALER"
+    ]
+  },
+  {
+    "id": "R-MTC-C-PHASE-LOSS",
+    "family": "MTC",
+    "cause_id": "C-PHASE-LOSS",
+    "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.",
+    "est_minutes": 15,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-MTC-C-HTR-OPEN",
+    "family": "MTC",
+    "cause_id": "C-HTR-OPEN",
+    "steps": "Isolate power, measure heater resistance; replace heater element if open.",
+    "est_minutes": 60,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MTC-HTR"
+    ]
+  },
+  {
+    "id": "R-MTC-C-PHASE-REV",
+    "family": "MTC",
+    "cause_id": "C-PHASE-REV",
+    "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": []
+  },
+  {
+    "id": "R-DHD-C-HTR-OPEN",
+    "family": "DHD",
+    "cause_id": "C-HTR-OPEN",
+    "steps": "Isolate power, measure heater resistance; replace heater element if open.",
+    "est_minutes": 60,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-HTR"
+    ]
+  },
+  {
+    "id": "R-DHD-C-SSR-FAIL",
+    "family": "DHD",
+    "cause_id": "C-SSR-FAIL",
+    "steps": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-SSR"
+    ]
+  },
+  {
+    "id": "R-DHD-C-TC-DRIFT",
+    "family": "DHD",
+    "cause_id": "C-TC-DRIFT",
+    "steps": "Compare against reference thermometer; recalibrate offset or replace sensor.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-TC"
+    ]
+  },
+  {
+    "id": "R-DHD-C-SETPOINT",
+    "family": "DHD",
+    "cause_id": "C-SETPOINT",
+    "steps": "Check setpoint, material recipe and units on the HMI; restore recommended values.",
+    "est_minutes": 5,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-DHD-C-RHTR-OPEN",
+    "family": "DHD",
+    "cause_id": "C-RHTR-OPEN",
+    "steps": "Isolate power, check regeneration heater resistance; replace if open.",
+    "est_minutes": 75,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-RHTR"
+    ]
+  },
+  {
+    "id": "R-DHD-C-TC-OPEN",
+    "family": "DHD",
+    "cause_id": "C-TC-OPEN",
+    "steps": "Re-seat sensor connector; if reading still open, replace thermocouple.",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-TC"
+    ]
+  },
+  {
+    "id": "R-DHD-C-ROTOR-DEG",
+    "family": "DHD",
+    "cause_id": "C-ROTOR-DEG",
+    "steps": "Inspect rotor for discoloration or oil contamination; replace desiccant rotor.",
+    "est_minutes": 120,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-ROTOR"
+    ]
+  },
+  {
+    "id": "R-DHD-C-FLT-CLOG",
+    "family": "DHD",
+    "cause_id": "C-FLT-CLOG",
+    "steps": "Stop blower, remove filter, clean with compressed air from clean side or replace if torn.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": [
+      "MT-DHD-FLT"
+    ]
+  },
+  {
+    "id": "R-DHD-C-DPS-FAULT",
+    "family": "DHD",
+    "cause_id": "C-DPS-FAULT",
+    "steps": "Verify against portable dew point meter; recalibrate or replace dew point sensor.",
+    "est_minutes": 45,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-DPS"
+    ]
+  },
+  {
+    "id": "R-DHD-C-BLW-OVL",
+    "family": "DHD",
+    "cause_id": "C-BLW-OVL",
+    "steps": "Reset overload after cooling; check filter and duct for blockage; check motor current; replace blower if current high.",
+    "est_minutes": 40,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-BLW"
+    ]
+  },
+  {
+    "id": "R-DHD-C-PHASE-LOSS",
+    "family": "DHD",
+    "cause_id": "C-PHASE-LOSS",
+    "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.",
+    "est_minutes": 15,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-DHD-C-PROX-DIRTY",
+    "family": "DHD",
+    "cause_id": "C-PROX-DIRTY",
+    "steps": "Clean sensor face; adjust sensitivity screw until LED switches with material.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-DHD-C-PLC-COMM",
+    "family": "DHD",
+    "cause_id": "C-PLC-COMM",
+    "steps": "Power-cycle unit; reload default parameters; if fault persists replace controller board.",
+    "est_minutes": 60,
+    "performed_by": "technician",
+    "parts": [
+      "MT-DHD-PLC"
+    ]
+  },
+  {
+    "id": "R-DHD-C-PHASE-REV",
+    "family": "DHD",
+    "cause_id": "C-PHASE-REV",
+    "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": []
+  },
+  {
+    "id": "R-DHD-C-BRIDGE",
+    "family": "DHD",
+    "cause_id": "C-BRIDGE",
+    "steps": "Refill source bin; agitate hopper; consider anti-bridging insert.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-HAD-C-SSR-FAIL",
+    "family": "HAD",
+    "cause_id": "C-SSR-FAIL",
+    "steps": "Check SSR input/output with meter; replace SSR and verify heat-sink paste.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-HAD-SSR"
+    ]
+  },
+  {
+    "id": "R-HAD-C-TC-DRIFT",
+    "family": "HAD",
+    "cause_id": "C-TC-DRIFT",
+    "steps": "Compare against reference thermometer; recalibrate offset or replace sensor.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-HAD-TC"
+    ]
+  },
+  {
+    "id": "R-HAD-C-TC-OPEN",
+    "family": "HAD",
+    "cause_id": "C-TC-OPEN",
+    "steps": "Re-seat sensor connector; if reading still open, replace thermocouple.",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": [
+      "MT-HAD-TC"
+    ]
+  },
+  {
+    "id": "R-HAD-C-HTR-OPEN",
+    "family": "HAD",
+    "cause_id": "C-HTR-OPEN",
+    "steps": "Isolate power, measure heater resistance; replace heater element if open.",
+    "est_minutes": 60,
+    "performed_by": "technician",
+    "parts": [
+      "MT-HAD-HTR"
+    ]
+  },
+  {
+    "id": "R-HAD-C-BLW-OVL",
+    "family": "HAD",
+    "cause_id": "C-BLW-OVL",
+    "steps": "Reset overload after cooling; check filter and duct for blockage; check motor current; replace blower if current high.",
+    "est_minutes": 40,
+    "performed_by": "technician",
+    "parts": [
+      "MT-HAD-BLW"
+    ]
+  },
+  {
+    "id": "R-HAD-C-FLT-CLOG",
+    "family": "HAD",
+    "cause_id": "C-FLT-CLOG",
+    "steps": "Stop blower, remove filter, clean with compressed air from clean side or replace if torn.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": [
+      "MT-HAD-FLT"
+    ]
+  },
+  {
+    "id": "R-HAD-C-BRIDGE",
+    "family": "HAD",
+    "cause_id": "C-BRIDGE",
+    "steps": "Refill source bin; agitate hopper; consider anti-bridging insert.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-HAD-C-PROX-DIRTY",
+    "family": "HAD",
+    "cause_id": "C-PROX-DIRTY",
+    "steps": "Clean sensor face; adjust sensitivity screw until LED switches with material.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CHL-C-COND-DIRTY",
+    "family": "CHL",
+    "cause_id": "C-COND-DIRTY",
+    "steps": "Clean condenser fins with low-pressure air or water; ensure 1 m clearance around unit.",
+    "est_minutes": 30,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CHL-C-CW-LOW",
+    "family": "CHL",
+    "cause_id": "C-CW-LOW",
+    "steps": "Check cooling tower pump, strainer and valves; ensure rated condenser water flow.",
+    "est_minutes": 30,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CHL-C-AMB-HIGH",
+    "family": "CHL",
+    "cause_id": "C-AMB-HIGH",
+    "steps": "Improve ventilation or relocate unit; reduce load until ambient is within rating.",
+    "est_minutes": 30,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CHL-C-HP-TRIP",
+    "family": "CHL",
+    "cause_id": "C-HP-TRIP",
+    "steps": "Find root cause (dirty condenser / low water flow) before resetting HP switch.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CHL-HPSW"
+    ]
+  },
+  {
+    "id": "R-CHL-C-REF-LEAK",
+    "family": "CHL",
+    "cause_id": "C-REF-LEAK",
+    "steps": "Leak test with detector, repair joint, vacuum and recharge refrigerant per nameplate.",
+    "est_minutes": 240,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CHL-REFKIT"
+    ]
+  },
+  {
+    "id": "R-CHL-C-EVAP-FREEZE",
+    "family": "CHL",
+    "cause_id": "C-EVAP-FREEZE",
+    "steps": "Raise setpoint above 7 C, check flow; add glycol for sub-10 C operation.",
+    "est_minutes": 30,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CHL-C-COMP-OVL",
+    "family": "CHL",
+    "cause_id": "C-COMP-OVL",
+    "steps": "Check supply voltage and compressor current; reset overload; replace contactor or compressor if faulty.",
+    "est_minutes": 180,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CHL-CONTACTOR"
+    ]
+  },
+  {
+    "id": "R-CHL-C-PHASE-LOSS",
+    "family": "CHL",
+    "cause_id": "C-PHASE-LOSS",
+    "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.",
+    "est_minutes": 15,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CHL-C-FSW-FAULT",
+    "family": "CHL",
+    "cause_id": "C-FSW-FAULT",
+    "steps": "Check flow switch paddle and wiring; replace flow switch.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CHL-FSW"
+    ]
+  },
+  {
+    "id": "R-CHL-C-PUMP-SEIZED",
+    "family": "CHL",
+    "cause_id": "C-PUMP-SEIZED",
+    "steps": "Isolate power, rotate shaft manually; clear debris or replace pump seal kit / pump.",
+    "est_minutes": 90,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CHL-PUMP",
+      "MT-CHL-SEALKIT"
+    ]
+  },
+  {
+    "id": "R-CHL-C-LOW-WATER",
+    "family": "CHL",
+    "cause_id": "C-LOW-WATER",
+    "steps": "Open make-up water valve, check float; top up tank to the marked level.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CHL-C-SOL-STUCK",
+    "family": "CHL",
+    "cause_id": "C-SOL-STUCK",
+    "steps": "Check coil voltage; clean or replace solenoid valve.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CHL-SOL"
+    ]
+  },
+  {
+    "id": "R-CHL-C-PHASE-REV",
+    "family": "CHL",
+    "cause_id": "C-PHASE-REV",
+    "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": []
+  },
+  {
+    "id": "R-CHL-C-TC-OPEN",
+    "family": "CHL",
+    "cause_id": "C-TC-OPEN",
+    "steps": "Re-seat sensor connector; if reading still open, replace thermocouple.",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CHL-TC"
+    ]
+  },
+  {
+    "id": "R-CHL-C-PLC-COMM",
+    "family": "CHL",
+    "cause_id": "C-PLC-COMM",
+    "steps": "Power-cycle unit; reload default parameters; if fault persists replace controller board.",
+    "est_minutes": 60,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CHL-PLC"
+    ]
+  },
+  {
+    "id": "R-MDH-C-COND-DIRTY",
+    "family": "MDH",
+    "cause_id": "C-COND-DIRTY",
+    "steps": "Clean condenser fins with low-pressure air or water; ensure 1 m clearance around unit.",
+    "est_minutes": 30,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-MDH-C-FLT-CLOG",
+    "family": "MDH",
+    "cause_id": "C-FLT-CLOG",
+    "steps": "Stop blower, remove filter, clean with compressed air from clean side or replace if torn.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": [
+      "MT-MDH-FLT"
+    ]
+  },
+  {
+    "id": "R-MDH-C-REF-LEAK",
+    "family": "MDH",
+    "cause_id": "C-REF-LEAK",
+    "steps": "Leak test with detector, repair joint, vacuum and recharge refrigerant per nameplate.",
+    "est_minutes": 240,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MDH-REFKIT"
+    ]
+  },
+  {
+    "id": "R-MDH-C-EVAP-FREEZE",
+    "family": "MDH",
+    "cause_id": "C-EVAP-FREEZE",
+    "steps": "Raise setpoint above 7 C, check flow; add glycol for sub-10 C operation.",
+    "est_minutes": 30,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-MDH-C-COMP-OVL",
+    "family": "MDH",
+    "cause_id": "C-COMP-OVL",
+    "steps": "Check supply voltage and compressor current; reset overload; replace contactor or compressor if faulty.",
+    "est_minutes": 180,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MDH-CONTACTOR"
+    ]
+  },
+  {
+    "id": "R-MDH-C-AMB-HIGH",
+    "family": "MDH",
+    "cause_id": "C-AMB-HIGH",
+    "steps": "Improve ventilation or relocate unit; reduce load until ambient is within rating.",
+    "est_minutes": 30,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-MDH-C-DPS-FAULT",
+    "family": "MDH",
+    "cause_id": "C-DPS-FAULT",
+    "steps": "Verify against portable dew point meter; recalibrate or replace dew point sensor.",
+    "est_minutes": 45,
+    "performed_by": "technician",
+    "parts": [
+      "MT-MDH-DPS"
+    ]
+  },
+  {
+    "id": "R-CCS-C-BRIDGE",
+    "family": "CCS",
+    "cause_id": "C-BRIDGE",
+    "steps": "Refill source bin; agitate hopper; consider anti-bridging insert.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CCS-C-VAC-LEAK",
+    "family": "CCS",
+    "cause_id": "C-VAC-LEAK",
+    "steps": "Check hose clamps, lid gasket and couplings; replace gasket or hose if cracked.",
+    "est_minutes": 15,
+    "performed_by": "customer",
+    "parts": [
+      "MT-CCS-GASKET",
+      "MT-CCS-HOSE"
+    ]
+  },
+  {
+    "id": "R-CCS-C-HOSE-BLOCK",
+    "family": "CCS",
+    "cause_id": "C-HOSE-BLOCK",
+    "steps": "Disconnect hose and clear blockage; fit lump screen at pick-up.",
+    "est_minutes": 15,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CCS-C-FLT-CLOG",
+    "family": "CCS",
+    "cause_id": "C-FLT-CLOG",
+    "steps": "Stop blower, remove filter, clean with compressed air from clean side or replace if torn.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": [
+      "MT-CCS-FLT"
+    ]
+  },
+  {
+    "id": "R-CCS-C-BLW-OVL",
+    "family": "CCS",
+    "cause_id": "C-BLW-OVL",
+    "steps": "Reset overload after cooling; check filter and duct for blockage; check motor current; replace blower if current high.",
+    "est_minutes": 40,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CCS-BLW"
+    ]
+  },
+  {
+    "id": "R-CCS-C-SOL-STUCK",
+    "family": "CCS",
+    "cause_id": "C-SOL-STUCK",
+    "steps": "Check coil voltage; clean or replace solenoid valve.",
+    "est_minutes": 30,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CCS-SOL"
+    ]
+  },
+  {
+    "id": "R-CCS-C-PLC-COMM",
+    "family": "CCS",
+    "cause_id": "C-PLC-COMM",
+    "steps": "Power-cycle unit; reload default parameters; if fault persists replace controller board.",
+    "est_minutes": 60,
+    "performed_by": "technician",
+    "parts": [
+      "MT-CCS-PLC"
+    ]
+  },
+  {
+    "id": "R-CCS-C-PROX-DIRTY",
+    "family": "CCS",
+    "cause_id": "C-PROX-DIRTY",
+    "steps": "Clean sensor face; adjust sensitivity screw until LED switches with material.",
+    "est_minutes": 10,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-CCS-C-PHASE-REV",
+    "family": "CCS",
+    "cause_id": "C-PHASE-REV",
+    "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": []
+  },
+  {
+    "id": "R-CCS-C-PHASE-LOSS",
+    "family": "CCS",
+    "cause_id": "C-PHASE-LOSS",
+    "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.",
+    "est_minutes": 15,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-RCY-C-OVERFEED",
+    "family": "RCY",
+    "cause_id": "C-OVERFEED",
+    "steps": "Reduce feed rate; feed parts gradually; let motor cool before restart.",
+    "est_minutes": 5,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-RCY-C-BLADE-DULL",
+    "family": "RCY",
+    "cause_id": "C-BLADE-DULL",
+    "steps": "Re-sharpen or replace rotor and bed knives; reset blade gap to 0.2-0.3 mm.",
+    "est_minutes": 120,
+    "performed_by": "technician",
+    "parts": [
+      "MT-RCY-BLADESET"
+    ]
+  },
+  {
+    "id": "R-RCY-C-MOT-OVL",
+    "family": "RCY",
+    "cause_id": "C-MOT-OVL",
+    "steps": "Check motor current and belts; reset overload; replace motor bearings if noisy.",
+    "est_minutes": 90,
+    "performed_by": "technician",
+    "parts": [
+      "MT-RCY-BELT"
+    ]
+  },
+  {
+    "id": "R-RCY-C-ILK-OPEN",
+    "family": "RCY",
+    "cause_id": "C-ILK-OPEN",
+    "steps": "Close and lock hopper and screen cradle until interlock clicks; never bypass interlocks.",
+    "est_minutes": 5,
+    "performed_by": "customer",
+    "parts": []
+  },
+  {
+    "id": "R-RCY-C-SCR-CLOG",
+    "family": "RCY",
+    "cause_id": "C-SCR-CLOG",
+    "steps": "Isolate and lock out, open cradle and clean screen; replace if holes are damaged.",
+    "est_minutes": 20,
+    "performed_by": "customer",
+    "parts": [
+      "MT-RCY-SCREEN"
+    ]
+  },
+  {
+    "id": "R-RCY-C-PHASE-REV",
+    "family": "RCY",
+    "cause_id": "C-PHASE-REV",
+    "steps": "Swap any two incoming phases at the main terminal (qualified electrician only).",
+    "est_minutes": 20,
+    "performed_by": "technician",
+    "parts": []
+  },
+  {
+    "id": "R-RCY-C-PHASE-LOSS",
+    "family": "RCY",
+    "cause_id": "C-PHASE-LOSS",
+    "steps": "Check incoming fuses/MCB on all three phases; restore supply before restart.",
+    "est_minutes": 15,
+    "performed_by": "customer",
+    "parts": []
+  }
+]

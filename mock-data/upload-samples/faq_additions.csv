@@ -1,0 +1,3 @@
+id,category,question,paraphrases,answer,source_doc
+FAQ-101,product,Do you offer remote monitoring for dryers?,"iot monitoring|can i see dryer status on phone","Yes (demo): an optional IoT remote monitoring kit shows dew point, temperatures and alarms on a web dashboard.",UPLOAD-FAQ
+FAQ-102,service,Can I book a preventive maintenance visit online?,"book pm visit|schedule maintenance","Yes (demo): reply to your AMC email or ask in chat with the serial number and preferred dates.",UPLOAD-FAQ

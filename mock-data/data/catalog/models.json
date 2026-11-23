@@ -1,0 +1,279 @@
+[
+  {
+    "id": "MTC-W60",
+    "family": "MTC",
+    "name": "MTC-W60 water mold temperature controller",
+    "specs": {
+      "medium": "water",
+      "max_temp_c": 95,
+      "heater_kw": 6,
+      "pump_kw": 0.4,
+      "flow_lpm": 30,
+      "power": "415V 3ph 50Hz"
+    }
+  },
+  {
+    "id": "MTC-W90",
+    "family": "MTC",
+    "name": "MTC-W90 water mold temperature controller",
+    "specs": {
+      "medium": "water",
+      "max_temp_c": 95,
+      "heater_kw": 9,
+      "pump_kw": 0.75,
+      "flow_lpm": 45,
+      "power": "415V 3ph 50Hz"
+    }
+  },
+  {
+    "id": "MTC-W120HP",
+    "family": "MTC",
+    "name": "MTC-W120HP pressurised water mold temperature controller",
+    "specs": {
+      "medium": "pressurised water",
+      "max_temp_c": 120,
+      "heater_kw": 12,
+      "pump_kw": 1.1,
+      "flow_lpm": 60,
+      "power": "415V 3ph 50Hz"
+    }
+  },
+  {
+    "id": "MTC-O150",
+    "family": "MTC",
+    "name": "MTC-O150 oil mold temperature controller",
+    "specs": {
+      "medium": "thermal oil",
+      "max_temp_c": 150,
+      "heater_kw": 9,
+      "pump_kw": 0.75,
+      "flow_lpm": 40,
+      "power": "415V 3ph 50Hz"
+    }
+  },
+  {
+    "id": "DHD-50",
+    "family": "DHD",
+    "name": "DHD-50 dehumidifying dryer",
+    "specs": {
+      "throughput_kg_h": 25,
+      "hopper_l": 50,
+      "dew_point_c": -40,
+      "process_heater_kw": 3,
+      "regen_heater_kw": 2.5,
+      "blower_kw": 0.75
+    }
+  },
+  {
+    "id": "DHD-100",
+    "family": "DHD",
+    "name": "DHD-100 dehumidifying dryer",
+    "specs": {
+      "throughput_kg_h": 50,
+      "hopper_l": 100,
+      "dew_point_c": -40,
+      "process_heater_kw": 4.5,
+      "regen_heater_kw": 3,
+      "blower_kw": 1.1
+    }
+  },
+  {
+    "id": "DHD-150",
+    "family": "DHD",
+    "name": "DHD-150 dehumidifying dryer",
+    "specs": {
+      "throughput_kg_h": 75,
+      "hopper_l": 150,
+      "dew_point_c": -40,
+      "process_heater_kw": 6,
+      "regen_heater_kw": 4,
+      "blower_kw": 1.5
+    }
+  },
+  {
+    "id": "DHD-300M",
+    "family": "DHD",
+    "name": "DHD-300M multibin dehumidifying dryer",
+    "specs": {
+      "throughput_kg_h": 150,
+      "hopper_l": 300,
+      "bins": 3,
+      "dew_point_c": -40,
+      "process_heater_kw": 9,
+      "regen_heater_kw": 6,
+      "blower_kw": 2.2
+    }
+  },
+  {
+    "id": "HAD-25",
+    "family": "HAD",
+    "name": "HAD-25 hot air dryer",
+    "specs": {
+      "hopper_kg": 25,
+      "heater_kw": 2.5,
+      "max_temp_c": 150,
+      "blower_kw": 0.18
+    }
+  },
+  {
+    "id": "HAD-50",
+    "family": "HAD",
+    "name": "HAD-50 hot air dryer",
+    "specs": {
+      "hopper_kg": 50,
+      "heater_kw": 3.5,
+      "max_temp_c": 150,
+      "blower_kw": 0.25
+    }
+  },
+  {
+    "id": "HAD-100",
+    "family": "HAD",
+    "name": "HAD-100 hot air dryer",
+    "specs": {
+      "hopper_kg": 100,
+      "heater_kw": 6,
+      "max_temp_c": 150,
+      "blower_kw": 0.37
+    }
+  },
+  {
+    "id": "CHL-3A",
+    "family": "CHL",
+    "name": "CHL-3A air-cooled chiller (3 TR)",
+    "specs": {
+      "cooling_tr": 3,
+      "condenser": "air-cooled",
+      "refrigerant": "R407C",
+      "compressor": "scroll",
+      "tank_l": 60,
+      "outlet_temp_range_c": "7-25"
+    }
+  },
+  {
+    "id": "CHL-5A",
+    "family": "CHL",
+    "name": "CHL-5A air-cooled chiller (5 TR)",
+    "specs": {
+      "cooling_tr": 5,
+      "condenser": "air-cooled",
+      "refrigerant": "R407C",
+      "compressor": "scroll",
+      "tank_l": 100,
+      "outlet_temp_range_c": "7-25"
+    }
+  },
+  {
+    "id": "CHL-10W",
+    "family": "CHL",
+    "name": "CHL-10W water-cooled chiller (10 TR)",
+    "specs": {
+      "cooling_tr": 10,
+      "condenser": "water-cooled",
+      "refrigerant": "R410A",
+      "compressor": "scroll",
+      "tank_l": 200,
+      "outlet_temp_range_c": "7-25"
+    }
+  },
+  {
+    "id": "CHL-20W",
+    "family": "CHL",
+    "name": "CHL-20W water-cooled chiller (20 TR)",
+    "specs": {
+      "cooling_tr": 20,
+      "condenser": "water-cooled",
+      "refrigerant": "R410A",
+      "compressor": "2x scroll",
+      "tank_l": 300,
+      "outlet_temp_range_c": "7-25"
+    }
+  },
+  {
+    "id": "MDH-500",
+    "family": "MDH",
+    "name": "MDH-500 mold dehumidifier",
+    "specs": {
+      "airflow_m3_h": 500,
+      "dew_point_c": -5,
+      "compressor_kw": 1.1
+    }
+  },
+  {
+    "id": "MDH-1000",
+    "family": "MDH",
+    "name": "MDH-1000 mold dehumidifier",
+    "specs": {
+      "airflow_m3_h": 1000,
+      "dew_point_c": -5,
+      "compressor_kw": 2.2
+    }
+  },
+  {
+    "id": "VL-1",
+    "family": "CCS",
+    "name": "VL-1 single-phase vacuum hopper loader",
+    "specs": {
+      "capacity_kg_h": 150,
+      "max_distance_m": 4,
+      "motor": "1ph carbon-brush",
+      "power": "230V 1ph"
+    }
+  },
+  {
+    "id": "VL-3",
+    "family": "CCS",
+    "name": "VL-3 three-phase vacuum loader",
+    "specs": {
+      "capacity_kg_h": 400,
+      "max_distance_m": 15,
+      "blower_kw": 2.2,
+      "power": "415V 3ph"
+    }
+  },
+  {
+    "id": "CCS-8",
+    "family": "CCS",
+    "name": "CCS-8 centralized conveying system (8 stations)",
+    "specs": {
+      "stations": 8,
+      "capacity_kg_h": 900,
+      "max_distance_m": 60,
+      "blower_kw": 5.5,
+      "controller": "PLC with HMI"
+    }
+  },
+  {
+    "id": "GR-200",
+    "family": "RCY",
+    "name": "GR-200 beside-the-press granulator",
+    "specs": {
+      "rotor_width_mm": 200,
+      "capacity_kg_h": 30,
+      "motor_kw": 2.2,
+      "screen_mm": 6
+    }
+  },
+  {
+    "id": "GR-400",
+    "family": "RCY",
+    "name": "GR-400 granulator",
+    "specs": {
+      "rotor_width_mm": 400,
+      "capacity_kg_h": 120,
+      "motor_kw": 7.5,
+      "screen_mm": 8
+    }
+  },
+  {
+    "id": "GR-600",
+    "family": "RCY",
+    "name": "GR-600 central granulator",
+    "specs": {
+      "rotor_width_mm": 600,
+      "capacity_kg_h": 300,
+      "motor_kw": 15,
+      "screen_mm": 10
+    }
+  }
+]

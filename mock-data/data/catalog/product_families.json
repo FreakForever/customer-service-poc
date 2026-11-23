@@ -1,0 +1,75 @@
+[
+  {
+    "id": "MTC",
+    "name": "Mold temperature controller",
+    "summary": "Circulates temperature-controlled water or oil through the mold to hold a stable mold surface temperature.",
+    "industries": [
+      "automotive",
+      "appliances",
+      "packaging",
+      "medical"
+    ]
+  },
+  {
+    "id": "DHD",
+    "name": "Dehumidifying dryer",
+    "summary": "Dries hygroscopic resins (PA, PC, PET, PBT, ABS) with low-dew-point air from a desiccant rotor.",
+    "industries": [
+      "automotive",
+      "electrical",
+      "medical",
+      "packaging"
+    ]
+  },
+  {
+    "id": "HAD",
+    "name": "Hot air dryer",
+    "summary": "Removes surface moisture from non-hygroscopic resins (PP, PE, PS) using heated ambient air.",
+    "industries": [
+      "packaging",
+      "household",
+      "toys"
+    ]
+  },
+  {
+    "id": "CHL",
+    "name": "Chiller",
+    "summary": "Supplies chilled water to molds and machine oil coolers using a refrigeration circuit.",
+    "industries": [
+      "automotive",
+      "packaging",
+      "appliances",
+      "medical"
+    ]
+  },
+  {
+    "id": "MDH",
+    "name": "Mold dehumidifier",
+    "summary": "Blankets the mold area with dry air to stop condensation when molds run with chilled water.",
+    "industries": [
+      "packaging",
+      "medical"
+    ]
+  },
+  {
+    "id": "CCS",
+    "name": "Conveying system",
+    "summary": "Vacuum loaders and centralized conveying that move resin from storage or dryers to machines.",
+    "industries": [
+      "automotive",
+      "packaging",
+      "appliances",
+      "electrical"
+    ]
+  },
+  {
+    "id": "RCY",
+    "name": "Recycling granulator",
+    "summary": "Beside-the-press and central granulators that regrind sprues, runners and rejects for reuse.",
+    "industries": [
+      "packaging",
+      "automotive",
+      "household"
+    ]
+  }
+]

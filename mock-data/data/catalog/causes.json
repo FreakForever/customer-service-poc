@@ -1,0 +1,206 @@
+[
+  {
+    "id": "C-HTR-OPEN",
+    "description": "Heater element open circuit",
+    "component": "CMP-HTR",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-RHTR-OPEN",
+    "description": "Regeneration heater open circuit",
+    "component": "CMP-RHTR",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-SSR-FAIL",
+    "description": "Heater solid-state relay failed (shorted or open)",
+    "component": "CMP-SSR",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-TC-OPEN",
+    "description": "Temperature sensor open or loose connection",
+    "component": "CMP-TC",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-TC-DRIFT",
+    "description": "Temperature sensor drifted out of calibration",
+    "component": "CMP-TC",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-FLT-CLOG",
+    "description": "Air filter clogged with fines or dust",
+    "component": "CMP-FLT",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-ROTOR-DEG",
+    "description": "Desiccant rotor degraded or contaminated",
+    "component": "CMP-ROTOR",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-DPS-FAULT",
+    "description": "Dew point sensor faulty or due for calibration",
+    "component": "CMP-DPS",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-BLW-OVL",
+    "description": "Blower motor overload (thermal trip)",
+    "component": "CMP-BLW",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-PHASE-LOSS",
+    "description": "Loss of one supply phase",
+    "component": "CMP-PHR",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-PHASE-REV",
+    "description": "Supply phase sequence reversed",
+    "component": "CMP-PHR",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-LOW-WATER",
+    "description": "Low water level in tank or no make-up water",
+    "component": "CMP-LSW",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-PUMP-SEIZED",
+    "description": "Pump seized or impeller jammed",
+    "component": "CMP-PUMP",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-SCALE",
+    "description": "Scale build-up in mold channels or heat exchanger",
+    "component": "CMP-PUMP",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-FSW-FAULT",
+    "description": "Flow switch stuck or wiring fault",
+    "component": "CMP-FSW",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-REF-LEAK",
+    "description": "Refrigerant leak (low suction pressure)",
+    "component": "CMP-COMP",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-COND-DIRTY",
+    "description": "Condenser fins dirty or blocked airflow",
+    "component": "CMP-COND",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-CW-LOW",
+    "description": "Insufficient cooling-tower water to condenser",
+    "component": "CMP-COND",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-AMB-HIGH",
+    "description": "Ambient temperature above rated 45 C",
+    "component": "CMP-COND",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-COMP-OVL",
+    "description": "Compressor overload or locked rotor",
+    "component": "CMP-COMP",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-EVAP-FREEZE",
+    "description": "Evaporator freezing due to low setpoint or low flow",
+    "component": "CMP-EVAP",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-VAC-LEAK",
+    "description": "Vacuum leak at hose, lid gasket or coupling",
+    "component": "CMP-HOSE",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-HOSE-BLOCK",
+    "description": "Conveying hose blocked by lumps or long strands",
+    "component": "CMP-HOSE",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-BRIDGE",
+    "description": "Material bridging in hopper or source bin empty",
+    "component": "CMP-PROX",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-PROX-DIRTY",
+    "description": "Level sensor dirty or mis-adjusted",
+    "component": "CMP-PROX",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-BLADE-DULL",
+    "description": "Blades dull or blade gap too wide",
+    "component": "CMP-BLADE",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-OVERFEED",
+    "description": "Overfeeding the granulator",
+    "component": "CMP-MOT",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-ILK-OPEN",
+    "description": "Safety interlock open (hopper or screen cradle not locked)",
+    "component": "CMP-ILK",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-SCR-CLOG",
+    "description": "Screen clogged",
+    "component": "CMP-SCR",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-PLC-COMM",
+    "description": "Controller communication fault or corrupted parameters",
+    "component": "CMP-PLC",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-SOL-STUCK",
+    "description": "Solenoid valve stuck",
+    "component": "CMP-SOL",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-HP-TRIP",
+    "description": "High-pressure switch tripped",
+    "component": "CMP-PRS",
+    "fixable_by": "technician"
+  },
+  {
+    "id": "C-SETPOINT",
+    "description": "Setpoint or recipe entered incorrectly",
+    "component": "CMP-PLC",
+    "fixable_by": "customer"
+  },
+  {
+    "id": "C-MOT-OVL",
+    "description": "Drive motor overload",
+    "component": "CMP-MOT",
+    "fixable_by": "technician"
+  }
+]
