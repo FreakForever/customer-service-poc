@@ -39,7 +39,7 @@ steps:
     dir: services/agent
     env: [UV_LINK_MODE=copy]
     entrypoint: bash
-    args: [-c, 'uv sync --frozen && uv run ruff check . && uv run mypy && uv run pytest tests/unit -q']
+    args: [-c, 'uv sync --frozen && uv run ruff check . && uv run mypy && uv run pytest tests/unit tests/security -q -m "not network"']
 
   - id: web
     name: node:20-bookworm-slim
@@ -80,4 +80,4 @@ steps:
         drv.close()
         PY
         uv run python ../../mock-data/kg/load_kg.py --wipe
-        uv run pytest tests/integration -q
+        uv run pytest tests/integration tests/security -q -m network

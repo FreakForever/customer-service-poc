@@ -339,11 +339,11 @@
         "pytest services/agent/tests/unit/test_linker.py",
         "pytest services/agent/tests/security/test_text2cypher_guard.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-23",
+      "completed": "2026-11-23",
+      "notes": "app/kg/linker.py (dictionary -> Neo4j full-text -> embedding) and app/kg/text2cypher.py (guard, schema prompt with 6 few-shots, entity $parameters, READ transaction, 2 s timeout, one repair). tests/unit/test_linker.py: 16 passed — linking accuracy 123/123 = 1.0 on the 54 multi_hop items (gold: model, error code, warehouse, AMC plan from gold_kg_path; FR-KG-02 needs >= 0.95), family disambiguation, ambiguity on PHASE/E06 without context, cue/case rules, fallback order. tests/security/test_text2cypher_guard.py: 52 passed — 23 write/admin attacks rejected (incl. comment, UNION, subquery, apoc function, LOAD CSV, USE system), schema escapes and unbounded paths rejected, LIMIT injected/clamped, rejected queries never reach the DB, one repair; on AuraDB a MERGE run directly in the READ transaction fails at the database and the 2 s timeout fires on a heavy query. tests/integration/test_linker_kg.py: 2 passed (linker from the live graph, Lucene-escaped full-text). CI now runs tests/security too. Full suite 179 passed. D-026. Gaps: NFR-SEC-03 also traces to BS-31 (security hardening); no dedicated Neo4j read-only user until OD-003; Text2Cypher not yet exercised with the real strong model (BS-14/BS-30); embedding fallback threshold (0.6) untuned on real embeddings."
     },
     {
       "id": "BS-10",

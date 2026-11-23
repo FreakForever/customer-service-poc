@@ -1338,7 +1338,7 @@
         "Linking accuracy at least 0.95 on multi_hop eval items"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5"
@@ -1396,7 +1396,7 @@
         "Timeout 2 s"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5",
@@ -2543,7 +2543,7 @@
         "Write attempt via Text2Cypher fails at DB level (READ access-mode transaction; read-only user where the Neo4j hosting supports RBAC)"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-4.4"
