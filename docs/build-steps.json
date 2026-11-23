@@ -136,11 +136,11 @@
         "make migrate",
         "pytest services/agent/tests/integration/test_schema.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-23",
+      "completed": "2026-11-23",
+      "notes": "Alembic (plain-SQL) migrations 0001_core, 0002_knowledge, 0003_ops_traces; `make migrate` -> dev db `mcs` at 0003 (head). tests/integration/test_schema.py: 11 passed against mcs_test (rebuilt via downgrade base -> upgrade head): tables/extensions, HNSW + GIN indexes, ticket_seq 141, check constraints, FTS + cosine search, warranty v1 superseded / v2 active with one-active guard, conversation state + transcript, purge_expired (expired conversations/messages, traces/spans older than retention; arg/setting/30-day default), mcs_ro SELECT-only incl. default privileges. Real mcs_ro login: SELECT ok, INSERT denied. Full suite 50 passed (integration skips without DATABASE_URL_TEST). Deviations D-020 (immutable heading_text() for generated tsv, kb_documents_one_active, no mcs_ro password in migrations, purge_expired signature). Gaps: Cloud Run migrate job and the scheduled purge are later steps (BS-31); embedding dim 768 pending OD-004 (before BS-07)."
     },
     {
       "id": "BS-04",

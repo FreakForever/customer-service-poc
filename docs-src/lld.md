@@ -151,13 +151,15 @@ CREATE TABLE spare_parts (part_no text PRIMARY KEY, family text, name text, pric
   fits_models text[], stock jsonb, lead_time_days int, source text DEFAULT 'seed');
 
 -- knowledge
+CREATE FUNCTION heading_text(text[]) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT coalesce(array_to_string($1,' '),'') $$;
 CREATE TABLE kb_documents (doc_id text, version text, title text, doc_type text, family text,
   status text CHECK (status IN ('active','superseded','deleted')), effective_from date, effective_to date,
   supersedes text, storage_uri text, checksum text, language text DEFAULT 'en', source text DEFAULT 'seed',
   created_at timestamptz DEFAULT now(), PRIMARY KEY (doc_id, version));
+CREATE UNIQUE INDEX kb_documents_one_active ON kb_documents (doc_id) WHERE status = 'active';
 CREATE TABLE kb_chunks (id bigserial PRIMARY KEY, doc_id text, version text, ord int, heading_path text[],
   anchor text, content text, token_count int, metadata jsonb, embedding vector(768),
-  tsv tsvector GENERATED ALWAYS AS (to_tsvector('english', coalesce(array_to_string(heading_path,' '),'') || ' ' || content)) STORED,
+  tsv tsvector GENERATED ALWAYS AS (to_tsvector('english', heading_text(heading_path) || ' ' || coalesce(content,''))) STORED,
   FOREIGN KEY (doc_id, version) REFERENCES kb_documents ON DELETE CASCADE);
 CREATE INDEX kb_chunks_hnsw ON kb_chunks USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX kb_chunks_tsv ON kb_chunks USING gin (tsv);
@@ -208,12 +210,19 @@ CREATE TABLE spans (id bigserial PRIMARY KEY, trace_id uuid REFERENCES traces ON
 CREATE TABLE eval_runs (id uuid PRIMARY KEY, mode text, started_at timestamptz, summary jsonb, report_uri text);
 
 -- roles & retention
-CREATE ROLE mcs_ro LOGIN PASSWORD 'mcs_ro';  GRANT SELECT ON ALL TABLES IN SCHEMA public TO mcs_ro;
-CREATE FUNCTION purge_expired() RETURNS void LANGUAGE sql AS $$
-  DELETE FROM conversations WHERE expires_at < now();
-  DELETE FROM traces WHERE created_at < now() - make_interval(days => current_setting('mcs.retention_days')::int);
+-- mcs_ro LOGIN password is set by infra/gcp/db_init.py from Secret Manager; the migration only ensures the role and grants
+CREATE ROLE mcs_ro NOLOGIN;  -- if missing
+GRANT USAGE ON SCHEMA public TO mcs_ro;  GRANT SELECT ON ALL TABLES IN SCHEMA public TO mcs_ro;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO mcs_ro;
+CREATE FUNCTION purge_expired(retention_days int DEFAULT NULL)
+  RETURNS TABLE (conversations_deleted int, traces_deleted int) LANGUAGE plpgsql AS $$ ...
+  -- days = argument, else current_setting('mcs.retention_days', true), else 30
+  DELETE FROM conversations WHERE expires_at < now();          -- messages/attachments cascade
+  DELETE FROM traces WHERE created_at < now() - make_interval(days => days);   -- spans cascade
 $$;
 ```
+
+Implementation notes (BS-03, D-020): migrations live in `services/agent/migrations/versions/` as plain SQL: `0001_core` (extensions, ops, catalog, conversations), `0002_knowledge`, `0003_ops_traces` (jobs, KG change requests, traces, role, retention). `make migrate` runs `alembic upgrade head` against `DATABASE_URL` (proxy) or the `/cloudsql` socket; `alembic -x url=...` targets another database (the integration tests rebuild `mcs_test` with downgrade base → upgrade head). Indexes carry explicit names, plus a few FK/lookup indexes (`assets_customer`, `tickets_customer`, `messages_conversation`, `conversations_expires`, `traces_created`, `spans_trace`, `kb_chunks_doc`).
 
 ## 4. Knowledge graph schema and Cypher templates {#LLD-4}
 

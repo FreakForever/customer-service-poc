@@ -292,7 +292,7 @@
         "Reloading the page resumes the session"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.2"
@@ -2026,7 +2026,7 @@
         "Warranty v1/v2 seed behaves as superseded/active"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.8"
@@ -2573,7 +2573,7 @@
         "Purge job deletes expired rows in test"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-4.4"

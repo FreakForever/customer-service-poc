@@ -16,6 +16,7 @@ dependencies = [
     "anthropic[vertex]>=2.12,<3",
     "openai>=3.57,<4",
     "pyyaml>=6.0",
+    "alembic>=1.14",
 ]
 
 [dependency-groups]
