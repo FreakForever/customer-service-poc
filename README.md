@@ -42,6 +42,17 @@ make deploy-dev
 
 Code lives in `services/agent` (FastAPI + worker, `uv`) and `apps/web` (Next.js, `pnpm`); layout per LLD §1.
 
+## Driving the build with Claude Code
+
+| Command | What it does |
+|---|---|
+| `/build-step` | Runs the next eligible build step through `docs/BUILD_LOOP.md` (implement, verify, update JSON, `make docs`, commit) |
+| `/build-step bs-02` | Runs a specific step. Refuses if it is already done or its dependencies aren't done |
+| `/build-status` | Read-only progress summary and the next eligible step |
+| `/loop /build-step` | Keeps running steps back to back (Esc to stop) |
+
+Command files live in `.claude/commands/`.
+
 ## Workflow
 
 ```bash
