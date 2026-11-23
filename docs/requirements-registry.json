@@ -1165,7 +1165,7 @@
         "Each manual error-code section maps to exactly one chunk"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5"
@@ -1910,7 +1910,7 @@
         "Uploaded SB-2026-12 searchable within 60 s"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.8"
@@ -2026,7 +2026,7 @@
         "Warranty v1/v2 seed behaves as superseded/active"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.8"

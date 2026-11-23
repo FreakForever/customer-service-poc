@@ -65,7 +65,8 @@ def scalar(db: Connection, sql: str, **params):
 # ---------- structure ----------
 
 def test_at_head_with_all_tables_and_extensions(db):
-    assert scalar(db, "SELECT version_num FROM alembic_version") == "0003"
+    head = max(f.name.split("_", 1)[0] for f in (AGENT_DIR / "migrations" / "versions").glob("[0-9]*_*.py"))
+    assert scalar(db, "SELECT version_num FROM alembic_version") == head
     tables = {r[0] for r in db.execute(text("SELECT tablename FROM pg_tables WHERE schemaname = 'public'"))}
     assert TABLES <= tables
     exts = {r[0] for r in db.execute(text("SELECT extname FROM pg_extension"))}

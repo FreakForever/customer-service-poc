@@ -270,11 +270,11 @@
         "pytest services/agent/tests/unit/test_chunker.py",
         "make seed-kb && psql count kb_chunks > 0"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-23",
+      "completed": "2026-11-23",
+      "notes": "OD-004 closed (D-024): Vertex text-embedding-005, 768 d. Parsers MD/TXT/DOCX/PDF; heading-aware chunker; embedding batches of 64; Postgres job queue (SKIP LOCKED, 3 attempts, backoff via migration 0004 jobs.run_after); worker job loop; supersede logic. tests/unit/test_chunker.py: 16 passed (no table split, each of the 44 manual error-code sections = exactly one chunk, anchors, packing rules, DOCX/PDF parsing). tests/integration/test_ingest.py: 10 passed on mcs_test with fake embeddings (15 docs via jobs, warranty v1 superseded/v2 active, idempotent re-seed, upload of SB-2026-12 searchable in < 60 s, new version supersedes old, retry/backoff/fail, SKIP LOCKED). `make seed-kb` on dev db with live Vertex (asia-south1): 15 docs, 106 kb_chunks (all 768-d embeddings), 109 FAQ variants embedded, 19.5 s. Semantic spot check: 'my dryer shows dew point high' -> DOC-MAN-DHD#e04-dew-point-high; 'warranty kitna hai' -> FAQ-001 (0.91). Full suite 92 passed. D-023. Gaps: POST /v1/admin/documents route lands with staff auth in BS-26 (FR-KB-01 stays in_progress; live upload timing not yet measured end-to-end through the API); extract_graph + cache invalidation in BS-28/BS-09; 'PM visits in comprehensive AMC' ranks a neighbouring AMC chunk first — hybrid + rerank in BS-08."
     },
     {
       "id": "BS-08",

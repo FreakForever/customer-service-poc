@@ -1,7 +1,7 @@
 """Load mock data into Postgres idempotently (BS-04, LLD-13 "Seed", FR-KB-06).
 
     cd services/agent && uv run python ../../scripts/seed.py [--url postgresql+psycopg://...] [--data DIR]
-    ... seed.py --kb      # KB documents + FAQ variant embeddings: added by BS-07
+    ... seed.py --kb      # KB documents (job queue: parse, chunk, embed) + FAQ variant embeddings (BS-07)
 
 Loads mock-data/data/{ops,catalog,kb/faqs.json}. Every table is upserted on its primary key, so re-running
 converges to the generated data without duplicates. Rows that came from runtime uploads (`source`/`origin` not
@@ -136,14 +136,11 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--url", help="database URL (default: app settings / DATABASE_URL)")
     ap.add_argument("--data", type=Path, default=DATA)
-    ap.add_argument("--kb", action="store_true", help="ingest KB documents and FAQ embeddings (BS-07)")
+    ap.add_argument("--kb", action="store_true", help="ingest KB documents and FAQ embeddings")
     args = ap.parse_args(argv)
-    if args.kb:
-        print("seed --kb: KB ingestion arrives with BS-07; nothing to do yet.")
-        return 0
+    sys.path.insert(0, str(ROOT / "services" / "agent"))
     url = args.url
     if not url:
-        sys.path.insert(0, str(ROOT / "services" / "agent"))
         from app.config.settings import get_settings
 
         url = get_settings().resolved_database_url()
@@ -151,12 +148,35 @@ def main(argv: list[str] | None = None) -> int:
         print("No database URL: run `make env` (and `make proxy`) or pass --url", file=sys.stderr)
         return 2
     start = time.perf_counter()
+    if args.kb:
+        return _seed_kb(url, start)
     engine = create_engine(url)
     with engine.begin() as conn:  # one transaction: all or nothing
         counts = seed(conn, args.data)
     engine.dispose()
     print("seeded " + ", ".join(f"{k}={v}" for k, v in counts.items()) + f" in {time.perf_counter() - start:.1f}s")
     return 0
+
+
+def _seed_kb(url: str, start: float) -> int:
+    """KB documents + FAQ variant embeddings through the job queue and the configured embedder (BS-07)."""
+    import asyncio
+
+    from sqlalchemy.ext.asyncio import create_async_engine
+
+    from app.ingest.seed_kb import seed_kb
+    from app.providers import get_embedder
+
+    async def run() -> dict:
+        engine = create_async_engine(url)
+        try:
+            return await seed_kb(engine, get_embedder())
+        finally:
+            await engine.dispose()
+
+    counts = asyncio.run(run())
+    print("seeded kb " + ", ".join(f"{k}={v}" for k, v in counts.items()) + f" in {time.perf_counter() - start:.1f}s")
+    return 0 if counts["jobs_pending_or_failed"] == 0 and counts["kb_chunks"] > 0 else 1
 
 
 if __name__ == "__main__":

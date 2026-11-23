@@ -58,7 +58,7 @@ matsui-cs-poc/
 | `PROVIDER` | `vertex` (`fake` in tests) | LLM provider: `vertex` (Gemini), `anthropic` (Claude), `openai_compat`, `fake` |
 | `MODEL_FAST` / `MODEL_STRONG` | `gemini-2.5-flash` / `gemini-2.5-pro` until OD-002 closes | Router/T2 vs T3/judge |
 | `FALLBACK_PROVIDER` / `MODEL_FALLBACK` | empty / empty | Fallback after the retry: other provider and/or model (empty provider = same provider, other model) |
-| `EMBED_PROVIDER` / `EMBED_MODEL` / `EMBED_DIM` / `EMBED_TIMEOUT_MS` | empty (= `PROVIDER`; `vertex` when `PROVIDER=anthropic`) / `text-embedding-005` until OD-004 closes / `768` / `3000` | Embeddings |
+| `EMBED_PROVIDER` / `EMBED_MODEL` / `EMBED_DIM` / `EMBED_TIMEOUT_MS` | empty (= `PROVIDER`; `vertex` when `PROVIDER=anthropic`) / `text-embedding-005` (OD-004 → D-024) / `768` / `3000` | Embeddings |
 | `VERTEX_LOCATION` | empty (= `GCP_REGION`) | Vertex endpoint location; `global` for models not served in the region |
 | `ANTHROPIC_VIA` / `ANTHROPIC_VERTEX_REGION` / `ANTHROPIC_API_KEY` | `vertex` / `global` / — | Claude on Vertex AI (ADC) or the Claude API (key from Secret Manager) |
 | `OPENAI_BASE_URL` / `OPENAI_API_KEY` | — | OpenAI-compatible endpoint |
@@ -179,6 +179,7 @@ CREATE TABLE jobs (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), kind text, pay
   attempts int DEFAULT 0, error text, result jsonb, created_at timestamptz DEFAULT now(), started_at timestamptz,
   finished_at timestamptz);
 CREATE INDEX ON jobs (status, created_at);   -- worker: SELECT ... FOR UPDATE SKIP LOCKED
+-- 0004 (D-023): jobs.run_after timestamptz NOT NULL DEFAULT now() + partial index jobs_claim (status, run_after) WHERE status='queued' — backoff between attempts
 CREATE TABLE kg_change_requests (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), job_id uuid, doc_id text,
   chunk_id bigint, op text, payload jsonb, confidence real, status text DEFAULT 'pending',
   decided_by text, decided_at timestamptz);
@@ -425,6 +426,8 @@ USER: <question>
 
 Output parsed into `Draft{text, citations:[{marker, evidence_id, doc_id, anchor}]}`; streaming tokens are forwarded to SSE while citations are resolved at the end.
 
+Implementation notes (BS-07, D-023): `app/ingest/chunker.py` parses Markdown into blocks (heading, table, list item with its nested lines, code fence, paragraph); H1–H3 open sections (H4+ stays inside as bold text); an error-code section is an H3 `E04 — …` or an H2/H3 `… code E11 — …` (service bulletins) and is one chunk whatever its size; other sections are greedily packed from whole blocks (≈350 tokens, ≤700 unless one block is larger) with anchors `<slug>-part-N`; token counts are a provider-independent estimate (≈4 chars/token); anchors drop the `(display: …)` suffix and are unique per document. The embedded text is `heading_path joined by ' > '` + content (`kind=document`); FAQ variants are embedded as `kind=query` (question-to-question). Parsers (`app/ingest/parsers.py`): MD/TXT native, DOCX via python-docx (headings, list styles, tables → Markdown), PDF via pypdf (text only).
+
 ## 9. Entity linking, GraphRAG and Text2Cypher {#LLD-9}
 
 **Linker** ([FR-KG-02](Requirements.html#FR-KG-02)): (1) dictionary of ids/aliases built from catalog at startup and on KG change; (2) Neo4j full-text index `entity_fulltext` (name, code, display_text); (3) embedding similarity over node names (cached). Error codes are disambiguated with the model's family; if the model is missing and the code exists in more than one family, the agent asks one clarifying question.
@@ -524,6 +527,8 @@ Session state persists in `conversations.state` ([FR-CH-02](Requirements.html#FR
 **Jobs:** `ingest_document`, `ingest_csv`, `extract_graph`, `reindex_document`, `delete_document`, `email_poll`, `audit_sample`, `purge`. The worker claims jobs with `FOR UPDATE SKIP LOCKED`, max 3 attempts, exponential backoff ([FR-KB-04](Requirements.html#FR-KB-04)).
 
 **Document upload flow** ([FR-KB-01](Requirements.html#FR-KB-01), [FR-KB-05](Requirements.html#FR-KB-05)): `POST /v1/admin/documents` (multipart: file, title, doc_type, family?, supersedes?) → store file → `kb_documents(status=active)` and, if `supersedes`, mark the old version `superseded` with `effective_to` = today → job `ingest_document` (parse → chunk → embed batch 64 → insert) → job `extract_graph` → invalidate caches.
+
+Implementation notes (BS-07, D-023): `app/ingest/pipeline.py` — `submit_document` (doc id from the file name, next major version, storage `gs://$GCS_BUCKET/kb/<doc>/<ver>/<file>` or a local `.uploads/` dir in dev) → `register_document` (supersedes the active version of the same doc and of `supersedes`, `effective_to` = new `effective_from` or today, chunk metadata status updated) → job `ingest_document`; the handler re-reads the file, embeds outside the DB transaction and replaces the version's chunks atomically. `app/jobs/queue.py` claims with `FOR UPDATE SKIP LOCKED`, max 3 attempts, backoff 5 s then 10 s via `jobs.run_after`; `app/worker.py` polls every 2 s. `make seed-kb` (`scripts/seed.py --kb`, also the last step of `make seed`) registers the 15 seed documents with their own statuses/dates, drains the jobs in-process and embeds FAQ variants; unchanged documents are skipped. The HTTP route `POST /v1/admin/documents` is added with the admin UI and staff auth (BS-26); `extract_graph` and cache invalidation arrive with BS-28/BS-09.
 
 **CSV upload** ([FR-KB-02](Requirements.html#FR-KB-02)) — `POST /v1/admin/csv?type=error_codes|spare_parts|faqs`; Pydantic row schemas; valid rows applied in one transaction (Postgres) and a batched MERGE (Neo4j); invalid rows returned with line numbers:
 
