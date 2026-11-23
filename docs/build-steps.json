@@ -68,14 +68,14 @@
       ],
       "verify": [
         "make bootstrap-gcp (re-run is a no-op)",
-        "make dev, then curl localhost:8000/healthz reports db=ok neo4j=ok",
-        "make deploy-dev, then curl $DEV_API_URL/healthz returns ok"
+        "make dev, then curl localhost:8000/health reports db=ok neo4j=ok",
+        "make deploy-dev, then curl $DEV_API_URL/health returns ok"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-23",
+      "completed": "2026-11-23",
+      "notes": "Project matsui-doc-poc, asia-south1. Verify: (1) make bootstrap-gcp re-run creates nothing (only re-applies same mcs password + IAM bindings); (2) make dev: localhost:8000/health -> {status:ok, db:ok, neo4j:ok}, /ready 200, worker heartbeat ok, web renders API health; (3) make deploy-dev: Cloud Build b0d224a6 SUCCESS (4m32s), smoke /health ok on https://mcs-agent-api-m32ylgel7a-el.a.run.app, web /api/health ok. Resources: Cloud SQL mcs-dev (PG16, db-f1-micro, vector 0.8.7, dbs mcs/mcs_test, roles mcs/mcs_ro), AR repo mcs, gs://mcs-dev-uploads, SAs mcs-api/worker/web/build, secrets mcs-dev-*, AuraDB Free fbd474a8. Unit tests 6 passed. Deviations: D-017 (deploy SA, tags, secret names), D-018 (/health instead of /healthz on Cloud Run). Gaps: budget alert not created (BUDGET_AMOUNT unset); migration job + chat/email smoke deferred to BS-03/20/21."
     },
     {
       "id": "BS-02",

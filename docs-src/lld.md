@@ -51,7 +51,9 @@ matsui-cs-poc/
 | `DATABASE_URL` | `postgresql+psycopg://mcs:<secret>@127.0.0.1:5432/mcs` (via Cloud SQL Auth Proxy locally; Cloud SQL connector on Cloud Run) | App role (read/write) |
 | `DATABASE_URL_RO` | same host, role `mcs_ro` | Read-only role for AI-driven reads |
 | `CLOUDSQL_INSTANCE` | `<project>:asia-south1:mcs-dev` | Used by the proxy / Python connector |
-| `NEO4J_URI` / `NEO4J_USER` / `NEO4J_PASSWORD` | `neo4j+s://<id>.databases.neo4j.io` / `neo4j` / from Secret Manager | AuraDB Free in dev |
+| `DATABASE_URL_TEST` | same host, database `mcs_test` | Integration tests (local) |
+| `DB_PASSWORD` | from Secret Manager | Cloud Run only: with `DATABASE_URL` empty the app builds the URL from the `/cloudsql/<CLOUDSQL_INSTANCE>` socket |
+| `NEO4J_URI` / `NEO4J_USER` / `NEO4J_PASSWORD` / `NEO4J_DATABASE` | `neo4j+s://<id>.databases.neo4j.io` / `<id>` / from Secret Manager / `<id>` | AuraDB Free in dev (user and database are named after the instance id) |
 | `NEO4J_RO_USER` / `NEO4J_RO_PASSWORD` | empty in dev | Optional read-only user where hosting supports RBAC; READ access mode always enforced |
 | `PROVIDER` | `vertex` (`fake` in tests) | LLM provider |
 | `MODEL_FAST` / `MODEL_STRONG` | set per OD-002 | Router/T2 vs T3/judge |
@@ -63,6 +65,7 @@ matsui-cs-poc/
 | `GCS_BUCKET` | `mcs-<env>-uploads` | Uploads & attachments (all environments) |
 | `RETENTION_DAYS` | `30` | Purge horizon |
 | `NEXTAUTH_SECRET` / `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `STAFF_ALLOWLIST` | — | Staff auth |
+| `AGENT_API_URL` | `http://localhost:8000` (Cloud Run API URL when deployed) | Web → agent API base URL (server side) |
 
 **Channel policies (`app/config/policies.yaml`)** ([FR-OR-04](Requirements.html#FR-OR-04)):
 
@@ -542,7 +545,7 @@ Base URL `/v1`. Auth: staff routes need a NextAuth session JWT forwarded as `Aut
 | `GET /analytics/benchmark` | agent | Latest eval report | → `{runs[], by_mode, by_type}` |
 | `POST /demo/reset` | admin | Reset to seed | → `{job_id}` ([FR-UI-08](Requirements.html#FR-UI-08)) |
 | `POST /demo/send-sample-emails` | admin | Fire EM-001..010 | → `{count}` |
-| `GET /healthz` / `GET /readyz` | public | Health | |
+| `GET /health` / `GET /ready` | public | Liveness + dependency status / readiness (503 unless Postgres and Neo4j are up) | → `{status, env, db, neo4j}`. `/healthz` and `/readyz` are local aliases only: Cloud Run reserves paths ending in `z` (D-018) |
 
 Errors: RFC 7807 JSON `{type, title, status, detail, trace_id}`.
 
@@ -614,11 +617,11 @@ Each requirement has test id `TC-<REQ-ID>`; tests carry `@pytest.mark.req("FR-KG
 | Cloud SQL Postgres 16 | `mcs-dev`, smallest shared-core tier, public IP + Auth Proxy, databases `mcs`, `mcs_test`, `vector` extension | `mcs-demo`, dedicated small tier, private IP via Serverless VPC connector |
 | Neo4j | AuraDB Free | per OD-003 |
 | Cloud Storage | `mcs-dev-uploads` | `mcs-demo-uploads` |
-| Secret Manager | DB passwords, Neo4j creds, NextAuth secret, Google OAuth client, Gmail token | same names, demo values |
-| Service accounts | `mcs-api@`, `mcs-worker@` (Cloud SQL client, Vertex user, secret accessor, storage object admin) | same |
+| Secret Manager | `mcs-<env>-db-password`, `-db-ro-password`, `-neo4j-{uri,user,password,database}`, `-nextauth-secret`; later Google OAuth client, Gmail token | same names with `mcs-demo-` prefix |
+| Service accounts | `mcs-api@`, `mcs-worker@` (Cloud SQL client, Vertex user, secret accessor, storage object admin, log writer); `mcs-web@` (log writer only); `mcs-build@` (Cloud Build deployer: run admin, SA user, Artifact Registry writer, Cloud SQL client) | same |
 | Cloud Run | `mcs-web`, `mcs-agent-api`, `mcs-agent-worker` (scale to zero) | same, API and worker min 1, CPU always allocated |
 | Pub/Sub + Scheduler | `mcs-gmail` topic (if Gmail enabled) | + jobs: purge (daily), audit (hourly), gmail-watch-renew (daily) |
-| Budget alert | yes | yes |
+| Budget alert | when `BUDGET_AMOUNT` is set (billing account currency; 50/90/100 % thresholds) | yes |
 
 Region `asia-south1`. Cloud Run services connect to Cloud SQL through the built-in Cloud SQL connector (`--add-cloudsql-instances`).
 
@@ -627,8 +630,8 @@ Region `asia-south1`. Cloud Run services connect to Cloud SQL through the built-
 ```makefile
 bootstrap-gcp: ; ENV=dev bash infra/gcp/bootstrap.sh
 env:          ; bash infra/gcp/env.sh dev > .env          # pulls secrets from Secret Manager into a git-ignored .env
-proxy:        ; cloud-sql-proxy $$CLOUDSQL_INSTANCE --port 5432
-dev:          ; make -j3 proxy api-dev worker-dev web-dev
+proxy:        ; $(PROXY) $$CLOUDSQL_INSTANCE --port 5432          # PROXY = PATH or next to gcloud
+dev:          ; $(MAKE) -j4 proxy api-dev worker-dev web-dev
 api-dev:      ; cd services/agent && uv run uvicorn app.main:app --reload --port 8000
 worker-dev:   ; cd services/agent && uv run python -m app.worker
 web-dev:      ; pnpm -C apps/web dev
@@ -636,15 +639,15 @@ migrate:      ; cd services/agent && uv run alembic upgrade head
 seed: migrate ; uv run python mock-data/generate.py && uv run python scripts/seed.py && uv run python mock-data/kg/load_kg.py --wipe && uv run python scripts/seed.py --kb
 test:         ; cd services/agent && uv run pytest -q && pnpm -C apps/web test
 ci:           ; gcloud builds submit --config infra/gcp/cloudbuild.ci.yaml .
-deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --substitutions=_ENV=dev .
-deploy-demo:  ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --substitutions=_ENV=demo .
+deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=dev,_TAG=$(TAG) .
+deploy-demo:  ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=demo,_TAG=$(TAG) .
 eval:         ; uv run python eval/run.py --mode all
 demo-emails:  ; uv run python scripts/demo_emails.py
 demo-upload:  ; uv run python scripts/demo_upload.py mock-data/upload-samples
 docs:         ; python tools/sync_docs.py
 ```
 
-**`cloudbuild.deploy.yaml`:** build `services/agent` and `apps/web` images (tag = `$SHORT_SHA`) → push to Artifact Registry → `alembic upgrade head` as a Cloud Run job → `gcloud run deploy` the three services with env from Secret Manager (`--set-secrets`) → smoke test (`/healthz`, one T1 chat question, one T3 question, one demo-mailbox email).
+**`cloudbuild.deploy.yaml`** (runs as `mcs-build@`): build `services/agent` and `apps/web` images (tag = `_TAG`: git short SHA, `-dirty` suffix for uncommitted trees, since `$SHORT_SHA` is empty for `gcloud builds submit`) → push to Artifact Registry → `alembic upgrade head` as a Cloud Run job → `gcloud run deploy` the three services with env from Secret Manager (`--set-secrets`) → smoke test (`/health`, one T1 chat question, one T3 question, one demo-mailbox email).
 
 ## 19. Build steps and progress {#LLD-19}
 

@@ -1,0 +1,14 @@
+# Source uploaded by `gcloud builds submit` (Cloud Build). Keep it small and secret-free.
+.git
+.gitignore
+.env
+.env.*
+**/.venv/
+**/node_modules/
+**/.next/
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+.DS_Store
+docs/
+mock-data/data/

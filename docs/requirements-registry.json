@@ -2716,7 +2716,7 @@
         "Separate dev and demo environments"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-5"

@@ -21,6 +21,27 @@ Design pack and mock data to start the build. All data is **synthetic** (see `mo
 
 `gcloud` CLI with a GCP project, Python 3.12 + `uv`, Node 20 + `pnpm`, Cloud SQL Auth Proxy. All databases and services run on Google Cloud (Cloud SQL, Neo4j AuraDB, Cloud Storage, Vertex AI); images are built by Cloud Build and run on Cloud Run. See LLD §18.
 
+## Quick start (dev, GCP)
+
+```bash
+gcloud auth login && gcloud auth application-default login
+gcloud config set project <your-project>
+gcloud components install cloud-sql-proxy          # Makefile also finds it next to gcloud
+
+# 1. Create Neo4j AuraDB Free at console.neo4j.io and keep the downloaded credentials .txt
+# 2. Bootstrap GCP (idempotent; first run creates Cloud SQL, ~10 min). BUDGET_AMOUNT is optional.
+NEO4J_CREDS_FILE=~/Downloads/Neo4j-xxxx.txt BUDGET_AMOUNT=50 make bootstrap-gcp
+# 3. Local env from Secret Manager (git-ignored .env)
+make env
+# 4. Run natively: Cloud SQL proxy :5432, API :8000, worker, web :3000
+make dev
+curl localhost:8000/health        # {"status":"ok","db":"ok","neo4j":"ok",...}
+# 5. Build on Cloud Build and deploy to Cloud Run dev
+make deploy-dev
+```
+
+Code lives in `services/agent` (FastAPI + worker, `uv`) and `apps/web` (Next.js, `pnpm`); layout per LLD §1.
+
 ## Workflow
 
 ```bash
