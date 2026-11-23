@@ -241,34 +241,47 @@ Node labels (all also `:Entity {id}` unique): `ProductFamily, Model, Component, 
 **Parameterized templates (`kg/templates.py`)** ([FR-KG-03](Requirements.html#FR-KG-03)). Each returns rows plus a `path_id` used for citations.
 
 ```cypher
-// T-DIAG: diagnose an error code on a model (2-3 hops)
-MATCH (m:Model {id:$model})-[:CAN_RAISE]->(e:ErrorCode {code:$code})-[c:CAUSED_BY]->(k:Cause)-[rb:RESOLVED_BY]->(r:Resolution)
-WHERE rb.family = m.family OR r.family = e.id[0..3]
+// The model's family comes from (Model)-[:BELONGS_TO]->(ProductFamily); Model nodes carry no family property (D-021).
+// T-DIAG: diagnose an error code on a model (3 hops) — causes by likelihood, resolution, parts
+MATCH (m:Model {id:$model})-[:BELONGS_TO]->(f:ProductFamily)
+MATCH (m)-[:CAN_RAISE]->(e:ErrorCode {code:$code})-[c:CAUSED_BY]->(k:Cause)-[rb:RESOLVED_BY]->(r:Resolution)
+WHERE rb.family = f.id
 OPTIONAL MATCH (r)-[:REQUIRES_PART]->(p:SparePart)
-RETURN e, k, c.likelihood AS likelihood, r, collect(p.id) AS parts ORDER BY likelihood DESC;
+RETURN e…, k…, c.likelihood AS likelihood, r…, collect(p.id) AS parts ORDER BY likelihood DESC, k.id;
 
-// T-STOCK: part availability near a city (part -> warehouse <- service centre -> city)
+// T-PARTS: spare parts needed to resolve a cause in a family
+MATCH (k:Cause {id:$cause})-[rb:RESOLVED_BY]->(r:Resolution)-[:REQUIRES_PART]->(p:SparePart) WHERE rb.family = $family
+RETURN p…, r.id ORDER BY p.id;
+
+// T-STOCK: part availability, home warehouse of the city's service centre first
 MATCH (p:SparePart {id:$part})-[s:STOCKED_AT]->(w:Warehouse)
-OPTIONAL MATCH (sc:ServiceCentre)-[:COVERS]->(:City {name:$city}) , (sc)-[:SUPPLIED_BY]->(home:Warehouse)
-RETURN p, w, s.qty AS qty, home.id = w.id AS is_home_warehouse, p.lead_time_days_if_unavailable AS lead_time
-ORDER BY is_home_warehouse DESC, qty DESC;
+OPTIONAL MATCH (sc:ServiceCentre)-[:COVERS]->(c:City) WHERE toLower(c.name) = toLower($city)
+OPTIONAL MATCH (sc)-[:SUPPLIED_BY]->(home:Warehouse)
+WITH p, w, s, collect(DISTINCT home.id) AS homes
+RETURN p…, w.id, s.qty AS qty, w.id IN homes AS is_home_warehouse, p.lead_time_days_if_unavailable AS lead_time_days
+ORDER BY is_home_warehouse DESC, qty DESC, w.id;
 
-// T-COVER: is the part needed for the top cause covered by an AMC plan? (5 hops)
-MATCH (m:Model {id:$model})-[:CAN_RAISE]->(e:ErrorCode {code:$code})-[c:CAUSED_BY]->(k:Cause)-[:RESOLVED_BY]->(r:Resolution {family:m.family})-[:REQUIRES_PART]->(p:SparePart)
-WITH p, c ORDER BY c.likelihood DESC LIMIT 1
+// T-COVER: is the part for the most likely cause that needs one covered by an AMC plan? (5 hops)
+MATCH (m:Model {id:$model})-[:BELONGS_TO]->(f:ProductFamily)
+MATCH (m)-[:CAN_RAISE]->(e:ErrorCode {code:$code})-[c:CAUSED_BY]->(k:Cause)-[rb:RESOLVED_BY]->(r:Resolution)-[:REQUIRES_PART]->(p:SparePart)
+WHERE rb.family = f.id
+WITH m, e, k, c, r, p ORDER BY c.likelihood DESC, k.id, p.id LIMIT 1
 OPTIONAL MATCH (a:AMCPlan)-[:COVERS_PART]->(p)
-RETURN p, collect(a.name) AS covered_by;
+RETURN p…, k.id, c.likelihood, collect(a.name) AS covered_by;
 
 // T-SHARED: error codes in a family that share a cause with a given code
-MATCH (e:ErrorCode {id:$error_id})-[:CAUSED_BY]->(k:Cause)<-[:CAUSED_BY]-(o:ErrorCode)-[:FOR_FAMILY]->(f:ProductFamily {id:$family})
-WHERE o <> e RETURN o.code, collect(k.name) AS shared_causes;
+MATCH (e:ErrorCode {id:$error_id})-[:CAUSED_BY]->(k:Cause)<-[:CAUSED_BY]-(o:ErrorCode)-[:FOR_FAMILY]->(:ProductFamily {id:$family})
+WHERE o <> e RETURN o.code, collect(k.name) AS shared_causes ORDER BY o.code;
 
 // T-BYCAUSE: error codes of a family caused by a cause (aggregation)
-MATCH (k:Cause {id:$cause})<-[:CAUSED_BY]-(e:ErrorCode)-[:FOR_FAMILY]->(:ProductFamily {id:$family}) RETURN e.code, e.name;
+MATCH (k:Cause {id:$cause})<-[c:CAUSED_BY]-(e:ErrorCode)-[:FOR_FAMILY]->(:ProductFamily {id:$family}) RETURN e.code, e.name, c.likelihood;
 
-// T-SC: nearest service centre for a city
-MATCH (sc:ServiceCentre)-[:COVERS]->(c:City) WHERE toLower(c.name) = toLower($city) RETURN sc;
+// T-SC: service centre covering a city, with its home warehouse
+MATCH (sc:ServiceCentre)-[:COVERS]->(c:City) WHERE toLower(c.name) = toLower($city)
+OPTIONAL MATCH (sc)-[:SUPPLIED_BY]->(w:Warehouse) RETURN sc…, w.id AS home_warehouse;
 ```
+
+Implementation notes (BS-05, D-021): full Cypher in `app/kg/templates.py`; `run_template(id, params)` validates the exact parameter set (non-empty strings, values only as Cypher parameters) and returns `TemplateResult(rows, server_ms)`. `path_id` = `<template>:<node ids joined by > (path), ~ (shared) or < (reverse)>`, e.g. `T-DIAG:DHD-150>DHD-E04>C-ROTOR-DEG>R-DHD-C-ROTOR-DEG`. Every agent query goes through `app/kg/client.read_query`: a READ transaction (writes are rejected by the server) with a 5 s timeout, using `NEO4J_RO_USER` when set; AuraDB Free has no user management (OD-003), so dev uses the main user in READ mode. `load_kg.py` (`make kg-load`, part of `make seed`) adds per-label `id` indexes and `errorcode_code`, honours `NEO4J_DATABASE`, and exits non-zero unless counts equal `SUMMARY.json`.
 
 ## 5. Orchestrator graph and state {#LLD-5}
 

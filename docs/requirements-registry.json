@@ -1309,7 +1309,7 @@
         "Seed load produces the node/edge counts in mock-data SUMMARY.json"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5",
@@ -1366,7 +1366,7 @@
         "Template queries p95 under 50 ms on seed data"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5"

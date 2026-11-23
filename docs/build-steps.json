@@ -201,11 +201,11 @@
         "python mock-data/kg/load_kg.py --wipe (counts match SUMMARY.json)",
         "pytest services/agent/tests/integration/test_kg_templates.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-23",
+      "completed": "2026-11-23",
+      "notes": "`make kg-load` (load_kg.py --wipe) on AuraDB dev fbd474a8: nodes=343 rels=1107 = SUMMARY.json (OK); constraint entity_id, per-label name/id indexes, errorcode_code, entity_fulltext. app/kg/templates.py: T-DIAG, T-PARTS, T-STOCK, T-COVER, T-SHARED, T-BYCAUSE, T-SC with path_id; app/kg/client.py READ-transaction runner. tests/integration/test_kg_templates.py: 11 passed — counts per label + provenance, T-DIAG/T-PARTS/T-COVER checked against the catalog for all 44 error codes, T-STOCK home-warehouse ordering, T-SC for every covered city, server-side p95 < 50 ms per template (FR-KG-03), parameter validation and injection-as-value, writes rejected in READ transactions. Full suite 66 passed. Deviations D-021 (family via BELONGS_TO, T-PARTS added, tie-breaks, read-only = READ mode because AuraDB Free has no RBAC). Gaps: no dedicated Neo4j read-only user until OD-003 (demo hosting, before BS-32); p95 is server time (network round trip to AuraDB not included); KG tests take ~100 s over the network."
     },
     {
       "id": "BS-06",
