@@ -46,6 +46,12 @@ class Settings(BaseSettings):
     embed_model: str = "text-embedding-005"
     embed_dim: int = 768
     embed_timeout_ms: int = 3000
+    # Reranker (OD-005 → D-025): local ONNX cross-encoder via fastembed; "none" keeps RRF order
+    reranker: Literal["cross_encoder", "none"] = "cross_encoder"
+    rerank_model: str = "Xenova/ms-marco-MiniLM-L-6-v2"
+    rerank_cache_dir: str = ""  # baked into the image at /opt/models; default: fastembed's temp cache
+    rerank_max_length: int = 256  # tokens per (query, passage) pair; latency grows with it
+    rerank_top: int = 20
 
     # Provider credentials and endpoints
     gcp_project: str = ""

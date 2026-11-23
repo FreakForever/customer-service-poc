@@ -1136,7 +1136,7 @@
         "Recall@5 at least 0.9 on single_hop gold docs"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5"
@@ -1194,7 +1194,7 @@
         "Query naming DHD-150 retrieves no MTC manual chunks"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5"
@@ -1222,7 +1222,7 @@
         "MRR improves versus no-rerank on eval (reported)"
       ],
       "verification": "analysis",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5"
@@ -1280,7 +1280,7 @@
         "version_trap eval item cites v2 and never v1"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5"

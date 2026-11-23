@@ -305,11 +305,11 @@
         "pytest services/agent/tests/integration/test_retrieval.py",
         "make eval-retrieval (Recall@5 >= 0.9)"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-23",
+      "completed": "2026-11-23",
+      "notes": "OD-005 closed (D-025): local ONNX cross-encoder Xenova/ms-marco-MiniLM-L-6-v2 (fastembed), baked into the agent image. app/retrieval/hybrid.py: OR-lexeme FTS leg + pgvector leg (k=30 each, embedding concurrent with FTS) → RRF k=60 → rerank top 20 → k_ctx 6; filters status/doc_type/family/model; superseded docs only on past cues; rerank timeout/error keeps RRF order. tests/integration/test_retrieval.py: 8 passed (+3 unit in test_retrieval_unit.py; full suite 109 passed). `make eval-retrieval` on dev db (live Vertex embeddings): filtered+rerank single_hop Recall@5 1.0 (unfiltered 1.0), section MRR 0.979 vs 0.896 without rerank (unfiltered 0.958 vs 0.910); doc MRR 0.979 vs 1.0; FAQ Recall@5 0.914 vs 0.929, MRR 0.810 vs 0.815; version_trap cites v2 never v1; 'old warranty policy before 2025' pulls v1; 0 other-family manual chunks under a model filter. Report eval/reports/retrieval.json. Gaps: rerank latency p50 445 ms / p95 464 ms for 20 pairs on 8 local cores, over the chat rerank budget (250 ms), so chat falls back to RRF order until BS-32 sizing/perf tuning (fewer pairs or shorter max_length); Dockerfile model bake not yet exercised by a deploy build; rerank gives no gain on FAQ-style questions."
     },
     {
       "id": "BS-09",

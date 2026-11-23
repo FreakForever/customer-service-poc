@@ -59,6 +59,7 @@ matsui-cs-poc/
 | `MODEL_FAST` / `MODEL_STRONG` | `gemini-2.5-flash` / `gemini-2.5-pro` until OD-002 closes | Router/T2 vs T3/judge |
 | `FALLBACK_PROVIDER` / `MODEL_FALLBACK` | empty / empty | Fallback after the retry: other provider and/or model (empty provider = same provider, other model) |
 | `EMBED_PROVIDER` / `EMBED_MODEL` / `EMBED_DIM` / `EMBED_TIMEOUT_MS` | empty (= `PROVIDER`; `vertex` when `PROVIDER=anthropic`) / `text-embedding-005` (OD-004 → D-024) / `768` / `3000` | Embeddings |
+| `RERANKER` / `RERANK_MODEL` / `RERANK_MAX_LENGTH` / `RERANK_TOP` / `RERANK_CACHE_DIR` | `cross_encoder` (or `none`) / `Xenova/ms-marco-MiniLM-L-6-v2` / `256` / `20` / `/opt/models` in the image | Reranker (OD-005 → D-025) |
 | `VERTEX_LOCATION` | empty (= `GCP_REGION`) | Vertex endpoint location; `global` for models not served in the region |
 | `ANTHROPIC_VIA` / `ANTHROPIC_VERTEX_REGION` / `ANTHROPIC_API_KEY` | `vertex` / `global` / — | Claude on Vertex AI (ADC) or the Claude API (key from Secret Manager) |
 | `OPENAI_BASE_URL` / `OPENAI_API_KEY` | — | OpenAI-compatible endpoint |
@@ -412,6 +413,8 @@ SELECT id, ts_rank_cd(tsv, websearch_to_tsquery('english', :text)) AS score FROM
 ```
 
 Fusion: RRF with k = 60, then rerank top 20 with the cross-encoder, keep `k_ctx` = 6 ([FR-RG-04](Requirements.html#FR-RG-04)). Superseded docs are included only when the query has a past date or "old/previous policy" cue.
+
+Implementation notes (BS-08, D-025): `app/retrieval/hybrid.py` `retrieve(conn, embedder, query, Filters(family, model, doc_types, include_superseded))`. The lexical leg ORs the query's English lexemes (`string_agg(quote_literal(lexeme), ' | ')::tsquery`) because `websearch_to_tsquery` ANDs every word and misses most natural questions; the query embedding runs concurrently with it. Family filter: a chunk whose `metadata.family` (or document family) is set must equal the filter, family-less documents (policies, guides) always pass; model filter: chunks listing models must include the model. `include_superseded=None` → `wants_superseded(query)` (cue words such as old/previous/earlier/used to, or a year before the current one). Rerank runs in a thread under the node budget (`rerank` timeout from the channel policy); on timeout or error the RRF order is kept (`rerank_status`). `app/retrieval/rerank.py`: `Reranker` protocol, `CrossEncoderReranker` (fastembed ONNX, pairs truncated to `RERANK_MAX_LENGTH` tokens, model baked into the image), `NoopReranker`. `make eval-retrieval` (eval/retrieval.py) writes `eval/reports/retrieval.json`.
 
 **T2 prompt contract** (`agents/rag_answerer.py`) ([FR-RG-05](Requirements.html#FR-RG-05)):
 

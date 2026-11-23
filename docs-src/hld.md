@@ -309,7 +309,7 @@ Mirrored in `DECISIONS.md`. Traceability is enforced in CI ([NFR-MNT-01](Require
 | OD-002 | LLM provider and models | Vertex Gemini (fast/strong) · Claude via Vertex · mix | Vertex AI, configurable | BS-30 bake-off |
 | OD-003 | Neo4j hosting for the demo environment | AuraDB Free/Pro · Neo4j Community on Compute Engine | AuraDB Free in dev; decide demo hosting (RBAC read-only user needs a paid tier or self-managed) | Before BS-32 |
 | OD-004 | Embedding model | Vertex text embeddings (768 d) · multilingual open model (bge-m3) | **Closed → D-024:** Vertex `text-embedding-005`, 768 d | Before BS-07 |
-| OD-005 | Reranker | Local cross-encoder · Vertex ranking API · none | Local cross-encoder | BS-08 eval |
+| OD-005 | Reranker | Local cross-encoder · Vertex ranking API · none | **Closed → D-025:** local ONNX cross-encoder (ms-marco-MiniLM-L-6) | BS-08 eval |
 | OD-006 | Customer identity in chat | Anonymous + email OTP · demo persona login only | Demo persona + optional email OTP | Before BS-20 |
 | OD-007 | Real mailbox for the live demo | Gmail API on a demo Gmail/Workspace mailbox · demo mailbox only | Demo mailbox; Gmail adapter built in BS-21 | Before demo |
 | OD-008 | Reply language for Hinglish queries | Always English · mirror user | English, mirror if the message is Hinglish only | BS-13 |

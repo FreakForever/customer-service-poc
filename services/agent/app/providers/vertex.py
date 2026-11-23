@@ -2,7 +2,7 @@
 
 import time
 from collections.abc import AsyncIterator
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from pydantic import BaseModel
 
@@ -91,7 +91,7 @@ class VertexProvider:
         try:
             for i in range(0, len(texts), EMBED_BATCH):
                 resp = await self._client.aio.models.embed_content(
-                    model=self.embed_model, contents=texts[i:i + EMBED_BATCH],
+                    model=self.embed_model, contents=cast(Any, texts[i:i + EMBED_BATCH]),
                     config=types.EmbedContentConfig(task_type=task, output_dimensionality=self.dim))
                 out.extend(list(e.values or []) for e in resp.embeddings or [])
         except Exception as exc:

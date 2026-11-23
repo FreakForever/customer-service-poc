@@ -6,5 +6,8 @@ WORKDIR /srv
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev
 COPY app ./app
+# Bake the reranker model into the image (OD-005 → D-025) so Cloud Run never downloads it at request time.
+ENV RERANK_CACHE_DIR=/opt/models
+RUN python -c "from app.retrieval.rerank import warm; warm()"
 # Same image for API and worker; the worker service overrides the command with `python -m app.worker`.
 CMD ["sh", "-c", "exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
