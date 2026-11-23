@@ -508,11 +508,11 @@
         "pytest services/agent/tests/unit/test_cache.py",
         "make eval-cache (paraphrase hit >= 0.85, false hit < 0.03)"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "app/cache/normalize.py, app/cache/store.py (exact + semantic lookup, guarded writer, FAQ seeding, invalidation), orchestrator/nodes/cache.py (real cache_lookup), supersede → invalidation hook, `make seed-kb` fills answer_cache (109 rows on dev). tests/unit/test_cache.py: 15 passed (normalizer, write guard, scope guard, node T1 draft + citation, account-id skip, DB error = miss); tests/integration/test_cache_db.py: 6 passed (exact hit EXPLAIN execution < 20 ms, semantic threshold/guards, superseding warranty v2 deletes its cached answers and flags FAQs needs_review, deleted source withdraws FAQs, writer guard + TTL). Full suite 299 passed. `make eval-cache` live (text-embedding-005): faq_paraphrase served correctly 35/35 = 1.0 (all via the exact layer — eval paraphrases are seeded variants), canonical 1.0, false-hit rate 0/112 = 0.0. Honest generalisation check: leave-one-out semantic 0.143 at tau 0.90 (0.371 at 0.80); other task types no better. D-031. Gaps: semantic cache rarely catches unseen paraphrases (they go to RAG); agent-promoted answers (FR-CA-05) arrive with the console (BS-25); hit-rate metrics dashboard in analytics steps."
     },
     {
       "id": "BS-15",

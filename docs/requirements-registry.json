@@ -993,7 +993,7 @@
         "Hit returns in under 20 ms server time"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.3"
@@ -1022,7 +1022,7 @@
         "False-hit rate under 3% on non-FAQ eval items"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.3"
@@ -1050,7 +1050,7 @@
         "Superseding a policy removes cached answers that cite it"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.8"
@@ -1079,7 +1079,7 @@
         "Cache writer rejects entries with customer-scoped flag"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-4.4"

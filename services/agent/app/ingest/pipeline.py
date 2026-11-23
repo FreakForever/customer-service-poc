@@ -74,6 +74,9 @@ async def supersede(conn: AsyncConnection, doc_id: str, *, except_version: str |
     if rows:
         await conn.execute(text("""UPDATE kb_chunks SET metadata = jsonb_set(coalesce(metadata, '{}'), '{status}', '"superseded"')
                                    WHERE doc_id = :d AND version = ANY(:vs)"""), {"d": doc_id, "vs": list(rows)})
+        from app.cache.store import invalidate_document  # FR-CA-03: cached answers citing it go
+
+        await invalidate_document(conn, doc_id, "superseded")
     return len(rows)
 
 

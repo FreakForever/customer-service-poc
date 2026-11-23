@@ -14,6 +14,7 @@ from typing import Any
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncEngine
 
+from app.cache.store import seed_exact_from_faqs
 from app.ingest.pipeline import _vec, make_ingest_handler, register_document
 from app.jobs.queue import drain, enqueue
 from app.providers.base import Embedder
@@ -72,5 +73,7 @@ async def seed_kb(engine: AsyncEngine, embedder: Embedder, kb_dir: Path = KB_DIR
                                           "AND status IN ('failed', 'queued')"))).scalar_one()
         chunks = (await conn.execute(text("SELECT count(*) FROM kb_chunks"))).scalar_one()
     faqs = await embed_faq_variants(engine, embedder)
+    async with engine.begin() as conn:
+        exact = await seed_exact_from_faqs(conn)
     return {"documents_queued": len(queued), "jobs_run": ran, "jobs_pending_or_failed": failed,
-            "kb_chunks": chunks, "faq_variants_embedded": faqs}
+            "kb_chunks": chunks, "faq_variants_embedded": faqs, "answer_cache_rows": exact}
