@@ -1,0 +1,108 @@
+service.create_ticket:
+  description: Wants an engineer visit / to log a new service request for their machine
+  examples:
+    - please send an engineer for our chiller
+    - I want to book a service visit
+    - raise a breakdown call for our dryer
+    - we need a technician tomorrow
+    - can someone come and check the granulator
+    - log a complaint for the MTC not heating
+    - schedule a visit for our loader
+    - our machine is down please register a call
+    - engineer bhejo please chiller kharab hai
+    - service request register karna hai
+    - kal tak engineer aa sakta hai kya
+    - book an engineer for preventive maintenance next week
+    - open a ticket for the dryer at our Pune plant
+    - I need someone on site urgently for the conveying system
+    - create a service request for serial MT-HAD50-22-00011
+service.ticket_status:
+  description: Status of an existing service ticket
+  examples:
+    - when is the engineer coming for my ticket
+    - any update on my service request
+    - is my complaint resolved yet
+    - what happened to the call I logged yesterday
+    - has the engineer been assigned
+    - my ticket is still open why
+    - when will the visit happen for my request
+    - status of the breakdown call we logged
+    - mera ticket ka kya hua
+    - engineer kab aayega mere complaint ke liye
+    - ticket abhi tak close kyun nahi hua
+    - track my service request
+    - is my case scheduled
+    - who is the engineer on my ticket
+    - expected date for my repair
+amc.status:
+  description: Status/coverage of the customer's own AMC contract
+  examples:
+    - is my AMC still active
+    - when does our maintenance contract expire
+    - how many visits are left in our AMC
+    - is our chiller covered under our current AMC
+    - which machines are included in my contract
+    - check my AMC validity
+    - has our contract lapsed
+    - is this repair covered by our contract
+    - mera AMC active hai kya
+    - hamara contract kab khatam hoga
+    - AMC mein kitne visit bache hain
+    - does our AMC cover this part
+    - show my contract details
+    - are we in the grace period for renewal
+    - what plan is our dryer on
+warranty.status:
+  description: Whether the customer's own machine is still in warranty
+  examples:
+    - is my dryer still under warranty
+    - when does warranty end for our chiller
+    - check warranty for my machine
+    - our MTC was installed in 2024 is it in warranty
+    - is serial MT-CHL5A-22-00146 under warranty
+    - warranty expiry date for our granulator
+    - has the warranty on our loader finished
+    - will this repair be free under warranty
+    - meri machine warranty mein hai kya
+    - warranty kab tak hai hamare dryer ki
+    - is our new chiller covered
+    - check if my machine warranty is valid
+    - warranty status please
+    - is the rotor on our dryer still under its warranty
+    - our dryer is one year old is it covered
+asset.info:
+  description: Details about the customer's own machines (model, serial, installation, running hours)
+  examples:
+    - which machines do we have registered with you
+    - what model is serial MT-GR400-22-00981
+    - when was our dryer commissioned
+    - list all machines at our Pune site
+    - how many running hours on our chiller
+    - details of my machine
+    - which site is this serial installed at
+    - when was this machine dispatched
+    - hamare paas kaun kaun si machines hain
+    - is serial number ki machine kaunsi hai
+    - our machine installation date
+    - show our asset list
+    - what is the capacity of our installed chiller
+    - which plant has the DHD-150
+    - give me the details of serial MT-MTCW90-23-00418
+amc.renewal:
+  description: Renewing an AMC, renewal price and process
+  examples:
+    - how do I renew our maintenance contract
+    - I want to renew my AMC
+    - renewal price for comprehensive plan
+    - our AMC ended last month can we still renew
+    - send me a renewal quote for our contract
+    - is inspection needed to renew a lapsed AMC
+    - renew our platinum plan for another year
+    - AMC renew karna hai
+    - renewal ka kitna lagega
+    - expired AMC phir se shuru kar sakte hain kya
+    - upgrade our AMC from basic to platinum at renewal
+    - when should we renew to avoid a gap
+    - can renewal include our new chiller
+    - is there a discount if we renew early
+    - remind me before our contract renewal

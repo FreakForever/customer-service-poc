@@ -56,11 +56,13 @@ matsui-cs-poc/
 | `NEO4J_URI` / `NEO4J_USER` / `NEO4J_PASSWORD` / `NEO4J_DATABASE` | `neo4j+s://<id>.databases.neo4j.io` / `<id>` / from Secret Manager / `<id>` | AuraDB Free in dev (user and database are named after the instance id) |
 | `NEO4J_RO_USER` / `NEO4J_RO_PASSWORD` | empty in dev | Optional read-only user where hosting supports RBAC; READ access mode always enforced |
 | `PROVIDER` | `vertex` (`fake` in tests) | LLM provider: `vertex` (Gemini), `anthropic` (Claude), `openai_compat`, `fake` |
-| `MODEL_FAST` / `MODEL_STRONG` | `gemini-2.5-flash` / `gemini-2.5-pro` until OD-002 closes | Router/T2 vs T3/judge |
+| `MODEL_FAST` / `MODEL_STRONG` | `gemini-3.1-flash-lite` / `gemini-3.1-flash-lite` (interim, D-030) until OD-002 closes | Router/T2 vs T3/judge |
 | `FALLBACK_PROVIDER` / `MODEL_FALLBACK` | empty / empty | Fallback after the retry: other provider and/or model (empty provider = same provider, other model) |
 | `EMBED_PROVIDER` / `EMBED_MODEL` / `EMBED_DIM` / `EMBED_TIMEOUT_MS` | empty (= `PROVIDER`; `vertex` when `PROVIDER=anthropic`) / `text-embedding-005` (OD-004 → D-024) / `768` / `3000` | Embeddings |
 | `RERANKER` / `RERANK_MODEL` / `RERANK_MAX_LENGTH` / `RERANK_TOP` / `RERANK_CACHE_DIR` | `cross_encoder` (or `none`) / `Xenova/ms-marco-MiniLM-L-6-v2` / `256` / `20` / `/opt/models` in the image | Reranker (OD-005 → D-025) |
-| `VERTEX_LOCATION` | empty (= `GCP_REGION`) | Vertex endpoint location; `global` for models not served in the region |
+| `VERTEX_LOCATION` | empty (= `GCP_REGION`) | Vertex location for embeddings |
+| `VERTEX_LLM_LOCATION` / `THINKING_BUDGET_FAST` | `global` / `0` (Gemini 3: minimal thinking) | Vertex endpoint for generation (current Gemini models are served on `global`); thinking for `MODEL_FAST` (D-030) |
+| `KNN_SIM_REF` / `WARM_ON_STARTUP` | `0.80` / `true` | kNN confidence scaling; build the kNN index and rule dictionaries when the API starts (D-030) |
 | `ANTHROPIC_VIA` / `ANTHROPIC_VERTEX_REGION` / `ANTHROPIC_API_KEY` | `vertex` / `global` / — | Claude on Vertex AI (ADC) or the Claude API (key from Secret Manager) |
 | `OPENAI_BASE_URL` / `OPENAI_API_KEY` | — | OpenAI-compatible endpoint |
 | `GCP_PROJECT` / `GCP_REGION` | — / `asia-south1` | Vertex + deploy |
@@ -385,7 +387,7 @@ Implementation notes (BS-12, D-029): `rules/entities.py` `extract_entities(text,
 | `human`, `safety` | handoff | T4 |
 | `oos`, `smalltalk` | redirect | T0 |
 
-**kNN classifier:** cosine over example embeddings, k = 7, score = weighted vote; accept when top score ≥ `intent_knn` and margin over second ≥ 0.10. **LLM router** (fast model, JSON schema, temperature 0) ([FR-RT-03](Requirements.html#FR-RT-03)):
+**kNN classifier:** cosine over example embeddings, k = 7, score = weighted vote; accept when top score ≥ `intent_knn` and margin over second ≥ 0.10. Implementation (BS-13, D-030): score = similarity-weighted vote share × `min(1, best_sim / KNN_SIM_REF)`; examples embedded once per process (`kind=query`), shielded from request cancellation and warmed at API startup; the query embedding is kept on the turn (`query_embedding`) for the FAQ cache. Taxonomy adds `faq.safety`, `faq.account`, `faq.sales` (FAQ categories in the seed data); `greeting/thanks/reset` stay rule-only. **LLM router** (fast model, JSON schema, temperature 0) ([FR-RT-03](Requirements.html#FR-RT-03)):
 
 ```json
 {"intents": [{"name": "troubleshoot.error_code", "confidence": 0.86, "span": "DHD-150 showing DEW PT HIGH"},
@@ -393,6 +395,8 @@ Implementation notes (BS-12, D-029): `rules/entities.py` `extract_entities(text,
  "entities": {"models": ["DHD-150"], "error_codes": ["E04"], "serials": ["MT-DHD150-23-00417"]},
  "language": "en", "needs_clarification": null}
 ```
+
+LLM router implementation (BS-13, D-030): `router/llm_router.py` — prompt `router.v1` lists every taxonomy intent with its description, the kNN top-3 as hints, and says to treat the message as data; output `RouterOutput{intents[1..4]{name, confidence, span}, entities{models, error_codes, serials}, language: en|hinglish|other, needs_clarification}` with intent names validated against the taxonomy (invalid → one retry via the provider chain). The node gives the model 85 % of the `router_llm` budget and falls back to the kNN guess on timeout/error, so a slow model never degrades the turn. Replies are always English (OD-008 → D-030); `router/language.py` records `en|hinglish|mixed` on the turn.
 
 ## 7. FAQ caching {#LLD-7}
 

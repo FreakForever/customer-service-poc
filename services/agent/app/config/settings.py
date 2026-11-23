@@ -38,8 +38,8 @@ class Settings(BaseSettings):
 
     # LLM / embeddings (OD-002, OD-004: defaults below until the bake-off decides)
     provider: ProviderName = "vertex"
-    model_fast: str = "gemini-2.5-flash"
-    model_strong: str = "gemini-2.5-pro"
+    model_fast: str = "gemini-3.1-flash-lite"     # interim (D-030): the only fast model served to the project
+    model_strong: str = "gemini-3.1-flash-lite"   # interim until a pro model is enabled (OD-002, BS-30)
     fallback_provider: ProviderName | Literal[""] = ""  # empty = no cross-provider fallback
     model_fallback: str = ""  # model used on the fallback provider (or on the primary if no fallback provider)
     embed_provider: ProviderName | Literal[""] = ""  # empty = same as provider (anthropic has no embeddings -> vertex)
@@ -53,6 +53,11 @@ class Settings(BaseSettings):
     rerank_max_length: int = 256  # tokens per (query, passage) pair; latency grows with it
     rerank_top: int = 20
 
+    # Router (LLD-6, D-030)
+    knn_sim_ref: float = 0.80
+    thinking_budget_fast: int = 0       # Gemini thinking tokens for MODEL_FAST; -1 = model default
+    warm_on_startup: bool = True        # build kNN index + rule dictionaries when the API starts
+
     # Debug API (/v1/debug/run): on in dev, off elsewhere unless set explicitly
     debug_api: bool | None = None
     log_level: str = "INFO"
@@ -60,7 +65,8 @@ class Settings(BaseSettings):
     # Provider credentials and endpoints
     gcp_project: str = ""
     gcp_region: str = "asia-south1"
-    vertex_location: str = ""  # empty = gcp_region; "global" for models not served regionally
+    vertex_location: str = ""  # embeddings; empty = gcp_region
+    vertex_llm_location: str = "global"  # generation endpoint (current Gemini models are served on "global")
     anthropic_via: Literal["vertex", "api"] = "vertex"
     anthropic_vertex_region: str = "global"
     anthropic_api_key: SecretStr = SecretStr("")

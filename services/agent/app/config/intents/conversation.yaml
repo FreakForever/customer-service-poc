@@ -1,0 +1,90 @@
+complaint:
+  description: Dissatisfaction, repeated failures, escalation demands
+  examples:
+    - this is the third time the same problem has happened
+    - your engineer never showed up
+    - I am very unhappy with your service
+    - nobody is responding to our calls
+    - we have been waiting for a week this is unacceptable
+    - I want to escalate this to a manager
+    - production is stopped and no one cares
+    - the repair did not fix anything
+    - bahut bura service hai aapka
+    - koi response nahi de raha
+    - teen baar complaint kar chuke hain
+    - I wish to file a formal complaint about the repair
+    - please escalate my issue
+    - your service is terrible
+    - we will stop the AMC if this continues
+human:
+  description: Wants a person
+  examples:
+    - can I talk to someone
+    - get me a real person
+    - connect me to customer care
+    - I want an agent not a bot
+    - please transfer me to your team
+    - I would like to speak to a manager
+    - is there a human I can chat with
+    - put me through to support staff
+    - kisi insaan se baat karao
+    - manager se baat karni hai
+    - mujhe bot se baat nahi karni
+    - call me please
+    - I prefer talking to a person
+    - transfer to a live agent
+    - can someone from your team call me
+safety:
+  description: Active safety incident at the machine
+  examples:
+    - there is smoke from the panel
+    - the cable is burning
+    - operator got a shock from the machine
+    - sparks are coming from the motor
+    - fire in the dryer hopper
+    - someone got hurt at the granulator
+    - strong burning smell near the chiller
+    - refrigerant is leaking
+    - machine se dhuan aa raha hai
+    - panel jal raha hai
+    - operator ko current laga
+    - motor se chingari nikal rahi hai
+    - gas smell near the chiller unit
+    - the heater wires are melting
+    - hand injured in the granulator
+oos:
+  description: Out of scope for Matsui equipment support
+  examples:
+    - what is the weather in Mumbai
+    - tell me a joke
+    - who won the match yesterday
+    - write my homework
+    - what is the price of gold today
+    - recommend a good movie
+    - how do I cook biryani
+    - what is the capital of France
+    - aaj ka match kaun jeeta
+    - koi accha gaana sunao
+    - stock market kaisa chal raha hai
+    - help me write a cover letter
+    - what's the latest news
+    - translate this into french
+    - who is the richest man in the world
+smalltalk:
+  description: Chit-chat about the assistant itself
+  examples:
+    - how are you
+    - who are you
+    - are you a bot
+    - what can you do
+    - what is your name
+    - are you human
+    - nice talking to you
+    - you are helpful
+    - aap kaun ho
+    - kya aap robot ho
+    - aap kya kar sakte ho
+    - good job
+    - can you understand hindi
+    - ok
+    - bye

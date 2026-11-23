@@ -472,11 +472,11 @@
       "verify": [
         "make eval-router (accuracy >= 0.90)"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
+      "status": "blocked",
+      "progress_pct": 80,
+      "started": "2026-11-24",
       "completed": null,
-      "notes": ""
+      "notes": "BLOCKED: Vertex refuses generation for this project — 'Access requires an eligible paid billing account in a supported region' (403) for gemini-3.1-flash-lite / gemini-3-flash-preview / gemini-3.5-flash / gemini-3.1-pro-preview on `global`; gemini-2.5-flash/pro return 404 in asia-south1 and global; Claude on Vertex is global-only with 0 quota (429). The billing account is the default 'My Billing Account' (likely a free trial). Unblock: upgrade the billing account to a paid account (Console → Billing → Overview → Upgrade / Activate full account), then rerun `/build-step bs-13` (make eval-router). Done (4/5): config/intents/*.yaml — 28 intents, >= 15 fresh examples each incl. Hinglish (leakage check); router/knn.py (warmed, shielded build); router/llm_router.py (schema, taxonomy-validated names, multi-intent, kNN hint); router/language.py; real classify + llm_router graph nodes with kNN fallback; VERTEX_LLM_LOCATION split; OD-008 closed (D-030). tests/unit/test_router.py: 14 passed (offline: retry on invalid intent, EM-001 multi-intent → planner, confident kNN skips the LLM, router failure falls back, Hinglish recorded). Full suite 278 passed. `make eval-router` live (Vertex embeddings, LLM fallback failing 403 → kNN guess): accuracy 0.913 on 207 items (gate 0.90 met), CH-007 and the Hinglish FAQ paraphrase correct, classify p50 65 ms; EM-001 yields only troubleshoot.error_code (needs the LLM) → gate not passed."
     },
     {
       "id": "BS-14",

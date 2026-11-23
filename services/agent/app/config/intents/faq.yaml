@@ -1,0 +1,220 @@
+# FAQ intents (LLD-6): answered from the FAQ cache, else RAG (T1/T2). Examples are written fresh — never copied
+# from mock-data eval questions or FAQ paraphrases (no train/test leakage).
+faq.warranty:
+  description: General warranty terms, periods, what is covered, claims
+  examples:
+    - how many months of warranty do your machines come with
+    - does the warranty start from dispatch or from installation
+    - is the heater element included in warranty
+    - what voids the warranty on a dryer
+    - warranty terms for a chiller bought last year
+    - do consumables come under warranty
+    - who pays for the engineer visit during the warranty period
+    - is the desiccant rotor warranty different from the machine warranty
+    - process to raise a warranty claim
+    - can warranty be extended beyond the standard period
+    - does warranty cover damage from voltage fluctuation
+    - warranty ke andar kya kya cover hota hai
+    - warranty kab se start hoti hai
+    - kya compressor warranty mein aata hai
+    - what documents do I need for a warranty claim
+    - is labour free during warranty
+faq.amc:
+  description: AMC plans, what they include, pricing basis, coverage rules (not a specific contract)
+  examples:
+    - what is included in the comprehensive maintenance contract
+    - difference between basic and platinum AMC
+    - how many preventive visits do I get in an AMC
+    - is the AMC price based on the machine price
+    - does any AMC plan include spare parts
+    - what does the platinum plan not cover
+    - discount on AMC for multiple machines
+    - can I take an AMC for an old machine
+    - which AMC has the fastest response time
+    - are consumables free under comprehensive AMC
+    - AMC mein kitne visit milte hain
+    - platinum aur comprehensive mein kya fark hai
+    - AMC ka rate kaise decide hota hai
+    - do you need an inspection before starting an AMC
+    - is a compressor replacement covered by any maintenance plan
+    - what happens if my AMC lapses
+faq.service:
+  description: Service process, response times, business hours, escalation process, service centre locations
+  examples:
+    - how fast will an engineer reach after a breakdown call
+    - what time does your support desk open
+    - do engineers work on sundays
+    - how do I log a breakdown complaint
+    - which city has your nearest service centre to Rajkot
+    - what is the response time for a P1 breakdown
+    - how can I escalate if the engineer did not come
+    - is there an emergency service number
+    - do you have a service centre in Coimbatore
+    - service engineer kitne time mein aayega
+    - aapka office time kya hai
+    - escalation ka process kya hai
+    - what is your SLA for breakdowns
+    - can I book a preventive maintenance visit
+    - who do I contact for service in Gujarat
+faq.parts:
+  description: Spare-parts ordering policy, delivery times, shipping, returns (not a specific part's stock)
+  examples:
+    - how many days for a spare part to reach Chennai
+    - do you charge courier for spares
+    - can I send back a part that I do not need
+    - what information is needed to order spares
+    - do you ship spares on the same day
+    - is there a minimum order for spare parts
+    - can spares be delivered outside India
+    - how do I pay for a spare part order
+    - spare part kitne din mein aata hai
+    - spare part return ho sakta hai kya
+    - shipping charge lagta hai kya spares pe
+    - where are spares dispatched from
+    - do you supply genuine parts only
+    - can I track my spare part shipment
+    - is there a warranty on replaced parts
+faq.installation:
+  description: Installation, commissioning, site requirements, power, water quality
+  examples:
+    - is commissioning charged separately
+    - what voltage does a dryer need
+    - what should be ready at site before installation
+    - what water hardness is acceptable for an MTC
+    - do you install the machine or do we
+    - three phase supply needed for a chiller
+    - how much space is needed around a chiller
+    - can a chiller be installed outdoors
+    - installation free hai kya
+    - machine ke liye kaunsa power supply chahiye
+    - chiller ke liye pani kaisa hona chahiye
+    - who connects the water lines at installation
+    - is earthing mandatory for the dryer
+    - do you train our operators at commissioning
+    - recommended cable size for the granulator motor
+faq.process:
+  description: Process guidance - drying temperatures, materials, which dryer for which resin
+  examples:
+    - what temperature should ABS be dried at
+    - how long to dry PET before moulding
+    - which dryer is better for nylon
+    - can a hot air dryer handle polycarbonate
+    - what dew point is needed for PBT
+    - how much moisture is acceptable for PA6
+    - do I need a dehumidifying dryer for PP
+    - nylon ko kitne temperature pe dry karte hain
+    - PET ke liye kaunsa dryer lena chahiye
+    - ABS ko kitni der dry karna hai
+    - recommended mould temperature for PC parts
+    - why do my parts have silver streaks after drying
+    - how to choose between hot air and desiccant drying
+    - what is residence time in a dryer hopper
+    - can I dry regrind together with virgin material
+faq.maintenance:
+  description: Routine maintenance schedules and care (not a fault)
+  examples:
+    - how often to clean the dryer filter
+    - when should the desiccant wheel be changed
+    - descaling interval for a water MTC
+    - what yearly maintenance does a chiller need
+    - how often to calibrate the dew point sensor
+    - should I clean the condenser every month
+    - how frequently to sharpen granulator blades
+    - preventive maintenance checklist for a dryer
+    - filter kitne din mein saaf karna chahiye
+    - chiller ki servicing kab karni chahiye
+    - rotor kab badalna padta hai
+    - how to store a dryer during a long shutdown
+    - what oil is used for the vacuum pump
+    - checklist before restarting after a holiday shutdown
+    - how often should hoses be replaced
+faq.product:
+  description: Product range, models, capacities, sizing, new features
+  examples:
+    - what machines does Matsui sell in India
+    - do you have an oil type temperature controller
+    - which chiller capacity is right for a 250 ton machine
+    - what is the throughput of the biggest dehumidifying dryer
+    - do you make vacuum loaders
+    - do you have a granulator for thick sprues
+    - is there an IoT or remote monitoring option
+    - what is the difference between DHD and HAD
+    - kaun kaun se products milte hain
+    - mere machine ke liye kaunsa chiller lena chahiye
+    - kya aapke paas mold dehumidifier hai
+    - can your dryers connect to our MES
+    - which loader for 200 kg per hour
+    - do you offer water cooled and air cooled chillers
+    - specs of the 10 ton chiller
+faq.safety:
+  description: Safety rules and practices (not an active incident)
+  examples:
+    - is it okay to bypass the safety interlock
+    - can I open the granulator while the motor is coasting
+    - what PPE should operators wear near the dryer
+    - is it safe to touch the hopper during drying
+    - lockout tagout procedure for the chiller
+    - can I run the machine with the guard removed
+    - safety precautions while cleaning the granulator
+    - interlock bypass karke chala sakte hain kya
+    - granulator saaf karte waqt kya dhyan rakhein
+    - safety gloves zaroori hain kya
+    - what is the safe way to clear a material jam
+    - can the dryer run unattended overnight
+    - safe distance from a running granulator
+    - who can work on the electrical panel
+    - how do I isolate power before maintenance
+faq.account:
+  description: Account self-service questions (how to check tickets, update contacts) without a specific id
+  examples:
+    - how can I check where my service request is
+    - how do I change the contact person on our account
+    - can I see all my company's machines online
+    - how do I update our billing address
+    - where can I see my AMC expiry date
+    - how do I add another email to our account
+    - can I download past service reports
+    - how do I find my machine serial number
+    - apna ticket status kaise dekhein
+    - company ka contact kaise update karein
+    - meri AMC kab khatam ho rahi hai kaise pata karun
+    - how do I register a new machine we bought
+    - can I get invoices for previous visits
+    - who is our account manager
+    - how do I reset my portal password
+faq.sales:
+  description: Buying new machines - quotations process, demos, trials, financing (general)
+  examples:
+    - how can I get a price for a new dryer
+    - do you give demo machines for trial
+    - can I see a machine running before buying
+    - do you offer finance or EMI on machines
+    - what is the delivery time for a new chiller
+    - who do I contact for a new machine quotation
+    - can you visit our plant to suggest equipment
+    - do you take old machines in exchange
+    - naya machine lene ke liye kisse baat karein
+    - demo unit milta hai kya
+    - quotation kaise milega
+    - are prices inclusive of GST
+    - do you have dealers in Maharashtra
+    - is there a discount for bulk orders of loaders
+    - lead time for a custom conveying system
+faq.general:
+  description: Other general company questions
+  examples:
+    - can you service machines in Bangladesh or Nepal
+    - where is Matsui headquartered
+    - is Matsui India a Japanese company
+    - do you have a customer portal
+    - what languages does your support speak
+    - how long has Matsui been in India
+    - do you have ISO certification
+    - can I visit your factory
+    - matsui ka head office kahan hai
+    - kya aap international customers ko support karte ho
+    - how do I give feedback about your service
+    - are you on whatsapp
+    - which industries do you serve
+    - do you have a training centre
+    - what is your GST number for invoices

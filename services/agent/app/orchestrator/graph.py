@@ -14,6 +14,7 @@ from typing import Any, cast
 from langgraph.graph import END, START, StateGraph
 
 from app.obs.tracing import TraceRecorder, span_set, traced
+from app.orchestrator.nodes import router as router_nodes
 from app.orchestrator.nodes import rules as rule_nodes
 from app.orchestrator.nodes import stubs
 from app.orchestrator.policies import ChannelPolicy, get_policy
@@ -30,7 +31,7 @@ UNBUDGETED = {"degrade", "respond", "safety_handoff", "refuse_or_redirect", "han
 TOOL_INTENTS = {"service.create_ticket", "service.ticket_status", "amc.status", "warranty.status", "asset.info",
                 "sales.quote", "complaint"}
 AGENT_INTENTS = {"troubleshoot.error_code", "troubleshoot.symptom", "parts.availability", "parts.compatibility"}
-HANDOFF_INTENTS = {"human", "safety"}
+HANDOFF_INTENTS = {"human"}
 REDIRECT_INTENTS = {"oos", "smalltalk", "greeting", "thanks", "reset"}
 
 
@@ -80,6 +81,8 @@ def dispatch(state: TurnState) -> str:
         return "planner"                                       # multi-intent
     if top is None:
         return "rag_answer"
+    if top == "safety":
+        return "safety_handoff"
     if top in HANDOFF_INTENTS:
         return "handoff_or_review"
     if top in REDIRECT_INTENTS:
@@ -144,7 +147,7 @@ def with_budget(name: str, fn: NodeFn) -> NodeFn:
 
 # ---------- graph ----------
 
-REAL_NODES: dict[str, NodeFn] = {**rule_nodes.NODES}    # grows as build steps replace stubs
+REAL_NODES: dict[str, NodeFn] = {**rule_nodes.NODES, **router_nodes.NODES}   # grows as steps replace stubs
 
 
 def build_graph(overrides: dict[str, NodeFn] | None = None):
@@ -157,7 +160,8 @@ def build_graph(overrides: dict[str, NodeFn] | None = None):
     g.add_conditional_edges("guardrails", _budget_guard(route_guardrails),
                             ["safety_handoff", "refuse_or_redirect", "rule_layer", "degrade"])
     g.add_conditional_edges("rule_layer", _budget_guard(route_rules), ["agents", "classify", "degrade"])
-    dispatch_targets = ["planner", "rag_answer", "handoff_or_review", "refuse_or_redirect", "tools", "cache_lookup"]
+    dispatch_targets = ["planner", "rag_answer", "handoff_or_review", "refuse_or_redirect", "tools", "cache_lookup",
+                        "safety_handoff"]
     g.add_conditional_edges("classify", _budget_guard(route_classify),
                             ["llm_router", "decompose", *dispatch_targets, "degrade"])
     g.add_conditional_edges("llm_router", _budget_guard(_to_dispatch), ["decompose", *dispatch_targets, "degrade"])

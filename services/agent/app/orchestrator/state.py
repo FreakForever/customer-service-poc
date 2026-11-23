@@ -101,4 +101,8 @@ class TurnState(TypedDict, total=False):
     budget_exceeded: str | None           # node whose budget ran out → degrade
     deadline: float                       # time.monotonic() when the total budget ends
     path: list[str]                       # visited nodes, in order
+    query_embedding: list[float]          # reused by the FAQ cache and retrieval (BS-14/15)
+    knn: list[tuple[str, float]]          # top kNN intents (hint for the LLM router)
+    language: str                         # en | hinglish | mixed — replies are always English (D-030)
+    clarification: str | None             # router asks one clarifying question
     response: dict[str, Any]

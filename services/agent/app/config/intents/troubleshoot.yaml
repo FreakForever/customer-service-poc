@@ -1,0 +1,39 @@
+troubleshoot.error_code:
+  description: A machine shows an error code or display text and the user wants causes/fixes
+  examples:
+    - my dryer is showing PROC TEMP LO what do I do
+    - chiller display says HP TRIP again
+    - error A03 on the chiller this morning
+    - what does code E07 mean on the mould temperature controller
+    - granulator showing MOTOR OL alarm
+    - the MTC shows LO LEVEL and stopped
+    - E02 keeps appearing on our DHD-100
+    - loader giving L1 alarm repeatedly
+    - what causes the FILTER alarm on a dryer
+    - controller shows SENSOR OPEN
+    - display par REGEN TEMP LO aa raha hai
+    - chiller mein A01 error aa raha hai kya karein
+    - E04 error ka matlab kya hai
+    - how to reset the PHASE alarm on the granulator
+    - which codes come from a blocked filter on the dryer
+    - mould dehumidifier shows coil frosting code
+    - same alarm comes back after reset what next
+troubleshoot.symptom:
+  description: A fault described in words without an error code
+  examples:
+    - the dryer is not heating
+    - parts are coming out wet even after drying
+    - chiller is not cooling properly
+    - water is leaking from the MTC
+    - loader is not picking up material
+    - granulator is making a loud noise
+    - blower is vibrating a lot
+    - output temperature keeps fluctuating
+    - machine trips after ten minutes
+    - dryer hopper is getting too hot
+    - chiller thanda nahi kar raha
+    - dryer garam nahi ho raha
+    - loader material nahi utha raha
+    - pump is running but there is no flow
+    - granulator output has a lot of dust
+    - compressor starts and stops frequently

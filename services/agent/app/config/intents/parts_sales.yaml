@@ -1,0 +1,54 @@
+parts.availability:
+  description: Whether a specific part is in stock / which part is needed / delivery for it
+  examples:
+    - is the heater element for the dryer in stock
+    - do you have the circulation pump available in Pune
+    - which part do I need to fix this and do you have it
+    - stock of blade set for granulator
+    - how soon can you send a thermocouple for the MTC
+    - is MT-CHL-FSW available
+    - when can I get a new rotor for our dryer
+    - do you have filter elements in Noida
+    - pump ka stock hai kya
+    - blade set kab tak milega
+    - rotor available hai Chennai mein
+    - I need two seal kits how fast can you send
+    - price and availability of the dew point sensor
+    - which warehouse has the blower motor
+    - order a replacement fan for our chiller
+parts.compatibility:
+  description: Whether a part fits a model, replacements and revisions
+  examples:
+    - will this heater fit the DHD-100
+    - is the new rotor compatible with older dryers
+    - which pump fits the MTC-W90
+    - can I use the same filter on HAD-25 and HAD-50
+    - what replaces the discontinued blade set
+    - does this sensor work with our chiller model
+    - is the R2 rotor backward compatible
+    - kya yeh part hamare model mein lagega
+    - same filter dono dryer mein chalega kya
+    - which belt fits our dryer rotor drive
+    - part number for the MTC heater
+    - alternative part for the old thermocouple
+    - is there a newer version of this valve
+    - compatible screen for the GR-400
+    - does the seal kit fit all water MTCs
+sales.quote:
+  description: Wants a quotation for specific new equipment
+  examples:
+    - please quote for two 10 ton chillers
+    - need a quotation for a dehumidifying dryer for PET
+    - price for a vacuum loader system for 8 machines
+    - send me an offer for a granulator
+    - quote for a 150 kg per hour dryer
+    - we are expanding and need 3 MTCs please quote
+    - cost of a new mould dehumidifier
+    - quotation chahiye 5 ton chiller ka
+    - naye dryer ka rate bhejo
+    - please share a proposal for a central conveying system
+    - budgetary quote for an air cooled chiller
+    - need pricing for a hot air dryer with loader
+    - what will a 300 litre dryer cost us
+    - request a quote for replacing our old chiller
+    - send price for oil MTC 150 degree

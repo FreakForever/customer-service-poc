@@ -435,14 +435,14 @@
       "type": "functional",
       "area": "Chat",
       "title": "English and Hinglish understanding",
-      "statement": "The router and answerers shall understand English and romanised Hinglish queries and reply in clear English (or Hinglish if the user writes only in Hinglish).",
+      "statement": "The router and answerers shall understand English and romanised Hinglish queries and reply in clear English (OD-008 → D-030: English even when the user writes only in Hinglish).",
       "priority": "Could",
       "source": "Indian B2B customer base",
       "acceptance": [
         "CH-007 and Hinglish FAQ paraphrases route to the correct intent"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.3"
@@ -848,7 +848,7 @@
         "Accepted when confidence at or above tau_intent (default 0.80)"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.3"
@@ -877,7 +877,7 @@
         "EM-001 yields two intents"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.3"

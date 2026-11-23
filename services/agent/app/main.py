@@ -1,6 +1,10 @@
 """FastAPI app factory (LLD-1, LLD-14). Routers are added by later build steps."""
 
+import asyncio
+import logging
 import uuid
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -10,10 +14,32 @@ from app.obs.health import check_all
 from app.obs.logging import configure_logging, request_id_var
 
 
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    """Warm the rule dictionaries and the kNN intent index in the background so the first turns don't pay for
+    them inside their node budgets (BS-13)."""
+    async def warm() -> None:
+        try:
+            from app.providers import get_embedder
+            from app.router.knn import get_knn
+            from app.rules.context import get_rule_context
+
+            await get_rule_context()
+            await get_knn().build(get_embedder())
+            logging.getLogger("mcs.api").info("router warm")
+        except Exception as exc:  # noqa: BLE001 - lazily retried on first use
+            logging.getLogger("mcs.api").warning("router warm-up failed: %s", type(exc).__name__)
+
+    task = asyncio.create_task(warm()) if get_settings().warm_on_startup else None
+    yield
+    if task is not None:
+        task.cancel()
+
+
 def create_app() -> FastAPI:
     settings = get_settings()
     configure_logging(settings.log_level)
-    app = FastAPI(title="Matsui CS agent API", version="0.1.0")
+    app = FastAPI(title="Matsui CS agent API", version="0.1.0", lifespan=lifespan)
 
     @app.middleware("http")
     async def request_id(request: Request, call_next):

@@ -23,11 +23,18 @@ def _err(exc: BaseException, provider: str) -> ProviderError:
 
 class VertexProvider:
     def __init__(self, *, project: str, location: str, dim: int = 768, embed_model: str = "text-embedding-005",
-                 name: str = "vertex") -> None:
+                 name: str = "vertex", thinking_budgets: dict[str, int] | None = None, llm_location: str = "") -> None:
         from google import genai
 
         self.name, self.dim, self.embed_model = name, dim, embed_model
+        # Gemini 2.5 "thinks" by default; the fast model is used for routing/short answers where that only adds
+        # latency, so its budget is 0 unless configured (THINKING_BUDGET_FAST, -1 = model default).
+        self.thinking_budgets = thinking_budgets or {}
+        # embeddings stay in `location` (asia-south1); generation may use another endpoint (e.g. "global", where
+        # the current Gemini models are served) — VERTEX_LLM_LOCATION, D-030
         self._client = genai.Client(vertexai=True, project=project or None, location=location)
+        self._llm = self._client if not llm_location or llm_location == location else \
+            genai.Client(vertexai=True, project=project or None, location=llm_location)
 
     @staticmethod
     def _contents(messages: list[Msg]) -> list[Any]:
@@ -37,10 +44,17 @@ class VertexProvider:
                 for m in messages]
 
     def _config(self, system: str, *, max_tokens: int, temperature: float, timeout_ms: int,
-                schema: type[BaseModel] | None = None) -> Any:
+                schema: type[BaseModel] | None = None, model: str = "") -> Any:
         from google.genai import types
 
-        return types.GenerateContentConfig(
+        budget = self.thinking_budgets.get(model)
+        thinking = None
+        if budget is not None and budget >= 0:
+            # Gemini 3 takes a thinking level; 2.5 takes a token budget
+            thinking = (types.ThinkingConfig(thinking_level=types.ThinkingLevel.MINIMAL if budget == 0 else
+                                             types.ThinkingLevel.LOW) if model.startswith("gemini-3")
+                        else types.ThinkingConfig(thinking_budget=budget))
+        return types.GenerateContentConfig(thinking_config=thinking,
             system_instruction=system or None, max_output_tokens=max_tokens, temperature=temperature,
             response_mime_type="application/json" if schema else None, response_schema=schema,
             http_options=types.HttpOptions(timeout=timeout_ms))
@@ -50,10 +64,10 @@ class VertexProvider:
         system, rest = split_system(messages)
         start = time.perf_counter()
         try:
-            resp = await self._client.aio.models.generate_content(
+            resp = await self._llm.aio.models.generate_content(
                 model=model, contents=self._contents(rest),
                 config=self._config(system, max_tokens=max_tokens, temperature=temperature,
-                                    timeout_ms=timeout_ms, schema=schema))
+                                    timeout_ms=timeout_ms, schema=schema, model=model))
         except Exception as exc:
             raise _err(exc, self.name) from exc
         text = resp.text or ""
@@ -72,9 +86,9 @@ class VertexProvider:
     async def stream(self, messages: list[Msg], *, model: str, timeout_ms: int) -> AsyncIterator[str]:
         system, rest = split_system(messages)
         try:
-            chunks = await self._client.aio.models.generate_content_stream(
+            chunks = await self._llm.aio.models.generate_content_stream(
                 model=model, contents=self._contents(rest),
-                config=self._config(system, max_tokens=2048, temperature=0.0, timeout_ms=timeout_ms))
+                config=self._config(system, max_tokens=2048, temperature=0.0, timeout_ms=timeout_ms, model=model))
             async for chunk in chunks:
                 if chunk.text:
                     yield chunk.text
