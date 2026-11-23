@@ -1,0 +1,86 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	normalize(normalize)
+	guardrails(guardrails)
+	safety_handoff(safety_handoff)
+	refuse_or_redirect(refuse_or_redirect)
+	rule_layer(rule_layer)
+	classify(classify)
+	llm_router(llm_router)
+	decompose(decompose)
+	tools(tools)
+	cache_lookup(cache_lookup)
+	rag_answer(rag_answer)
+	planner(planner)
+	agents(agents)
+	verify(verify)
+	decide(decide)
+	handoff_or_review(handoff_or_review)
+	degrade(degrade)
+	respond(respond)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> normalize;
+	agents -.-> degrade;
+	agents -.-> verify;
+	cache_lookup -.-> degrade;
+	cache_lookup -.-> rag_answer;
+	cache_lookup -.-> verify;
+	classify -.-> cache_lookup;
+	classify -.-> decompose;
+	classify -.-> degrade;
+	classify -.-> handoff_or_review;
+	classify -.-> llm_router;
+	classify -.-> planner;
+	classify -.-> rag_answer;
+	classify -.-> refuse_or_redirect;
+	classify -.-> tools;
+	decide -.-> degrade;
+	decide -.-> handoff_or_review;
+	decide -.-> respond;
+	decompose -.-> cache_lookup;
+	decompose -.-> degrade;
+	decompose -.-> handoff_or_review;
+	decompose -.-> planner;
+	decompose -.-> rag_answer;
+	decompose -.-> refuse_or_redirect;
+	decompose -.-> tools;
+	degrade -.-> handoff_or_review;
+	degrade -.-> respond;
+	guardrails -.-> degrade;
+	guardrails -.-> refuse_or_redirect;
+	guardrails -.-> rule_layer;
+	guardrails -.-> safety_handoff;
+	handoff_or_review --> respond;
+	llm_router -.-> cache_lookup;
+	llm_router -.-> decompose;
+	llm_router -.-> degrade;
+	llm_router -.-> handoff_or_review;
+	llm_router -.-> planner;
+	llm_router -.-> rag_answer;
+	llm_router -.-> refuse_or_redirect;
+	llm_router -.-> tools;
+	normalize -.-> degrade;
+	normalize -.-> guardrails;
+	planner -.-> agents;
+	planner -.-> degrade;
+	rag_answer -.-> degrade;
+	rag_answer -.-> planner;
+	rag_answer -.-> verify;
+	refuse_or_redirect --> respond;
+	rule_layer -.-> agents;
+	rule_layer -.-> classify;
+	rule_layer -.-> degrade;
+	safety_handoff --> respond;
+	tools -.-> degrade;
+	tools -.-> verify;
+	verify -.-> decide;
+	verify -.-> degrade;
+	respond --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc

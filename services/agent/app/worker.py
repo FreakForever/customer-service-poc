@@ -84,5 +84,7 @@ def _handlers(settings):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
+    from app.obs.logging import configure_logging
+
+    configure_logging(get_settings().log_level)
     asyncio.run(run())

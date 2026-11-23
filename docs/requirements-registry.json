@@ -644,7 +644,7 @@
         "Orchestrator code has no imports from channel adapters"
       ],
       "verification": "inspection",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.1",
@@ -675,7 +675,7 @@
         "Graph definition renders to a diagram"
       ],
       "verification": "inspection",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.2"
@@ -2602,7 +2602,7 @@
         "Trace viewer in console shows the node timeline"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-4.1"
@@ -2630,7 +2630,7 @@
         "Logs parse as JSON in Cloud Logging"
       ],
       "verification": "inspection",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-4.1"

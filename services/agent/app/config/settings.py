@@ -53,6 +53,10 @@ class Settings(BaseSettings):
     rerank_max_length: int = 256  # tokens per (query, passage) pair; latency grows with it
     rerank_top: int = 20
 
+    # Debug API (/v1/debug/run): on in dev, off elsewhere unless set explicitly
+    debug_api: bool | None = None
+    log_level: str = "INFO"
+
     # Provider credentials and endpoints
     gcp_project: str = ""
     gcp_region: str = "asia-south1"

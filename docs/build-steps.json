@@ -405,11 +405,11 @@
         "pytest services/agent/tests/unit/test_graph_wiring.py",
         "POST /v1/debug/run returns trace with node spans"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "app/orchestrator/state.py (Envelope, TurnState, Draft, Intent...), graph.py (LangGraph, code routing, with_budget, degrade), nodes/stubs.py, app/obs/tracing.py (@traced, span_set, save_trace), app/obs/logging.py (JSON, request/trace ids, PII masking), app/api/debug.py, scripts/export_graph.py -> app/orchestrator/graph.mmd (make graph). tests/unit/test_graph_wiring.py: 20 passed (12 route cases incl. T0/T1/T2/T3/T4, email decompose + draft_for_review, LLM nodes never run on T0/T1 paths, node timeout and total-budget degrade, one span per node with model/tokens, concurrent traces isolated, no channel imports in orchestrator, committed diagram current). tests/unit/test_logging_and_debug.py: 4 passed; tests/integration/test_tracing.py: 1 passed. Full suite 212 passed. Live: `make api-dev` + POST /v1/debug/run -> persisted trace cf247a7f… (T3, 9 node spans, mode=debug) in dev db; server logs JSON incl. uvicorn with request_id. D-028. Gaps: nodes are stubs (real ones from BS-12 on); OpenTelemetry export not wired; console trace viewer (NFR-OBS-01 acceptance) and Cloud Logging parsing on Cloud Run (NFR-OBS-02) not yet checked; cost per span needs the price table (NFR-COST-01)."
     },
     {
       "id": "BS-12",

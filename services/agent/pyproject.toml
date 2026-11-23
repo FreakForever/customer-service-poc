@@ -21,6 +21,7 @@ dependencies = [
     "python-docx>=1.1",
     "google-cloud-storage>=2.18",
     "fastembed>=0.5",
+    "langgraph>=0.6",
 ]
 
 [dependency-groups]
