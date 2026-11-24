@@ -68,6 +68,9 @@ def create_app() -> FastAPI:
     app.include_router(email_router)
     app.include_router(console_router)
     app.include_router(demo_router)
+    from app.api.kb import router as kb_router
+
+    app.include_router(kb_router)
     if settings.debug_api if settings.debug_api is not None else settings.env == "dev":
         from app.api.debug import router as debug_router
 

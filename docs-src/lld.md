@@ -599,6 +599,9 @@ Base URL `/v1`. Auth: staff routes need a NextAuth session JWT forwarded as `Aut
 | `GET /chat/sessions/{id}/events` | session | Human messages stream | SSE |
 | `POST /chat/sessions/{id}/forms/{form_id}` | session | Submit inline form | `{fields}` → SSE |
 | `POST /feedback` | session/staff | Rate an answer | `{message_id, rating: 1\|-1, reason?}` → `204` |
+| `GET /kb/home` / `GET /kb/families/{family}` | public | Help-centre home and category content (BS-23) | → `{popular[], bulletins[], recent[]}` / `{models[], documents[], error_codes[], parts[]}` |
+| `GET /kb/articles/{doc_id}` | public | Article rebuilt from the version's chunks | `?version=` → `{document, sections[{heading_path, anchor, content}], related[], superseded_by, versions[]}` |
+| `GET /kb/search` | public | Full-text search and typeahead, no model call | `?q=&limit=` → `{items[{kind, title, snippet, url}]}` |
 | `POST /email/inbound` | public (rate-limited) / internal | Contact form or demo-mailbox inbound | `{from, name?, subject, body, serial_no?, in_reply_to?}` → `{conversation_id}` |
 | `POST /email/gmail/push` | Pub/Sub (OIDC) | Gmail change notification | Pub/Sub envelope → `204` (enqueues history sync) |
 | `GET /console/mailbox` | agent | Demo mailbox inbox/outbox view | `?box=inbox\|outbox` → `{items[]}` |
@@ -660,6 +663,8 @@ Errors: RFC 7807 JSON `{type, title, status, detail, trace_id}`.
 **Persona bar** ([FR-UI-08](Requirements.html#FR-UI-08)): thin bar above the top bar in demo mode: persona select (anonymous, Aarav Polymers, Orion Auto Components, Navkar Precision Plastics, …, Agent, Admin), "Send sample emails", "Reset demo".
 
 Implementation notes (BS-22, D-040): Next 15 + Tailwind 4 + NextAuth 4. `styles/tokens.css` is the only file with colours (`tests/contrast.test.ts` checks AA and the single-file rule; steel, ok and warn were darkened to pass). `middleware.ts` (Node runtime) guards `/console`, `/analytics` (agent), `/admin`, `/api/demo` (admin): no session → redirect to `/signin` (401 for API routes), no role → 403; layouts, pages and routes check again. Roles come from `STAFF_ALLOWLIST` on every request. The web server calls staff API routes with a 5-minute HS256 token (`lib/staffToken.ts` → `app/api/staff.py`, key = SHA-256 of `staff-api:`+`NEXTAUTH_SECRET`, issuer `mcs-web`, audience `mcs-agent-api`). `GET /console/mailbox` now needs the agent role in every environment. Customer persona = cookie `mcs_persona`. `POST /demo/send-sample-emails` is live; `POST /demo/reset` arrives in BS-33.
+
+Implementation notes (BS-23): help-centre pages are server-rendered from the public `/kb/*` API. Articles are rebuilt from chunks so every citation anchor exists on the page; superseded versions stay readable with a notice; raw HTML in documents is not rendered. The contact form posts through the web server to `POST /email/inbound`. Browser tests: `pnpm -C apps/web e2e` (Playwright + axe) start `scripts/e2e_server.py` (API + worker on `mcs_test`, scripted model and classifier) and a production web build; they need `make proxy`.
 
 ## 16. Observability, analytics and evaluation {#LLD-16}
 

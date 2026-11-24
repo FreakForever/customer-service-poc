@@ -2086,7 +2086,7 @@
         "Search returns KB articles"
       ],
       "verification": "demo",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.9"
@@ -2114,7 +2114,7 @@
         "Citation deep links scroll to the right heading"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.9"
@@ -2142,7 +2142,7 @@
         "Submitted form appears as an email conversation and its reply is visible in the demo mailbox (or the Gmail demo inbox when enabled)"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.1"

@@ -823,11 +823,11 @@
       "verify": [
         "pnpm -C apps/web e2e -g helpcentre"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "`pnpm -C apps/web e2e -g helpcentre`: 6 passed (axe WCAG 2.1 AA at 360 and 1366 px, search, typeahead, deep links, superseded notice, contact form → inbox → reply in demo outbox with scripted model). Lighthouse accessibility 100 on /, /c/DHD, /a/DOC-MAN-DHD, /contact. Integration test_kb_api.py 14 passed; vitest 71 passed. New public /v1/kb API. Gaps: no product photos or chat launcher in the hero (launcher BS-24); no seed bulletins, so 'Recently updated' is shown until one is uploaded; search is full-text only (no embeddings); API rate limits see the web server's address, per-visitor limits are BS-32; browser tests don't run in CI yet."
     },
     {
       "id": "BS-24",

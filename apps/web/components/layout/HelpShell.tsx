@@ -16,7 +16,7 @@ export function HelpShell({ children }: { children: ReactNode }) {
             <Link className={link} href="/#products">Products</Link>
             <Link className={link} href="/#support">Support</Link>
             <Link className={link} href="/#service-centres">Service centres</Link>
-            <Link className={link} href="/#contact">Contact</Link>
+            <Link className={link} href="/contact">Contact</Link>
           </nav>
           <DemoBadge label="DEMO" />
           <Link className={`${link} text-sm`} href="/console">Sign in (staff)</Link>
