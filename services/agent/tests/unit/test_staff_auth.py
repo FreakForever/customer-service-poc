@@ -36,7 +36,7 @@ async def http(monkeypatch):
 
 @pytest.mark.req("NFR-SEC-01")
 @pytest.mark.parametrize(("make", "code"), [          # minted inside the test: tokens live 5 minutes, a full run takes longer
-    (lambda: {}, 401), (lambda: {"Authorization": "Bearer x"}, 401), (lambda: token(None), 403), (lambda: token("customer"), 403),
+    (dict, 401), (lambda: {"Authorization": "Bearer x"}, 401), (lambda: token(None), 403), (lambda: token("customer"), 403),
     (lambda: token("agent"), 403), (lambda: token("admin", secret="other"), 401), (lambda: token("admin", prefix="chat-session:"), 401),
     (lambda: token("admin", alg="none"), 401), (lambda: token("admin", exp=1), 401), (lambda: token("admin", exp=None), 401),
     (lambda: token("admin", aud="x"), 401), (lambda: token("admin", iss="x"), 401)])
