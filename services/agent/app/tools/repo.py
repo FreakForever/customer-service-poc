@@ -67,9 +67,9 @@ class PgRepo:
     async def insert_ticket(self, row: Row) -> str:
         r = await self._one(
             "INSERT INTO tickets (id, customer_id, serial_no, model, error_code, priority, status, channel, opened_at, "
-            "summary, history) VALUES ('SR-' || to_char(now(), 'YYYY') || '-' || lpad(nextval('ticket_seq')::text, 5, '0'),"
+            "summary, history, conversation_id) VALUES ('SR-' || to_char(now(), 'YYYY') || '-' || lpad(nextval('ticket_seq')::text, 5, '0'),"
             " :customer_id, :serial_no, :model, :error_code, :priority, 'new', :channel, now(), :summary, "
-            "CAST(:history AS jsonb)) RETURNING id", **{**row, "history": json.dumps(row["history"])})
+            "CAST(:history AS jsonb), :conversation_id) RETURNING id", **{**row, "history": json.dumps(row["history"])})
         assert r is not None
         return str(r["id"])
 

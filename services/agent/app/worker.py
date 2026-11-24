@@ -48,6 +48,8 @@ async def run() -> None:
         _serve_health(int(port))
     settings = get_settings()
     engine, handlers = _handlers(settings)
+    if engine is not None and settings.warm_on_startup:
+        await _warm()
     next_beat = 0.0
     while not stop.is_set():
         if time.monotonic() >= next_beat:
@@ -69,6 +71,23 @@ async def run() -> None:
     log.info("worker stopped")
 
 
+async def _warm() -> None:
+    """Same as the API: the first e-mail shouldn't pay for dictionaries, the intent index and the reranker."""
+    try:
+        from app.db import warm_pool
+        from app.providers import get_embedder
+        from app.retrieval.rerank import get_reranker
+        from app.router.knn import get_knn
+        from app.rules.context import get_rule_context
+
+        await warm_pool()
+        await get_rule_context()
+        await get_knn().build(get_embedder())
+        await asyncio.to_thread(get_reranker)
+    except Exception as exc:  # noqa: BLE001 - retried lazily on first use
+        log.warning("worker warm-up failed: %s", type(exc).__name__)
+
+
 def _handlers(settings):
     url = settings.resolved_database_url()
     if not url:
@@ -76,11 +95,17 @@ def _handlers(settings):
         return None, {}
     from sqlalchemy.ext.asyncio import create_async_engine
 
+    from app.channels.email.pipeline import (
+        make_gmail_sync_handler,
+        make_gmail_watch_handler,
+        make_reply_handler,
+    )
     from app.ingest.pipeline import make_ingest_handler
     from app.providers import get_embedder
 
     engine = create_async_engine(url, pool_pre_ping=True)
-    return engine, {"ingest_document": make_ingest_handler(engine, get_embedder())}
+    return engine, {"ingest_document": make_ingest_handler(engine, get_embedder()), "email_reply": make_reply_handler(engine),
+                    "gmail_sync": make_gmail_sync_handler(engine), "gmail_watch": make_gmail_watch_handler(engine)}
 
 
 if __name__ == "__main__":

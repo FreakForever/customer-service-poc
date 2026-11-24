@@ -8,13 +8,15 @@ from app.retrieval.evidence import Evidence
 
 ACCOUNT_INTENTS = {"service.ticket_status", "amc.status", "warranty.status", "asset.info", "service.create_ticket"}
 
+ACCOUNT_TOOLS = {"get_ticket_status", "get_asset", "get_warranty", "get_amc_contract"}
+
 
 def retrieval_norm(evidence: list[Evidence]) -> float:
     """0–1. Exact sources (graph paths, tools, the documented section) count as 1; retrieved chunks use the
     cross-encoder score, or leg agreement when the reranker was skipped (RRF isn't a probability)."""
     if not evidence:
         return 0.0
-    if any(e.kind in ("kg_path", "tool") or e.source == "documented_in" for e in evidence):
+    if any(e.kind in ("kg_path", "tool") or e.source in ("documented_in", "faq_cache") for e in evidence):
         return 1.0
     best = 0.0
     for e in evidence:
@@ -60,6 +62,9 @@ def overrides(state: TurnState) -> HandoffDecision | None:
             return HandoffDecision(action="draft_for_review", reason="complaint")
         if any(a.get("priority") == "P1" for a in acts):
             return HandoffDecision(action="draft_for_review", reason="priority P1", priority="P1")
+        account = bool(names & ACCOUNT_INTENTS) or any(e.source in ACCOUNT_TOOLS for e in state.get("evidence") or [])
+        if env.customer is not None and env.customer.trust == "domain" and (account or acts):
+            return HandoffDecision(action="draft_for_review", reason="sender matched by domain only")
         if env.customer is None and names & ACCOUNT_INTENTS:
             return HandoffDecision(action="draft_for_review", reason="account question from an unknown sender")
     return None

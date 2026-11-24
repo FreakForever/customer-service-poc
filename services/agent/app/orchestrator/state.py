@@ -65,6 +65,7 @@ class Draft(BaseModel):
     actions: list[dict[str, Any]] = Field(default_factory=list)
     form: dict[str, Any] | None = None
     abstained: bool = False
+    composite: bool = False               # several sections: checked per sentence, never regenerated as a whole
     generated: bool = False               # written by a model (needs coverage, regeneration and the judge)
 
 

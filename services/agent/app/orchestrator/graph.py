@@ -18,6 +18,7 @@ from app.obs.tracing import TraceRecorder, span_set, traced
 from app.orchestrator.budget import TAIL, allocate_s
 from app.orchestrator.nodes import agents as agent_nodes
 from app.orchestrator.nodes import cache as cache_nodes
+from app.orchestrator.nodes import decompose as decompose_nodes
 from app.orchestrator.nodes import degrade as degrade_nodes
 from app.orchestrator.nodes import rag as rag_nodes
 from app.orchestrator.nodes import router as router_nodes
@@ -195,7 +196,7 @@ def with_budget(name: str, fn: NodeFn) -> NodeFn:
 REAL_NODES: dict[str, NodeFn] = {**rule_nodes.NODES, **router_nodes.NODES, **cache_nodes.NODES,
                                 **rag_nodes.NODES, **tool_nodes.NODES,
                                 **agent_nodes.NODES, **verify_nodes.NODES,
-                                **degrade_nodes.NODES}  # grows per step
+                                **degrade_nodes.NODES, **decompose_nodes.NODES}  # grows per step
 
 
 log = logging.getLogger("mcs.graph")

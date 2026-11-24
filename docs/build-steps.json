@@ -753,11 +753,11 @@
         "pytest services/agent/tests/e2e/test_email_samples.py",
         "Optional: send a real email to the Gmail demo inbox and see the reply"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "`make demo-emails` live (gemini-3.5-flash-lite, dev db, demo outbox only): 10/10 processed; EM-004 auto-sent with three answers and separate sources, EM-003 draft + handoff, EM-008 safety reply + P1 handoff, EM-007 fixed refusal. tests/e2e/test_email_samples.py and tests/unit/test_email_parts.py pass (scripted model); full suite 524 passed, 1 failed (BS-19 chat test degraded on a slow link; passes on re-run and was given generous timeouts; test_degradation re-run 30 passed, full suite not repeated). D-039. Gaps: Gmail adapter tested only against a mock (optional real-mail check not done; needs Workspace domain-wide delegation); no Pub/Sub push subscription or Cloud Scheduler watch job created; rate limits are per process; attachments not virus-scanned; attachment list in the console is BS-25; review approve/send is BS-25; EM-009 and others not reviewed for wording; footnote for cached FAQ answers shows the document id."
     },
     {
       "id": "BS-22",

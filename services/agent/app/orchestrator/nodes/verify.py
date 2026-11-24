@@ -45,7 +45,7 @@ async def verify(state: TurnState) -> Update:
         span_set(coverage=cov.score, issues=issues)
         return {"verification": Verification(passed=True, coverage=round(cov.score, 3), issues=issues)}
     regenerated = False
-    if draft.generated and (issues or cov.score < MIN_COVERAGE) and _left(state) > REGEN_MIN_S:
+    if draft.generated and not draft.composite and (issues or cov.score < MIN_COVERAGE) and _left(state) > REGEN_MIN_S:
         s = get_settings()
         notes = [*issues, *(f"no citation: {x}" for x in cov.uncovered)]
         try:
@@ -59,8 +59,11 @@ async def verify(state: TurnState) -> Update:
     out: Update = {}
     raw = cov.score
     if draft.generated and not draft.abstained and cov.uncovered:
-        kept = parse_draft(coverage.drop_uncovered(draft.text), evidence)
-        draft = kept.model_copy(update={"actions": draft.actions, "form": draft.form})
+        text = coverage.drop_uncovered(draft.text)
+        if draft.composite:
+            draft = draft.model_copy(update={"text": text, "citations": [c for c in draft.citations if c.marker in text]})
+        else:
+            draft = parse_draft(text, evidence).model_copy(update={"actions": draft.actions, "form": draft.form})
         _, issues = _problems(draft.text, state, draft) if not draft.abstained else (cov, [])
     verdict: Judgement | None = None
     policy = state["policy"]

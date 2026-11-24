@@ -6,8 +6,9 @@ from dataclasses import replace
 from typing import Any
 
 from app.agents import knowledge, parts, sales, service_request, troubleshoot
-from app.agents.base import AgentCtx, AgentResult
+from app.agents.base import AgentCtx, AgentResult, cite
 from app.agents.rag_answerer import abstention
+from app.cache.store import exact_lookup, semantic_lookup
 from app.config.settings import get_settings
 from app.db import get_engine
 from app.kg.client import get_read_driver
@@ -20,6 +21,7 @@ from app.retrieval.evidence import Evidence
 from app.retrieval.graphrag import GraphRAGDeps
 from app.retrieval.rerank import get_reranker
 from app.rules.context import get_rule_context
+from app.rules.entities import extract_entities
 from app.tools.account import ToolContext
 from app.tools.repo import PgRepo
 
@@ -48,6 +50,8 @@ def agent_for(intent: str | None) -> str:
 
 async def planner(state: TurnState) -> Update:
     """One sub-query per distinct specialist/look-up, from the router's intents and spans (D-035)."""
+    if len(state.get("subqueries") or []) > 1:
+        return {}                                   # decomposed e-mail: one sub-query per question already
     seen: dict[str, SubQuery] = {}
     for i in sorted(state.get("intents") or [], key=lambda x: -x.confidence):
         if i.name in ("human", "safety", "oos", "smalltalk", "other"):
@@ -69,7 +73,7 @@ async def _with_ctx(state: TurnState, name: str, text: str, dialog: dict[str, An
     reranker = await asyncio.to_thread(get_reranker)
     async with engine.begin() as conn:             # commits tool writes; one connection per agent
         tools = ToolContext(PgRepo(conn), customer_id=env.customer.customer_id if env.customer else None,
-                            channel=env.channel, safety="safety" in (state.get("flags") or set()))
+                            channel=env.channel, conversation_id=env.conversation_id, safety="safety" in (state.get("flags") or set()))
         deps = GraphRAGDeps(conn=conn, embedder=get_embedder(), reranker=reranker, kg_driver=get_read_driver(),
                             kg_database=s.neo4j_database, linker=rules.linker, llm=get_llm(), llm_model=s.model_strong,
                             rerank_timeout_ms=state["policy"].timeout_ms("rerank"),
@@ -122,9 +126,28 @@ async def _sub(state: TurnState, q: SubQuery, budget: float, dialog: dict[str, A
             return head, AgentResult(ASK.get(intent, "Could you share a few more details?"), tier="T0")
         text, ev = await lookups(state, calls)
         return head, AgentResult(text, tier="T0", evidence=ev)
+    if intent == "faq.question":
+        return q.text, await _question(state, q.text, budget)
     name = agent_for(intent)
     text = state["env"].text if name != "knowledge" else q.text
     return HEADINGS[name], await _with_ctx(state, name, text, dialog, int(budget * 1000), False)
+
+
+async def _question(state: TurnState, text: str, budget: float) -> AgentResult:
+    """One question of a decomposed e-mail: FAQ cache, else graph + documents, with that question's own entities."""
+    ents = extract_entities(text, (await get_rule_context()).linker)
+    engine = get_engine()
+    if engine is not None and not ents.has_account_ids:
+        async with engine.begin() as conn:
+            hit = await exact_lookup(conn, text)
+            if hit is None:
+                qvec = (await get_embedder().embed([text], kind="query"))[0]
+                hit = await semantic_lookup(conn, qvec, state["policy"].thresholds.get("cache_semantic", 0.92))
+        if hit is not None:
+            ev = [Evidence(id=f"doc:{d}", kind="chunk", source="faq_cache", text=hit.answer, score=1.0, doc_id=d) for d in hit.source_docs]
+            return AgentResult(hit.answer + "".join(f" [E{i}]" for i in range(1, len(ev) + 1)), tier="T1", evidence=ev, citations=cite(ev))
+    sub: TurnState = {**state, "entities": ents}
+    return await _with_ctx(sub, "knowledge", text, {}, int(budget * 1000), False)
 
 
 async def multi(state: TurnState, subs: list[SubQuery]) -> Update:
@@ -157,9 +180,13 @@ async def multi(state: TurnState, subs: list[SubQuery]) -> Update:
         evidence += res.evidence
         citations += [c.model_copy(update={"marker": f"[E{int(c.marker[2:-1]) + shift}]"}) for c in res.citations]
         actions += res.actions
-    span_set(subqueries=[q.intent for q in subs], failed=failed)
-    out: Update = {"answered_tier": "T3", "evidence": evidence, "handback": False, "dialog": dialog,
-                   "draft": Draft(text="\n\n".join(sections), citations=citations, actions=actions,
+    results = [r[1] for r in done if not isinstance(r, BaseException)]
+    if any(r.abstained for r in results) and policy.on_low_confidence == "draft_for_review":
+        failed.append("a question could not be answered")
+    tier = "T1" if results and len(results) == len(subs) and all(r.tier == "T1" for r in results) else "T3"
+    span_set(subqueries=[q.intent for q in subs], tiers=[r.tier for r in results], failed=failed)
+    out: Update = {"answered_tier": tier, "evidence": evidence, "handback": False, "dialog": dialog,
+                   "draft": Draft(text="\n\n".join(sections), citations=citations, actions=actions, composite=True,
                                   generated=any(not isinstance(r, BaseException) and r[1].generated for r in done))}
     complaint = any(i.name in ("complaint", "human") for i in state.get("intents") or [])
     if complaint or failed:

@@ -83,6 +83,7 @@ class Settings(BaseSettings):
     gmail_delegated_user: str = ""
     gmail_pubsub_topic: str = ""
     gmail_push_audience: str = ""
+    gmail_push_service_account: str = ""   # identity Pub/Sub signs the push with
     support_address: str = "support@matsui-demo.example"
 
     # Storage / retention

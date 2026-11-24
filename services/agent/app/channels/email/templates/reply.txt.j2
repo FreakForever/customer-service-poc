@@ -1,0 +1,31 @@
+Dear {{ name }},
+
+Thank you for contacting Matsui.
+
+{% for b in blocks %}
+{% if b.kind == 'heading' %}
+
+{{ b.text }}
+{{ '-' * (b.text|length) }}
+{% elif b.kind == 'p' %}
+{{ b.text }}
+{% else %}
+{% for i in b['items'] %}
+{{ '%d.' % loop.index if b.kind == 'ol' else '-' }} {{ i }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+{% if notes %}
+Sources
+{% for n in notes %}
+[{{ loop.index }}] {{ n }}
+{% endfor %}
+
+{% endif %}
+{% if ticket %}
+Ticket reference: {{ ticket }}
+
+{% endif %}
+Matsui Customer Care (AI-assisted, reviewed when needed)
+Demo system: all data in this message is synthetic.

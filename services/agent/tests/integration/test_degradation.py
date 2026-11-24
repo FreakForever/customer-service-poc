@@ -214,7 +214,8 @@ def edited(tmp_path, channel, **changes):
 @pytest.mark.req("FR-OR-04")
 async def test_yaml_changes_behaviour_without_code(ask, monkeypatch, tmp_path):
     async def run(channel="chat", text=ASK, intent="faq.warranty", llm=None, **changes):
-        pols = edited(tmp_path, channel, **changes)
+        roomy = {"budget_ms": {"total": 30000}, "node_timeouts_ms": {"retrieval": 5000, "generate": 15000, "tool": 5000}}
+        pols = edited(tmp_path, channel, **{**roomy, **changes})
         monkeypatch.setattr(g, "get_policy", lambda ch: pols[ch])
         return (await ask(text, intent, channel, llm))[0]
 
@@ -237,6 +238,9 @@ async def test_yaml_changes_behaviour_without_code(ask, monkeypatch, tmp_path):
 
 @pytest.mark.req("FR-OR-04")
 async def test_judge_mode_and_auto_send_come_from_the_policy(ask, monkeypatch, tmp_path):
+    # this is about settings, not speed: a slow link to the test database must not degrade the chat turn
+    slow = edited(tmp_path, "chat", budget_ms={"total": 30000}, node_timeouts_ms={"retrieval": 5000, "generate": 15000})
+    monkeypatch.setattr(g, "get_policy", lambda ch: slow[ch])
     def llm(score):
         return FakeProvider(script={"t2.v1": "It is excluded [E1].",
                                     "judge.v1": f'{{"faithfulness": {score}, "unsupported_claims": [], "answers_question": true}}'})

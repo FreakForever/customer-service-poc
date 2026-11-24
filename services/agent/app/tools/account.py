@@ -111,6 +111,7 @@ class ToolContext:
     customer_id: str | None = None
     channel: str = "chat"
     safety: bool = False
+    conversation_id: uuid.UUID | None = None
     today: dt.date = field(default_factory=dt.date.today)
 
 
@@ -202,7 +203,7 @@ async def create_ticket(a: CreateTicketArgs, c: ToolContext) -> Row | None:
     tid = await c.repo.insert_ticket({
         "customer_id": c.customer_id, "serial_no": a.serial_no, "model": asset["model"] if asset else None,
         "error_code": a.error_code, "priority": prio, "channel": c.channel, "summary": a.description,
-        "history": [event]})
+        "history": [event], "conversation_id": c.conversation_id})
     return {"ticket_id": tid, "priority": prio, "status": "new", "unverified": c.customer_id is None}
 
 
