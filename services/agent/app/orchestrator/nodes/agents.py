@@ -2,7 +2,6 @@
 
 import asyncio
 import logging
-import time
 from dataclasses import replace
 from typing import Any
 
@@ -13,6 +12,7 @@ from app.config.settings import get_settings
 from app.db import get_engine
 from app.kg.client import get_read_driver
 from app.obs.tracing import span_set
+from app.orchestrator.budget import allocate_s
 from app.orchestrator.nodes.tools import ASK, UNAVAILABLE, lookups, plan
 from app.orchestrator.state import Citation, Draft, HandoffDecision, SubQuery, TurnState
 from app.providers import get_embedder, get_llm
@@ -71,7 +71,8 @@ async def _with_ctx(state: TurnState, name: str, text: str, dialog: dict[str, An
                             channel=env.channel, safety="safety" in (state.get("flags") or set()))
         deps = GraphRAGDeps(conn=conn, embedder=get_embedder(), reranker=reranker, kg_driver=get_read_driver(),
                             kg_database=s.neo4j_database, linker=rules.linker, llm=get_llm(), llm_model=s.model_strong,
-                            rerank_timeout_ms=state["policy"].timeout_ms("rerank"))
+                            rerank_timeout_ms=state["policy"].timeout_ms("rerank"),
+                            kg_timeout_s=state["policy"].timeout_ms("kg") / 1000)
         ctx = AgentCtx(env=env, text=text, ents=state["entities"], dialog=dialog, deps=deps, tools=tools, llm=get_llm(),
                        model_fast=s.model_fast, model_strong=s.model_strong, timeout_ms=timeout_ms, sticky=sticky)
         if sticky and name == "troubleshoot" and parts.CUES.search(text):
@@ -91,7 +92,7 @@ def _update(res: AgentResult, dialog: dict[str, Any]) -> Update:
 
 async def run_agent(state: TurnState, name: str, *, sticky: bool = False) -> Update:
     policy = state["policy"]
-    budget = max(0.05, min(policy.timeout_ms("generate") / 1000, state["deadline"] - time.monotonic())) * BUDGET_SHARE
+    budget = max(0.05, allocate_s(state, "generate")) * BUDGET_SHARE
     dialog = dict(state.get("dialog") or {})
     try:
         async with asyncio.timeout(budget):
@@ -128,7 +129,7 @@ async def _sub(state: TurnState, q: SubQuery, budget: float, dialog: dict[str, A
 async def multi(state: TurnState, subs: list[SubQuery]) -> Update:
     """Independent sub-queries in parallel, one section each; a failed section doesn't lose the others."""
     policy = state["policy"]
-    budget = max(0.05, min(policy.timeout_ms("generate") / 1000, state["deadline"] - time.monotonic())) * BUDGET_SHARE
+    budget = max(0.05, allocate_s(state, "generate")) * BUDGET_SHARE
 
     dialog = dict(state.get("dialog") or {})
 

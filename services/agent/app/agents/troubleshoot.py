@@ -59,7 +59,8 @@ async def diagnose(ctx: AgentCtx, errors: list[str]) -> tuple[list[dict[str, Any
                                               if f == fam and ctx.linker.nodes[n]["label"] == "Model")
         for m in models:
             params = {"model": m, "code": ctx.linker.nodes[eid]["props"]["code"]}
-            res = await run_template("T-DIAG", params, driver=ctx.deps.kg_driver, database=ctx.deps.kg_database)
+            res = await run_template("T-DIAG", params, driver=ctx.deps.kg_driver, database=ctx.deps.kg_database,
+                                     timeout_s=ctx.deps.kg_timeout_s)
             if res.rows:
                 used = m
                 evidence += verbalize("T-DIAG", params, res.rows)

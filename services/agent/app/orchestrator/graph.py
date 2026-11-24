@@ -6,6 +6,7 @@ policy, capped by what is left of the turn's total budget; on timeout the turn g
 """
 
 import asyncio
+import logging
 import time
 import uuid
 from collections.abc import Awaitable, Callable
@@ -14,16 +15,18 @@ from typing import Any, cast
 from langgraph.graph import END, START, StateGraph
 
 from app.obs.tracing import TraceRecorder, span_set, traced
+from app.orchestrator.budget import TAIL, allocate_s
 from app.orchestrator.nodes import agents as agent_nodes
 from app.orchestrator.nodes import cache as cache_nodes
+from app.orchestrator.nodes import degrade as degrade_nodes
 from app.orchestrator.nodes import rag as rag_nodes
 from app.orchestrator.nodes import router as router_nodes
 from app.orchestrator.nodes import rules as rule_nodes
 from app.orchestrator.nodes import stubs
 from app.orchestrator.nodes import tools as tool_nodes
 from app.orchestrator.nodes import verify as verify_nodes
-from app.orchestrator.policies import ChannelPolicy, get_policy
-from app.orchestrator.state import Envelope, TurnState
+from app.orchestrator.policies import get_policy
+from app.orchestrator.state import Draft, Envelope, HandoffDecision, TurnState
 
 NodeFn = Callable[[TurnState], Awaitable[dict[str, Any]]]
 
@@ -41,7 +44,35 @@ HANDOFF_INTENTS = {"human"}
 REDIRECT_INTENTS = {"oos", "smalltalk", "greeting", "thanks", "reset"}
 
 
+_HUMAN = HandoffDecision(action="handoff", reason="internal error")
+# terminal nodes have no degrade edge: if one fails, the customer still gets a safe answer
+LAST_RESORT: dict[str, dict[str, Any]] = {
+    "safety_handoff": {"answered_tier": "T4", "draft": Draft(text=rule_nodes.SAFETY_TEXT),
+                       "handoff": HandoffDecision(action="handoff", reason="safety", priority="P1", summary="Safety report")},
+    "refuse_or_redirect": {"answered_tier": "T0", "draft": Draft(text=rule_nodes.REFUSE_TEXT)},
+    "handoff_or_review": {"answered_tier": "T4", "handoff": _HUMAN},
+    "degrade": {"answered_tier": "T4", "draft": Draft(text=degrade_nodes.HANDOFF_TEXT), "handoff": _HUMAN},
+    "respond": {"answered_tier": "T4", "handoff": _HUMAN, "response": {
+        "text": degrade_nodes.HANDOFF_TEXT, "citations": [], "answered_tier": "T4",
+        "handoff": {"action": "handoff", "priority": None}}},
+}
+TIER_OF = {"tools": "T0", "cache_lookup": "T1", "rag_answer": "T2", "planner": "T3", "agents": "T3"}
+NEXT_TIER = {"tools": "handoff_or_review", "cache_lookup": "rag_answer", "rag_answer": "planner",
+             "planner": "rag_answer", "agents": "rag_answer"}
+
+
 # ---------- routing (code, not model output) ----------
+
+def allowed(target: str, state: TurnState) -> str:
+    """allowed_tiers from the policy (FR-OR-04): skip a tier the channel doesn't permit, ending at a person."""
+    tiers, seen = state["policy"].allowed_tiers, set()
+    while target in TIER_OF and TIER_OF[target] not in tiers:
+        seen.add(target)
+        target = NEXT_TIER[target]
+        if target in seen:
+            return "handoff_or_review"
+    return target
+
 
 def _top(state: TurnState) -> tuple[str | None, float]:
     intents = state.get("intents") or []
@@ -111,7 +142,7 @@ def route_cache(state: TurnState) -> str:
 def route_rag(state: TurnState) -> str:
     d = state.get("draft")
     if (d is not None and d.abstained) or state.get("retrieval_score", 1.0) < 0.2:
-        return "planner"
+        return "planner" if "T3" in state["policy"].allowed_tiers else "verify"
     return "verify"
 
 
@@ -127,7 +158,7 @@ def _budget_guard(route: Callable[[TurnState], str] | str) -> Callable[[TurnStat
     def guarded(state: TurnState) -> str:
         if state.get("budget_exceeded"):
             return "degrade"
-        return route(state) if callable(route) else route
+        return allowed(route(state) if callable(route) else route, state)
     guarded.__name__ = getattr(route, "__name__", f"to_{route}")
     return guarded
 
@@ -140,16 +171,20 @@ def with_budget(name: str, fn: NodeFn) -> NodeFn:
         path = [*state.get("path", []), name]
         timeout_s: float | None = None
         if name not in UNBUDGETED:
-            policy: ChannelPolicy = state["policy"]
-            remaining = state.get("deadline", float("inf")) - time.monotonic()
-            node_s = policy.timeout_ms(POLICY_KEY.get(name, name)) / 1000
-            timeout_s = max(0.0, min(node_s, remaining))
+            timeout_s = allocate_s(state, POLICY_KEY.get(name, name), tail=name in TAIL)
         try:
             async with asyncio.timeout(timeout_s):
                 out = await fn(state)
         except TimeoutError:
             span_set(status="timeout", timeout_s=timeout_s)
             return {"budget_exceeded": name, "path": path}
+        except Exception as exc:
+            log.exception("node %s failed", name)
+            span_set(status="error", error=type(exc).__name__)
+            if name in LAST_RESORT:
+                keep = {"handoff": state["handoff"]} if state.get("handoff") and name != "safety_handoff" else {}
+                return {**LAST_RESORT[name], **keep, "path": path}
+            return {"budget_exceeded": name, "node_error": type(exc).__name__, "path": path}
         return {**out, "path": path}
     run.__name__ = name
     return run
@@ -159,7 +194,11 @@ def with_budget(name: str, fn: NodeFn) -> NodeFn:
 
 REAL_NODES: dict[str, NodeFn] = {**rule_nodes.NODES, **router_nodes.NODES, **cache_nodes.NODES,
                                 **rag_nodes.NODES, **tool_nodes.NODES,
-                                **agent_nodes.NODES, **verify_nodes.NODES}  # grows per step
+                                **agent_nodes.NODES, **verify_nodes.NODES,
+                                **degrade_nodes.NODES}  # grows per step
+
+
+log = logging.getLogger("mcs.graph")
 
 
 def build_graph(overrides: dict[str, NodeFn] | None = None):
@@ -171,15 +210,16 @@ def build_graph(overrides: dict[str, NodeFn] | None = None):
     g.add_conditional_edges("normalize", _budget_guard("guardrails"), ["guardrails", "degrade"])
     g.add_conditional_edges("guardrails", _budget_guard(route_guardrails),
                             ["safety_handoff", "refuse_or_redirect", "rule_layer", "degrade"])
-    g.add_conditional_edges("rule_layer", _budget_guard(route_rules), ["agents", "classify", "degrade"])
+    g.add_conditional_edges("rule_layer", _budget_guard(route_rules),
+                            ["agents", "classify", "rag_answer", "handoff_or_review", "degrade"])
     dispatch_targets = ["planner", "rag_answer", "handoff_or_review", "refuse_or_redirect", "tools", "cache_lookup",
                         "safety_handoff"]
     g.add_conditional_edges("classify", _budget_guard(route_classify),
                             ["llm_router", "decompose", *dispatch_targets, "degrade"])
     g.add_conditional_edges("llm_router", _budget_guard(_to_dispatch), ["decompose", *dispatch_targets, "degrade"])
     g.add_conditional_edges("decompose", _budget_guard(dispatch), [*dispatch_targets, "degrade"])
-    g.add_conditional_edges("cache_lookup", _budget_guard(route_cache), ["verify", "rag_answer", "degrade"])
-    g.add_conditional_edges("rag_answer", _budget_guard(route_rag), ["planner", "verify", "degrade"])
+    g.add_conditional_edges("cache_lookup", _budget_guard(route_cache), ["verify", "rag_answer", "planner", "handoff_or_review", "degrade"])
+    g.add_conditional_edges("rag_answer", _budget_guard(route_rag), ["planner", "verify", "handoff_or_review", "degrade"])
     g.add_conditional_edges("planner", _budget_guard("agents"), ["agents", "degrade"])
     g.add_conditional_edges("tools", _budget_guard("verify"), ["verify", "degrade"])
     g.add_conditional_edges("agents", _budget_guard(route_agents), ["verify", "classify", "degrade"])

@@ -9,8 +9,8 @@ import pytest
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from app.config.settings import Settings
-from app.db import warm_pool
+from app.config.settings import Settings, get_settings
+from app.db import get_engine, warm_pool
 from app.obs.tracing import TraceRecorder, save_trace
 from app.orchestrator.graph import run_turn
 from app.orchestrator.state import Envelope
@@ -19,12 +19,15 @@ pytestmark = [pytest.mark.network, pytest.mark.req("NFR-OBS-01")]
 AGENT = Path(__file__).resolve().parents[2]
 
 
-async def test_trace_and_node_spans_are_stored():
+async def test_trace_and_node_spans_are_stored(monkeypatch):
     url = os.environ.get("DATABASE_URL_TEST") or Settings().database_url_test.get_secret_value()
     if not url:
         pytest.skip("DATABASE_URL_TEST not set")
     await asyncio.to_thread(subprocess.run, ["uv", "run", "alembic", "-x", f"url={url}", "upgrade", "head"],
                             cwd=AGENT, check=True, capture_output=True, text=True)
+    monkeypatch.setenv("DATABASE_URL", url)        # the tool step must use the test database, also in CI
+    get_settings.cache_clear()
+    get_engine.cache_clear()
     await warm_pool()          # as the API does at startup
     rec = TraceRecorder(mode="debug")
     final = await run_turn(Envelope(channel="chat", text="Is AMC AMC-2025-0014 active?"), recorder=rec)

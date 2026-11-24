@@ -8,6 +8,7 @@ from app.agents.rag_answerer import abstention, answer
 from app.config.settings import get_settings
 from app.db import get_engine
 from app.obs.tracing import span_set
+from app.orchestrator.budget import allocate_s
 from app.orchestrator.state import TurnState
 from app.orchestrator.stream import token_sink
 from app.providers import get_embedder, get_llm
@@ -46,9 +47,8 @@ async def retrieve_evidence(state: TurnState) -> list[Evidence]:
 
 
 async def rag_answer(state: TurnState) -> Update:
-    policy, s = state["policy"], get_settings()
-    remaining = state["deadline"] - time.monotonic()
-    budget_s = max(0.0, min(policy.timeout_ms("generate") / 1000, remaining)) * BUDGET_SHARE
+    s = get_settings()
+    budget_s = allocate_s(state, "generate") * BUDGET_SHARE
     end = time.monotonic() + budget_s
     evidence: list[Evidence] = []
     try:

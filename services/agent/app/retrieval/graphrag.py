@@ -53,6 +53,7 @@ class GraphRAGDeps:
     llm: LLM | None = None                     # Text2Cypher fallback
     llm_model: str = ""
     rerank_timeout_ms: int = 250
+    kg_timeout_s: float = 5.0                  # server-side transaction timeout from the channel policy
 
 
 @dataclass
@@ -117,7 +118,8 @@ def choose_templates(question: str, ents: Entities, deps: GraphRAGDeps,
 
 
 async def _run(tid: str, params: dict[str, Any], deps: GraphRAGDeps) -> tuple[str, dict[str, Any], list[dict]]:
-    res = await run_template(tid, params, driver=deps.kg_driver, database=deps.kg_database)
+    res = await run_template(tid, params, driver=deps.kg_driver, database=deps.kg_database,
+                             timeout_s=deps.kg_timeout_s)
     return tid, params, res.rows
 
 
@@ -172,7 +174,8 @@ async def documented_chunks(error_ids: list[str], deps: GraphRAGDeps) -> list[Ev
         return []
     rows, _ = await read_query(deps.kg_driver, """
         MATCH (e:ErrorCode)-[:DOCUMENTED_IN]->(d:Document) WHERE e.id IN $ids
-        RETURN e.id AS error_id, d.id AS doc_id""", {"ids": error_ids}, database=deps.kg_database)
+        RETURN e.id AS error_id, d.id AS doc_id""", {"ids": error_ids}, database=deps.kg_database,
+        timeout_s=deps.kg_timeout_s)
     out: list[Evidence] = []
     for r in rows:
         chunk = (await deps.conn.execute(text("""

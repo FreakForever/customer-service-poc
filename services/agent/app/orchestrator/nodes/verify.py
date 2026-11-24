@@ -18,6 +18,7 @@ from app.verify.summary import plain, summarize
 Update = dict[str, Any]
 MIN_COVERAGE = 0.8
 REGEN_MIN_S = 1.2            # not worth starting a regeneration with less time than this
+CONNECTING = "I'm connecting you with our service team. They'll pick this up with the details you've shared."
 UNSURE = "I'm not certain enough to answer that reliably, so I'm connecting you with our service team."
 
 
@@ -35,8 +36,14 @@ async def verify(state: TurnState) -> Update:
     if draft is None or draft.abstained or state.get("answered_tier") == "T1" or not state.get("evidence"):
         # nothing to check: abstentions, curated FAQ answers and scripted prompts state no new facts
         return {"verification": Verification(passed=True, coverage=None)}
+    mode = state["policy"].verification.rules
+    if mode == "off":
+        return {"verification": Verification(passed=True, coverage=None)}
     evidence = state["evidence"]
     cov, issues = _problems(draft.text, state, draft)
+    if mode == "async":                          # recorded for the audit, doesn't hold the answer back
+        span_set(coverage=cov.score, issues=issues)
+        return {"verification": Verification(passed=True, coverage=round(cov.score, 3), issues=issues)}
     regenerated = False
     if draft.generated and (issues or cov.score < MIN_COVERAGE) and _left(state) > REGEN_MIN_S:
         s = get_settings()
@@ -85,16 +92,21 @@ async def decide(state: TurnState) -> Update:
         parts = conf.score(router=conf.router_conf(state), retrieval=conf.retrieval_norm(evidence),
                            coverage=v.coverage if v.coverage is not None else 1.0, judge=j)
     policy = state["policy"]
-    if state["env"].channel == "email" and draft is not None and draft.generated and v.judge is None and not draft.abstained:
+    if state["env"].channel == "email" and draft is not None and draft.generated and v.judge is None and not draft.abstained \
+            and policy.verification.judge == "sync":
         # the channel requires a judged answer; without one it can't be sent unattended
         parts["confidence"] = min(parts["confidence"], policy.thresholds["confidence_answer"] - 0.01)
         parts["judge_missing"] = 1.0
     c = parts["confidence"]
     out: Update = {"confidence": c, "confidence_parts": parts}
+    auto = policy.thresholds.get("auto_send")
     h = state.get("handoff") or conf.overrides(state)
     if h is None and c < policy.thresholds["confidence_answer"]:
         h = HandoffDecision(action=policy.on_low_confidence, reason=f"low confidence {c:.2f}")
-    span_set(**parts, handoff=h.reason if h else None)
+    if h is None and auto is not None and c < auto:
+        h = HandoffDecision(action="draft_for_review", reason=f"below auto-send threshold {auto}")
+    out["auto_send"] = auto is not None and h is None
+    span_set(**parts, handoff=h.reason if h else None, auto_send=out["auto_send"])
     if h is not None:
         out["handoff"] = h
         unsafe = not v.passed or (draft is not None and draft.generated and not draft.abstained
@@ -107,6 +119,9 @@ async def decide(state: TurnState) -> Update:
 
 async def handoff_or_review(state: TurnState) -> Update:
     out = await _handoff(state)
+    drafted = state.get("draft")
+    if drafted is None or not drafted.text:      # e.g. "talk to a human": nothing drafted yet
+        out["draft"] = Draft(text=CONNECTING)
     merged: TurnState = {**state, **out}  # type: ignore[typeddict-item]
     limit = min(1.5 if state["env"].channel == "chat" else 5.0, max(0.0, _left(state)))
     s = get_settings()
@@ -125,7 +140,7 @@ async def safety_handoff(state: TurnState) -> Update:
 
 async def respond(state: TurnState) -> Update:
     d, h = state.get("draft"), state.get("handoff")
-    return {"response": {"text": d.text if d else "", "citations": [c.model_dump() for c in d.citations] if d else [],
+    return {"response": {"text": d.text if d and d.text else CONNECTING, "citations": [c.model_dump() for c in d.citations] if d else [],
                          "answered_tier": state.get("answered_tier"),
                          # the customer sees that a handoff happened, not the internal reason or note
                          "handoff": {"action": h.action, "priority": h.priority} if h else None}}

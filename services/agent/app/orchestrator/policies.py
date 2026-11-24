@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 DEFAULT_PATH = Path(__file__).resolve().parent.parent / "config" / "policies.yaml"
 Tier = Literal["T0", "T1", "T2", "T3", "T4"]
@@ -27,6 +27,13 @@ class ChannelPolicy(BaseModel):
     verification: Verification
     thresholds: dict[str, float]
     on_low_confidence: Literal["handoff", "draft_for_review"]
+    reserve_ms: int = 0        # kept back for verify, handoff and respond
+
+    @model_validator(mode="after")
+    def _t4(self) -> "ChannelPolicy":
+        if "T4" not in self.allowed_tiers:
+            raise ValueError("allowed_tiers must include T4: a person is always the last resort")
+        return self
 
     def timeout_ms(self, node: str) -> int:
         """Timeout for a node; falls back to the channel's total budget if the node has no entry."""

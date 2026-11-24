@@ -732,7 +732,7 @@
         "Changing policy YAML changes behaviour without code changes"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.2"
@@ -790,7 +790,7 @@
         "Fault-injection test: LLM timeout produces a handoff message within budget"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.2",

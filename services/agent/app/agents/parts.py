@@ -35,7 +35,8 @@ async def resolve(ctx: AgentCtx) -> tuple[list[str], list[Evidence]]:
             return [p for n, p in scored if n == scored[0][0]][:3], []
         if d.get("errors"):
             params = {"model": d["model"], "code": ctx.linker.nodes[d["errors"][0]]["props"]["code"]}
-            res = await run_template("T-COVER", params, driver=ctx.deps.kg_driver, database=ctx.deps.kg_database)
+            res = await run_template("T-COVER", params, driver=ctx.deps.kg_driver, database=ctx.deps.kg_database,
+                                     timeout_s=ctx.deps.kg_timeout_s)
             return list(dict.fromkeys(r["part_no"] for r in res.rows))[:3], verbalize("T-COVER", params, res.rows)
     return (d.get("parts") or [])[:3], []
 

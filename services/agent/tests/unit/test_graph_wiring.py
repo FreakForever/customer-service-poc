@@ -86,7 +86,7 @@ async def test_node_timeout_degrades_to_handoff():
 
 
 async def test_total_budget_caps_the_sum_of_nodes(monkeypatch):
-    tight = get_policy("chat").model_copy(update={"budget_ms": {"total": 300}, "node_timeouts_ms": {}})
+    tight = get_policy("chat").model_copy(update={"budget_ms": {"total": 300}, "node_timeouts_ms": {}, "reserve_ms": 0})
     monkeypatch.setattr(g, "get_policy", lambda channel: tight)
     final, _ = await turn(sleep_ms={"normalize": 150, "guardrails": 100, "rule_layer": 200})
     assert final["budget_exceeded"] == "rule_layer" and "degrade" in final["path"]

@@ -679,11 +679,11 @@
       "verify": [
         "pytest services/agent/tests/integration/test_degradation.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "orchestrator/budget.py, nodes/degrade.py, policy enforcement. tests/integration/test_degradation.py 30 passed (LLM hang/errors, DB down, graph down, 8 nodes each failing and hanging, terminal nodes failing, YAML policy changes); full suite 435 passed. Fixed: an exception in any node crashed the turn; a customer asking for a person got an empty reply (since BS-11). CI on 09080b0 (BS-15..17) had failed in test_tracing because the test did not set DATABASE_URL; fixed here, not yet confirmed by a CI run. D-037. Gaps: scripted model only; judge_sample_rate (async audit) is not implemented (FR-VF-05); allowed_tiers does not apply to T4; KG timeout is server-side, network time is covered by the node budget only."
     },
     {
       "id": "BS-20",

@@ -103,6 +103,8 @@ class TurnState(TypedDict, total=False):
     cache_hit: bool
     retrieval_score: float
     budget_exceeded: str | None           # node whose budget ran out → degrade
+    node_error: str | None                # exception type that sent the turn to degrade
+    auto_send: bool                       # email: confident enough to send without review
     deadline: float                       # time.monotonic() when the total budget ends
     path: list[str]                       # visited nodes, in order
     query_embedding: list[float]          # reused by the FAQ cache and retrieval (BS-14/15)
