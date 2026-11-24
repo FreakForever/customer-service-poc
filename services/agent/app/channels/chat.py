@@ -26,6 +26,9 @@ STATUS_TEXT = "Checking that for you…"
 QUEUED = "Connecting you to our service team…"
 WITH_HUMAN = "Our service team has your message."
 QUICK_REPLY = {"offer_ticket": ("Raise a service request", "yes please"), "offer_quote": ("Request a quote", "please send a quote")}
+TICKET = {"type": "quick_reply", "label": "Raise a service request", "payload": "I want to raise a service request"}
+STATUS = {"type": "quick_reply", "label": "Check a ticket", "payload": "Check my ticket status"}
+HUMAN = {"type": "quick_reply", "label": "Talk to a person", "payload": "talk to a human"}
 _tasks: set[asyncio.Task[Any]] = set()
 graph: Any = None                       # tests may set a graph; None = the default graph
 
@@ -37,9 +40,25 @@ def encode(event: str, data: Any) -> str:
 def citations_of(final: TurnState) -> list[dict[str, Any]]:
     d = final.get("draft")
     titles = {e.citation: e.title for e in final.get("evidence") or []}
+    texts = {e.citation: e.text for e in final.get("evidence") or []}
     return [{"marker": c.marker.strip("[]"), "title": titles.get(c.evidence_id) or ("Matsui knowledge base" if c.doc_id else "Matsui product data"),
-             "url": f"/a/{c.doc_id}" + (f"#{c.anchor}" if c.anchor else "") if c.doc_id else None}
+             "url": f"/a/{c.doc_id}" + (f"#{c.anchor}" if c.anchor else "") if c.doc_id else None,
+             "fact": None if c.doc_id else (texts.get(c.evidence_id) or "")[:300] or None}
             for c in (d.citations if d else [])]
+
+
+def quick_replies(out: dict[str, Any], related: list[str]) -> list[dict[str, Any]]:
+    """FR-CH-04: what the answer offers first, then related questions, then the general routes."""
+    if out["handoff"]:
+        return []
+    quick = [{"type": "quick_reply", "label": QUICK_REPLY[a["type"]][0], "payload": QUICK_REPLY[a["type"]][1]}
+             for a in out["actions"] if a.get("type") in QUICK_REPLY]
+    if out["form"]:
+        return quick                                           # a request is being filled in: no distractions
+    quick += [{"type": "quick_reply", "label": q, "payload": q} for q in related]
+    if not out["citations"]:
+        quick += [q for q in (TICKET, STATUS) if q["label"] not in {x["label"] for x in quick}]
+    return [*quick, HUMAN]
 
 
 async def _turn(engine: AsyncEngine, sid: uuid.UUID, conv: dict[str, Any], message: str) -> dict[str, Any]:
@@ -67,6 +86,7 @@ async def _turn(engine: AsyncEngine, sid: uuid.UUID, conv: dict[str, Any], messa
         out["message_id"] = await store.add_message(conn, sid, "assistant", r["text"], citations=cites, actions=actions, trace_id=rec.trace_id)
         await store.end_turn(conn, sid, session=session_of(final) if final else None, status="handoff" if handoff else None,
                              priority=handoff["priority"] if handoff else None, retention_days=s.retention_days)
+        out["related"] = [] if handoff or out["form"] else await store.related_questions(conn, cites, message)
         if handoff:
             out["position"] = await store.queue_position(conn, sid)
     try:
@@ -106,8 +126,7 @@ async def stream(engine: AsyncEngine, sid: uuid.UUID, conv: dict[str, Any], mess
         yield "token", {"t": piece}
     if out["citations"]:
         yield "citations", out["citations"]
-    if quick := [{"type": "quick_reply", "label": QUICK_REPLY[a["type"]][0], "payload": QUICK_REPLY[a["type"]][1]}
-                 for a in out["actions"] if a.get("type") in QUICK_REPLY]:
+    if quick := quick_replies(out, out["related"]):
         yield "actions", quick
     if out["form"]:
         yield "form", out["form"]

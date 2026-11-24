@@ -104,3 +104,12 @@ def test_rule_layer_p95_under_10ms():
         times.append((time.perf_counter() - start) * 1000)
     times.sort()
     assert times[int(0.95 * len(times))] < 10
+
+
+@pytest.mark.req("FR-CH-04")
+def test_quick_reply_payloads_are_rules():
+    from app.channels import chat
+    from app.kg.linker import Entities
+    from app.rules.intents import exact_intents
+    got = [exact_intents(q["payload"], Entities())[0].name for q in (chat.TICKET, chat.STATUS, chat.HUMAN)]
+    assert got == ["service.create_ticket", "service.ticket_status", "human"]

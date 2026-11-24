@@ -11,6 +11,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +25,7 @@ CLASSIFY = [  # (substring of the message, intents)
     ("motor ol", ["troubleshoot.error_code"]), ("dew point high", ["troubleshoot.symptom"]), ("bitcoin", ["out_of_scope"]),
     ("hot air dryer", ["faq.process"]), ("parts are common", ["troubleshoot.symptom"]), ("amc", ["amc.status"]),
 ]
+ALIASES = [("pc ko hot air dryer", "pc drying which dryer"), ("warranty on a new dryer", "how long is the warranty")]
 
 
 def prepare(url: str) -> None:
@@ -77,6 +79,26 @@ def patch() -> None:
         mod.get_llm = lambda: ResilientLLM(FakeProvider(script=dict(script)))  # type: ignore[attr-defined]
     for mod in (rag, agents):
         mod.get_reranker = NoopReranker  # type: ignore[attr-defined]
+    # this is about behaviour, not speed: a slow link to the test database must not degrade turns
+    import yaml
+
+    from app.orchestrator import graph as g
+    from app.orchestrator.policies import DEFAULT_PATH, load_policies
+
+    raw = yaml.safe_load(DEFAULT_PATH.read_text())
+    raw["chat"].update(budget_ms={**raw["chat"]["budget_ms"], "total": 30000},
+                       node_timeouts_ms={**raw["chat"].get("node_timeouts_ms", {}), "retrieval": 5000, "generate": 15000, "tool": 8000})
+    tmp = Path(tempfile.mkdtemp()) / "policies.yaml"
+    tmp.write_text(yaml.safe_dump(raw))
+    pols = load_policies(tmp)
+    g.get_policy = lambda ch: pols[ch]  # type: ignore[assignment]
+
+    # the hashing embedder has no meaning: give two script questions the vector of the FAQ paraphrase a real model finds
+    real = FakeProvider.embed
+
+    async def embed(self, texts, *, kind):
+        return await real(self, [next((v for k, v in ALIASES if k in t.lower()), t) for t in texts], kind=kind)
+    FakeProvider.embed = embed  # type: ignore[method-assign]
     chat.graph = pipeline.graph = build_graph({"classify": classify})
 
 

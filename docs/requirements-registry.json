@@ -260,7 +260,7 @@
         "Widget opens from a launcher on every help-centre page"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.1",
@@ -324,7 +324,7 @@
         "Clicking a chip opens the article anchor"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.6"
@@ -353,7 +353,7 @@
         "Quick replies returned in the SSE 'actions' event and rendered as buttons"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.9"
@@ -383,7 +383,7 @@
         "CH-004 creates a ticket in at most 4 turns"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.4"

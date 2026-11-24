@@ -146,7 +146,7 @@ async def test_event_order_citations_and_transcript(http):
     c = await Client(http).start()
     ev = await c.say("Does dust damage void the warranty on parts?")
     names = [e for e, _ in ev if e != "status"]
-    assert names[0] == "token" and names[-2:] == ["citations", "done"] and names.count("token") > 3 and txt(ev) == ANSWER
+    assert names[0] == "token" and names[-3:] == ["citations", "actions", "done"] and names.count("token") > 3 and txt(ev) == ANSWER
     [cite] = one(ev, "citations")
     assert cite["marker"] == "E1" and cite["url"].startswith("/a/DOC-") and cite["title"]
     done = one(ev, "done")
@@ -218,6 +218,30 @@ async def test_form_creates_a_ticket(http):
     assert tuple(t) == ("CUST-0010", "MT-GR200-24-00233")
     bad = await http.post(f"/v1/chat/sessions/{c.sid}/forms/service_request", headers=c.auth, json={"fields": {"customer_id": "X"}})
     assert bad.status_code == 422
+
+
+@pytest.mark.req("FR-CH-05")
+async def test_form_is_validated_before_anything_is_stored(http):
+    ok = {"description": "MOTOR OL", "serial_no": "mt-gr200-24-00233", "contact": "a@b.example"}
+    for persona, change, field in (("CUST-0010", {"serial_no": "123"}, "serial_no"), ("CUST-0001", {}, "serial_no"), (None, {"serial_no": "MT-X"}, "serial_no"),
+                                   ("CUST-0010", {"contact": "soon"}, "contact"), ("CUST-0010", {"description": " "}, "description")):
+        c = await Client(http).start(persona)
+        r = await http.post(f"/v1/chat/sessions/{c.sid}/forms/service_request", headers=c.auth, json={"fields": {**ok, **change}})
+        assert r.status_code == 422 and list(r.json()["detail"]["errors"]) == [field], r.text
+        assert (await c.get())["messages"] == []
+
+
+@pytest.mark.req("FR-CH-04")
+async def test_quick_replies(http):
+    c = await Client(http).start()
+    labels = [a["label"] for a in one(await c.say("hi"), "actions")]
+    assert labels == ["Raise a service request", "Check a ticket", "Talk to a person"]
+    assert "actions" not in [e for e, _ in await c.say("I want a person")]
+    c = await Client(http).start("CUST-0010")
+    ev = await c.say("Are filters and thermocouples covered under warranty?")
+    q = one(ev, "actions")
+    assert q[-1]["label"] == "Talk to a person" and len(q) == 3 and "Are filters and thermocouples covered under warranty?" not in [x["label"] for x in q]
+    assert one(ev, "citations")[0]["url"].startswith("/a/")
 
 
 async def test_handoff_queue_bot_continues_until_a_human_takes_over(http):

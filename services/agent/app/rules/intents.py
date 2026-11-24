@@ -22,6 +22,9 @@ _COMPLAINT = re.compile(r"\b(escalat\w*|complain\w*|unacceptable|(second|third|f
                         re.IGNORECASE)
 _RESET = re.compile(r"^\s*(reset|start over|restart|new (chat|conversation)|clear( chat)?)[\s!.]*$", re.IGNORECASE)
 
+# quick-reply buttons (FR-CH-04) must not depend on the classifier
+_BUTTONS = {"i want to raise a service request": "service.create_ticket", "check my ticket status": "service.ticket_status"}
+
 
 def exact_intents(text: str, ents: Entities) -> list[Intent]:
     out: list[Intent] = []
@@ -31,6 +34,8 @@ def exact_intents(text: str, ents: Entities) -> list[Intent]:
         return [Intent(name="greeting", confidence=1.0, source="rule")]
     if _THANKS.match(text):
         return [Intent(name="thanks", confidence=1.0, source="rule")]
+    if name := _BUTTONS.get(text.strip().lower()):
+        return [Intent(name=name, confidence=1.0, source="rule")]
     if _HUMAN.search(text):
         out.append(Intent(name="human", confidence=1.0, source="rule", span=_HUMAN.search(text).group(0)))  # type: ignore[union-attr]
     if ents.ticket_ids and (_STATUS.search(text) or len(text.split()) <= 6):

@@ -82,3 +82,20 @@ async def add_feedback(conn: AsyncConnection, message_id: uuid.UUID, session_id:
     await conn.execute(text("INSERT INTO feedback (message_id, trace_id, rating, reason) VALUES (:m, :t, :r, :x)"),
                        {"m": message_id, "t": m.trace_id, "r": rating, "x": reason})
     return True
+
+
+async def related_questions(conn: AsyncConnection, citations: list[dict[str, Any]], asked: str) -> list[str]:
+    """Up to two FAQ questions answered by the documents just cited, closest to the question first."""
+    docs = list(dict.fromkeys(c["url"].removeprefix("/a/").split("#")[0] for c in citations if c.get("url")))[:3]
+    if not docs:
+        return []
+    rows = await conn.execute(text(
+        "SELECT question FROM faq_entries WHERE status = 'active' AND source_doc = ANY(:d) AND id NOT IN "
+        "(SELECT faq_id FROM faq_variants WHERE lower(text) = lower(:q)) AND lower(question) <> lower(:q) ORDER BY "
+        "ts_rank(to_tsvector('english', question), plainto_tsquery('english', :q)) DESC, id LIMIT 2"), {"d": docs, "q": asked})
+    return list(rows.scalars())
+
+
+async def owns_serial(conn: AsyncConnection, customer_id: str, serial: str) -> bool:
+    return bool((await conn.execute(text("SELECT 1 FROM assets WHERE serial_no = :s AND customer_id = :c"),
+                                    {"s": serial, "c": customer_id})).scalar())

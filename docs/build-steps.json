@@ -860,11 +860,11 @@
       "verify": [
         "pnpm -C apps/web e2e -g chat (runs CH-001..CH-010)"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "`pnpm -C apps/web e2e -g chat`: 15 passed (CH-001..CH-010 tiers through the widget, sources, quick replies, inline form → ticket in 4 turns or fewer, handoff banner kept on reload, feedback, keyboard, axe, 360 px, failure message). test_chat_api.py 22 passed, vitest 76 passed. Model, classifier and embedder are scripted; CH-001 and CH-007 get the matching FAQ vector by alias, and chat time budgets are widened in the e2e server, so this is not a live latency or answer-quality check. D-041: anonymous serials are checked for format only. Gaps: quick replies and forms aren't restored after a reload; no reason box on a thumbs-down; the agent's name in the banner arrives with BS-25."
     },
     {
       "id": "BS-25",

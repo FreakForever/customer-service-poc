@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ChatButton } from "@/components/chat/ChatButton";
 import { DocCard } from "@/components/help/DocCard";
 import { SearchBox } from "@/components/help/SearchBox";
 import { CENTRES, FAMILIES } from "@/lib/families";
@@ -53,6 +54,7 @@ export default async function HomePage() {
         <section id="contact" aria-labelledby="h-contact" className="rounded-card border border-line bg-surface p-6">
           <h2 id="h-contact" className="mb-4 text-2xl">Contact us</h2>
           <div className="flex flex-wrap items-center gap-4">
+            <ChatButton />
             <Link href="/contact" className="inline-flex min-h-11 items-center rounded-card bg-blue px-5 font-semibold text-surface hover:bg-blue-600">Email us</Link>
             <span>Breakdown line (24x7): +91-00000-00000 <span className="text-steel">(placeholder)</span></span>
           </div>

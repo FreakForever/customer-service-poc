@@ -2,6 +2,7 @@
 only where DEMO_PERSONAS is on."""
 
 import asyncio
+import re
 import uuid
 from collections.abc import AsyncIterator
 from typing import Annotated, Any, Literal
@@ -18,6 +19,8 @@ from app.config.settings import get_settings
 from app.db import get_engine
 
 router = APIRouter(prefix="/v1", tags=["chat"])
+_SERIAL = re.compile(r"MT-[A-Z0-9]+-\d{2}-\d{5}")
+_CONTACT = re.compile(r"(?:\+91[-\s]?|0)?(?:\d{5}[-\s]?\d{5,6}|\d{10})|[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 SSE_HEADERS = {"Cache-Control": "no-cache, no-transform", "X-Accel-Buffering": "no"}
 POLL_S, HEARTBEAT_S, STREAM_MAX_S = 1.0, 15.0, 600.0
 
@@ -126,6 +129,24 @@ async def submit_form(form_id: str, body: FormIn, sid: SessionDep,
     labels = {"description": "Issue", "serial_no": "Serial", "contact": "Contact"}
     if unknown := set(body.fields) - set(labels):
         raise HTTPException(422, f"unknown fields: {', '.join(sorted(unknown))}")
+    errors = {}
+    f = {k: v.strip() for k, v in body.fields.items()}
+    if "serial_no" in f:                                       # FR-CH-05: format, then the customer's own machines
+        f["serial_no"] = f["serial_no"].upper()
+        conv = await _load(engine, sid)
+        if not _SERIAL.fullmatch(f["serial_no"]):
+            errors["serial_no"] = "Serial numbers look like MT-GR200-24-00233."
+        elif conv["customer_id"]:
+            async with engine.connect() as conn:
+                if not await store.owns_serial(conn, conv["customer_id"], f["serial_no"]):
+                    errors["serial_no"] = "We couldn't find this machine under your account."
+    if not f.get("description"):
+        errors["description"] = "Please describe the problem."
+    if not _CONTACT.fullmatch(f.get("contact", "")):
+        errors["contact"] = "Enter a phone number or an email address."
+    if errors:
+        raise HTTPException(422, {"errors": errors})
+    body = FormIn(fields=f)
     text = ". ".join(f"{labels[k]} {body.fields[k].strip()[:2000]}" for k in labels if body.fields.get(k, "").strip())
     return await _reply(engine, sid, text)
 

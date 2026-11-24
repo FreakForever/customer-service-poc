@@ -7,6 +7,8 @@ export const PERSONAS = [
   { id: "CUST-0005", company: "Trident Industries" },
   { id: "CUST-0006", company: "Deccan Technoplast" },
   { id: "CUST-0008", company: "Navkar Precision Plastics" },
+  { id: "CUST-0009", company: "Indus Polymers" },
+  { id: "CUST-0010", company: "Vihaan Technoplast" },
 ] as const;
 export const PERSONA_COOKIE = "mcs_persona";
 
