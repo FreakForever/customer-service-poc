@@ -360,6 +360,9 @@ async def test_attachments_go_to_the_bucket(mail, monkeypatch):
 @pytest_asyncio.fixture
 async def http(mail):
     from app.main import create_app
+    from tests.unit.test_staff_auth import SECRET
+    mail.mp.setenv("NEXTAUTH_SECRET", SECRET)      # CI has no .env
+    get_settings.cache_clear()
     api._hits.clear()
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app()), base_url="http://t") as c:
         yield c
