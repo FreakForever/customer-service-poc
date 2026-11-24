@@ -76,7 +76,7 @@ def names(text):
     ("talk to a human", ["human"]), ("Can I speak with an agent please?", ["human"]), ("kisi se baat karni hai", ["human"]),
     ("status of SR-2026-00112", ["service.ticket_status"]), ("SR-2026-00105?", ["service.ticket_status"]),
     ("What's the status of ticket SR-2026-00105?", ["service.ticket_status"]),
-    ("Engineer still not come for SR-2026-00105, please escalate", ["service.ticket_status"]),
+    ("Engineer still not come for SR-2026-00105, please escalate", ["service.ticket_status", "complaint"]),
     ("Is AMC AMC-2025-0001 active?", ["amc.status"]), ("start over", ["reset"]),
     ("Our AMC-2025-0014 expired, we want to renew it", []),          # renewal → router (amc.renewal), not status
     ("hi, my DHD-150 shows E04", []), ("what's the warranty on a new dryer?", []),

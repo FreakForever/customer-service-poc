@@ -8,6 +8,9 @@ from pydantic import BaseModel
 
 from app.providers.base import Completion, Msg, ProviderError, parse_json, split_system
 
+# The Gemini API refuses deadlines under 10 s (400). The real, shorter budget is enforced on our side: ResilientLLM
+# cancels the attempt (D-035).
+MIN_DEADLINE_MS = 10_000
 EMBED_BATCH = 100  # stay well under the per-request instance limit
 
 
@@ -62,7 +65,7 @@ class VertexProvider:
         return types.GenerateContentConfig(thinking_config=thinking,
             system_instruction=system or None, max_output_tokens=max_tokens, temperature=temperature,
             response_mime_type="application/json" if schema else None, response_schema=schema,
-            http_options=types.HttpOptions(timeout=timeout_ms))
+            http_options=types.HttpOptions(timeout=max(timeout_ms, MIN_DEADLINE_MS)))
 
     async def complete(self, messages: list[Msg], *, model: str, schema: type[BaseModel] | None = None,
                        max_tokens: int = 800, temperature: float = 0.0, timeout_ms: int) -> Completion:

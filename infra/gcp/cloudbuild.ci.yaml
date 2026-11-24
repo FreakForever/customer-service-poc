@@ -80,4 +80,4 @@ steps:
         drv.close()
         PY
         uv run python ../../mock-data/kg/load_kg.py --wipe
-        uv run pytest tests/integration tests/security -q -m network
+        uv run pytest tests/integration tests/security tests/e2e -q -m network

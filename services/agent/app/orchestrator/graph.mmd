@@ -25,6 +25,7 @@ graph TD;
 	respond(respond)
 	__end__([<p>__end__</p>]):::last
 	__start__ --> normalize;
+	agents -.-> classify;
 	agents -.-> degrade;
 	agents -.-> verify;
 	cache_lookup -.-> degrade;

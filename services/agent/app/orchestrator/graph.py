@@ -14,6 +14,7 @@ from typing import Any, cast
 from langgraph.graph import END, START, StateGraph
 
 from app.obs.tracing import TraceRecorder, span_set, traced
+from app.orchestrator.nodes import agents as agent_nodes
 from app.orchestrator.nodes import cache as cache_nodes
 from app.orchestrator.nodes import rag as rag_nodes
 from app.orchestrator.nodes import router as router_nodes
@@ -31,9 +32,10 @@ POLICY_KEY = {"classify": "retrieval", "llm_router": "router_llm", "cache_lookup
               "decompose": "router_llm"}
 UNBUDGETED = {"degrade", "respond", "safety_handoff", "refuse_or_redirect", "handoff_or_review"}
 
-TOOL_INTENTS = {"service.create_ticket", "service.ticket_status", "amc.status", "warranty.status", "asset.info",
-                "sales.quote", "complaint"}
-AGENT_INTENTS = {"troubleshoot.error_code", "troubleshoot.symptom", "parts.availability", "parts.compatibility"}
+TOOL_INTENTS = {"service.ticket_status", "amc.status", "warranty.status", "asset.info"}
+# ticket and lead flows answer at T0 but run in the agents node: they need more than the tool budget (D-035)
+AGENT_INTENTS = {"troubleshoot.error_code", "troubleshoot.symptom", "parts.availability", "parts.compatibility",
+                 "service.create_ticket", "sales.quote", "complaint"}
 HANDOFF_INTENTS = {"human"}
 REDIRECT_INTENTS = {"oos", "smalltalk", "greeting", "thanks", "reset"}
 
@@ -112,6 +114,10 @@ def route_rag(state: TurnState) -> str:
     return "verify"
 
 
+def route_agents(state: TurnState) -> str:
+    return "classify" if state.get("handback") else "verify"     # sticky agent handed the turn back
+
+
 def route_decide(state: TurnState) -> str:
     return "handoff_or_review" if state.get("handoff") else "respond"
 
@@ -151,7 +157,8 @@ def with_budget(name: str, fn: NodeFn) -> NodeFn:
 # ---------- graph ----------
 
 REAL_NODES: dict[str, NodeFn] = {**rule_nodes.NODES, **router_nodes.NODES, **cache_nodes.NODES,
-                                **rag_nodes.NODES, **tool_nodes.NODES}  # grows per step
+                                **rag_nodes.NODES, **tool_nodes.NODES,
+                                **agent_nodes.NODES}  # grows per step
 
 
 def build_graph(overrides: dict[str, NodeFn] | None = None):
@@ -173,8 +180,8 @@ def build_graph(overrides: dict[str, NodeFn] | None = None):
     g.add_conditional_edges("cache_lookup", _budget_guard(route_cache), ["verify", "rag_answer", "degrade"])
     g.add_conditional_edges("rag_answer", _budget_guard(route_rag), ["planner", "verify", "degrade"])
     g.add_conditional_edges("planner", _budget_guard("agents"), ["agents", "degrade"])
-    for src in ("tools", "agents"):
-        g.add_conditional_edges(src, _budget_guard("verify"), ["verify", "degrade"])
+    g.add_conditional_edges("tools", _budget_guard("verify"), ["verify", "degrade"])
+    g.add_conditional_edges("agents", _budget_guard(route_agents), ["verify", "classify", "degrade"])
     g.add_conditional_edges("verify", _budget_guard("decide"), ["decide", "degrade"])
     g.add_conditional_edges("decide", _budget_guard(route_decide), ["handoff_or_review", "respond", "degrade"])
     g.add_conditional_edges("degrade", route_decide, ["handoff_or_review", "respond"])
@@ -203,12 +210,19 @@ def mermaid(graph=None) -> str:
     return (graph or default_graph()).get_graph().draw_mermaid()
 
 
-async def run_turn(env: Envelope, *, graph=None, recorder: TraceRecorder | None = None) -> TurnState:
+def session_of(final: TurnState) -> dict[str, Any]:
+    """What a conversation keeps between turns (conversations.active_agent / .state)."""
+    return {"active_agent": final.get("active_agent"), "dialog": final.get("dialog") or {}}
+
+
+async def run_turn(env: Envelope, *, graph=None, recorder: TraceRecorder | None = None,
+                   session: dict[str, Any] | None = None) -> TurnState:
     """Run one inbound message through the graph. The caller owns the recorder (and persists it)."""
     policy = get_policy(env.channel)
     rec = recorder or TraceRecorder(conversation_id=env.conversation_id, channel=env.channel)
     rec.conversation_id, rec.channel = env.conversation_id, env.channel
     state: TurnState = {"env": env, "policy": policy, "trace_id": rec.trace_id or uuid.uuid4(), "path": [],
+                        "active_agent": (session or {}).get("active_agent"), "dialog": (session or {}).get("dialog") or {},
                         "deadline": time.monotonic() + policy.budget_ms["total"] / 1000}
     with rec:
         final: TurnState = await (graph or default_graph()).ainvoke(state)

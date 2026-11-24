@@ -28,6 +28,7 @@ RESET_TEXT = "Okay, let's start over. How can I help?"
 
 async def normalize(state: TurnState) -> Update:
     out = await _normalize_stub(state)
+    out.pop("active_agent")                 # comes from the conversation (run_turn session), never from the message
     ctx = await get_rule_context()
     t0 = time.perf_counter()
     out["entities"] = extract_entities(out["env"].text, ctx.linker)
@@ -48,7 +49,10 @@ async def guardrails(state: TurnState) -> Update:
 async def rule_layer(state: TurnState) -> Update:
     intents = exact_intents(state["env"].text, state["entities"])
     span_set(intents=[i.name for i in intents])
-    return {"intents": intents}
+    out: Update = {"intents": intents}
+    if any(i.name not in ("greeting", "thanks") for i in intents):
+        out["active_agent"] = None                  # a new top-level request ends the sticky agent (FR-OR-05)
+    return out
 
 
 async def safety_handoff(state: TurnState) -> Update:

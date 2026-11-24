@@ -96,6 +96,12 @@ class LeadArgs(Args):
     contact: Contact
 
 
+class HandoffArgs(Args):
+    reason: Text
+    priority: Literal["P1", "P2", "P3"]
+    summary: Text
+
+
 Status = Literal["ok", "needs_verification", "not_found", "invalid"]
 
 
@@ -215,6 +221,10 @@ async def create_lead(a: LeadArgs, c: ToolContext) -> Row | None:
                                                  "contact": a.contact.model_dump(exclude_none=True)})}
 
 
+async def handoff(a: HandoffArgs, c: ToolContext) -> Row | None:
+    return {"queue_position": await c.repo.queue_length() + 1, "priority": a.priority, "reason": a.reason}
+
+
 @dataclass(frozen=True)
 class Tool:
     args: type[Args]
@@ -232,6 +242,7 @@ TOOLS: dict[str, Tool] = {
     "create_ticket": Tool(CreateTicketArgs, create_ticket, False),
     "create_parts_quote": Tool(QuoteArgs, create_parts_quote, True),
     "create_lead": Tool(LeadArgs, create_lead, False),
+    "handoff": Tool(HandoffArgs, handoff, False),
 }
 NEEDS_VERIFICATION = ("To look that up I need to verify your account. Please share your machine's serial number and "
                       "the email address registered with Matsui.")

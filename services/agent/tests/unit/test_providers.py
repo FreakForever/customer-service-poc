@@ -282,3 +282,22 @@ def test_vertex_adapter_client_modes(monkeypatch):
                                      gemini_api_key="ignored", vertex_llm_location="global"))
     assert made == [{"vertexai": True, "project": "p", "location": "asia-south1"},
                     {"vertexai": True, "project": "p", "location": "global"}]
+
+
+async def test_vertex_deadline_floor_but_our_budget_still_applies(monkeypatch):
+    """The Gemini API rejects deadlines < 10 s; a 100 ms budget must still cut the call off at 100 ms."""
+    from app.providers.vertex import VertexProvider
+
+    seen = []
+
+    class Models:
+        async def generate_content(self, **kw):
+            seen.append(kw["config"].http_options.timeout)
+            await asyncio.sleep(5)
+    from google import genai
+    monkeypatch.setattr(genai, "Client", lambda **kw: SimpleNamespace(aio=SimpleNamespace(models=Models())))
+    p = VertexProvider(project="p", location="asia-south1", api_key="k")
+    start = asyncio.get_running_loop().time()
+    with pytest.raises(ProviderUnavailable):
+        await ResilientLLM(p).complete(msgs(), model="gemini-3.5-flash-lite", timeout_ms=100)
+    assert set(seen) == {10_000} and asyncio.get_running_loop().time() - start < 1

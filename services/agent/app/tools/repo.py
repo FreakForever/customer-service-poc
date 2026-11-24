@@ -20,6 +20,9 @@ class OpsRepo(Protocol):
     async def insert_ticket(self, row: Row) -> str: ...
     async def insert_quote(self, row: Row) -> None: ...
     async def insert_lead(self, row: Row) -> str: ...
+    async def parts_for_model(self, model: str) -> list[Row]: ...
+    async def customer_city(self, customer_id: str) -> str | None: ...
+    async def queue_length(self) -> int: ...
 
 
 class PgRepo:
@@ -82,3 +85,15 @@ class PgRepo:
             "RETURNING id", **{**row, "contact": json.dumps(row["contact"])})
         assert r is not None
         return str(r["id"])
+
+    async def parts_for_model(self, model: str) -> list[Row]:
+        rows = await self.conn.execute(text("SELECT part_no, name FROM spare_parts WHERE :m = ANY(fits_models)"), {"m": model})
+        return [dict(r) for r in rows.mappings()]
+
+    async def customer_city(self, customer_id: str) -> str | None:
+        r = await self._one("SELECT city FROM customers WHERE id = :c", c=customer_id)
+        return r["city"] if r else None
+
+    async def queue_length(self) -> int:
+        r = await self._one("SELECT count(*) AS n FROM conversations WHERE status = 'handoff'")
+        return int(r["n"]) if r else 0

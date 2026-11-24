@@ -1,11 +1,10 @@
-"""tools node (BS-16, LLD-10): T0 account and part look-ups. Ticket/lead forms stay stubbed until BS-17."""
+"""tools node (BS-16/17, LLD-10): T0 account and part look-ups; ticket and lead flows go to their agents."""
 
 import time
 from typing import Any
 
 from app.db import get_engine
 from app.obs.tracing import span_set
-from app.orchestrator.nodes.stubs import tools as _stub
 from app.orchestrator.state import Draft, HandoffDecision, TurnState
 from app.retrieval.evidence import Evidence
 from app.tools.account import ToolContext, call_tool
@@ -46,28 +45,32 @@ def _unavailable(reason: str, state: TurnState) -> Update:
 async def tools(state: TurnState) -> Update:
     top = max(state["intents"], key=lambda i: i.confidence).name
     calls = plan(top, state)
-    if calls is None:
-        return await _stub(state)
+    if calls is None:                                  # dispatch only sends look-up intents here
+        return _unavailable(f"no tool for {top}", state)
     if not calls:
         return {"answered_tier": "T0", "draft": Draft(text=ASK.get(top, "Could you share a few more details?"))}
-    engine = get_engine()
-    if engine is None:
-        return _unavailable("no database", state)
-    env = state["env"]
-    t0 = time.perf_counter()
     try:
-        async with engine.connect() as conn:
-            ctx = ToolContext(PgRepo(conn), customer_id=env.customer.customer_id if env.customer else None,
-                              channel=env.channel)
-            results = [await call_tool(n, a, ctx) for n, a in calls]
+        text, ev = await lookups(state, calls)
     except Exception as exc:  # noqa: BLE001 - store down: say so and hand off, never fail the turn
         return _unavailable(type(exc).__name__, state)
+    return {"answered_tier": "T0", "draft": Draft(text=text), "evidence": ev}
+
+
+async def lookups(state: TurnState, calls: list[tuple[str, dict[str, Any]]]) -> tuple[str, list[Evidence]]:
+    engine = get_engine()
+    if engine is None:
+        raise ConnectionError("no database")
+    env = state["env"]
+    t0 = time.perf_counter()
+    async with engine.connect() as conn:
+        ctx = ToolContext(PgRepo(conn), customer_id=env.customer.customer_id if env.customer else None,
+                          channel=env.channel)
+        results = [await call_tool(n, a, ctx) for n, a in calls]
     span_set(tools=[(r.tool, r.status) for r in results], tool_ms=round((time.perf_counter() - t0) * 1000, 1))
     ev = [Evidence(id=f"tool:{r.tool}:{next(iter(a.values()))}", kind="tool", source=r.tool, text=render(r), score=1.0,
                    metadata={"status": r.status})
           for r, (_, a) in zip(results, calls, strict=True) if r.status == "ok"]
-    texts = list(dict.fromkeys(render(r) for r in results))
-    return {"answered_tier": "T0", "draft": Draft(text="\n".join(texts)), "evidence": ev}
+    return "\n".join(dict.fromkeys(render(r) for r in results)), ev
 
 
 NODES = {"tools": tools}

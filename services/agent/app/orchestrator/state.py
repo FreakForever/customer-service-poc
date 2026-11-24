@@ -105,4 +105,6 @@ class TurnState(TypedDict, total=False):
     knn: list[tuple[str, float]]          # top kNN intents (hint for the LLM router)
     language: str                         # en | hinglish | mixed — replies are always English (D-030)
     clarification: str | None             # router asks one clarifying question
+    dialog: dict[str, Any]                # specialist memory, stored in conversations.state
+    handback: bool                        # sticky agent returned the turn to the router
     response: dict[str, Any]

@@ -17,6 +17,9 @@ _STATUS = re.compile(r"\b(status|update|progress|where|when|kab|kya hua|any news
                      r"escalat\w*|nobody came|not come)\b", re.IGNORECASE)
 _AMC_STATUS = re.compile(r"\b(active|valid|status|expir\w*|lapsed|still|cover\w*|running)\b", re.IGNORECASE)
 _RENEWAL = re.compile(r"\b(renew\w*|extend|extension|upgrade|quote|quotation)\b", re.IGNORECASE)
+_COMPLAINT = re.compile(r"\b(escalat\w*|complain\w*|unacceptable|(second|third|fourth|\d(nd|rd|th)) time|nobody (came|come|called|"
+                        r"responded)|no one (came|called|responded)|no response|never (came|showed up)|suffering)\b",
+                        re.IGNORECASE)
 _RESET = re.compile(r"^\s*(reset|start over|restart|new (chat|conversation)|clear( chat)?)[\s!.]*$", re.IGNORECASE)
 
 
@@ -32,6 +35,8 @@ def exact_intents(text: str, ents: Entities) -> list[Intent]:
         out.append(Intent(name="human", confidence=1.0, source="rule", span=_HUMAN.search(text).group(0)))  # type: ignore[union-attr]
     if ents.ticket_ids and (_STATUS.search(text) or len(text.split()) <= 6):
         out.append(Intent(name="service.ticket_status", confidence=1.0, source="rule", span=ents.ticket_ids[0]))
+        if _COMPLAINT.search(text):        # an id skips the classifier, so the complaint must be seen here (EM-003)
+            out.append(Intent(name="complaint", confidence=0.95, source="rule", span=_COMPLAINT.search(text).group(0)))  # type: ignore[union-attr]
     if ents.amc_ids and not _RENEWAL.search(text) and (_AMC_STATUS.search(text) or len(text.split()) <= 6):
         out.append(Intent(name="amc.status", confidence=1.0, source="rule", span=ents.amc_ids[0]))
     return out

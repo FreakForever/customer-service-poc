@@ -761,7 +761,7 @@
         "CH-002 turns 2–3 skip the router (trace shows 'sticky_agent')"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.4"
@@ -1481,7 +1481,7 @@
         "CH-002, CH-005, EM-001, EM-006, EM-010 produce correct likely cause and next step"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.4"
@@ -1509,7 +1509,7 @@
         "Ticket id returned to the user; ticket visible in console"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.4"
@@ -1567,7 +1567,7 @@
         "EM-005 answer includes part no, price, availability for Ludhiana's supplying warehouse"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.4"
@@ -1595,7 +1595,7 @@
         "EM-002 creates a lead with extracted fields"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.4"

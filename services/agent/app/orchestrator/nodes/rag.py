@@ -8,7 +8,6 @@ from app.agents.rag_answerer import abstention, answer
 from app.config.settings import get_settings
 from app.db import get_engine
 from app.obs.tracing import span_set
-from app.orchestrator.nodes.stubs import agents as _agents_stub
 from app.orchestrator.state import TurnState
 from app.orchestrator.stream import token_sink
 from app.providers import get_embedder, get_llm
@@ -70,12 +69,4 @@ async def rag_answer(state: TurnState) -> Update:
             "answered_tier": "T2"}
 
 
-async def agents(state: TurnState) -> Update:
-    """Until the specialists exist, never replace a T2 abstention with a stub answer (D-033)."""
-    d = state.get("draft")
-    if d is not None and d.abstained:
-        return {"draft": d, "answered_tier": "T2"}
-    return await _agents_stub(state)
-
-
-NODES = {"rag_answer": rag_answer, "agents": agents}
+NODES = {"rag_answer": rag_answer}

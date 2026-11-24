@@ -18,6 +18,7 @@ from app.config.settings import Settings
 from app.ingest.seed_kb import seed_kb
 from app.obs.tracing import TraceRecorder
 from app.orchestrator.graph import build_graph, run_turn
+from app.orchestrator.nodes import agents as agents_node
 from app.orchestrator.nodes import cache as cache_node
 from app.orchestrator.nodes import rag as rag_node
 from app.orchestrator.policies import get_policy
@@ -57,11 +58,12 @@ async def engine():
 
 async def turn(engine, monkeypatch, text, reply, intent="faq.warranty", fail=0):
     fake = FakeProvider(script={"t2.v1": reply}).fail_next(fail)
-    for mod in (cache_node, rag_node):
+    for mod in (cache_node, rag_node, agents_node):      # an abstention escalates to T3: same model and database
         monkeypatch.setattr(mod, "get_engine", lambda: engine)
         monkeypatch.setattr(mod, "get_embedder", lambda: EMB)
-    monkeypatch.setattr(rag_node, "get_llm", lambda: ResilientLLM(fake))
-    monkeypatch.setattr(rag_node, "get_reranker", NoopReranker)
+    for mod in (rag_node, agents_node):
+        monkeypatch.setattr(mod, "get_llm", lambda: ResilientLLM(fake))
+        monkeypatch.setattr(mod, "get_reranker", NoopReranker)
 
     async def classify(state):
         qvec = (await EMB.embed([state["env"].text], kind="query"))[0]
@@ -105,6 +107,6 @@ async def test_requires_upload_abstains_before_upload(engine, monkeypatch, q):
 
 
 async def test_model_outage_abstains_and_keeps_evidence(engine, monkeypatch):
-    final, rec, _ = await turn(engine, monkeypatch, "Does dust damage void the warranty?", "x [E1]", fail=5)
+    final, rec, _ = await turn(engine, monkeypatch, "Does dust damage void the warranty?", "x [E1]", fail=50)
     assert final["draft"].abstained and final["evidence"] and "[stub]" not in final["response"]["text"]
     assert next(s for s in rec.spans if s.node == "rag_answer").status == "error"
