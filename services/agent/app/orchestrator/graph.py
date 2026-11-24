@@ -19,6 +19,7 @@ from app.orchestrator.nodes import rag as rag_nodes
 from app.orchestrator.nodes import router as router_nodes
 from app.orchestrator.nodes import rules as rule_nodes
 from app.orchestrator.nodes import stubs
+from app.orchestrator.nodes import tools as tool_nodes
 from app.orchestrator.policies import ChannelPolicy, get_policy
 from app.orchestrator.state import Envelope, TurnState
 
@@ -150,7 +151,7 @@ def with_budget(name: str, fn: NodeFn) -> NodeFn:
 # ---------- graph ----------
 
 REAL_NODES: dict[str, NodeFn] = {**rule_nodes.NODES, **router_nodes.NODES, **cache_nodes.NODES,
-                                **rag_nodes.NODES}  # grows per step
+                                **rag_nodes.NODES, **tool_nodes.NODES}  # grows per step
 
 
 def build_graph(overrides: dict[str, NodeFn] | None = None):

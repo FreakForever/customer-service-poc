@@ -41,12 +41,13 @@ def _no_network(request, monkeypatch):
 @pytest.fixture(autouse=True)
 def _fresh_caches():
     from app.config.settings import get_settings
+    from app.db import get_engine
     from app.providers import get_embedder, get_llm
 
-    for f in (get_settings, get_llm, get_embedder):
+    for f in (get_settings, get_engine, get_llm, get_embedder):
         f.cache_clear()
     yield
-    for f in (get_settings, get_llm, get_embedder):
+    for f in (get_settings, get_engine, get_llm, get_embedder):
         f.cache_clear()
 
 

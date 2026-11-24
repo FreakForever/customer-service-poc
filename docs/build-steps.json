@@ -574,11 +574,11 @@
         "pytest services/agent/tests/unit/test_tools.py",
         "make eval-transactional (100%)"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "app/tools/{account,repo,render}.py, orchestrator/nodes/tools.py, db.warm_pool. tests/unit/test_tools.py 21 passed; tests/integration/test_tools_db.py 8 passed; full suite 347 passed. `make eval-transactional`: first run 15/16 (Q-155 hit the 800 ms tool budget on a cold connection), then 4 runs of 16/16, 0 leaks as another customer or anonymous, Q-179 refused, Q-171 facts available from the tools. T0 p95 from the laptop via proxy: 294, 508, 297, 255 ms (n=80 each). D-034. Gaps: FR-AG-03 T0 p95 < 300 ms not reliable from here, to be measured on Cloud Run; Q-171 answer text needs the BS-17 agents; warranty rule reported as v2 per LLD-10 although DOC-POL-WARRANTY-V2 only covers machines dispatched from 2025-04-01 (recorded end date is used); customers matched only by e-mail domain get full account access (decide in BS-21); create_* have no duplicate protection; create_ticket/create_lead/quote not wired to chat until BS-17; one suite run had an unexplained test_kg_templates failure that passed twice since."
     },
     {
       "id": "BS-17",

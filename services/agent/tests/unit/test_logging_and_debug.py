@@ -54,7 +54,8 @@ def test_debug_run_returns_trace_with_node_spans(monkeypatch):
     assert r.status_code == 200 and r.headers["X-Request-ID"]
     body = r.json()
     assert body["path"] == [s["node"] for s in body["trace"]["spans"]]
-    assert body["trace"]["answered_tier"] == "T0" and body["response"]["text"] == "[stub] tool result"
+    assert "tools" in body["path"] and "[stub]" not in body["response"]["text"]     # no database: told plainly, handed off
+    assert body["trace"]["answered_tier"] == "T4" and body["response"]["handoff"]["action"] == "handoff"
     assert body["persisted"] is False and body["trace"]["mode"] == "debug"
 
 

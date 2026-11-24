@@ -20,11 +20,13 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     them inside their node budgets (BS-13)."""
     async def warm() -> None:
         try:
+            from app.db import warm_pool
             from app.providers import get_embedder
             from app.retrieval.rerank import get_reranker
             from app.router.knn import get_knn
             from app.rules.context import get_rule_context
 
+            await warm_pool()
             await get_rule_context()
             await get_knn().build(get_embedder())
             await asyncio.to_thread(get_reranker)
