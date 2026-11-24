@@ -19,6 +19,8 @@ from typing import Any, ParamSpec, Self, TypeVar
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncConnection
 
+from app.obs.cost import cost_usd
+
 P = ParamSpec("P")
 R = TypeVar("R")
 
@@ -49,6 +51,8 @@ class TraceRecorder:
     spans: list[Span] = field(default_factory=list)
     root: dict[str, Any] = field(default_factory=dict)   # answered_tier, intents, confidence, handoff, ...
     first_token_ms: int | None = None
+    cost_usd: float = 0.0
+    unpriced: set[str] = field(default_factory=set)      # models used that have no listed price
 
     def __enter__(self) -> Self:
         self._token = _recorder.set(self)
@@ -65,13 +69,18 @@ class TraceRecorder:
         if self.first_token_ms is None:
             self.first_token_ms = self.latency_ms
 
+    @property
+    def cost(self) -> float | None:
+        """Estimated cost of the request; unknown (None) when a model without a price was used."""
+        return None if self.unpriced else round(self.cost_usd, 8)
+
     def totals(self) -> dict[str, int]:
         return {"tokens_in": sum(s.tokens_in for s in self.spans), "tokens_out": sum(s.tokens_out for s in self.spans)}
 
     def as_dict(self) -> dict[str, Any]:
         return {"trace_id": str(self.trace_id), "conversation_id": str(self.conversation_id) if self.conversation_id else None,
                 "channel": self.channel, "mode": self.mode, "latency_ms": self.latency_ms,
-                "first_token_ms": self.first_token_ms, **self.totals(), **self.root,
+                "first_token_ms": self.first_token_ms, "cost_usd": self.cost, **self.totals(), **self.root,
                 "spans": [{**asdict(s), "started_at": s.started_at.isoformat()} for s in self.spans]}
 
 
@@ -94,6 +103,27 @@ def span_set(**fields: Any) -> None:
             setattr(s, k, v)
         else:
             s.attrs[k] = v
+
+
+def record_llm(model: str, tokens_in: int, tokens_out: int, *, estimated: bool = False) -> None:
+    """Every model call of a turn, whoever made it: tokens and cost go to the open span and the request total (NFR-COST-01)."""
+    rec = _recorder.get()
+    if rec is None:
+        return
+    cost = cost_usd(model, tokens_in, tokens_out)
+    if cost is None:
+        rec.unpriced.add(model)
+    else:
+        rec.cost_usd += cost
+    s = _span.get()
+    if s is None:                                   # outside any node (shouldn't happen): keep the tokens
+        s = Span(node="llm", started_at=dt.datetime.now(dt.UTC))
+        rec.spans.append(s)
+    s.model = model
+    s.tokens_in += tokens_in
+    s.tokens_out += tokens_out
+    s.attrs.setdefault("llm_calls", []).append({"model": model, "tokens_in": tokens_in, "tokens_out": tokens_out, "cost_usd": cost,
+                                                **({"estimated": True} if estimated else {})})
 
 
 def traced(node: str) -> Callable[[Callable[P, Awaitable[R]]], Callable[P, Awaitable[R]]]:
@@ -138,9 +168,9 @@ async def save_trace(conn: AsyncConnection, rec: TraceRecorder) -> None:
                 :mode, CAST(:detail AS jsonb))"""),
         {"id": rec.trace_id, "conv": rec.conversation_id, "channel": rec.channel, "tier": r.get("answered_tier"),
          "intents": r.get("intents") or [], "conf": r.get("confidence"), "ground": r.get("groundedness"),
-         "handoff": r.get("handoff"), "lat": rec.latency_ms, "ft": rec.first_token_ms, 
+         "handoff": r.get("handoff"), "lat": rec.latency_ms, "ft": rec.first_token_ms,
              "tin": rec.totals()["tokens_in"], "tout": rec.totals()["tokens_out"],
-         "cost": r.get("cost_usd"), "mode": rec.mode, "detail": _json(r.get("detail", {}))})
+         "cost": rec.cost, "mode": rec.mode, "detail": _json(r.get("detail", {}))})
     if rec.spans:
         await conn.execute(text("""
             INSERT INTO spans (trace_id, node, started_at, duration_ms, model, tokens_in, tokens_out, cache_hit, attrs)

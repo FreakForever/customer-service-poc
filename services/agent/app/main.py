@@ -74,6 +74,9 @@ def create_app() -> FastAPI:
 
     app.include_router(admin_router)
     app.include_router(demo_router)
+    from app.api.analytics import router as analytics_router
+
+    app.include_router(analytics_router)
     from app.api.kb import router as kb_router
 
     app.include_router(kb_router)

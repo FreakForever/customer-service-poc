@@ -61,8 +61,7 @@ async def rag_answer(state: TurnState) -> Update:
         span_set(status="timeout" if isinstance(exc, TimeoutError) else "error", error=type(exc).__name__)
         return {"evidence": evidence, "retrieval_score": 0.0, "draft": abstention(), "answered_tier": "T2"}
     if (c := res.completion) is not None:
-        span_set(model=c.model, tokens_in=c.input_tokens, tokens_out=c.output_tokens, attempts=c.attempts,
-                 fallback_used=c.fallback_used)
+        span_set(attempts=c.attempts, fallback_used=c.fallback_used)
     span_set(abstained=res.draft.abstained, citations=[x.evidence_id for x in res.draft.citations])
     # RRF/rerank scores aren't calibrated; the model's abstention is the "low retrieval score" signal (D-033)
     return {"evidence": evidence, "retrieval_score": 1.0 if evidence else 0.0, "draft": res.draft,

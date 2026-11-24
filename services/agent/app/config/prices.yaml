@@ -1,0 +1,6 @@
+# List prices, USD per 1M tokens, for the cost estimate (NFR-COST-01). Source: the Gemini API pricing page, paid tier,
+# standard, text; output includes thinking tokens. Checked 2026-11-25. The free tier itself is not billed.
+# A model that isn't listed has no estimate (shown as "not priced"), never zero.
+gemini-3.5-flash-lite: {input: 0.30, output: 2.50}
+gemini-3.1-flash-lite: {input: 0.25, output: 1.50}
+gemma-4-26b-a4b-it: {input: 0, output: 0}   # free tier only, no paid price

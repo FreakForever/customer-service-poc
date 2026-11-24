@@ -227,6 +227,7 @@ def make_reply_handler(engine: AsyncEngine, adapter: MailAdapter | None = None):
                 await conn.execute(text("UPDATE messages SET delivery = :d WHERE id = :i"), {"d": "sent" if ok else "failed", "i": rid})
             if not ok:
                 await _review(engine, cid, "The reply could not be sent.")
+        rec.root.setdefault("detail", {})["sent"] = send            # analytics: did the AI answer go out by itself?
         try:
             async with engine.begin() as conn:
                 await save_trace(conn, rec)

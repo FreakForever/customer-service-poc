@@ -2228,7 +2228,7 @@
         "Numbers match trace table aggregates"
       ],
       "verification": "demo",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.9"
@@ -2775,7 +2775,7 @@
         "Cost per conversation shown on analytics"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-4.3"

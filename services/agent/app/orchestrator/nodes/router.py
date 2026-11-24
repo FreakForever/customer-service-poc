@@ -45,8 +45,7 @@ async def llm_router(state: TurnState) -> Update:
         span_set(status="fallback", fallback=type(exc).__name__)
         log.info("llm router fell back to kNN: %s", type(exc).__name__)
         return {"intents": [Intent(name=hint[0][0], confidence=hint[0][1], source="knn")] if hint else []}
-    span_set(model=comp.model, tokens_in=comp.input_tokens, tokens_out=comp.output_tokens,
-             attempts=comp.attempts, routed=[i.name for i in routed.intents])
+    span_set(attempts=comp.attempts, routed=[i.name for i in routed.intents])
     intents = [Intent(name=i.name, confidence=i.confidence, source="llm", span=i.span)
                for i in routed.intents if i.name != "other"]
     out: Update = {"intents": intents}

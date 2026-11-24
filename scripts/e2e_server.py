@@ -52,6 +52,11 @@ def prepare(url: str) -> None:
 
         c.execute(text("INSERT INTO kg_change_requests (doc_id, op, payload, confidence) VALUES ('DOC-MAN-DHD', 'add_node', "
                        "CAST(:p AS jsonb), 0.6)"), {"p": json.dumps({"id": "E2E-REJECT", "label": "Component", "props": {"name": "Reject me"}})})
+        # two weeks of earlier turns, so the analytics charts have something to draw (outside the default 7-day view's last day)
+        c.execute(text("""INSERT INTO traces (id, conversation_id, channel, answered_tier, groundedness, handoff, latency_ms, tokens_in, tokens_out,
+            cost_usd, created_at, detail) SELECT gen_random_uuid(), md5((g / 2)::text)::uuid, CASE WHEN g % 4 = 0 THEN 'email' ELSE 'chat' END,
+            'T' || (g * 7 % 11 % 5), CASE WHEN g % 4 = 0 THEN 0.95 END, g * 7 % 11 % 5 = 4, 150 + (g * 37 % 90) * (1 + g * 7 % 11 % 5) * 12, 800, 90,
+            0.00001 * (g * 7 % 11 % 5), now() - interval '1 day' * (1 + g % 13), '{}' FROM generate_series(1, 160) g"""))
     eng.dispose()
 
     async def kb() -> None:

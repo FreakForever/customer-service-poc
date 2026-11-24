@@ -937,7 +937,7 @@
       "progress_pct": 100,
       "started": "2026-11-24",
       "completed": "2026-11-25",
-      "notes": "`pnpm -C apps/web e2e -g admin`: 7 passed (agents get 403, upload → searchable → cited in chat → re-index → delete → gone entirely from the UI, refused files, FAQ edit, graph change decision, explorer, axe at 360/1366 px). test_admin_api.py 16 passed, test_kg_changes.py 11 passed, vitest 80 passed. Regression after BS-26: full backend suite 596 passed; all browser tests 35 passed. D-043. Model, classifier and embedder scripted. Gaps: CSV upload and extraction are BS-28 (the changes page has nothing to list until then); re-index of seed documents fails on Cloud Run because their files aren't in the bucket; edited seed FAQs return to the seed text when `make seed` runs again; other API/worker processes see approved graph changes in their dictionaries only after a restart; uploads aren't virus-scanned."
+      "notes": "`pnpm -C apps/web e2e -g admin`: 7 passed (agents get 403, upload → searchable → cited in chat → re-index → delete → gone entirely from the UI, refused files, FAQ edit, graph change decision, explorer, axe at 360/1366 px). test_admin_api.py 16 passed, test_kg_changes.py 12 passed, vitest 80 passed. Regression after BS-26: full backend suite 596 passed; all browser tests 35 passed. D-043. Model, classifier and embedder scripted. Gaps: CSV upload and extraction are BS-28 (the changes page has nothing to list until then); re-index of seed documents fails on Cloud Run because their files aren't in the bucket; edited seed FAQs return to the seed text when `make seed` runs again; other API/worker processes see approved graph changes in their dictionaries only after a restart; uploads aren't virus-scanned."
     },
     {
       "id": "BS-27",
@@ -966,11 +966,11 @@
         "pnpm -C apps/web e2e -g analytics",
         "Spot-check numbers against SQL"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-25",
+      "completed": "2026-11-25",
+      "notes": "Analytics page (Overview, Cost, Benchmark) on /v1/analytics/{summary,flagged,benchmark}. Verify: pnpm e2e -g analytics 5 passed; numbers spot-checked against separate SQL on dev mcs (12 live turns, 11 conversations, p50 4076 ms, p95 9093 ms, groundedness 1.0, tier counts: all equal) and against hand-worked numbers in tests/e2e/test_analytics_api.py (7). Full runs: 607 backend, 40 browser, 91 web unit. Migration 0006 applied to dev. Deviation D-044: computed live, no materialized view. Model usage was recorded by 2 call sites only; now recorded for every call in ResilientLLM. Known gaps: Benchmark tab is empty until BS-29 writes eval_runs (only sample data tested); turns before BS-27 have no cost; cost is a list-price estimate (free tier isn't billed), without embeddings or failed attempts; streamed calls would be estimated; chat groundedness isn't judged; abandoned conversations count as deflected; traces are kept 30 days; tokens/cost not checked on live model calls."
     },
     {
       "id": "BS-28",

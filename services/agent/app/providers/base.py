@@ -14,6 +14,8 @@ from typing import Literal, Protocol, runtime_checkable
 
 from pydantic import BaseModel, ValidationError
 
+from app.obs.tracing import record_llm
+
 log = logging.getLogger("mcs.providers")
 
 Role = Literal["system", "user", "assistant"]
@@ -152,6 +154,7 @@ class ResilientLLM:
                 skip_retry = skip_retry or (i == 0 and not exc.transient)
                 log.warning("llm attempt %d failed (%s %s): %s", i + 1, llm.name, mdl, exc)
                 continue
+            record_llm(out.model, out.input_tokens, out.output_tokens)
             return out.model_copy(update={
                 "attempts": len(errors) + 1, "fallback_used": is_fallback,
                 "latency_ms": out.latency_ms or int((time.perf_counter() - start) * 1000)})
@@ -171,9 +174,14 @@ class ResilientLLM:
                 errors.append(exc)
                 log.warning("llm stream start failed (%s %s): %s", llm.name, mdl, exc)
                 continue
-            yield first
-            async for chunk in it:
-                yield chunk
+            size = len(first)
+            try:
+                yield first
+                async for chunk in it:
+                    size += len(chunk)
+                    yield chunk
+            finally:                                # streams report no usage: about four characters per token
+                record_llm(mdl, sum(len(m.content) for m in messages) // 4, size // 4, estimated=True)
             return
         raise ProviderUnavailable(f"all LLM stream attempts failed for {model}: {errors[-1]}", errors)
 

@@ -72,6 +72,7 @@ async def _turn(engine: AsyncEngine, sid: uuid.UUID, conv: dict[str, Any], messa
         final = await run_turn(env, recorder=rec, session=session, graph=graph)
     except Exception:
         log.exception("chat turn failed")
+        rec.root.update({"answered_tier": "T4", "handoff": True, "detail": {"failed": True, "handoff": {"action": "handoff", "reason": "turn failed"}}})
     r: dict[str, Any] = final["response"] if final else {"text": HANDOFF_TEXT, "handoff": {"action": "handoff", "priority": None}, "answered_tier": "T4"}
     d = final.get("draft") if final else None
     cites = citations_of(final) if final else []

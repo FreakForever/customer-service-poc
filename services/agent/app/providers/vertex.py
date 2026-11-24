@@ -87,7 +87,7 @@ class VertexProvider:
         return Completion(
             text=text, model=model, provider=self.name, parsed=parsed,
             input_tokens=(usage.prompt_token_count or 0) if usage else 0,
-            output_tokens=(usage.candidates_token_count or 0) if usage else 0,
+            output_tokens=(usage.candidates_token_count or 0) + (usage.thoughts_token_count or 0) if usage else 0,
             latency_ms=int((time.perf_counter() - start) * 1000),
             stop_reason=str(reason.value if hasattr(reason, "value") else reason) if reason else None)
 
