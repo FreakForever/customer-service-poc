@@ -61,15 +61,17 @@ def create_app() -> FastAPI:
     from app.api.chat import router as chat_router
 
     app.include_router(chat_router)
-    from app.api.email import mailbox_router
+    from app.api.demo import router as demo_router
+    from app.api.email import console_router
     from app.api.email import router as email_router
 
     app.include_router(email_router)
+    app.include_router(console_router)
+    app.include_router(demo_router)
     if settings.debug_api if settings.debug_api is not None else settings.env == "dev":
         from app.api.debug import router as debug_router
 
         app.include_router(debug_router)
-        app.include_router(mailbox_router)
 
     # Canonical paths are /health and /ready: Cloud Run's front end reserves paths ending in "z" and answers
     # /healthz with its own 404 before the request reaches the container (D-018). The *z aliases are kept

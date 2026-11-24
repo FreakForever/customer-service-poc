@@ -16,7 +16,7 @@ proxy:        ; $(PROXY) $$CLOUDSQL_INSTANCE --port 5432
 dev:          ; $(MAKE) -j4 proxy api-dev worker-dev web-dev
 api-dev:      ; cd services/agent && uv run uvicorn app.main:app --reload --port 8000
 worker-dev:   ; cd services/agent && uv run python -m app.worker
-web-dev:      ; pnpm -C apps/web dev
+web-dev:      ; DEMO_STAFF_LOGIN=true NEXTAUTH_URL=http://localhost:3000 pnpm -C apps/web dev
 migrate:      ; cd services/agent && uv run alembic upgrade head
 graph:        ; cd services/agent && uv run python ../../scripts/export_graph.py
 eval-router:  ; cd services/agent && uv run python ../../eval/router.py

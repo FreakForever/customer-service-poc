@@ -1,11 +1,19 @@
-/* Placeholder brand tokens until OD-001 is decided (BS-22 owns the full theme). */
+/* Design tokens: the only place colours and typography are defined (FR-UI-07, LLD-15).
+   Placeholders until Matsui brand assets arrive (OD-001 → D-040). tests/contrast.test.ts checks every text pair. */
 :root {
-  --color-navy: #0a2540;
-  --color-blue: #0057a8;
-  --color-bg: #ffffff;
-  --color-text: #0a2540;
+  --mt-navy: #0a2540;
+  --mt-blue: #0057a8;
+  --mt-blue-600: #004a8f;
+  --mt-sky: #eaf2fb;
+  --mt-steel: #52606f;
+  --mt-line: #d9e1ea;
+  --mt-field: #76869a;
+  --mt-bg: #f7f9fc;
+  --mt-surface: #ffffff;
+  --mt-accent: #e8590c;
+  --ok: #1a7a36;
+  --warn: #8f5500;
+  --bad: #c62828;
+  --radius: 12px;
+  --font: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
-@media (prefers-color-scheme: dark) {
-  :root { --color-bg: #0a1626; --color-text: #e6edf5; }
-}
-body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: system-ui, sans-serif; }

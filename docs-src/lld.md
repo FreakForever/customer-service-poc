@@ -72,7 +72,9 @@ matsui-cs-poc/
 | `SUPPORT_ADDRESS` | `support@matsui-demo.example` | Inbound/outbound address |
 | `GCS_BUCKET` | `mcs-<env>-uploads` | Uploads & attachments (all environments) |
 | `RETENTION_DAYS` | `30` | Purge horizon |
-| `NEXTAUTH_SECRET` / `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `STAFF_ALLOWLIST` | — | Staff auth |
+| `NEXTAUTH_SECRET` / `NEXTAUTH_URL` / `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | — | Staff auth (web; the API uses the same `NEXTAUTH_SECRET`) |
+| `STAFF_ALLOWLIST` | — | `role:email` or `role:@domain`, comma-separated; domain entries need Google's `hd` claim (D-040) |
+| `DEMO_STAFF_LOGIN` | off (`make web-dev` sets it) | Password-less agent/admin persona; only with `ENV=dev` and never on Cloud Run |
 | `AGENT_API_URL` | `http://localhost:8000` (Cloud Run API URL when deployed) | Web → agent API base URL (server side) |
 
 **Channel policies (`app/config/policies.yaml`)** ([FR-OR-04](Requirements.html#FR-OR-04)):
@@ -630,8 +632,8 @@ Errors: RFC 7807 JSON `{type, title, status, detail, trace_id}`.
 **Design tokens (`styles/tokens.css`)** — placeholders until OD-001 ([FR-UI-07](Requirements.html#FR-UI-07)):
 
 ```css
---mt-navy:#0A2540; --mt-blue:#0057A8; --mt-blue-600:#004A8F; --mt-sky:#EAF2FB; --mt-steel:#5B6B7C;
---mt-line:#D9E1EA; --mt-bg:#F7F9FC; --mt-accent:#E8590C; --ok:#1E8E3E; --warn:#B26A00; --bad:#C62828;
+--mt-navy:#0A2540; --mt-blue:#0057A8; --mt-blue-600:#004A8F; --mt-sky:#EAF2FB; --mt-steel:#52606F;
+--mt-line:#D9E1EA; --mt-bg:#F7F9FC; --mt-accent:#E8590C; --mt-field:#76869A; --mt-surface:#FFFFFF; --ok:#1A7A36; --warn:#8F5500; --bad:#C62828;
 --radius:12px; font: Inter / system-ui; headings 600, sentence case; 8-pt spacing grid
 ```
 
@@ -656,6 +658,8 @@ Errors: RFC 7807 JSON `{type, title, status, detail, trace_id}`.
 **Analytics** ([FR-UI-06](Requirements.html#FR-UI-06)): KPI tiles (conversations, deflection %, handoff %, median and p95 latency, groundedness, cost/conversation), tier-mix stacked bar by day, latency box per tier, feedback trend, flagged answers list, Benchmark tab (accuracy by question type × mode, latency and tokens by mode).
 
 **Persona bar** ([FR-UI-08](Requirements.html#FR-UI-08)): thin bar above the top bar in demo mode: persona select (anonymous, Aarav Polymers, Orion Auto Components, Navkar Precision Plastics, …, Agent, Admin), "Send sample emails", "Reset demo".
+
+Implementation notes (BS-22, D-040): Next 15 + Tailwind 4 + NextAuth 4. `styles/tokens.css` is the only file with colours (`tests/contrast.test.ts` checks AA and the single-file rule; steel, ok and warn were darkened to pass). `middleware.ts` (Node runtime) guards `/console`, `/analytics` (agent), `/admin`, `/api/demo` (admin): no session → redirect to `/signin` (401 for API routes), no role → 403; layouts, pages and routes check again. Roles come from `STAFF_ALLOWLIST` on every request. The web server calls staff API routes with a 5-minute HS256 token (`lib/staffToken.ts` → `app/api/staff.py`, key = SHA-256 of `staff-api:`+`NEXTAUTH_SECRET`, issuer `mcs-web`, audience `mcs-agent-api`). `GET /console/mailbox` now needs the agent role in every environment. Customer persona = cookie `mcs_persona`. `POST /demo/send-sample-emails` is live; `POST /demo/reset` arrives in BS-33.
 
 ## 16. Observability, analytics and evaluation {#LLD-16}
 

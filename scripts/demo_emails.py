@@ -9,8 +9,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "services" / "agent"))
 
-from app.channels.email.adapter import InboundMail
 from app.channels.email.pipeline import ingest, make_reply_handler
+from app.channels.email.samples import sample_mails
 from app.config.settings import get_settings
 from app.db import get_engine
 from app.jobs.queue import run_once
@@ -31,8 +31,8 @@ async def main() -> int:
         results[job.payload["message_id"]] = out
         return out
     new = 0
-    for e in json.loads((ROOT / "mock-data/data/channels/emails.json").read_text()):
-        new += (await ingest(engine, InboundMail(message_id=f"<{e['id']}@samples.mcs>", from_addr=e["from"], subject=e["subject"], text=e["body"])))[1]
+    for m in sample_mails():
+        new += (await ingest(engine, m))[1]
     while await run_once(engine, {"email_reply": record}):
         pass
     print(f"new messages: {new}")

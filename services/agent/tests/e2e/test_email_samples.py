@@ -441,10 +441,17 @@ async def test_gmail_sync_cursor_dedupe_and_expired_history(mail):
     assert make_gmail_watch_handler(get_engine(), g)
 
 
-async def test_mailbox_view_is_dev_only(http, monkeypatch):
-    assert (await http.get("/v1/console/mailbox?box=outbox")).status_code == 200
-    from app.main import create_app
-    monkeypatch.setenv("ENV", "demo")
+async def test_mailbox_view_needs_the_agent_role(http):
+    from tests.unit.test_staff_auth import token
+    assert (await http.get("/v1/console/mailbox")).status_code == 401
+    assert (await http.get("/v1/console/mailbox?box=outbox", headers=token("agent"))).status_code == 200
+
+
+async def test_send_sample_emails(http, monkeypatch):
+    from tests.unit.test_staff_auth import token
+    for _ in range(2):                                     # every click is a new set
+        r = await http.post("/v1/demo/send-sample-emails", headers=token("admin"))
+        assert (r.status_code, r.json()) == (202, {"count": 10})
+    monkeypatch.setenv("MAIL_ADAPTER", "gmail")
     get_settings.cache_clear()
-    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app()), base_url="http://t") as c:
-        assert (await c.get("/v1/console/mailbox")).status_code == 404
+    assert (await http.post("/v1/demo/send-sample-emails", headers=token("admin"))).status_code == 403

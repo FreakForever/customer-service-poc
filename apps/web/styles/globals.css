@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@theme inline {
+  --color-navy: var(--mt-navy);
+  --color-blue: var(--mt-blue);
+  --color-blue-600: var(--mt-blue-600);
+  --color-sky: var(--mt-sky);
+  --color-steel: var(--mt-steel);
+  --color-line: var(--mt-line);
+  --color-field: var(--mt-field);
+  --color-bg: var(--mt-bg);
+  --color-surface: var(--mt-surface);
+  --color-accent: var(--mt-accent);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --radius-card: var(--radius);
+  --font-sans: var(--font);
+}
+
+@layer base {
+  body { background: var(--mt-bg); color: var(--mt-navy); font-family: var(--font); line-height: 1.5; }
+  h1, h2, h3 { font-weight: 600; line-height: 1.25; }
+  :focus-visible { outline: 3px solid var(--mt-blue); outline-offset: 2px; }
+  .on-navy :focus-visible { outline-color: var(--mt-surface); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+}

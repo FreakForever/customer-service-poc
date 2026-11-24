@@ -7,25 +7,30 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "next dev -H localhost -p 3000",
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
-    "test": "echo \"no web tests yet (BS-22)\"",
+    "test": "vitest run",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "jose": "^5",
     "next": "15",
+    "next-auth": "^4.24.11",
     "react": "19",
     "react-dom": "19"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "20",
     "@types/react": "19",
     "@types/react-dom": "19",
     "eslint": "9",
     "eslint-config-next": "15",
-    "typescript": "5"
+    "tailwindcss": "^4",
+    "typescript": "5",
+    "vitest": "^3"
   }
 }

@@ -788,11 +788,11 @@
         "pnpm -C apps/web test",
         "Unauthenticated /console redirects; agent role sees console"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "pnpm test: 68 passed (contrast, roles, middleware, shells, API token). Production build probed with curl: unauthenticated /console, /admin, /analytics → 307 /signin; agent → /console 200, /admin 403; admin → 200; the same cookie with demo login off → 403. Headless Chromium at 360/768/1280 px: no horizontal overflow, persona switch and sign-out work (before the final mobile nav tweak, which was only rebuilt and unit-tested). Backend suite: 538 passed, 3 failed (test tokens minted at collection expired during the 14-minute run; fixed, file re-run 15 passed, full suite not repeated). OD-001 = placeholders, Google OAuth client later (user decisions, D-040). CI on 7ca029d (BS-18..21): SUCCESS, all 6 steps. Gaps: Google sign-in never exercised against Google; mcs-web on Cloud Run has no NEXTAUTH_SECRET/NEXTAUTH_URL/ENV/allow-list yet, so staff sign-in and the demo bar are off there until BS-32; sample e-mails aren't in the API image (endpoint returns 503 there); 'Reset demo' button disabled until BS-33; pages are shells until BS-23..27; no real logo, photos or Inter web font."
     },
     {
       "id": "BS-23",

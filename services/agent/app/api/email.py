@@ -1,4 +1,4 @@
-"""Email routes (LLD-14): contact form / demo inbound, Gmail push, demo mailbox view (dev)."""
+"""Email routes (LLD-14): contact form / demo inbound, Gmail push, demo mailbox view (staff)."""
 
 import asyncio
 import base64
@@ -13,6 +13,7 @@ from fastapi import APIRouter, Header, HTTPException, Request, Response
 from pydantic import BaseModel, Field
 
 from app.api.chat import EngineDep
+from app.api.staff import AgentDep
 from app.channels.email.adapter import InboundMail
 from app.channels.email.demo_mailbox import listing
 from app.channels.email.pipeline import ingest
@@ -20,7 +21,7 @@ from app.config.settings import get_settings
 from app.jobs.queue import enqueue
 
 router = APIRouter(prefix="/v1", tags=["email"])
-mailbox_router = APIRouter(prefix="/v1", tags=["email"])
+console_router = APIRouter(prefix="/v1", tags=["email"])
 PER_MINUTE = 30
 _hits: dict[str, deque[float]] = defaultdict(deque)
 _ADDR = re.compile(r"^[^@\s<>,;:\"']{1,64}@[A-Za-z0-9.-]{1,190}\.[A-Za-z]{2,}$")
@@ -91,8 +92,7 @@ async def gmail_push(request: Request, engine: EngineDep, authorization: Annotat
     return Response(status_code=204)
 
 
-@mailbox_router.get("/console/mailbox")
-async def mailbox(engine: EngineDep, box: Literal["inbox", "outbox"] = "inbox") -> dict[str, Any]:
-    """Dev only until staff sign-in exists (BS-22)."""
+@console_router.get("/console/mailbox")
+async def mailbox(_: AgentDep, engine: EngineDep, box: Literal["inbox", "outbox"] = "inbox") -> dict[str, Any]:
     async with engine.connect() as conn:
         return {"items": await listing(conn, box)}
