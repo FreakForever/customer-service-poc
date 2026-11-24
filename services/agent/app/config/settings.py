@@ -38,8 +38,8 @@ class Settings(BaseSettings):
 
     # LLM / embeddings (OD-002, OD-004: defaults below until the bake-off decides)
     provider: ProviderName = "vertex"
-    model_fast: str = "gemini-3.1-flash-lite"     # interim (D-030): the only fast model served to the project
-    model_strong: str = "gemini-3.1-flash-lite"   # interim until a pro model is enabled (OD-002, BS-30)
+    model_fast: str = "gemini-3.5-flash-lite"     # interim (D-032): served on the Gemini API free tier
+    model_strong: str = "gemini-3.5-flash-lite"   # interim until a stronger model is reachable (OD-002, BS-30)
     fallback_provider: ProviderName | Literal[""] = ""  # empty = no cross-provider fallback
     model_fallback: str = ""  # model used on the fallback provider (or on the primary if no fallback provider)
     embed_provider: ProviderName | Literal[""] = ""  # empty = same as provider (anthropic has no embeddings -> vertex)
@@ -67,6 +67,10 @@ class Settings(BaseSettings):
     gcp_region: str = "asia-south1"
     vertex_location: str = ""  # embeddings; empty = gcp_region
     vertex_llm_location: str = "global"  # generation endpoint (current Gemini models are served on "global")
+    # Gemini generation through the Gemini Developer API (API key, free tier) instead of Vertex — D-032. Embeddings
+    # stay on Vertex. Synthetic data only: free-tier prompts may be used to improve Google's products.
+    gemini_via: Literal["vertex", "api"] = "vertex"
+    gemini_api_key: SecretStr = SecretStr("")
     anthropic_via: Literal["vertex", "api"] = "vertex"
     anthropic_vertex_region: str = "global"
     anthropic_api_key: SecretStr = SecretStr("")

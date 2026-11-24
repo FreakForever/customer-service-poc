@@ -23,7 +23,8 @@ def _err(exc: BaseException, provider: str) -> ProviderError:
 
 class VertexProvider:
     def __init__(self, *, project: str, location: str, dim: int = 768, embed_model: str = "text-embedding-005",
-                 name: str = "vertex", thinking_budgets: dict[str, int] | None = None, llm_location: str = "") -> None:
+                 name: str = "vertex", thinking_budgets: dict[str, int] | None = None, llm_location: str = "",
+                 api_key: str = "") -> None:
         from google import genai
 
         self.name, self.dim, self.embed_model = name, dim, embed_model
@@ -33,8 +34,12 @@ class VertexProvider:
         # embeddings stay in `location` (asia-south1); generation may use another endpoint (e.g. "global", where
         # the current Gemini models are served) — VERTEX_LLM_LOCATION, D-030
         self._client = genai.Client(vertexai=True, project=project or None, location=location)
-        self._llm = self._client if not llm_location or llm_location == location else \
-            genai.Client(vertexai=True, project=project or None, location=llm_location)
+        if api_key:      # Gemini Developer API (D-032): generation only; embeddings stay on Vertex
+            self._llm = genai.Client(api_key=api_key)
+        elif not llm_location or llm_location == location:
+            self._llm = self._client
+        else:
+            self._llm = genai.Client(vertexai=True, project=project or None, location=llm_location)
 
     @staticmethod
     def _contents(messages: list[Msg]) -> list[Any]:

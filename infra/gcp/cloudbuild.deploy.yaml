@@ -37,9 +37,9 @@ steps:
       - |
         set -euo pipefail
         IMG=${_REGION}-docker.pkg.dev/$PROJECT_ID/mcs/agent:${_TAG}
-        ENVV=ENV=${_ENV},GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},CLOUDSQL_INSTANCE=$PROJECT_ID:${_REGION}:mcs-${_ENV},GCS_BUCKET=mcs-${_ENV}-uploads,PROVIDER=vertex,MAIL_ADAPTER=demo
+        ENVV=ENV=${_ENV},GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},CLOUDSQL_INSTANCE=$PROJECT_ID:${_REGION}:mcs-${_ENV},GCS_BUCKET=mcs-${_ENV}-uploads,PROVIDER=vertex,GEMINI_VIA=api,MODEL_FALLBACK=gemma-4-26b-a4b-it,MAIL_ADAPTER=demo
         S=mcs-${_ENV}
-        SECRETS=DB_PASSWORD=$$S-db-password:latest,NEO4J_URI=$$S-neo4j-uri:latest,NEO4J_USER=$$S-neo4j-user:latest,NEO4J_PASSWORD=$$S-neo4j-password:latest,NEO4J_DATABASE=$$S-neo4j-database:latest
+        SECRETS=DB_PASSWORD=$$S-db-password:latest,NEO4J_URI=$$S-neo4j-uri:latest,NEO4J_USER=$$S-neo4j-user:latest,NEO4J_PASSWORD=$$S-neo4j-password:latest,NEO4J_DATABASE=$$S-neo4j-database:latest,GEMINI_API_KEY=$$S-gemini-api-key:latest
         COMMON="--region ${_REGION} --image $$IMG --add-cloudsql-instances $PROJECT_ID:${_REGION}:mcs-${_ENV} --set-env-vars $$ENVV --set-secrets $$SECRETS --min-instances 0 --max-instances 2 --quiet"
         gcloud run deploy mcs-agent-api $$COMMON \
           --service-account mcs-api@$PROJECT_ID.iam.gserviceaccount.com --allow-unauthenticated \

@@ -56,7 +56,8 @@ matsui-cs-poc/
 | `NEO4J_URI` / `NEO4J_USER` / `NEO4J_PASSWORD` / `NEO4J_DATABASE` | `neo4j+s://<id>.databases.neo4j.io` / `<id>` / from Secret Manager / `<id>` | AuraDB Free in dev (user and database are named after the instance id) |
 | `NEO4J_RO_USER` / `NEO4J_RO_PASSWORD` | empty in dev | Optional read-only user where hosting supports RBAC; READ access mode always enforced |
 | `PROVIDER` | `vertex` (`fake` in tests) | LLM provider: `vertex` (Gemini), `anthropic` (Claude), `openai_compat`, `fake` |
-| `MODEL_FAST` / `MODEL_STRONG` | `gemini-3.1-flash-lite` / `gemini-3.1-flash-lite` (interim, D-030) until OD-002 closes | Router/T2 vs T3/judge |
+| `MODEL_FAST` / `MODEL_STRONG` / `MODEL_FALLBACK` | `gemini-3.5-flash-lite` / `gemini-3.5-flash-lite` / `gemma-4-26b-a4b-it` (interim, D-032) until OD-002 closes | Router/T2 vs T3/judge; fallback model on the same provider |
+| `GEMINI_VIA` / `GEMINI_API_KEY` | `api` in dev (`vertex` default) / Secret Manager `mcs-<env>-gemini-api-key` | Gemini generation through the Gemini Developer API free tier instead of Vertex; embeddings stay on Vertex (D-032) |
 | `FALLBACK_PROVIDER` / `MODEL_FALLBACK` | empty / empty | Fallback after the retry: other provider and/or model (empty provider = same provider, other model) |
 | `EMBED_PROVIDER` / `EMBED_MODEL` / `EMBED_DIM` / `EMBED_TIMEOUT_MS` | empty (= `PROVIDER`; `vertex` when `PROVIDER=anthropic`) / `text-embedding-005` (OD-004 → D-024) / `768` / `3000` | Embeddings |
 | `RERANKER` / `RERANK_MODEL` / `RERANK_MAX_LENGTH` / `RERANK_TOP` / `RERANK_CACHE_DIR` | `cross_encoder` (or `none`) / `Xenova/ms-marco-MiniLM-L-6-v2` / `256` / `20` / `/opt/models` in the image | Reranker (OD-005 → D-025) |

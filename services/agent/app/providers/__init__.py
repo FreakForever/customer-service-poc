@@ -32,7 +32,8 @@ def make_provider(name: str, s: Settings) -> Any:
         return VertexProvider(project=s.gcp_project, location=s.resolved_vertex_location, dim=s.embed_dim,
                               embed_model=s.embed_model,
                               thinking_budgets={s.model_fast: s.thinking_budget_fast},
-                              llm_location=s.vertex_llm_location)
+                              llm_location=s.vertex_llm_location,
+                              api_key=s.gemini_api_key.get_secret_value() if s.gemini_via == "api" else "")
     if name == "anthropic":
         from app.providers.anthropic import AnthropicProvider
         return AnthropicProvider(via=s.anthropic_via, project=s.gcp_project, region=s.anthropic_vertex_region,

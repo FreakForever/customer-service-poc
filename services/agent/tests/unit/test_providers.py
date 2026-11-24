@@ -263,3 +263,22 @@ async def test_whole_chain_runs_without_event_loop_leaks():
     llm = ResilientLLM(FakeProvider(script={"p": "ok"}))
     results = await asyncio.gather(*(llm.complete(msgs(pid="p"), model="m", timeout_ms=200) for _ in range(20)))
     assert {r.text for r in results} == {"ok"}
+
+
+def test_vertex_adapter_client_modes(monkeypatch):
+    """Embeddings always on Vertex in VERTEX_LOCATION; generation on the API key (D-032) or VERTEX_LLM_LOCATION."""
+    from google import genai
+
+    from app.providers import make_provider
+
+    made = []
+    monkeypatch.setattr(genai, "Client", lambda **kw: made.append(kw) or SimpleNamespace(**kw))
+    p = make_provider("vertex", Settings(_env_file=None, gcp_project="p", gcp_region="asia-south1",
+                                         gemini_via="api", gemini_api_key="k"))
+    assert made == [{"vertexai": True, "project": "p", "location": "asia-south1"}, {"api_key": "k"}]
+    assert p._llm is not p._client and p.thinking_budgets == {"gemini-3.5-flash-lite": 0}
+    made.clear()
+    make_provider("vertex", Settings(_env_file=None, gcp_project="p", gcp_region="asia-south1", gemini_via="vertex",
+                                     gemini_api_key="ignored", vertex_llm_location="global"))
+    assert made == [{"vertexai": True, "project": "p", "location": "asia-south1"},
+                    {"vertexai": True, "project": "p", "location": "global"}]

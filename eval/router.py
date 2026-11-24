@@ -5,11 +5,16 @@ graph front, on the eval questions, the sample emails and the chat-script turns.
 Gold intents are derived from each item's type (eval items carry no intent labels); a prediction is correct when
 the routed label is in the item's gold set. Gate: accuracy >= 0.90, EM-001 yields two intents, CH-007 and every
 Hinglish FAQ paraphrase routed correctly. Report: eval/reports/router.json.
+
+Free-tier mode (D-032, Gemini Developer API): routing *quality* is measured with a generous LLM budget
+(ROUTER_EVAL_BUDGET_MS, default 30 s) and items whose LLM call failed transiently (503/429/timeout) are retried
+twice with backoff; LLM calls are paced (ROUTER_EVAL_PACE_S, default 4 s) for the free-tier rate limit. Production
+budgets are unchanged; latency is reported separately.
 """
 
 import asyncio
 import json
-
+import os
 import statistics
 import sys
 import time
@@ -19,11 +24,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "services" / "agent"))
 
-from app.obs.tracing import TraceRecorder  # noqa: E402
-from app.orchestrator.graph import run_turn  # noqa: E402
-from app.orchestrator.state import Envelope  # noqa: E402
-from app.rules.context import RuleContext, set_rule_context  # noqa: E402
-from app.router.language import detect_language  # noqa: E402
+from app.obs.tracing import TraceRecorder
+from app.orchestrator import graph as graph_mod
+from app.orchestrator.graph import run_turn
+from app.orchestrator.policies import get_policy
+from app.orchestrator.state import Envelope
+from app.router.language import detect_language
+from app.rules.context import RuleContext, set_rule_context
 
 DATA = ROOT / "mock-data" / "data"
 REPORT = ROOT / "eval" / "reports" / "router.json"
@@ -107,7 +114,18 @@ async def run(text, channel="chat"):
     return final, spans
 
 
+BUDGET_MS = int(os.environ.get("ROUTER_EVAL_BUDGET_MS", "30000"))
+PACE_S = float(os.environ.get("ROUTER_EVAL_PACE_S", "4"))
+
+
+def _eval_policy(channel):
+    p = get_policy(channel)
+    return p.model_copy(update={"node_timeouts_ms": {**p.node_timeouts_ms, "router_llm": BUDGET_MS},
+                                "budget_ms": {**p.budget_ms, "total": max(p.budget_ms["total"], BUDGET_MS * 3)}})
+
+
 async def main() -> int:
+    graph_mod.get_policy = _eval_policy           # quality eval: generous router budget (see module docstring)
     set_rule_context(RuleContext.from_files(DATA))
     faqs = faq_index()
     items = []
@@ -138,7 +156,13 @@ async def main() -> int:
     llm_ms, knn_ms = [], []
     for it in items:
         t0 = time.perf_counter()
-        final, spans = await run(it["text"], it["channel"])
+        for attempt in range(3):
+            final, spans = await run(it["text"], it["channel"])
+            if "llm_router" in spans:
+                await asyncio.sleep(PACE_S)
+            if "llm_router" not in spans or not spans["llm_router"].attrs.get("fallback"):
+                break
+            await asyncio.sleep(15 * (attempt + 1))   # free tier: 503 "high demand" / 429 — back off and retry
         pred, src = label(final)
         good = ok(pred, it["gold"])
         sources[src] += 1

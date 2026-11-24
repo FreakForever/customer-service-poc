@@ -16,6 +16,7 @@ _HUMAN = re.compile(r"\b(talk|speak|chat|connect)( me)? (to|with) (a |an |some )
 _STATUS = re.compile(r"\b(status|update|progress|where|when|kab|kya hua|any news|still|pending|follow[- ]?up|"
                      r"escalat\w*|nobody came|not come)\b", re.IGNORECASE)
 _AMC_STATUS = re.compile(r"\b(active|valid|status|expir\w*|lapsed|still|cover\w*|running)\b", re.IGNORECASE)
+_RENEWAL = re.compile(r"\b(renew\w*|extend|extension|upgrade|quote|quotation)\b", re.IGNORECASE)
 _RESET = re.compile(r"^\s*(reset|start over|restart|new (chat|conversation)|clear( chat)?)[\s!.]*$", re.IGNORECASE)
 
 
@@ -31,6 +32,6 @@ def exact_intents(text: str, ents: Entities) -> list[Intent]:
         out.append(Intent(name="human", confidence=1.0, source="rule", span=_HUMAN.search(text).group(0)))  # type: ignore[union-attr]
     if ents.ticket_ids and (_STATUS.search(text) or len(text.split()) <= 6):
         out.append(Intent(name="service.ticket_status", confidence=1.0, source="rule", span=ents.ticket_ids[0]))
-    if ents.amc_ids and (_AMC_STATUS.search(text) or len(text.split()) <= 6):
+    if ents.amc_ids and not _RENEWAL.search(text) and (_AMC_STATUS.search(text) or len(text.split()) <= 6):
         out.append(Intent(name="amc.status", confidence=1.0, source="rule", span=ents.amc_ids[0]))
     return out

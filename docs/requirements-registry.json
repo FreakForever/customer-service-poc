@@ -877,7 +877,7 @@
         "EM-001 yields two intents"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.3"
