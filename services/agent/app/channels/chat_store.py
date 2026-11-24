@@ -7,6 +7,8 @@ from typing import Any
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncConnection
 
+# customers see a first name, never a staff e-mail address
+_FROM = "(SELECT split_part(a->>'name', ' ', 1) || ' (Matsui)' FROM jsonb_array_elements(coalesce(actions, '[]')) a WHERE a->>'type' = 'sent_by' LIMIT 1) AS sender"
 LEASE_S = 60            # one turn at a time per conversation; a crashed turn frees itself after this
 
 
@@ -37,7 +39,8 @@ async def end_turn(conn: AsyncConnection, sid: uuid.UUID, *, session: dict[str, 
                    priority: str | None, retention_days: int) -> None:
     """Saves the dialog (which drops the lease). `human`/`closed` set by staff meanwhile is never overwritten."""
     await conn.execute(text(
-        "UPDATE conversations SET state = CASE WHEN CAST(:st AS text) IS NULL THEN state - '_lease' ELSE CAST(:st AS jsonb) END, "
+        "UPDATE conversations SET state = CASE WHEN CAST(:st AS text) IS NULL THEN state - '_lease' ELSE CAST(:st AS jsonb) || "
+        "jsonb_strip_nulls(jsonb_build_object('agent_name', state->'agent_name')) END, "
         "active_agent = CASE WHEN CAST(:st AS text) IS NULL THEN active_agent ELSE :a END, "
         "status = CASE WHEN status IN ('human', 'closed') THEN status ELSE coalesce(:s, status) END, "
         "priority = least(priority, :p), updated_at = now(), expires_at = now() + make_interval(days => :d) WHERE id = :i"),
@@ -55,13 +58,13 @@ async def add_message(conn: AsyncConnection, sid: uuid.UUID, role: str, content:
 
 
 async def transcript(conn: AsyncConnection, sid: uuid.UUID) -> list[dict[str, Any]]:
-    rows = await conn.execute(text("SELECT id, role, content, citations, created_at FROM messages WHERE conversation_id = :i "
+    rows = await conn.execute(text(f"SELECT id, role, content, citations, {_FROM}, created_at FROM messages WHERE conversation_id = :i "
                                    "AND delivery = 'sent' AND role <> 'system' ORDER BY created_at, id"), {"i": sid})
     return [dict(r) for r in rows.mappings()]
 
 
 async def human_messages_after(conn: AsyncConnection, sid: uuid.UUID, seen: set[uuid.UUID]) -> list[dict[str, Any]]:
-    rows = await conn.execute(text("SELECT id, content FROM messages WHERE conversation_id = :i AND role = 'agent' AND "
+    rows = await conn.execute(text(f"SELECT id, content, {_FROM} FROM messages WHERE conversation_id = :i AND role = 'agent' AND "
                                    "delivery = 'sent' ORDER BY created_at, id"), {"i": sid})
     return [dict(r) for r in rows.mappings() if r["id"] not in seen]
 
@@ -99,3 +102,10 @@ async def related_questions(conn: AsyncConnection, citations: list[dict[str, Any
 async def owns_serial(conn: AsyncConnection, customer_id: str, serial: str) -> bool:
     return bool((await conn.execute(text("SELECT 1 FROM assets WHERE serial_no = :s AND customer_id = :c"),
                                     {"s": serial, "c": customer_id})).scalar())
+
+
+async def human_state(conn: AsyncConnection, sid: uuid.UUID) -> dict[str, Any]:
+    r = (await conn.execute(text("SELECT status, state->>'agent_name' AS name FROM conversations WHERE id = :i"), {"i": sid})).first()
+    if r is None:
+        return {"status": "closed", "from": None}
+    return {"status": r.status, "from": f"{r.name.split()[0]} (Matsui)" if r.status == "human" and r.name else None}

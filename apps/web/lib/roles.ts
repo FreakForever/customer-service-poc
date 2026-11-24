@@ -46,8 +46,8 @@ export function roleOf(id: Identity | null | undefined, env: Env): Role | null {
 
 /** Role a path needs, or null when public. */
 export function requiredRole(path: string): Role | null {
-  if (/^\/(admin|api\/demo)(\/|$)/.test(path)) return "admin";
-  if (/^\/(console|analytics)(\/|$)/.test(path)) return "agent";
+  if (/^\/(admin|api\/demo|api\/staff\/admin)(\/|$)/.test(path)) return "admin";
+  if (/^\/(console|analytics|api\/staff)(\/|$)/.test(path)) return "agent";
   return null;
 }
 

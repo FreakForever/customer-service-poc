@@ -616,7 +616,7 @@
         "Attachment metadata visible in agent console"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-2"
@@ -1107,7 +1107,7 @@
         "Promoted answer served on the next similar query"
       ],
       "verification": "demo",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.7"
@@ -1795,7 +1795,7 @@
         "CH-008 reaches the agent queue; agent message appears in customer widget"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.7"
@@ -1824,7 +1824,7 @@
         "Trace panel loads within 1 s for any conversation"
       ],
       "verification": "demo",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.7",
@@ -1853,7 +1853,7 @@
         "Seed tickets visible and filterable"
       ],
       "verification": "demo",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.7"
@@ -2171,7 +2171,7 @@
         "Usable at 1366x768"
       ],
       "verification": "demo",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.9"

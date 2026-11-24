@@ -6,7 +6,7 @@ import type { ChatForm, Citation, Msg, Quick } from "@/lib/chat";
 import { readSse } from "@/lib/sse";
 
 type Session = { sid: string; token: string };
-type Stored = { id: string; role: Msg["role"]; content: string; citations: Citation[] | null };
+type Stored = { id: string; role: Msg["role"]; content: string; citations: Citation[] | null; sender?: string | null };
 export type Human = { status: "queued" | "with_agent"; message: string; position: number } | null;
 
 const load = (k: string): Session | null => { try { return JSON.parse(sessionStorage.getItem(k) ?? "null"); } catch { return null; } };
@@ -33,7 +33,7 @@ export function useChat(persona: string, open: boolean) {
   const merge = useCallback((stored: Stored[], agentOnly: boolean) => setMsgs((all) => {
     const have = new Set(all.map((m) => m.id));
     const extra = stored.filter((m) => !have.has(m.id) && (!agentOnly || m.role === "agent"))
-      .map((m) => ({ key: `m${++seq.current}`, id: m.id, role: m.role, text: m.content, citations: m.citations ?? [], from: m.role === "agent" ? "Matsui service team" : undefined }));
+      .map((m) => ({ key: `m${++seq.current}`, id: m.id, role: m.role, text: m.content, citations: m.citations ?? [], from: m.role === "agent" ? (m.sender ?? "Matsui service team") : undefined }));
     return extra.length ? [...all, ...extra] : all;
   }), []);
 
@@ -57,8 +57,8 @@ export function useChat(persona: string, open: boolean) {
     return () => { dead = true; };
   }, [key, open, api, merge]);
 
-  // human replies, while a person is involved
-  const listening = human !== null;
+  // human replies and take-overs, as soon as there is a conversation
+  const listening = msgs.length > 0;
   useEffect(() => {
     if (!open || !listening) return;
     const ctl = new AbortController();

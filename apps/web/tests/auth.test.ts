@@ -40,8 +40,8 @@ describe("demo switches", () => {
 });
 
 it("paths and roles", () => {
-  expect(["/console", "/console/c/1", "/analytics", "/admin", "/admin/kg", "/api/demo/x", "/", "/consolex", "/signin"].map(requiredRole))
-    .toEqual(["agent", "agent", "agent", "admin", "admin", "admin", null, null, null]);
+  expect(["/console", "/console/c/1", "/analytics", "/admin", "/admin/kg", "/api/demo/x", "/api/staff/console/x", "/api/staff/admin/jobs", "/", "/consolex", "/signin"].map(requiredRole))
+    .toEqual(["agent", "agent", "agent", "admin", "admin", "admin", "agent", "admin", null, null, null]);
   expect([allows("admin", "agent"), allows("agent", "agent"), allows("agent", "admin"), allows(null, "agent")]).toEqual([true, true, false, false]);
 });
 

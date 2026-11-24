@@ -69,6 +69,11 @@ def render(*, name: str, text: str, citations: list[Citation], titles: dict[str,
     return _env(False).get_template("reply.txt.j2").render(**ctx).strip() + "\n", _env(True).get_template("reply.html.j2").render(**ctx)
 
 
+def render_manual(text: str) -> str:
+    """HTML for a reply a person wrote or edited: their text is the whole message (greeting and signature included)."""
+    return _env(True).get_template("manual.html.j2").render(paragraphs=[p.split("\n") for p in re.split(r"\n{2,}", text.strip())])
+
+
 def ticket_ref(actions: list[dict[str, Any]], subject: str, allowed: set[str]) -> str | None:
     for a in actions:
         if a.get("ticket_id"):

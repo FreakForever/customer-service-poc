@@ -111,7 +111,7 @@ async def ingest(engine: AsyncEngine, m: InboundMail) -> tuple[uuid.UUID, bool]:
                 "INSERT INTO conversations (channel, customer_id, external_thread_id, subject, state, expires_at) VALUES ('email', :c, :t, "
                 ":s, CAST(:st AS jsonb), now() + make_interval(days => :d)) RETURNING id"),
                 {"c": cust.customer_id if cust else None, "t": m.message_id, "s": m.subject[:300], "d": days,
-                 "st": json.dumps({"from": m.from_addr})})).scalar_one()
+                 "st": json.dumps({"from": m.from_addr, **({"thread": m.thread_id} if m.thread_id else {})})})).scalar_one()
         else:
             await conn.execute(text("UPDATE conversations SET updated_at = now(), expires_at = now() + make_interval(days => :d), "
                                     "status = CASE WHEN status = 'closed' THEN 'bot' ELSE status END WHERE id = :i"), {"i": cid, "d": days})

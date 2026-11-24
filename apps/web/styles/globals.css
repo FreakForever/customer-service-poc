@@ -36,6 +36,8 @@
   .prose-mt th, .prose-mt td { border: 1px solid var(--mt-line); padding: 0.35rem 0.6rem; text-align: left; }
   .prose-mt th { background: var(--mt-sky); }
   .prose-mt code { background: var(--mt-sky); padding: 0 0.25rem; border-radius: 4px; overflow-wrap: anywhere; }
+  /* the console fills exactly what the demo bar leaves */
+  @media (min-width: 768px) { body:has(.flush-shell) { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; } }
   .cite-target { scroll-margin-top: 1rem; }
   .cite-target:target { background: var(--mt-sky); box-shadow: -4px 0 0 var(--mt-blue); }
 }

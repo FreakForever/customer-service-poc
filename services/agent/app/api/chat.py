@@ -160,15 +160,20 @@ async def events(request: Request, sid: SessionDep,
         seen = {m["id"] for m in await store.human_messages_after(conn, sid, set())}
 
     async def body() -> AsyncIterator[str]:
+        last = None
         loop = asyncio.get_running_loop()
         end, beat = loop.time() + STREAM_MAX_S, loop.time()
         yield ": connected\n\n"
         while loop.time() < end and not await request.is_disconnected():
             async with engine.connect() as conn:
                 fresh = await store.human_messages_after(conn, sid, seen)
+                who = await store.human_state(conn, sid)
+            if who != last:
+                last = who
+                yield chat.encode("agent_status", who)
             for m in fresh:
                 seen.add(m["id"])
-                yield chat.encode("agent_message", {"from": "Matsui service team", "text": m["content"], "message_id": m["id"]})
+                yield chat.encode("agent_message", {"from": m["sender"] or "Matsui service team", "text": m["content"], "message_id": m["id"]})
             if loop.time() - beat > HEARTBEAT_S:
                 beat = loop.time()
                 yield ": keep-alive\n\n"

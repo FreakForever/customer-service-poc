@@ -899,11 +899,11 @@
       "verify": [
         "pnpm -C apps/web e2e -g console"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "`pnpm -C apps/web e2e -g console`: 7 passed (role guard and proxy, CH-008 queue → live take-over → customer sees agent → return to bot, edit and send an email draft, context panel, AI trace opens under 1 s, promote → T1 on the next ask, ticket filter/update, 1366x768 without page scroll, axe, 360 px). test_console_api.py 10 passed (incl. concurrent approval sends once, take-over during a bot turn, promotion guard, provider failure). vitest 79 passed. D-042. Model and classifier scripted. Gaps: trace cost shows 'not recorded' until pricing lands; attachments are listed but can't be downloaded; 'compose as customer' isn't in the console (use the contact form or sample emails); ticket list stops at 100 rows; 'My tickets' matches the engineer's name to the staff name."
     },
     {
       "id": "BS-26",

@@ -283,5 +283,9 @@ async def run_turn(env: Envelope, *, graph=None, recorder: TraceRecorder | None 
                                 "budget_exceeded": final.get("budget_exceeded"),
                                 "confidence": final.get("confidence_parts"),
                                 "verification": v.model_dump() if v else None,
-                                "handoff": h.model_dump() if h else None}})
+                                "handoff": h.model_dump() if h else None,
+                                # for the console's AI trace (BS-25): what the answer rests on, and a held-back draft
+                                "evidence": [{"citation": e.citation, "kind": e.kind, "source": e.source, "title": e.title, "doc_id": e.doc_id,
+                                              "score": e.score, "text": e.text[:300]} for e in (final.get("evidence") or [])[:12]],
+                                "suggested": blocked.text if (blocked := final.get("blocked_draft")) else None}})
     return final

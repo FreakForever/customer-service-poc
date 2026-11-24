@@ -67,6 +67,9 @@ def create_app() -> FastAPI:
 
     app.include_router(email_router)
     app.include_router(console_router)
+    from app.api.console import router as agent_console_router
+
+    app.include_router(agent_console_router)
     app.include_router(demo_router)
     from app.api.kb import router as kb_router
 
