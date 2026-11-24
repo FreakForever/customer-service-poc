@@ -192,7 +192,9 @@ def chunk_evidence(h: Hit) -> Evidence:
     return Evidence(id=f"doc:{h.doc_id}#{h.anchor}", kind="chunk", source="hybrid", text=h.rerank_text,
                     score=h.rerank_score if h.rerank_score is not None else h.rrf, title=h.title, doc_id=h.doc_id,
                     anchor=h.anchor, metadata={"heading_path": h.heading_path, "doc_type": h.doc_type,
-                                               "status": h.status, "chunk_id": h.chunk_id})
+                                               "status": h.status, "chunk_id": h.chunk_id,
+                                               "rerank_score": h.rerank_score, "vector_rank": h.vector_rank,
+                                               "lexical_rank": h.lexical_rank})
 
 
 def merge(kg: list[Evidence], documented: list[Evidence], rag: list[Evidence],

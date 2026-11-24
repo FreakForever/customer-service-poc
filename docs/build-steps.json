@@ -648,11 +648,11 @@
       "verify": [
         "pytest services/agent/tests/unit/test_verifier.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "tests/unit/test_verifier.py 41 passed (scripted model); full suite 405 passed, including a check that the composed diagnosis for all 44 error codes passes verification with coverage >= 0.8 and no handoff (first run showed coverage about 0.6: header and safety lines were uncited; fixed). D-036. NOT DONE, deferred at the user's request on 2026-11-24: live judge calibration (eval/judge.py, make eval-judge, was started and stopped, no result). eval/calibration/judge_50.json exists with labels constructed from known edits, not human labels, so FR-VF-02 stays open. Gaps: the verifier, judge and summary have never run against a real model; confidence thresholds untuned; an abstention in chat now hands off (low confidence); BS-20 must not stream unverified text; summary shown in console is BS-25."
     },
     {
       "id": "BS-19",

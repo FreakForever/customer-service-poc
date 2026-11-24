@@ -260,3 +260,16 @@ async def test_agent_failure_hands_off(chat, monkeypatch):
     assert f["handoff"].action == "handoff" and "service team" in reply(f) and "[stub]" not in reply(f)
 
 
+
+
+@pytest.mark.req("FR-VF-03")
+async def test_no_composed_diagnosis_is_wrongly_blocked(chat):
+    """All 44 error codes: consistent, fully covered, confident, no handoff."""
+    bad = []
+    for e in json.loads((DATA / "catalog/error_codes.json").read_text()):
+        chat.session = {}
+        f = await chat.say(f"My {e['applies_to_models'][0]} shows error {e['code']}", "troubleshoot.error_code")
+        v = f["verification"]
+        if not v.passed or f.get("handoff") or v.coverage < 0.8:
+            bad.append((e["id"], v.issues, v.coverage, f.get("confidence"), f["handoff"] and f["handoff"].reason))
+    assert bad == []

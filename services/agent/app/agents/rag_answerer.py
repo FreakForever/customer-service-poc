@@ -34,10 +34,12 @@ def abstention() -> Draft:
     return Draft(text=ABSTAIN, abstained=True)
 
 
-def build_messages(question: str, evidence: list[Evidence]) -> list[Msg]:
+def build_messages(question: str, evidence: list[Evidence], feedback: list[str] | None = None) -> list[Msg]:
     blocks = "\n\n".join(f"[E{i}] ({e.citation}) {neutralize_evidence(e.text)}" for i, e in enumerate(evidence, 1))
+    fix = ("\n\nA previous answer was rejected. Fix these problems, using only the evidence:\n- " + "\n- ".join(feedback)
+           if feedback else "")
     return [Msg(role="system", content=SYSTEM, prompt_id="t2.v1"),
-            Msg(role="user", content=f"EVIDENCE:\n{blocks}\n\nQUESTION: {question}")]
+            Msg(role="user", content=f"EVIDENCE:\n{blocks}\n\nQUESTION: {question}{fix}")]
 
 
 def is_abstention(text: str) -> bool:
@@ -60,16 +62,16 @@ def parse_draft(text: str, evidence: list[Evidence]) -> Draft:
     clean = re.sub(r"[ \t]+([.,;])", r"\1", _GROUP.sub(fix, text)).strip()
     if not used:
         return abstention()
-    return Draft(text=clean, citations=[
+    return Draft(text=clean, generated=True, citations=[
         Citation(marker=f"[E{n}]", evidence_id=e.citation, doc_id=e.doc_id, anchor=e.anchor)
         for n, e in sorted(used.items())])
 
 
 async def answer(question: str, evidence: list[Evidence], llm: ResilientLLM, *, model: str, timeout_ms: int,
-                 sink: TokenSink | None = None) -> T2Result:
+                 sink: TokenSink | None = None, feedback: list[str] | None = None) -> T2Result:
     if not evidence:
         return T2Result(abstention())
-    msgs = build_messages(question, evidence)
+    msgs = build_messages(question, evidence, feedback)
     if sink is None:
         out = await llm.complete(msgs, model=model, timeout_ms=timeout_ms, max_tokens=500)
         return T2Result(parse_draft(out.text, evidence), out)

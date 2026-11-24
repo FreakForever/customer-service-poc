@@ -14,7 +14,7 @@ _CANCEL = re.compile(r"\b(cancel|never ?mind|forget it|stop this|don'?t (raise|c
 _NO = re.compile(r"^\s*(no|nope|nahi|not now)\b", re.IGNORECASE)
 _OPENER = re.compile(r"\b(raise|log|register|create|open|book|file)\b.{0,30}\b(complaint|ticket|request|call|visit)\b|"
                      r"\bsend (an? )?(engineer|technician)\b", re.IGNORECASE)
-ASK = {"serial": "Please share the machine's serial number (on the nameplate, for example MT-GR200-24-00233).",
+ASK = {"serial": "Please share the machine's serial number (on the nameplate, for example MT-GR200-24-00000).",
        "issue": "What is the problem? If the display shows a code, please include it.",
        "contact": "Which phone number or email should our engineer use to contact you?"}
 

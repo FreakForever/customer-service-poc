@@ -1653,7 +1653,7 @@
         "Coverage metric logged per answer"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.6"
@@ -1681,7 +1681,7 @@
         "Judge agrees with human labels on at least 85% of a 50-item calibration set"
       ],
       "verification": "analysis",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.6"
@@ -1709,7 +1709,7 @@
         "Injected wrong part number in a draft is caught"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.6"
@@ -1738,7 +1738,7 @@
         "Score and components stored in trace"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.6"
@@ -1882,7 +1882,7 @@
         "Summary shown at top of the conversation in console"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.7"

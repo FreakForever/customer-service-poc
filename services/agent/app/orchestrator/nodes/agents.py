@@ -83,7 +83,7 @@ async def _with_ctx(state: TurnState, name: str, text: str, dialog: dict[str, An
 def _update(res: AgentResult, dialog: dict[str, Any]) -> Update:
     out: Update = {"answered_tier": res.tier, "active_agent": res.active_agent, "dialog": dialog, "evidence": res.evidence,
                    "draft": Draft(text=res.text, citations=res.citations, actions=res.actions, form=res.form,
-                                  abstained=res.abstained), "handback": False}
+                                  abstained=res.abstained, generated=res.generated), "handback": False}
     if res.handoff:
         out["handoff"] = res.handoff
     return out
@@ -157,7 +157,8 @@ async def multi(state: TurnState, subs: list[SubQuery]) -> Update:
         actions += res.actions
     span_set(subqueries=[q.intent for q in subs], failed=failed)
     out: Update = {"answered_tier": "T3", "evidence": evidence, "handback": False, "dialog": dialog,
-                   "draft": Draft(text="\n\n".join(sections), citations=citations, actions=actions)}
+                   "draft": Draft(text="\n\n".join(sections), citations=citations, actions=actions,
+                                  generated=any(not isinstance(r, BaseException) and r[1].generated for r in done))}
     complaint = any(i.name in ("complaint", "human") for i in state.get("intents") or [])
     if complaint or failed:
         out["handoff"] = HandoffDecision(action="handoff" if complaint and not failed else policy.on_low_confidence,

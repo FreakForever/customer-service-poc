@@ -21,6 +21,7 @@ from app.orchestrator.nodes import router as router_nodes
 from app.orchestrator.nodes import rules as rule_nodes
 from app.orchestrator.nodes import stubs
 from app.orchestrator.nodes import tools as tool_nodes
+from app.orchestrator.nodes import verify as verify_nodes
 from app.orchestrator.policies import ChannelPolicy, get_policy
 from app.orchestrator.state import Envelope, TurnState
 
@@ -158,7 +159,7 @@ def with_budget(name: str, fn: NodeFn) -> NodeFn:
 
 REAL_NODES: dict[str, NodeFn] = {**rule_nodes.NODES, **router_nodes.NODES, **cache_nodes.NODES,
                                 **rag_nodes.NODES, **tool_nodes.NODES,
-                                **agent_nodes.NODES}  # grows per step
+                                **agent_nodes.NODES, **verify_nodes.NODES}  # grows per step
 
 
 def build_graph(overrides: dict[str, NodeFn] | None = None):
@@ -228,9 +229,12 @@ async def run_turn(env: Envelope, *, graph=None, recorder: TraceRecorder | None 
         final: TurnState = await (graph or default_graph()).ainvoke(state)
     intents = final.get("intents") or []
     h = final.get("handoff")
-    rec.root.update({"answered_tier": final.get("answered_tier"), "intents": [i.name for i in intents],
+    v = final.get("verification")
+    rec.root.update({"groundedness": v.judge if v else None, "answered_tier": final.get("answered_tier"), "intents": [i.name for i in intents],
                      "confidence": final.get("confidence"), "handoff": h is not None and h.action == "handoff",
                      "detail": {"path": final.get("path", []), "flags": sorted(final.get("flags") or []),
                                 "budget_exceeded": final.get("budget_exceeded"),
+                                "confidence": final.get("confidence_parts"),
+                                "verification": v.model_dump() if v else None,
                                 "handoff": h.model_dump() if h else None}})
     return final

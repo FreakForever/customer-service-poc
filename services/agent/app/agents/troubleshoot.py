@@ -71,6 +71,13 @@ async def diagnose(ctx: AgentCtx, errors: list[str]) -> tuple[list[dict[str, Any
     return sorted(by_cause.values(), key=lambda c: (-len(c["codes"]), -c["score"], c["cause_id"])), evidence, used
 
 
+def _cited(text: str, marker: str) -> str:
+    """A marker on every sentence (a step can have several)."""
+    from app.verify.coverage import split_sentences
+
+    return " ".join(f"{s.rstrip('.')} {marker}." for s in split_sentences(text))
+
+
 async def run(ctx: AgentCtx) -> AgentResult:
     d = ctx.dialog
     if ctx.sticky:
@@ -110,30 +117,33 @@ async def run(ctx: AgentCtx) -> AgentResult:
     names = " and ".join(f"{ctx.linker.nodes[e]['props']['name']}" for e in errors)
     top = ranked[0]
     both = f" It explains both {' and '.join(top['codes'])}." if len(set(top["codes"])) > 1 else ""
-    out = [f"{d.get('model') or 'Your machine'}: {names}."]
+    first = mark[ranked[0]["cause_id"]]           # every row carries the code, severity and safety stop
+    out = [f"{d.get('model') or 'Your machine'}: {names} {first}."]
     if any(c.get("safety_stop") for c in causes):
-        out.append("Safety: the machine stops automatically for this code. Isolate power before any check and do not "
-                   "restart until the cause is fixed.")
+        stop = next(mark[c["cause_id"]] for c in causes if c.get("safety_stop"))
+        out.append(f"Safety: the machine stops automatically for this code {stop}. Isolate power before any check and do "
+                   f"not restart until the cause is fixed {stop}.")
     ties = [c for c in ranked if (len(c["codes"]), round(c["score"], 6)) == (len(top["codes"]), round(top["score"], 6))]
     if len(ties) > 1:                        # never pick one of several equally likely causes (D-027)
         out.append("Most likely causes (equally likely): " + "; ".join(f"{c['cause']} {mark[c['cause_id']]}" for c in ties) + ".")
     else:
-        out.append(f"Most likely cause: {top['cause']}. {mark[top['cause_id']]}{both}")
+        out.append(f"Most likely cause: {top['cause']}. {mark[top['cause_id']]}" + (f"{both[:-1]} {mark[top['cause_id']]}." if both else ""))
     customer = [c for c in ranked if c["performed_by"] == "customer"]
     tech = [c for c in ranked if c["performed_by"] != "customer"]
     if customer:
         out.append("You can check:\n" + "\n".join(
-            f"{i}. {c['cause']}: {c['steps']} {mark[c['cause_id']]}" for i, c in enumerate(customer, 1)))
+            f"{i}. {_cited(c['cause'] + ': ' + c['steps'], mark[c['cause_id']])}" for i, c in enumerate(customer, 1)))
     if tech:
         out.append("Needs a technician:\n" + "\n".join(
-            f"- {c['cause']}: {c['steps']}" + (f" Parts: {', '.join(c['parts'])}." if c["parts"] else "")
-            + f" {mark[c['cause_id']]}" for c in tech))
+            "- " + _cited(f"{c['cause']}: {c['steps']}" + (f" Parts: {', '.join(c['parts'])}." if c["parts"] else ""),
+                          mark[c["cause_id"]]) for c in tech))
     for pattern, cid, why in _HINTS:
         if pattern.search(ctx.text) and (hit := next((c for c in ranked[1:] if c["cause_id"] == cid), None)):
             out.append(f"Given {why}, also check early: {hit['cause']}. {mark[cid]}")
     if tried and open_:
         done = ", ".join(c["cause"] for c in causes if c["cause_id"] in tried)
-        out.append(f"I've set aside what you already checked: {done}.")
+        out.append(f"I've set aside what you already checked: {done} "
+                   + "".join(mark[c["cause_id"]] for c in causes if c["cause_id"] in tried) + ".")
     if chunks:
         out.append("Manual: " + " ".join(c.marker for c in cites[len(evidence):]))
     actions = []
@@ -150,4 +160,5 @@ async def _symptom(ctx: AgentCtx) -> AgentResult:
     ge = await graph_evidence(ctx.text, ctx.ents, "hybrid", ctx.deps)
     res = await answer(ctx.text, ge.evidence, ctx.llm, model=ctx.model_strong, timeout_ms=ctx.timeout_ms)
     return AgentResult(res.draft.text, active_agent=None if res.draft.abstained else "troubleshoot",
-                       evidence=ge.evidence, citations=res.draft.citations, abstained=res.draft.abstained)
+                       evidence=ge.evidence, citations=res.draft.citations, abstained=res.draft.abstained,
+                       generated=res.draft.generated)

@@ -7,7 +7,7 @@ ENV ?= dev
 PROXY := $(shell command -v cloud-sql-proxy 2>/dev/null || python3 -c "import os,shutil;print(os.path.join(os.path.dirname(os.path.realpath(shutil.which('gcloud'))),'cloud-sql-proxy'))")
 TAG :=$(shell git rev-parse --short HEAD 2>/dev/null)$(shell git diff --quiet HEAD 2>/dev/null || echo -dirty)
 
-.PHONY: bootstrap-gcp env proxy dev api-dev worker-dev web-dev migrate kg-load seed seed-kb eval-retrieval eval-router eval-cache eval-t2 eval-transactional graph test ci deploy-dev deploy-demo \
+.PHONY: bootstrap-gcp env proxy dev api-dev worker-dev web-dev migrate kg-load seed seed-kb eval-retrieval eval-router eval-cache eval-t2 eval-transactional eval-judge graph test ci deploy-dev deploy-demo \
         eval demo-emails demo-upload docs
 
 bootstrap-gcp: ; ENV=dev bash infra/gcp/bootstrap.sh
@@ -22,6 +22,7 @@ graph:        ; cd services/agent && uv run python ../../scripts/export_graph.py
 eval-router:  ; cd services/agent && uv run python ../../eval/router.py
 eval-t2:      ; cd services/agent && uv run python ../../eval/t2.py
 eval-transactional: ; cd services/agent && uv run python ../../eval/transactional.py
+eval-judge:   ; cd services/agent && uv run python ../../eval/judge.py
 eval-cache:   ; cd services/agent && uv run python ../../eval/cache.py
 eval-retrieval: ; cd services/agent && uv run python ../../eval/retrieval.py
 seed-kb:      ; cd services/agent && uv run python ../../scripts/seed.py --kb

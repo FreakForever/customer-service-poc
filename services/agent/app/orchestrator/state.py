@@ -65,6 +65,7 @@ class Draft(BaseModel):
     actions: list[dict[str, Any]] = Field(default_factory=list)
     form: dict[str, Any] | None = None
     abstained: bool = False
+    generated: bool = False               # written by a model (needs coverage, regeneration and the judge)
 
 
 class Verification(BaseModel):
@@ -78,6 +79,7 @@ class HandoffDecision(BaseModel):
     action: Literal["handoff", "draft_for_review"]
     reason: str
     priority: str | None = None
+    summary: str | None = None            # note for the human; never sent to the customer
 
 
 class TurnState(TypedDict, total=False):
@@ -93,6 +95,8 @@ class TurnState(TypedDict, total=False):
     draft: Draft | None                   # text, citations, actions, form
     verification: Verification | None
     confidence: float
+    confidence_parts: dict[str, float]
+    blocked_draft: Draft | None           # failed verification: for the human only
     answered_tier: Tier
     handoff: HandoffDecision | None
     # orchestration bookkeeping (not in LLD-5's list; D-028)

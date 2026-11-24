@@ -44,6 +44,7 @@ class AgentResult:
     handoff: HandoffDecision | None = None
     handback: bool = False                   # this turn isn't for the agent: re-route it
     abstained: bool = False
+    generated: bool = False
 
 
 def cite(evidence: list[Evidence], start: int = 1) -> list[Citation]:
