@@ -1910,7 +1910,7 @@
         "Uploaded SB-2026-12 searchable within 60 s"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.8"
@@ -1997,7 +1997,7 @@
         "Deleting a document removes its chunks, cache entries and KG provenance-only facts"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.8"
@@ -2199,7 +2199,7 @@
         "Upload-to-answer demo can be run entirely from the UI"
       ],
       "verification": "demo",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.8",

@@ -163,9 +163,16 @@ async def ingest_markdown(engine: AsyncEngine, embedder: Embedder, doc_id: str, 
         if doc is None:
             raise LookupError(f"kb_documents row {doc_id}@{version} not found")
         models = await known_models(conn)
+    if doc.status == "deleted":
+        return {"doc_id": doc_id, "version": version, "skipped": "deleted"}
     chunks = chunk_markdown(markdown, dict(doc._mapping), known_models=models)
     vectors = await embed_chunks(embedder, chunks)  # outside the transaction: no locks held during model calls
     async with engine.begin() as conn:
+        # deleted while we were embedding: don't bring its chunks back
+        now = (await conn.execute(text("SELECT status FROM kb_documents WHERE doc_id = :d AND version = :v FOR UPDATE"),
+                                  {"d": doc_id, "v": version})).scalar()
+        if now in (None, "deleted"):
+            return {"doc_id": doc_id, "version": version, "skipped": "deleted"}
         n = await replace_chunks(conn, doc_id, version, chunks, vectors)
     return {"doc_id": doc_id, "version": version, "chunks": n,
             "error_code_chunks": sum(1 for c in chunks if c.metadata["error_codes"])}

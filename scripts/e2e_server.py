@@ -47,6 +47,11 @@ def prepare(url: str) -> None:
     eng = create_engine(url)
     with eng.begin() as c:
         mod.seed(c)
+        # one pending graph change for the admin page (rejected by the test, so nothing is written to the graph)
+        from sqlalchemy import text
+
+        c.execute(text("INSERT INTO kg_change_requests (doc_id, op, payload, confidence) VALUES ('DOC-MAN-DHD', 'add_node', "
+                       "CAST(:p AS jsonb), 0.6)"), {"p": json.dumps({"id": "E2E-REJECT", "label": "Component", "props": {"name": "Reject me"}})})
     eng.dispose()
 
     async def kb() -> None:

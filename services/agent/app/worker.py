@@ -100,11 +100,14 @@ def _handlers(settings):
         make_gmail_watch_handler,
         make_reply_handler,
     )
+    from app.ingest.manage import make_delete_handler
     from app.ingest.pipeline import make_ingest_handler
     from app.providers import get_embedder
 
     engine = create_async_engine(url, pool_pre_ping=True)
-    return engine, {"ingest_document": make_ingest_handler(engine, get_embedder()), "email_reply": make_reply_handler(engine),
+    ingest = make_ingest_handler(engine, get_embedder())
+    return engine, {"ingest_document": ingest, "reindex_document": ingest,
+                    "delete_document": make_delete_handler(engine), "email_reply": make_reply_handler(engine),
                     "gmail_sync": make_gmail_sync_handler(engine), "gmail_watch": make_gmail_watch_handler(engine)}
 
 

@@ -933,11 +933,11 @@
       "verify": [
         "pnpm -C apps/web e2e -g admin"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-25",
+      "notes": "`pnpm -C apps/web e2e -g admin`: 7 passed (agents get 403, upload → searchable → cited in chat → re-index → delete → gone entirely from the UI, refused files, FAQ edit, graph change decision, explorer, axe at 360/1366 px). test_admin_api.py 16 passed, test_kg_changes.py 11 passed, vitest 80 passed. Regression after BS-26: full backend suite 596 passed; all browser tests 35 passed. D-043. Model, classifier and embedder scripted. Gaps: CSV upload and extraction are BS-28 (the changes page has nothing to list until then); re-index of seed documents fails on Cloud Run because their files aren't in the bucket; edited seed FAQs return to the seed text when `make seed` runs again; other API/worker processes see approved graph changes in their dictionaries only after a restart; uploads aren't virus-scanned."
     },
     {
       "id": "BS-27",
