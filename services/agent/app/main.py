@@ -21,11 +21,13 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     async def warm() -> None:
         try:
             from app.providers import get_embedder
+            from app.retrieval.rerank import get_reranker
             from app.router.knn import get_knn
             from app.rules.context import get_rule_context
 
             await get_rule_context()
             await get_knn().build(get_embedder())
+            await asyncio.to_thread(get_reranker)
             logging.getLogger("mcs.api").info("router warm")
         except Exception as exc:  # noqa: BLE001 - lazily retried on first use
             logging.getLogger("mcs.api").warning("router warm-up failed: %s", type(exc).__name__)

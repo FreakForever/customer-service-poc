@@ -542,11 +542,11 @@
       "verify": [
         "pytest services/agent/tests/integration/test_t2_answer.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "agents/rag_answerer.py, orchestrator/nodes/rag.py, orchestrator/stream.py. tests/integration/test_t2_answer.py 7 passed (scripted model), tests/unit/test_rag_answerer.py 10 passed; full suite 318 passed (verify tests re-run after the last prompt edit). `make eval-t2` live (gemini-3.5-flash-lite): run 1 FAILED (gold-cited 0.44; evidence lacked headings), run 2 FAILED (0.84, requires_upload 3/4: Q-181), run 3 passed: requires_upload 4/4, gold-cited 20/25 = 0.80, exactly the gate; p50 1.0 s. Prompt was tuned on these items; the condition rule also held on 3 unseen conditional questions (3 tries each). Gaps: narrow pass; wrong abstentions Q-043/055/067 (cause not checked), Q-097 (new in run 3), Q-115 (model-to-family link missing from chunk); an uncited answer could be streamed before being turned into an abstention; a year in a serial/manufacture date triggers the superseded-policy cue (BS-08); FR-OR-03 85 % tier match not measured; streaming not exercised live; demo deploy needs an mcs-demo-gemini-api-key secret."
     },
     {
       "id": "BS-16",

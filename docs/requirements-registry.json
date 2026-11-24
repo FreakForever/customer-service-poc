@@ -704,7 +704,7 @@
         "Expected tiers in eval achieved for at least 85% of items"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.3"
@@ -1251,7 +1251,7 @@
         "Citation format [doc_id#chunk] or [kg:path_id]"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.5",

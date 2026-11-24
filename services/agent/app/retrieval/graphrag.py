@@ -182,14 +182,14 @@ async def documented_chunks(error_ids: list[str], deps: GraphRAGDeps) -> list[Ev
             ORDER BY c.ord LIMIT 1"""), {"doc": r["doc_id"], "eid": r["error_id"]})).first()
         if chunk:
             out.append(Evidence(id=f"doc:{chunk.doc_id}#{chunk.anchor}", kind="chunk", source="documented_in",
-                                text=chunk.content, score=1.0, title=chunk.title, doc_id=chunk.doc_id,
+                                text=" > ".join(chunk.heading_path or []) + "\n\n" + chunk.content, score=1.0, title=chunk.title, doc_id=chunk.doc_id,
                                 anchor=chunk.anchor, metadata={"heading_path": list(chunk.heading_path or []),
                                                                "error_id": r["error_id"]}))
     return out
 
 
-def _chunk_evidence(h: Hit) -> Evidence:
-    return Evidence(id=f"doc:{h.doc_id}#{h.anchor}", kind="chunk", source="hybrid", text=h.content,
+def chunk_evidence(h: Hit) -> Evidence:
+    return Evidence(id=f"doc:{h.doc_id}#{h.anchor}", kind="chunk", source="hybrid", text=h.rerank_text,
                     score=h.rerank_score if h.rerank_score is not None else h.rrf, title=h.title, doc_id=h.doc_id,
                     anchor=h.anchor, metadata={"heading_path": h.heading_path, "doc_type": h.doc_type,
                                                "status": h.status, "chunk_id": h.chunk_id})
@@ -230,7 +230,7 @@ async def graph_evidence(question: str, ents: Entities, mode: Mode, deps: GraphR
         res = await retrieve(deps.conn, deps.embedder, question, Filters(family=ents.family, model=ents.model),
                              reranker=deps.reranker, rerank_timeout_ms=deps.rerank_timeout_ms)
         result.timings_ms["rag"] = int((time.perf_counter() - t) * 1000)
-        return [_chunk_evidence(h) for h in res.hits]
+        return [chunk_evidence(h) for h in res.hits]
 
     kg_out, rag_out = await asyncio.gather(kg_leg(), rag_leg(), return_exceptions=True)
     if isinstance(kg_out, BaseException):
