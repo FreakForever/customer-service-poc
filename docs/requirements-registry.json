@@ -260,7 +260,7 @@
         "Widget opens from a launcher on every help-centre page"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.1",
@@ -292,7 +292,7 @@
         "Reloading the page resumes the session"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.2"
@@ -413,7 +413,7 @@
         "Shown on analytics"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.9"

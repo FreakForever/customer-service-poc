@@ -1,6 +1,7 @@
 """Real nodes for the front of the graph (BS-12, LLD-6): normalize (+ rule entities), guardrails, rule_layer,
 safety_handoff and refuse_or_redirect. Deterministic and model-free."""
 
+import re
 import time
 from typing import Any
 
@@ -26,11 +27,24 @@ THANKS_TEXT = "You're welcome! Anything else I can help with?"
 RESET_TEXT = "Okay, let's start over. How can I help?"
 
 
+_FOLLOWUP = re.compile(r"^(and|also|what about|how about|aur|same for|but)\b", re.IGNORECASE)
+
+
+def resolve_followup(text: str, last: str) -> str:
+    """Short follow-ups carry the previous question's topic (FR-CH-02, CH-001). Anything else stands alone."""
+    return f"{last.rstrip('?. ')}? {text}" if _FOLLOWUP.match(text) and len(text.split()) <= 6 else text
+
+
 async def normalize(state: TurnState) -> Update:
     out = await _normalize_stub(state)
     out.pop("active_agent")                 # comes from the conversation (run_turn session), never from the message
     ctx = await get_rule_context()
     t0 = time.perf_counter()
+    if not state.get("active_agent") and (last := (state.get("dialog") or {}).get("last_question")):
+        resolved = resolve_followup(out["env"].text, last)          # "and the rotor?" → previous question + this one
+        if resolved != out["env"].text:
+            span_set(followup_of=last)
+            out["env"] = out["env"].model_copy(update={"text": resolved})
     out["entities"] = extract_entities(out["env"].text, ctx.linker)
     span_set(rule_ms=round((time.perf_counter() - t0) * 1000, 2))
     return out

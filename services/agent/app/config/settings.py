@@ -61,6 +61,7 @@ class Settings(BaseSettings):
     # Debug API (/v1/debug/run): on in dev, off elsewhere unless set explicitly
     debug_api: bool | None = None
     log_level: str = "INFO"
+    demo_personas: bool | None = None   # chat persona picker; default on in dev and demo only
 
     # Provider credentials and endpoints
     gcp_project: str = ""
@@ -93,6 +94,11 @@ class Settings(BaseSettings):
     google_client_id: str = ""
     google_client_secret: SecretStr = SecretStr("")
     staff_allowlist: str = ""
+
+    @property
+    def personas_enabled(self) -> bool:
+        """Anyone reaching the chat can pick a persona, so this is for synthetic data only (OD-006 → D-038)."""
+        return self.demo_personas if self.demo_personas is not None else self.env in ("dev", "demo")
 
     def resolved_database_url(self) -> str:
         if url := self.database_url.get_secret_value():

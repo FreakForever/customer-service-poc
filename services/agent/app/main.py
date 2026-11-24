@@ -58,6 +58,9 @@ def create_app() -> FastAPI:
         response.headers["X-Request-ID"] = rid
         return response
 
+    from app.api.chat import router as chat_router
+
+    app.include_router(chat_router)
     if settings.debug_api if settings.debug_api is not None else settings.env == "dev":
         from app.api.debug import router as debug_router
 

@@ -712,11 +712,11 @@
       "verify": [
         "pytest services/agent/tests/e2e/test_chat_api.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-24",
+      "completed": "2026-11-24",
+      "notes": "tests/e2e/test_chat_api.py 20 passed (scripted classifier and model, real graph, mcs_test), incl. 5 concurrent sessions p50 1.14 s, max 1.92 s; full regression passed. Live server check: first event 0.38-0.40 s; T0 answer in 0.96 s; one model question took 6.4 s against the 6 s budget (free-tier model timed out), then handed off; reserve raised and late escalation skipped, not re-measured live. D-038, OD-006 closed. Gaps: no rate limiting on the public session endpoint; any persona can be chosen by anyone who can reach the chat; text arrives in one burst after verification rather than as the model writes; a follow-up is recognised only by its opening word; FR-CH-01 widget is BS-24, FR-CH-06 analytics view is a later step; CH-001 expects T1 for the follow-ups, not measured; persona/session endpoints not deployed."
     },
     {
       "id": "BS-21",

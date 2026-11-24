@@ -28,6 +28,7 @@ Update = dict[str, Any]
 AGENTS = {"troubleshoot": troubleshoot.run, "service_request": service_request.run, "parts": parts.run,
           "sales": sales.run, "knowledge": knowledge.run}
 BUDGET_SHARE = 0.95
+MIN_ESCALATE_S = 0.5
 HEADINGS = {"troubleshoot": "Troubleshooting", "parts": "Spare parts", "sales": "Quotation", "knowledge": "Information",
             "service_request": "Service request", "amc": "AMC", "warranty": "Warranty", "service": "Ticket", "asset": "Machine"}
 
@@ -176,6 +177,9 @@ async def agents(state: TurnState) -> Update:
         return await multi(state, subs)
     d = state.get("draft")
     if d is not None and d.abstained:               # T2 had no answer: try graph + documents
+        if allocate_s(state, "generate") < MIN_ESCALATE_S:      # can't finish: don't start (cancelling costs time too)
+            span_set(skipped="no time to escalate")
+            return {"handback": False}
         out = await run_agent(state, "knowledge")
         return out if not out["draft"].abstained else {**out, "draft": abstention()}
     return await run_agent(state, agent_for(subs[0].intent if subs else None))

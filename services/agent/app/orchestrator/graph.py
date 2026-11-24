@@ -253,7 +253,13 @@ def mermaid(graph=None) -> str:
 
 def session_of(final: TurnState) -> dict[str, Any]:
     """What a conversation keeps between turns (conversations.active_agent / .state)."""
-    return {"active_agent": final.get("active_agent"), "dialog": final.get("dialog") or {}}
+    dialog = dict(final.get("dialog") or {})
+    names = {i.name for i in final.get("intents") or []}
+    if not (final.get("flags") or names & REDIRECT_INTENTS):
+        dialog["last_question"] = final["env"].text[-300:]
+    if "reset" in names:
+        dialog = {}
+    return {"active_agent": final.get("active_agent"), "dialog": dialog}
 
 
 async def run_turn(env: Envelope, *, graph=None, recorder: TraceRecorder | None = None,

@@ -6,7 +6,7 @@ chat:
   allowed_tiers: [T0, T1, T2, T3, T4]
   verification: {rules: sync, judge: async, judge_sample_rate: 0.2}
   thresholds: {intent_knn: 0.80, cache_semantic: 0.90, confidence_answer: 0.65}
-  reserve_ms: 500     # kept back for verify, handoff and respond
+  reserve_ms: 1000    # kept back for verify, handoff and respond (cancelling a step also takes time)
   on_low_confidence: handoff
 email:
   budget_ms: {total: 60000}
