@@ -158,14 +158,14 @@ async def known_models(conn: AsyncConnection) -> set[str] | None:
 async def ingest_markdown(engine: AsyncEngine, embedder: Embedder, doc_id: str, version: str,
                           markdown: str) -> dict[str, Any]:
     async with engine.connect() as conn:
-        doc = (await conn.execute(text("SELECT doc_id, version, title, doc_type, family, status FROM kb_documents "
+        doc = (await conn.execute(text("SELECT doc_id, version, title, doc_type, family, status, source FROM kb_documents "
                                        "WHERE doc_id = :d AND version = :v"), {"d": doc_id, "v": version})).first()
         if doc is None:
             raise LookupError(f"kb_documents row {doc_id}@{version} not found")
         models = await known_models(conn)
     if doc.status == "deleted":
         return {"doc_id": doc_id, "version": version, "skipped": "deleted"}
-    chunks = chunk_markdown(markdown, dict(doc._mapping), known_models=models)
+    chunks = chunk_markdown(markdown, {k: v for k, v in doc._mapping.items() if k != "source"}, known_models=models)
     vectors = await embed_chunks(embedder, chunks)  # outside the transaction: no locks held during model calls
     async with engine.begin() as conn:
         # deleted while we were embedding: don't bring its chunks back
@@ -174,6 +174,8 @@ async def ingest_markdown(engine: AsyncEngine, embedder: Embedder, doc_id: str, 
         if now in (None, "deleted"):
             return {"doc_id": doc_id, "version": version, "skipped": "deleted"}
         n = await replace_chunks(conn, doc_id, version, chunks, vectors)
+        if doc.source == "upload" and now == "active":            # FR-KB-03: proposals for the graph (seed documents are already in it)
+            await enqueue(conn, "extract_graph", {"doc_id": doc_id, "version": version})
     return {"doc_id": doc_id, "version": version, "chunks": n,
             "error_code_chunks": sum(1 for c in chunks if c.metadata["error_codes"])}
 

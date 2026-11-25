@@ -5,6 +5,12 @@ export type Change = { id: string; doc_id: string | null; op: string; payload: R
 export type KgNode = { id: string; label: string; name: string; source: string | null; dist?: number; props?: Record<string, unknown> };
 export type KgEdge = { src: string; type: string; dst: string; source: string | null };
 export type Hood = { nodes: KgNode[]; edges: KgEdge[]; truncated: boolean };
+export type CsvResult = { job_id: string; applied: number; rejected: { line: number; error: string }[]; warnings: { line: number; message: string }[] };
+export const CSV_TYPES = [
+  { id: "error_codes", label: "Error codes (CSV)", columns: "family, code, title, display_text, severity, safety_stop, cause_ids, likelihoods, notes" },
+  { id: "spare_parts", label: "Spare parts (CSV)", columns: "part_no, family, name, price_inr, consumable, fits_models, stock_WH-NOI, stock_WH-PUN, stock_WH-CHE, stock_WH-AMD, lead_time_days, replaces (optional)" },
+  { id: "faqs", label: "FAQs (CSV)", columns: "id, category, question, paraphrases, answer, source_doc (an active document or UPLOAD-FAQ)" },
+];
 export const DOC_TYPES = ["manual", "policy", "guide", "bulletin", "company"];
 
 /** Force-directed layout with a fixed start, so the same neighbourhood always looks the same. First node is the centre. */

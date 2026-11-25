@@ -75,6 +75,17 @@ WITH m, e, k, c, r, p, a ORDER BY a.name
 RETURN p.id AS part_no, p.name AS part, k.id AS cause_id, k.name AS cause, c.likelihood AS likelihood,
        collect(a.name) AS covered_by, m.id + '>' + e.id + '>' + k.id + '>' + r.id + '>' + p.id AS path
 ORDER BY cause_id, part_no"""),
+    Template("T-PART", "A part: price, lead time, stock, and the part that replaces it", ("part",), """
+MATCH (p:SparePart {id: $part})
+OPTIONAL MATCH (p)-[s:STOCKED_AT]->(w:Warehouse)
+WITH p, [x IN collect({warehouse: w.id, qty: s.qty}) WHERE x.warehouse IS NOT NULL] AS stock
+OPTIONAL MATCH (n:SparePart)-[r:REPLACES]->(p)
+OPTIONAL MATCH (n)-[:FITS]->(m:Model)
+WITH p, stock, n, r, collect(m.id) AS fits
+RETURN p.id AS part_no, p.name AS part, p.price_inr AS price_inr, p.lead_time_days_if_unavailable AS lead_time_days, stock,
+       n.id AS replaced_by, n.name AS replacement, n.price_inr AS replacement_price_inr, r.applies_to AS applies_to, fits AS replacement_fits,
+       p.id + CASE WHEN n IS NULL THEN '' ELSE '<' + n.id END AS path
+ORDER BY replaced_by"""),
     Template("T-SHARED", "Error codes in a family that share a cause with a given error code",
              ("error_id", "family"), """
 MATCH (e:ErrorCode {id: $error_id})-[:CAUSED_BY]->(k:Cause)<-[:CAUSED_BY]-(o:ErrorCode)

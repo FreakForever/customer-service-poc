@@ -34,5 +34,5 @@ deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml -
 deploy-demo:  ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=demo,_TAG=$(TAG) .
 eval:         ; uv run python eval/run.py --mode all
 demo-emails:  ; cd services/agent && uv run python ../../scripts/demo_emails.py
-demo-upload:  ; uv run python scripts/demo_upload.py mock-data/upload-samples
+demo-upload:  ; cd services/agent && uv run python ../../scripts/demo_upload.py ../../mock-data/upload-samples $(ARGS)
 docs:         ; uv run --no-project --with-requirements tools/requirements.txt python tools/sync_docs.py

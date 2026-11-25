@@ -8,23 +8,26 @@ import uuid
 from typing import Annotated, Any, Literal
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from neo4j.exceptions import DriverError, Neo4jError
 from pydantic import BaseModel, Field
 from sqlalchemy import text
 
 from app.api.chat import EngineDep
 from app.api.staff import AdminDep, require
-from app.cache.store import CacheWriteRejected, _vec, invalidate_faq, write_answer
+from app.cache.store import CURATED, CacheWriteRejected, _vec, invalidate_faq, write_answer
 from app.channels.console_store import like, rows
 from app.config.settings import get_settings
-from app.ingest import manage
+from app.ingest import csv_loaders, manage
 from app.ingest.parsers import SUPPORTED, UnsupportedDocument, parse_document
 from app.ingest.pipeline import doc_id_from_filename, submit_document
 from app.kg.changes import InvalidChange, apply_change, get_write_driver
 from app.kg.client import get_read_driver, read_query
-from app.providers import get_embedder
+from app.providers import ProviderError, get_embedder
+from app.rules.context import bump_kg_version, refresh_rule_context
 
 router = APIRouter(prefix="/v1/admin", tags=["admin"], dependencies=[Depends(require("admin"))])
 MAX_UPLOAD = 10 * 1024 * 1024
+MAX_CSV = 2 * 1024 * 1024
 FAMILIES = ("MTC", "DHD", "HAD", "CHL", "MDH", "CCS", "RCY")
 DocType = Literal["manual", "policy", "guide", "bulletin", "company"]
 Q = Annotated[str, Query(max_length=100)]
@@ -101,6 +104,24 @@ async def jobs(_: AdminDep, engine: EngineDep, limit: Annotated[int, Query(ge=1,
     return {"items": items}
 
 
+@router.post("/csv")
+async def upload_csv(_: AdminDep, engine: EngineDep, type: csv_loaders.CsvType, file: Annotated[UploadFile, File()]) -> dict[str, Any]:
+    """Structured upload (FR-KB-02): valid rows are applied, invalid ones come back with their line number."""
+    data = await file.read(MAX_CSV + 1)
+    if len(data) > MAX_CSV:
+        raise HTTPException(413, "the file is larger than 2 MB")
+    name = re.sub(r"[^\w.\- ]", "_", (file.filename or "").replace("\\", "/").rsplit("/", 1)[-1])[-120:]
+    try:
+        job, res = await csv_loaders.load_csv(engine, get_embedder(), type, data, name)
+    except (csv_loaders.BadFile, InvalidChange) as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except (Neo4jError, DriverError, ProviderError) as exc:
+        raise HTTPException(503, "the graph or the embedding service can't be reached; nothing was saved") from exc
+    if res.applied and type != "faqs":
+        await refresh_rule_context()
+    return {"job_id": job, "applied": res.applied, "rejected": res.rejected, "warnings": res.warnings}
+
+
 # ---------- FAQ cache ----------
 
 class FaqIn(BaseModel):
@@ -128,7 +149,7 @@ async def put_faq(faq_id: str, body: FaqIn, _: AdminDep, engine: EngineDep) -> d
         if not got:
             raise HTTPException(404, "no such FAQ")
         old = got[0]
-        if body.status == "active" and not await rows(conn, "SELECT 1 FROM kb_documents WHERE doc_id = :d AND status = 'active'", d=old["source_doc"]):
+        if body.status == "active" and old["source_doc"] != CURATED and not await rows(conn, "SELECT 1 FROM kb_documents WHERE doc_id = :d AND status = 'active'", d=old["source_doc"]):
             raise HTTPException(422, "its source document is no longer active, so this answer can't be approved")
         await conn.execute(text("UPDATE faq_entries SET question = :q, answer = :a, status = :s WHERE id = :i"),
                            {"q": body.question, "a": body.answer, "s": body.status, "i": faq_id})
@@ -181,12 +202,11 @@ async def decide(change_id: uuid.UUID, body: Decision, staff: AdminDep, engine: 
                 await apply_change(get_write_driver(), c["op"], c["payload"] or {}, c["doc_id"] or "unknown", c["chunk_id"])
             except InvalidChange as exc:
                 raise HTTPException(422, str(exc)) from exc
+            await bump_kg_version(conn)
         await conn.execute(text("UPDATE kg_change_requests SET status = :s, decided_by = :b, decided_at = now() WHERE id = :i"),
                            {"s": status, "b": staff.email, "i": change_id})
     if body.decision == "approve":
-        from app.rules.context import set_rule_context
-
-        set_rule_context(None)                      # this process reloads its dictionaries; others at their next start
+        await refresh_rule_context()                # other processes follow within seconds
     return {"status": status}
 
 

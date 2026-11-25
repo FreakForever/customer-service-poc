@@ -25,9 +25,9 @@ export function Changes() {
   }
   return (
     <section aria-labelledby="h-c"><h1 id="h-c" className="text-2xl">Graph changes</h1>
-      <label className="text-sm">Show <select className={field} value={status} onChange={(e) => setStatus(e.target.value)}><option value="pending">pending</option><option value="approved">approved</option><option value="rejected">rejected</option><option value="">all</option></select></label>
+      <label className="text-sm">Show <select className={field} value={status} onChange={(e) => setStatus(e.target.value)}><option value="pending">pending</option><option value="approved">approved</option><option value="rejected">rejected</option><option value="applied">applied automatically</option><option value="">all</option></select></label>
       <Status error={error} note={note} loading={!data} />
-      {data && !data.items.length && <p className="text-steel">No changes to show. Extraction from uploads arrives in BS-28.</p>}
+      {data && !data.items.length && <p className="text-steel">No changes to show. Uploaded documents propose changes here when they need a person to decide.</p>}
       <ul aria-label="Changes" className="grid gap-4 lg:grid-cols-2">{data?.items.map((c) => {
         const { props, ...rest } = c.payload as { props?: Record<string, unknown> };
         const r = rest as Record<string, unknown>;

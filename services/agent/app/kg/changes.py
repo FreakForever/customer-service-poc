@@ -71,6 +71,65 @@ def statement(op: str, payload: dict[str, Any], doc_id: str, chunk_id: int | Non
     raise InvalidChange(f"unsupported change {op!r}")
 
 
+async def apply_changes(driver: AsyncDriver, changes: list[tuple[str, dict[str, Any], int | None]], doc_id: str) -> None:
+    """All in one transaction, nodes first."""
+    todo = [statement(op, payload, doc_id, chunk) for op, payload, chunk in sorted(changes, key=lambda c: c[0] == "add_edge")]
+    if not todo:
+        return
+
+    async def work(tx):
+        for cypher, params in todo:
+            rec = await (await tx.run(cypher, params)).single()
+            if not rec or rec["n"] != 1:
+                raise InvalidChange(f"a node this change refers to doesn't exist: {params.get('src')} {params.get('dst')}")
+    async with driver.session(database=get_settings().neo4j_database or None) as s:
+        await s.execute_write(work)
+
+
+# ---------- CSV uploads (FR-KB-02): curated by an admin, so they also update existing nodes; new ones carry source csv:<job> ----------
+
+_EDGE = "ON CREATE SET x.source = $source"
+_ERROR_CODES = [
+    "UNWIND $rows AS r MERGE (n:Entity {id: r.id}) ON CREATE SET n:ErrorCode, n.source = $source SET n += r.props, n.updated_by = $source",
+    f"UNWIND $rows AS r MATCH (n:ErrorCode {{id: r.id}}), (f:ProductFamily {{id: r.family}}) MERGE (n)-[x:FOR_FAMILY]->(f) {_EDGE}",
+    f"UNWIND $rows AS r MATCH (n:ErrorCode {{id: r.id}}), (m:Model)-[:BELONGS_TO]->(:ProductFamily {{id: r.family}}) MERGE (m)-[x:CAN_RAISE]->(n) {_EDGE}",
+    "UNWIND $rows AS r MATCH (n:ErrorCode {id: r.id})-[x:CAUSED_BY]->(k) WHERE NOT k.id IN [c IN r.causes | c.cause_id] DELETE x",
+    (f"UNWIND $rows AS r UNWIND r.causes AS c MATCH (n:ErrorCode {{id: r.id}}), (k:Cause {{id: c.cause_id}}) MERGE (n)-[x:CAUSED_BY]->(k) {_EDGE} "
+    "SET x.likelihood = c.likelihood, x.family = r.family")]
+_PARTS = [
+    "UNWIND $rows AS r MERGE (n:Entity {id: r.id}) ON CREATE SET n:SparePart, n.source = $source SET n += r.props, n.updated_by = $source",
+    "UNWIND $rows AS r MATCH (n:SparePart {id: r.id})-[x:FITS]->(m) WHERE NOT m.id IN r.fits DELETE x",
+    f"UNWIND $rows AS r UNWIND r.fits AS f MATCH (n:SparePart {{id: r.id}}), (m:Model {{id: f}}) MERGE (n)-[x:FITS]->(m) {_EDGE}",
+    f"UNWIND $rows AS r UNWIND r.stock AS s MATCH (n:SparePart {{id: r.id}}), (w:Warehouse {{id: s.wh}}) MERGE (n)-[x:STOCKED_AT]->(w) {_EDGE} SET x.qty = s.qty",
+    f"UNWIND $rows AS r WITH r WHERE r.replaces <> '' MATCH (n:SparePart {{id: r.id}}), (o:SparePart {{id: r.replaces}}) MERGE (n)-[x:REPLACES]->(o) {_EDGE}"]
+
+
+async def _batch(driver: AsyncDriver, statements: list[str], rows: list[dict[str, Any]], source: str) -> None:
+    async def work(tx):
+        got = await (await tx.run("MATCH (n:Entity) WHERE n.id IN $ids RETURN n.id AS id, labels(n) AS l", {"ids": [r["id"] for r in rows]})).data()
+        label = "ErrorCode" if statements is _ERROR_CODES else "SparePart"
+        if wrong := [g["id"] for g in got if label not in g["l"]]:
+            raise InvalidChange(f"{wrong[0]} is not a {label} in the graph")
+        for q in statements:
+            await (await tx.run(q, {"rows": rows, "source": source})).consume()
+    async with driver.session(database=get_settings().neo4j_database or None) as s:
+        await s.execute_write(work)
+
+
+async def upsert_error_codes(driver: AsyncDriver, rows: list[dict[str, Any]], source: str) -> None:
+    await _batch(driver, _ERROR_CODES, [
+        {"id": r["id"], "family": r["family"], "causes": [{k: c[k] for k in ("cause_id", "likelihood")} for c in r["causes"]],
+         "props": {"name": f"{r['code']} {r['title']}", **{k: r[k] for k in ("code", "display_text", "severity", "safety_stop")},
+                   **({"notes": r["notes"]} if r["notes"] else {})}} for r in rows], source)
+
+
+async def upsert_parts(driver: AsyncDriver, rows: list[dict[str, Any]], source: str) -> None:
+    await _batch(driver, _PARTS, [
+        {"id": r["part_no"], "fits": r["fits_models"], "replaces": r["replaces"], "stock": [{"wh": w, "qty": q} for w, q in r["stock"].items()],
+         "props": {"name": r["name"], "price_inr": r["price_inr"], "consumable": r["consumable"],
+                   "lead_time_days_if_unavailable": r["lead_time_days"]}} for r in rows], source)
+
+
 async def apply_change(driver: AsyncDriver, op: str, payload: dict[str, Any], doc_id: str, chunk_id: int | None) -> None:
     cypher, params = statement(op, payload, doc_id, chunk_id)
 

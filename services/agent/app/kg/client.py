@@ -21,7 +21,8 @@ def read_credentials(s: Settings) -> tuple[str, str]:
 def make_read_driver(s: Settings) -> AsyncDriver:
     if not s.neo4j_uri:
         raise RuntimeError("NEO4J_URI is not configured")
-    return AsyncGraphDatabase.driver(s.neo4j_uri, auth=read_credentials(s))
+    # UNRECOGNIZED: a relationship type that no upload has used yet is normal, not worth a log line per query
+    return AsyncGraphDatabase.driver(s.neo4j_uri, auth=read_credentials(s), notifications_disabled_classifications=["UNRECOGNIZED"])
 
 
 @lru_cache

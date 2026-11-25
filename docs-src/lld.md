@@ -214,6 +214,7 @@ CREATE TABLE traces (id uuid PRIMARY KEY, conversation_id uuid, channel text, an
   cost_usd numeric(14,8), mode text DEFAULT 'live', created_at timestamptz DEFAULT now(), detail jsonb);
 CREATE TABLE spans (id bigserial PRIMARY KEY, trace_id uuid REFERENCES traces ON DELETE CASCADE, node text,
   started_at timestamptz, duration_ms int, model text, tokens_in int, tokens_out int, cache_hit bool, attrs jsonb);
+CREATE TABLE kg_state (id int PRIMARY KEY CHECK (id = 1), version bigint NOT NULL);   -- 0007: bumped on every graph change
 CREATE TABLE eval_runs (id uuid PRIMARY KEY, mode text, started_at timestamptz, summary jsonb, report_uri text);
 
 -- roles & retention
@@ -282,6 +283,7 @@ RETURN p…, k.id, c.likelihood, collect(a.name) AS covered_by ORDER BY k.id, p.
 MATCH (e:ErrorCode {id:$error_id})-[:CAUSED_BY]->(k:Cause)<-[:CAUSED_BY]-(o:ErrorCode)-[:FOR_FAMILY]->(:ProductFamily {id:$family})
 WHERE o <> e RETURN o.code, collect(k.name) AS shared_causes ORDER BY o.code;
 
+// T-PART: a part's price, lead time, stock and the part that replaces it (BS-28)
 // T-BYCAUSE: error codes of a family caused by a cause (aggregation)
 MATCH (k:Cause {id:$cause})<-[c:CAUSED_BY]-(e:ErrorCode)-[:FOR_FAMILY]->(:ProductFamily {id:$family}) RETURN e.code, e.name, c.likelihood;
 
@@ -587,7 +589,15 @@ Implementation notes (BS-07, D-023): `app/ingest/pipeline.py` — `submit_docume
 
 Changes with confidence ≥ 0.85 that only add nodes/edges are auto-applied with `source='upload:<doc_id>'`; updates, deletes or lower confidence go to `kg_change_requests` for approval in the admin UI. Deleting a document removes facts whose only source is that document.
 
-Implementation notes (BS-26, D-043): `app/api/admin.py`, `app/ingest/manage.py`, `app/kg/changes.py`. Upload checks type, size (10 MB), readability and text before storing; uploads of one document are serialised. `DELETE /admin/documents/{id}` covers all versions: status `deleted`, caches and FAQs invalidated and pending graph changes rejected at once; job `delete_document` then removes chunks and graph facts with `source='upload:<doc_id>'` (a node something else links to stays). A delete during ingestion wins. Superseded documents are not reactivated. Job `reindex_document` re-ingests the active version. `kg_change_requests.op` is `add_node | update_node | add_edge` with the payloads above; labels, relationship types and property names are allow-listed, an approved `add_*` never changes an existing node's properties or source. `PUT /admin/faqs/{id}` takes `{question, answer, status}` and rebuilds the exact cache; approval needs an active source. `GET /admin/kg/search?q=` finds nodes. `POST /admin/csv` and extraction arrive in BS-28.
+Implementation notes (BS-26, D-043): `app/api/admin.py`, `app/ingest/manage.py`, `app/kg/changes.py`. Upload checks type, size (10 MB), readability and text before storing; uploads of one document are serialised. `DELETE /admin/documents/{id}` covers all versions: status `deleted`, caches and FAQs invalidated and pending graph changes rejected at once; job `delete_document` then removes chunks and graph facts with `source='upload:<doc_id>'` (a node something else links to stays). A delete during ingestion wins. Superseded documents are not reactivated. Job `reindex_document` re-ingests the active version. `kg_change_requests.op` is `add_node | update_node | add_edge` with the payloads above; labels, relationship types and property names are allow-listed, an approved `add_*` never changes an existing node's properties or source. `PUT /admin/faqs/{id}` takes `{question, answer, status}` and rebuilds the exact cache; approval needs an active source. `GET /admin/kg/search?q=` finds nodes. 
+
+Implementation notes (BS-28, D-045):
+
+- **CSV** (`app/ingest/csv_loaders.py`): synchronous, recorded as an `ingest_csv` job; the graph is written inside the Postgres transaction, so a graph failure keeps nothing (503), and re-uploading is always safe. Rows with a known id are updated (cause, fit and stock edges follow the file); new nodes and edges get `source='csv:<job_id>'`, updated nodes keep theirs and get `updated_by`. Causes must exist, likelihoods match and add up to at most 1; parts must match their family; a missing repair step is a warning. FAQ rows: `origin='upload'`, seed or promoted ids are refused, same write guard as promotion; `source_doc` is an active document or `UPLOAD-FAQ` (hand-written, cited without a link). A near-duplicate (similarity ≥ 0.92) marks the other FAQ `needs_review`. Limits: UTF-8, 2 MB, 2000 rows.
+- **Extraction** (`app/ingest/extraction.py`): job `extract_graph` follows `ingest_document` for uploaded documents only; first 40 sections, one call each; nothing is written until all are read. The model only proposes `ErrorCode, Cause, Resolution, SparePart, Component` nodes and the 8 relationships between allowed label pairs; props are a fixed list. Code decides: ids must fit their label, required props must be present, codes and part numbers must be written in the document (else dropped); numbers, display texts, models and likelihoods not found in the text, confidence < 0.85, and anything hanging on a waiting node wait for approval; changes to existing nodes always wait. `FOR_FAMILY`, `DOCUMENTED_IN` and the Document node are added by code. Auto-applied changes are kept as `applied` by `auto`. A new extraction replaces the document's pending changes; a change a person rejected isn't proposed again.
+- **No restart:** `kg_state.version` (migration 0007) is bumped in the same transaction as every graph change; each process checks it at most every 5 s in the background and reloads its dictionaries.
+- **Answers:** template T-PART adds replacements (`REPLACES`) to parts answers, with the machines they apply to; "what does G5 mean" is answered without a model when the family is known.
+- **Demo:** `make demo-upload` asks the `requires_upload` questions before and after uploading the samples and checks the graph; `make demo-upload ARGS=--reset` takes the samples out.
 
 **Seed** ([FR-KB-06](Requirements.html#FR-KB-06)): `make seed` = `python mock-data/generate.py && python scripts/seed.py && python mock-data/kg/load_kg.py --wipe && python scripts/seed.py --kb` (ingests `data/kb/docs` and FAQ variants with embeddings). `scripts/seed.py` upserts on primary keys in one transaction (re-runs converge, no duplicates); catalog/FAQ rows whose `source`/`origin` isn't `seed` (runtime uploads) are never overwritten; FAQ variants = question + paraphrases keyed by `normalized`, embedding kept while the text is unchanged; `ticket_seq` is advanced past seeded and runtime tickets, never backwards. Field mapping: `amc_contracts.start/end` → `start_date/end_date`, `spare_parts.lead_time_days_if_unavailable` → `lead_time_days`; `error_codes.applies_to_models` lives only in the KG (`CAN_RAISE`). Until BS-05/BS-07 land, `make seed` runs generate + `seed.py` only (BS-04).
 
@@ -622,7 +632,7 @@ Base URL `/v1`. Auth: staff routes need a NextAuth session JWT forwarded as `Aut
 | `POST /admin/documents` | admin | Upload doc | multipart → `{doc_id, version, job_id}` |
 | `GET /admin/documents` / `DELETE /admin/documents/{doc_id}` | admin | Manage | → list / `{job_id}` |
 | `POST /admin/documents/{doc_id}/reindex` | admin | Reindex | → `{job_id}` |
-| `POST /admin/csv` | admin | Structured upload | `?type=` multipart → `{applied, rejected:[{line, error}]}` |
+| `POST /admin/csv` | admin | Structured upload | `?type=` multipart → `{job_id, applied, rejected:[{line, error}], warnings:[{line, message}]}` |
 | `GET /admin/jobs` | admin | Job status | → `{items[]}` |
 | `GET /admin/kg/changes` / `POST /admin/kg/changes/{id}/decision` | admin | Review graph changes | → list / `{decision: approve\|reject}` |
 | `GET /admin/kg/node/{id}` | admin | Explorer neighbourhood | `?depth=1..2` → `{nodes[], edges[]}` |
@@ -741,7 +751,7 @@ deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml -
 deploy-demo:  ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=demo,_TAG=$(TAG) .
 eval:         ; uv run python eval/run.py --mode all
 demo-emails:  ; uv run python scripts/demo_emails.py
-demo-upload:  ; uv run python scripts/demo_upload.py mock-data/upload-samples
+demo-upload:  ; cd services/agent && uv run python ../../scripts/demo_upload.py ../../mock-data/upload-samples $(ARGS)
 docs:         ; python tools/sync_docs.py
 ```
 

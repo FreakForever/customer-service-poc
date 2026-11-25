@@ -1940,7 +1940,7 @@
         "Invalid rows reported, valid rows applied"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.8"
@@ -1969,7 +1969,7 @@
         "SB-2026-12 yields ErrorCode DHD-E11, parts MT-DHD-ROTOR-R2/RBELT/RMOTOR and REPLACES edge"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.8"

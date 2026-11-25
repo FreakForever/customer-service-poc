@@ -172,7 +172,7 @@ async def test_template_p95_under_50ms_server_side(kg):
     cases = [("T-DIAG", {"model": "DHD-150", "code": "E04"}), ("T-PARTS", {"cause": "C-ROTOR-DEG", "family": "DHD"}),
              ("T-STOCK", {"part": "MT-DHD-ROTOR", "city": "Pune"}), ("T-COVER", {"model": "DHD-150", "code": "E04"}),
              ("T-SHARED", {"error_id": "DHD-E04", "family": "DHD"}),
-             ("T-BYCAUSE", {"cause": "C-ROTOR-DEG", "family": "DHD"}), ("T-SC", {"city": "Pune"})]
+             ("T-BYCAUSE", {"cause": "C-ROTOR-DEG", "family": "DHD"}), ("T-SC", {"city": "Pune"}), ("T-PART", {"part": "MT-DHD-ROTOR"})]
     assert {t for t, _ in cases} == set(TEMPLATES)
     for tid, p in cases:   # warm the plan cache
         await run(kg, tid, **p)

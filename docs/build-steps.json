@@ -1000,11 +1000,11 @@
         "make demo-upload (requires_upload eval items flip to correct)",
         "pytest services/agent/tests/integration/test_uploads.py"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-25",
+      "completed": "2026-11-25",
+      "notes": "CSV upload (error codes, spare parts, FAQs), LLM graph extraction with approval, T-PART, no-restart reload, upload page, demo script. Verify: make demo-upload 4/4 requires_upload items flipped with the live model (gemini-3.5-flash-lite) and all graph checks true (E11, ROTOR-R2, RBELT, RMOTOR, REPLACES with provenance; G5 and L7 linked); tests/integration/test_uploads.py 11 passed. The demo checks key facts by pattern, not answer quality, with widened budgets; dev was reset afterwards. Full backend run: 652 passed, 4 failed because a queued retry from one upload test was run by another and left facts in the shared graph; cleanup fixed, leftovers removed, the 4 files re-run and all passed (24), graph clean again. Browser: 41 passed; web unit 91. Migration 0007 applied to dev. D-045. Known gaps: extraction needs model quota (free tier 15 requests a minute): after 3 attempts the job fails and needs a re-index; first 40 sections only; extracted parts and codes are in the graph only (no Postgres stock or quote for them); new document versions add facts and queue changes but don't retract old facts; approving an update of a seed node has no undo; make kg-load --wipe drops uploaded graph facts; graph facts of one document keep the first document as source when two state the same."
     },
     {
       "id": "BS-29",

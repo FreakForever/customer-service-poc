@@ -17,6 +17,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app.cache.normalize import cache_key, normalize
 
+CURATED = "UPLOAD-FAQ"      # source of uploaded FAQs that were written by hand, with no document behind them
 SERVABLE = ("active", "needs_review")      # needs_review is still served until a person looks (LLD-7 §5)
 _ACCOUNT_ID = re.compile(r"\b(SR-\d{4}-\d{5}|AMC-\d{4}-\d{4}|MT-[A-Z0-9]+-\d{2}-\d{5}|CUST-\d{4})\b", re.IGNORECASE)
 _VOLATILE = re.compile(r"\b(in stock|out of stock|stock (is|of)|available (at|in) (the )?\w+ warehouse|"

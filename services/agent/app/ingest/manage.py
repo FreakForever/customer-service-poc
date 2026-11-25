@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 from app.cache.store import invalidate_document
 from app.jobs.queue import Job, enqueue
 from app.kg.changes import get_write_driver, remove_document_facts
+from app.rules.context import bump_kg_version
 
 
 async def delete_document(conn: AsyncConnection, doc_id: str) -> str | None:
@@ -42,6 +43,8 @@ def make_delete_handler(engine: AsyncEngine):
         async with engine.begin() as conn:
             n = (await conn.execute(text("DELETE FROM kb_chunks c USING kb_documents d WHERE c.doc_id = d.doc_id AND c.version = d.version AND "
                                          "d.doc_id = :d AND d.status = 'deleted'"), {"d": doc_id})).rowcount
-            await invalidate_document(conn, doc_id, "deleted") if not live else None
+            if not live:
+                await invalidate_document(conn, doc_id, "deleted")
+                await bump_kg_version(conn)
         return {"chunks": n, **facts}
     return handle

@@ -1,5 +1,7 @@
 """Parts agent (LLD-10, FR-AG-04): resolve the part, then price, stock, home warehouse and ETA; quote requests."""
 
+import asyncio
+import logging
 import re
 
 from app.agents.base import AgentCtx, AgentResult, cite, remember
@@ -8,12 +10,15 @@ from app.kg.templates import run_template
 from app.kg.verbalize import verbalize
 from app.retrieval.evidence import Evidence
 from app.tools.account import call_tool
+from app.verify.coverage import split_sentences
+
+log = logging.getLogger("mcs.parts")
 
 _QUOTE = re.compile(r"\b(quote|quotation|order it|place (an )?order)\b", re.IGNORECASE)
 _QTY = re.compile(r"\b(\d{1,3})\s*(?:nos?|pcs|pieces|units?|sets?)\b", re.IGNORECASE)
 CUES = re.compile(r"\b(parts?|spares?|stock|available|availability|price|cost|deliver\w*|lead time|warehouse|quote|"
                   r"quotation|order)\b", re.IGNORECASE)
-_STOP = {"set", "part", "spare", "for", "and", "the", "machine", "assembly", "need"}
+_STOP = {"set", "part", "spare", "for", "and", "the", "machine", "assembly", "need", "a"}
 ETA = {"home": "dispatches the same business day if confirmed before 14:00 IST", "other": "transfer adds 2–3 business days"}
 
 
@@ -41,6 +46,29 @@ async def resolve(ctx: AgentCtx) -> tuple[list[str], list[Evidence]]:
     return (d.get("parts") or [])[:3], []
 
 
+async def _graph(ctx: AgentCtx, part: str) -> tuple[Evidence | None, list[Evidence]]:
+    """(the part as the graph knows it, parts that replace it on the customer's model). Optional: a slow graph never fails the answer."""
+    if ctx.deps.kg_driver is None:
+        return None, []
+    try:
+        res = await run_template("T-PART", {"part": part}, driver=ctx.deps.kg_driver, database=ctx.deps.kg_database, timeout_s=ctx.deps.kg_timeout_s)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("T-PART failed: %s", type(exc).__name__)
+        return None, []
+    if not res.rows:
+        return None, []
+    own = verbalize("T-PART", {"part": part}, [{**res.rows[0], "replaced_by": None}])[0]
+    model = ctx.dialog.get("model")
+    newer = [r for r in res.rows if r["replaced_by"] and (not model or not r["replacement_fits"] or model in r["replacement_fits"])]
+    return own, verbalize("T-PART", {"part": part}, newer)
+
+
+def _newer(lines: list[str], evidence: list[Evidence], newer: list[Evidence]) -> None:
+    for e in newer:
+        evidence.append(e)
+        lines.append(" ".join(f"{s.rstrip('.')} [E{len(evidence)}]." for s in split_sentences(e.text)))
+
+
 async def run(ctx: AgentCtx) -> AgentResult:
     d = ctx.dialog
     if ctx.sticky and not (CUES.search(ctx.text) or ctx.ents.items or ctx.ents.part_nos or _QTY.search(ctx.text)):
@@ -54,11 +82,17 @@ async def run(ctx: AgentCtx) -> AgentResult:
                            "name.", active_agent="parts")
     d["parts"] = parts
     city = d.get("city") or (await ctx.tools.repo.customer_city(ctx.tools.customer_id) if ctx.tools.customer_id else None)
-    lines = []
-    for p in parts:
+    lines: list[str] = []
+    graph = await asyncio.gather(*(_graph(ctx, p) for p in parts))
+    for p, (own, newer) in zip(parts, graph, strict=True):
         r = await call_tool("get_part_availability", {"part_no": p, **({"city": city} if city else {})}, ctx.tools)
         if r.status != "ok":
-            lines.append(f"{p}: I couldn't find this part number.")
+            if own:                                # known from an uploaded document only: no live stock record
+                evidence.append(own)
+                lines.append(f"{own.text} [E{len(evidence)}]")
+            else:
+                lines.append(f"{p}: I couldn't find this part number.")
+            _newer(lines, evidence, newer)
             continue
         x = r.data
         home, stock = x["home_warehouse"], x["stock"]
@@ -75,6 +109,7 @@ async def run(ctx: AgentCtx) -> AgentResult:
                      text=f"{p} INR {x['price_inr']} stock {stock}", metadata={"stock": stock})
         evidence.append(e)
         lines.append(f"{p} ({x['name']}): INR {x['price_inr']}; {eta}. [E{len(evidence)}]")
+        _newer(lines, evidence, newer)
     text = "\n".join(lines) + "\nWould you like me to request a quote?"
     return AgentResult(text, active_agent="parts", evidence=evidence, citations=cite(evidence),
                        actions=[{"type": "offer_quote", "parts": parts}])

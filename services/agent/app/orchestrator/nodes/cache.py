@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from app.cache.store import CacheHit, exact_lookup, semantic_lookup
+from app.cache.store import CURATED, CacheHit, exact_lookup, semantic_lookup
 from app.db import get_engine
 from app.obs.tracing import span_set
 from app.orchestrator.state import Citation, Draft, TurnState
@@ -12,7 +12,7 @@ Update = dict[str, Any]
 
 
 def _draft(hit: CacheHit) -> Draft:
-    cites = [Citation(marker=f"[{i}]", evidence_id=f"doc:{d}", doc_id=d) for i, d in enumerate(hit.source_docs, 1)]
+    cites = [Citation(marker=f"[{i}]", evidence_id=f"doc:{d}" if d != CURATED else f"faq:{hit.faq_id}", doc_id=d if d != CURATED else None) for i, d in enumerate(hit.source_docs, 1)]
     text = hit.answer + ("".join(f" {c.marker}" for c in cites) if cites else "")
     return Draft(text=text, citations=cites)
 

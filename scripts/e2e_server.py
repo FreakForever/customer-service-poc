@@ -84,7 +84,11 @@ def patch() -> None:
         return {"intents": [Intent(name=n, confidence=0.95 - i / 50, source="knn") for i, n in enumerate(names)]}
 
     script = {"t2.v1": lambda m: "The manual covers this [E1].", "summary.v1": lambda m: "Customer asked for a person.",
+              "extract.v1": lambda m: json.dumps({"nodes": [], "edges": [], "confidence": 1}),        # the graph is shared: nothing is proposed
               "judge.v1": lambda m: json.dumps({"faithfulness": 1.0, "unsupported_claims": [], "answers_question": True})}
+    from app import providers
+
+    providers.get_llm = lambda: ResilientLLM(FakeProvider(script=dict(script)))  # type: ignore[assignment]   # the worker
     for mod in (rag, agents, verify):
         mod.get_llm = lambda: ResilientLLM(FakeProvider(script=dict(script)))  # type: ignore[attr-defined]
     for mod in (rag, agents):

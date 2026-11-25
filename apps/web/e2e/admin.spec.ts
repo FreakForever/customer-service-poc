@@ -64,6 +64,31 @@ test.describe("admin", () => {
     await page.getByRole("button", { name: "Upload", exact: true }).click();
     await expect(page.getByText("the file can't be read")).toBeVisible();
   });
+  test("CSV upload: applied rows answer at once, bad rows are listed", async ({ page, browser }) => {
+    await signIn(page, "admin");
+    await page.getByLabel("What are you uploading?").selectOption("faqs");
+    await expect(page.getByLabel("Title")).toHaveCount(0);
+    const id = `FAQ-E${Date.now() % 1e9}`, q = `Can I paint my dryer ${id} purple`;
+    const csv = `id,category,question,paraphrases,answer,source_doc\n${id},product,${q}?,,Only with heat resistant paint.,UPLOAD-FAQ\n${id}X,product,Who says so?,,Nobody at all.,DOC-GHOST\n`;
+    await page.getByLabel("Drop a file here, or choose one").setInputFiles({ name: "faqs.csv", mimeType: "text/csv", buffer: Buffer.from(csv) });
+    await page.getByRole("button", { name: "Upload", exact: true }).click();
+    await expect(page.getByText("1 row applied, 1 rejected.")).toBeVisible();
+    await expect(page.getByRole("region", { name: "Rejected rows" })).toContainText("source_doc must be an active document");
+    await a11y(page);
+    await page.setViewportSize({ width: 360, height: 768 });
+    expect(await overflow(page)).toBeLessThanOrEqual(0);
+    const visitor = await (await browser.newContext()).newPage();
+    await visitor.goto("/");
+    await visitor.getByRole("button", { name: "Chat with us" }).click();
+    const p = visitor.getByRole("dialog", { name: "Matsui Assistant" });
+    await p.getByLabel("Your message").fill(q);
+    await p.getByRole("button", { name: "Send", exact: true }).click();
+    await expect(p.locator("[data-role=assistant]").last()).toContainText("heat resistant paint", { timeout: 40_000 });
+    await expect(p.locator("[data-role=assistant] a[href*=UPLOAD]")).toHaveCount(0);
+    await visitor.context().close();
+    await page.getByRole("link", { name: "Jobs" }).click();
+    await expect(page.locator("tbody tr", { hasText: "faqs.csv" }).first()).toContainText("applied: 1");
+  });
   test("FAQ edit", async ({ page }) => {
     await signIn(page, "admin", "/admin/faqs");
     await page.getByLabel("Search").fill("FAQ-004");

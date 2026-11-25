@@ -20,6 +20,7 @@ _HAS_MATERIAL = re.compile(r"\b(has|have|full of|enough) material\b", re.IGNOREC
 _HINTS = [(re.compile(r"\bbore ?well|hard water|untreated water\b", re.IGNORECASE), "C-SCALE", "your water source")]
 YES = re.compile(r"^\s*(yes|yeah|yep|ok(ay)?|sure|please do|haan|ha|go ahead)\b", re.IGNORECASE)
 _RELEVANT = re.compile(r"\b(clean|replac|check|reset|still|again|tried|cause|fix|step|next|work|not)\w*", re.IGNORECASE)
+_MEANS = re.compile(r"\b(what (?:does|is)|meaning of)\b.*\b(mean\w*|stand for|code|error)\b|\bmeaning of\b", re.IGNORECASE)
 _GENERIC = {"the", "it", "them", "that", "this", "machine", "unit", "already"}
 
 
@@ -94,7 +95,7 @@ async def run(ctx: AgentCtx) -> AgentResult:
     errors = sorted(set(d.get("errors") or []) | set(errors_from_titles(ctx, family)))
     if errors:
         d["errors"] = errors
-    if not d.get("model") and not d.get("asked_model") and (errors or d.get("pending") or not family):
+    if not d.get("model") and not d.get("asked_model") and not (family and errors and _MEANS.search(ctx.text)) and (errors or d.get("pending") or not family):
         d["asked_model"] = True
         what = f"{ctx.linker.nodes[errors[0]]['props']['name']}" if errors else "that"
         return AgentResult(f"I can help with {what}. Which model is it (it's on the nameplate, for example CHL-10W)?",

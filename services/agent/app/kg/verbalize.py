@@ -58,6 +58,19 @@ def verbalize(tid: str, params: dict[str, Any], rows: list[dict[str, Any]],
                 f". If unavailable, lead time is {first['lead_time_days']} days.")
         return [_ev(tid, f"{first['part_no']}@{params['city'].lower()}", text, [r["path_id"] for r in rows], 1.0,
                     part_no=first["part_no"], stock={r["warehouse"]: r["qty"] for r in rows})]
+    if tid == "T-PART":
+        out = []
+        for r in rows:
+            if r["replaced_by"]:
+                when = f" Applies to: {r['applies_to']}." if r["applies_to"] else ""
+                fits = f" Fits: {', '.join(sorted(r['replacement_fits']))}." if r["replacement_fits"] else ""
+                price = f" Price of {r['replaced_by']}: INR {r['replacement_price_inr']}." if r["replacement_price_inr"] is not None else ""
+                text = f"{r['replaced_by']} ({r['replacement']}) replaces {r['part_no']} ({r['part']}).{when}{fits}{price}"
+            else:
+                stock = ", ".join(f"{s['warehouse']} {s['qty']}" for s in r["stock"]) or "not recorded"
+                text = f"{r['part_no']} ({r['part']}): price INR {r['price_inr']}; stock: {stock}; lead time {r['lead_time_days']} days."
+            out.append(_ev(tid, r["path_id"].split(":", 1)[1], text, [r["path_id"]], 1.0, part_no=r["part_no"], replaced_by=r["replaced_by"]))
+        return out
     if tid == "T-PARTS":
         items = "; ".join(f"{r['part_no']} ({r['part']}, INR {r['price_inr']})" for r in rows)
         text = f"Parts needed to resolve {params['cause']} on {params['family']} equipment: {items}."
