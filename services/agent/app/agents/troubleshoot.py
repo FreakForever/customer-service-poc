@@ -21,6 +21,10 @@ _HINTS = [(re.compile(r"\bbore ?well|hard water|untreated water\b", re.IGNORECAS
 YES = re.compile(r"^\s*(yes|yeah|yep|ok(ay)?|sure|please do|haan|ha|go ahead)\b", re.IGNORECASE)
 _RELEVANT = re.compile(r"\b(clean|replac|check|reset|still|again|tried|cause|fix|step|next|work|not)\w*", re.IGNORECASE)
 _MEANS = re.compile(r"\b(what (?:does|is)|meaning of)\b.*\b(mean\w*|stand for|code|error)\b|\bmeaning of\b", re.IGNORECASE)
+_WHICH_CODES = re.compile(r"\b(which|what|list|show)\b.*\b(error )?codes?\b", re.IGNORECASE)
+_BY_CAUSE = re.compile(r"\b(?:caused by|due to|because of|result of|from)\b(.+)", re.IGNORECASE | re.DOTALL)
+_SHARE = re.compile(r"\b(share[sd]?|same|common)\b.*\bcauses?\b", re.IGNORECASE)
+_SMALL = {"a", "an", "the", "of", "or", "and", "in", "on", "with", "to"}
 _GENERIC = {"the", "it", "them", "that", "this", "machine", "unit", "already"}
 
 
@@ -80,8 +84,38 @@ def _cited(text: str, marker: str) -> str:
     return " ".join(f"{s.rstrip('.')} {marker}." for s in split_sentences(text))
 
 
+async def code_list(ctx: AgentCtx) -> AgentResult | None:
+    """"Which dryer codes can be caused by a clogged filter?", "which codes share a cause with E05?": straight from the graph."""
+    family = ctx.ents.family
+    if not family or not _WHICH_CODES.search(ctx.text):
+        return None
+    calls: list[tuple[str, dict[str, str]]] = []
+    if _SHARE.search(ctx.text) and ctx.ents.error_codes:
+        calls = [("T-SHARED", {"error_id": ctx.ents.error_codes[0], "family": family})]
+    elif m := _BY_CAUSE.search(ctx.text):
+        want = words(m.group(1)) - _SMALL
+        calls = [("T-BYCAUSE", {"cause": nid, "family": family}) for nid, n in sorted(ctx.linker.nodes.items())
+                 if n["label"] == "Cause" and want and want <= words(n["props"]["name"])]
+    evidence: list[Evidence] = []
+    for tid, params in calls[:3]:
+        res = await run_template(tid, params, driver=ctx.deps.kg_driver, database=ctx.deps.kg_database, timeout_s=ctx.deps.kg_timeout_s)
+        names = ctx.linker.nodes
+        text_ids = {k: names[v]["props"].get("name", v) for k, v in params.items() if v in names}
+        for e in verbalize(tid, params, res.rows):
+            if tid == "T-BYCAUSE":                           # ids mean nothing to a customer
+                e = e.model_copy(update={"text": e.text.replace(params["cause"], f"\"{text_ids['cause']}\"")})
+            evidence.append(e)
+    if not evidence:
+        return None
+    return AgentResult("\n".join(f"{e.text.rstrip('.')} [E{i}]." for i, e in enumerate(evidence, 1)), active_agent="troubleshoot", evidence=evidence,
+                       citations=cite(evidence))
+
+
 async def run(ctx: AgentCtx) -> AgentResult:
     d = ctx.dialog
+    if (listed := await code_list(ctx)) is not None:
+        remember(ctx)
+        return listed
     if ctx.sticky:
         if YES.match(ctx.text) and d.get("offered_ticket"):
             from app.agents import service_request

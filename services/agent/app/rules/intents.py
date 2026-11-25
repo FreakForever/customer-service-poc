@@ -22,6 +22,10 @@ _COMPLAINT = re.compile(r"\b(escalat\w*|complain\w*|unacceptable|(second|third|f
                         re.IGNORECASE)
 _RESET = re.compile(r"^\s*(reset|start over|restart|new (chat|conversation)|clear( chat)?)[\s!.]*$", re.IGNORECASE)
 
+# a question about the policy, not about the customer's own machine: the classifier mixes the two up ("how long is the warranty on a new dryer")
+_WARRANTY_POLICY = re.compile(r"\b(how long|how many (months|years)|what('s| is))\b[^.?!]{0,30}\bwarranty\b(?! status)", re.IGNORECASE)
+_OWN = re.compile(r"\b(my|our|this|these|mine|ours|i|we|status|left|remaining|expire[sd]?|ended)\b", re.IGNORECASE)
+
 # quick-reply buttons (FR-CH-04) must not depend on the classifier
 _BUTTONS = {"i want to raise a service request": "service.create_ticket", "check my ticket status": "service.ticket_status"}
 
@@ -44,4 +48,8 @@ def exact_intents(text: str, ents: Entities) -> list[Intent]:
             out.append(Intent(name="complaint", confidence=0.95, source="rule", span=_COMPLAINT.search(text).group(0)))  # type: ignore[union-attr]
     if ents.amc_ids and not _RENEWAL.search(text) and (_AMC_STATUS.search(text) or len(text.split()) <= 6):
         out.append(Intent(name="amc.status", confidence=1.0, source="rule", span=ents.amc_ids[0]))
+    if not out and not ents.has_account_ids and not ents.error_codes and (m := _WARRANTY_POLICY.search(text)):
+        end = re.search(r"[.?!]|$", text[m.end():])
+        if not _OWN.search(text[m.start():m.end() + (end.end() if end else 0)]):
+            out.append(Intent(name="faq.warranty", confidence=0.95, source="rule", span=m.group(0)))
     return out

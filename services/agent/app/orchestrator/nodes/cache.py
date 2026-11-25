@@ -7,6 +7,7 @@ from app.db import get_engine
 from app.obs.tracing import span_set
 from app.orchestrator.state import Citation, Draft, TurnState
 from app.providers import get_embedder
+from app.rules.questions import questions
 
 Update = dict[str, Any]
 
@@ -25,12 +26,16 @@ async def cache_lookup(state: TurnState) -> Update:
         span_set(cache_hit=False, skipped="no db" if engine is None else "account ids or flags")
         return {"cache_hit": False}
     top = max(state.get("intents") or [], key=lambda i: i.confidence, default=None)
-    text = state["env"].text
+    text, qvec = state["env"].text, state.get("query_embedding")
+    if state["env"].channel == "email":                    # the subject and the greeting hide a question the cache knows
+        asked = questions(state["env"].meta.get("body") or "")
+        if len(asked) == 1:
+            text, qvec = asked[0], None
     try:
         async with engine.begin() as conn:
             hit = await exact_lookup(conn, text)
             if hit is None:
-                qvec = state.get("query_embedding") or (await get_embedder().embed([text], kind="query"))[0]
+                qvec = qvec or (await get_embedder().embed([text], kind="query"))[0]
                 tau = state["policy"].thresholds.get("cache_semantic", 0.90)
                 hit = await semantic_lookup(conn, qvec, tau, has_account_ids=has_ids,
                                             intent=top.name if top else None)
