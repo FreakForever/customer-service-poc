@@ -736,6 +736,8 @@ Each requirement has test id `TC-<REQ-ID>`; tests carry `@pytest.mark.req("FR-KG
 
 Region `asia-south1`. Cloud Run services connect to Cloud SQL through the built-in Cloud SQL connector (`--add-cloudsql-instances`).
 
+Implementation notes (BS-32, D-048): `_MIN` (default 1) sets the warm instances; API and worker keep CPU on, the worker runs one instance (few database connections). The web service gets `NEXTAUTH_SECRET`, and Google sign-in as soon as `bash infra/gcp/staff-signin.sh` has stored the OAuth client and the staff allow-list; it can read only these secrets. `make smoke URL=<web> API_URL=<api>` checks pages, chat and that staff and debug routes are closed.
+
 **Makefile:**
 
 ```makefile

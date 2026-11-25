@@ -6,6 +6,7 @@ substitutions:
   _ENV: dev
   _REGION: asia-south1
   _TAG: manual
+  _MIN: "1"      # warm instances; 0 = scale to zero (cheaper, slow first answer)
 options:
   logging: CLOUD_LOGGING_ONLY
   dynamicSubstitutions: true
@@ -37,16 +38,17 @@ steps:
       - |
         set -euo pipefail
         IMG=${_REGION}-docker.pkg.dev/$PROJECT_ID/mcs/agent:${_TAG}
-        ENVV=ENV=${_ENV},GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},CLOUDSQL_INSTANCE=$PROJECT_ID:${_REGION}:mcs-${_ENV},GCS_BUCKET=mcs-${_ENV}-uploads,PROVIDER=vertex,GEMINI_VIA=api,MODEL_FALLBACK=gemma-4-26b-a4b-it,MAIL_ADAPTER=demo
+        ENVV=ENV=${_ENV},GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},CLOUDSQL_INSTANCE=$PROJECT_ID:${_REGION}:mcs-${_ENV},GCS_BUCKET=mcs-${_ENV}-uploads,PROVIDER=vertex,GEMINI_VIA=api,MODEL_FALLBACK=gemma-4-26b-a4b-it,MAIL_ADAPTER=demo,SUPPORT_ADDRESS=support@matsui-demo.example
         S=mcs-${_ENV}
-        SECRETS=DB_PASSWORD=$$S-db-password:latest,NEO4J_URI=$$S-neo4j-uri:latest,NEO4J_USER=$$S-neo4j-user:latest,NEO4J_PASSWORD=$$S-neo4j-password:latest,NEO4J_DATABASE=$$S-neo4j-database:latest,GEMINI_API_KEY=$$S-gemini-api-key:latest
-        COMMON="--region ${_REGION} --image $$IMG --add-cloudsql-instances $PROJECT_ID:${_REGION}:mcs-${_ENV} --set-env-vars $$ENVV --set-secrets $$SECRETS --min-instances 0 --max-instances 2 --quiet"
+        SECRETS=DB_PASSWORD=$$S-db-password:latest,NEO4J_URI=$$S-neo4j-uri:latest,NEO4J_USER=$$S-neo4j-user:latest,NEO4J_PASSWORD=$$S-neo4j-password:latest,NEO4J_DATABASE=$$S-neo4j-database:latest,GEMINI_API_KEY=$$S-gemini-api-key:latest,NEXTAUTH_SECRET=$$S-nextauth-secret:latest
+        COMMON="--region ${_REGION} --image $$IMG --add-cloudsql-instances $PROJECT_ID:${_REGION}:mcs-${_ENV} --set-env-vars $$ENVV --set-secrets $$SECRETS --min-instances ${_MIN} --quiet"
+        # CPU stays on: the API warms its dictionaries and reranker in the background. One worker: the small database has few connections.
         gcloud run deploy mcs-agent-api $$COMMON \
           --service-account mcs-api@$PROJECT_ID.iam.gserviceaccount.com --allow-unauthenticated \
-          --cpu 1 --memory 1Gi
+          --no-cpu-throttling --cpu 1 --memory 2Gi --max-instances 2
         gcloud run deploy mcs-agent-worker $$COMMON \
           --service-account mcs-worker@$PROJECT_ID.iam.gserviceaccount.com --no-allow-unauthenticated \
-          --command python --args=-m,app.worker --no-cpu-throttling --cpu 1 --memory 1Gi
+          --command python --args=-m,app.worker --no-cpu-throttling --cpu 1 --memory 2Gi --max-instances 1
 
   - id: deploy-web
     name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
@@ -56,10 +58,19 @@ steps:
       - |
         set -euo pipefail
         API_URL=$$(gcloud run services describe mcs-agent-api --region ${_REGION} --format 'value(status.url)')
+        WEB_URL=$$(gcloud run services describe mcs-web --region ${_REGION} --format 'value(status.url)')
+        S=mcs-${_ENV}
+        SECRETS=NEXTAUTH_SECRET=$$S-nextauth-secret:latest
+        # staff sign-in is switched on by creating these three secrets (infra/gcp/staff-signin.sh)
+        for pair in GOOGLE_CLIENT_ID=google-client-id GOOGLE_CLIENT_SECRET=google-client-secret STAFF_ALLOWLIST=staff-allowlist; do
+          if gcloud secrets versions access latest --secret "$$S-$${pair#*=}" >/dev/null 2>&1; then SECRETS="$$SECRETS,$${pair%%=*}=$$S-$${pair#*=}:latest"
+          else echo "no $$S-$${pair#*=}: staff sign-in stays off"; fi
+        done
         gcloud run deploy mcs-web --region ${_REGION} \
           --image ${_REGION}-docker.pkg.dev/$PROJECT_ID/mcs/web:${_TAG} \
           --service-account mcs-web@$PROJECT_ID.iam.gserviceaccount.com --allow-unauthenticated \
-          --set-env-vars AGENT_API_URL=$$API_URL --min-instances 0 --max-instances 2 --quiet
+          --set-env-vars AGENT_API_URL=$$API_URL,ENV=${_ENV},NEXTAUTH_URL=$$WEB_URL --set-secrets $$SECRETS \
+          --min-instances ${_MIN} --max-instances 2 --quiet
 
   - id: smoke
     name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim

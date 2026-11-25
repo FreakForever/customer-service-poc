@@ -8,7 +8,7 @@ PROXY := $(shell command -v cloud-sql-proxy 2>/dev/null || python3 -c "import os
 TAG :=$(shell git rev-parse --short HEAD 2>/dev/null)$(shell git diff --quiet HEAD 2>/dev/null || echo -dirty)
 
 .PHONY: bootstrap-gcp env proxy dev api-dev worker-dev web-dev migrate kg-load seed seed-kb eval-retrieval eval-router eval-cache eval-t2 eval-transactional eval-judge graph test ci deploy-dev deploy-demo \
-        eval demo-emails demo-upload docs
+        eval smoke demo-emails demo-upload docs
 
 bootstrap-gcp: ; ENV=dev bash infra/gcp/bootstrap.sh
 env:          ; bash infra/gcp/env.sh dev > .env && echo "wrote .env"
@@ -32,6 +32,7 @@ test:         ; cd services/agent && uv run pytest -q && pnpm -C apps/web test
 ci:           ; gcloud builds submit --config infra/gcp/cloudbuild.ci.yaml --region asia-south1 --ignore-file=infra/gcp/ci.gcloudignore .
 deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=dev,_TAG=$(TAG) .
 deploy-demo:  ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=demo,_TAG=$(TAG) .
+smoke:        ; python3 scripts/smoke.py $(URL) $(API_URL)
 eval:         ; cd services/agent && uv run python ../../eval/run.py $(ARGS)
 demo-emails:  ; cd services/agent && uv run python ../../scripts/demo_emails.py
 demo-upload:  ; cd services/agent && uv run python ../../scripts/demo_upload.py ../../mock-data/upload-samples $(ARGS)

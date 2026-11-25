@@ -1136,11 +1136,11 @@
       "verify": [
         "make deploy-demo && make smoke URL=$DEMO_URL"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
+      "status": "in_progress",
+      "progress_pct": 50,
+      "started": "2026-11-25",
       "completed": null,
-      "notes": ""
+      "notes": "Reduced scope chosen by the user for an early client demo (D-048): started before BS-29/BS-30 are done, on the dev environment. Done: environment config, Cloud Run x3 with one warm instance, smoke test. Deployed 2026-11-25, Cloud Build ff6a2e6c; `make smoke` all passed against https://mcs-web-m32ylgel7a-el.a.run.app (18 checks; chat answers 0.2-1.8 s). Tried live: generated answer 3.5 s; safety, handoff, ticket guard work; the e-mail reply job ran. Not good on the free tier: one Hinglish question and one unknown error code timed out to a person after 6.2 s (model 503 'high demand'); the warranty e-mail was answered as an account question (T0); an aggregation question was answered with a model question. Open: Google OAuth client and allow-list (infra/gcp/staff-signin.sh), so console, analytics and admin can't be opened in the cloud yet. Skipped for now: separate demo environment, demo Cloud SQL and Neo4j (OD-003), private IP, Scheduler/Pub/Sub; `make deploy-demo` not run."
     },
     {
       "id": "BS-33",

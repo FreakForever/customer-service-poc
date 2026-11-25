@@ -78,6 +78,8 @@ ensure_random() { secret_exists "$1" && echo "  ok  $1" || put_secret "$1" "$(op
 ensure_random "$P-db-password"
 ensure_random "$P-db-ro-password"
 ensure_random "$P-nextauth-secret"
+# the web app reads only its own secrets, not the whole project's
+g secrets add-iam-policy-binding "$P-nextauth-secret" --member "serviceAccount:$(sa mcs-web)" --role roles/secretmanager.secretAccessor >/dev/null
 
 if [[ -n "${NEO4J_CREDS_FILE:-}" ]]; then
   [[ -r "$NEO4J_CREDS_FILE" ]] || { echo "Cannot read NEO4J_CREDS_FILE=$NEO4J_CREDS_FILE" >&2; exit 1; }
