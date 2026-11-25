@@ -233,6 +233,20 @@ Email budget is 60 s end to end, which allows the planner, the strong model and 
 - **Injection and exfiltration:** input screening, documents treated as data, refusal to reveal system prompts or other customers' data ([FR-RT-05](Requirements.html#FR-RT-05)); caches never hold personal answers ([FR-CA-04](Requirements.html#FR-CA-04)).
 - **Privacy:** PII masked in logs ([FR-RT-06](Requirements.html#FR-RT-06)); 30-day retention with a purge job ([NFR-SEC-04](Requirements.html#NFR-SEC-04)); secrets in `.env`/Secret Manager ([NFR-SEC-02](Requirements.html#NFR-SEC-02)).
 
+**Threat model (BS-31).** What we protect: customer and contract records, staff accounts, the knowledge base and graph that answers rest on, model budget.
+
+| Threat | Control | Tested in | What remains |
+|---|---|---|---|
+| A customer reads another customer's records | Customer id only from the server; every tool query is filtered by it; a foreign record looks like a missing one | `test_adversarial.py` (every record, other customers), `test_tools_db.py` | Demo personas let anyone act as a customer: synthetic data only (D-038) |
+| Prompt injection or bulk export in a message | Guardrail refuses before any model or tool runs; disguises (invisible or look-alike letters, spaced words, split lines) are undone first | `test_adversarial.py` | Pattern-based: new phrasings and other languages can pass it. The tool scope above still holds |
+| Instructions hidden in a document | Evidence is neutralised and passed as data; model-proposed graph facts must be in the text or wait for a person (D-045) | `test_adversarial.py`, `test_uploads.py` | An admin can upload wrong facts |
+| Model-written query changes or reads too much | Text2Cypher guard, READ transactions, 2 s limit, row cap; no SQL from models; tool allow-list with typed arguments | `test_text2cypher_guard.py`, `test_retention_and_roles.py` | AuraDB Free has no read-only user (OD-003) |
+| Wrong person uses staff functions | Google sign-in, allow-list per request, 5-minute API tokens, role per route; a route without a decision fails the tests | `test_rbac.py`, `tests/auth.test.ts` | Google client not configured yet (BS-32) |
+| Debug route reachable from the internet | Off unless set explicitly; never on by default on Cloud Run | `test_rbac.py` | None known: the build running on Cloud Run on 2026-11-25 has health routes only |
+| Data kept too long | Daily purge of conversations, traces, job payloads, demo mail and feedback after `RETENTION_DAYS` | `test_retention_and_roles.py` | Tickets, quotes and leads are business records and stay; uploaded files stay until deleted |
+| Secrets in code or logs | Secret Manager, gitleaks in CI, masking in logs and traces | CI, `test_guardrails.py` | CI scans the tree, not the git history |
+| Flooding or cost abuse | E-mail form limit per process, request size limits, turn lease per chat, instance cap | API tests | No shared rate limit and none on chat turns (BS-32); uploads aren't virus-scanned |
+
 ## 5. Deployment architecture {#HLD-5}
 
 Everything runs on Google Cloud; developers need only `gcloud`, Python 3.12 (uv) and Node 20 (pnpm) — **no local Docker** (D-015, [NFR-DEP-01](Requirements.html#NFR-DEP-01)). Two environments share one design: **dev** (cheap tiers, used while building) and **demo** (sized and warmed for presentations). Images are built remotely by Cloud Build ([NFR-DEP-02](Requirements.html#NFR-DEP-02)); `make seed` loads mock data into the dev services ([FR-KB-06](Requirements.html#FR-KB-06)).

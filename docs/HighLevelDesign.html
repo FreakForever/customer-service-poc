@@ -84,7 +84,7 @@ td ul{margin:0;padding-left:18px}
 <a class="l2" href="#HLD-7">7. Open decisions</a>
 <a class="l2" href="#HLD-8">8. Risks</a>
 <a class="l2" href="#HLD-9">9. Traceability</a></aside>
-<main><div class="hero"><h1>High-level design</h1><div class="meta">Project MCS · registry v0.2.0 · generated 2026-11-23 · build f6748c1b · owner Aviral</div></div>
+<main><div class="hero"><h1>High-level design</h1><div class="meta">Project MCS · registry v0.2.0 · generated 2026-11-23 · build 4cd54e58 · owner Aviral</div></div>
 <h2 id="HLD-1">1. Context and goals</h2>
 <p>Matsui's customers contact support for FAQs, troubleshooting, ticket/AMC status, spare parts and quotes. This POC shows a <strong>low-latency hybrid multi-agent service desk</strong> for <strong>email and chat</strong> that:</p>
 <ol>
@@ -584,6 +584,73 @@ td ul{margin:0;padding-left:18px}
 <li><strong>Injection and exfiltration:</strong> input screening, documents treated as data, refusal to reveal system prompts or other customers' data (<a href="Requirements.html#FR-RT-05">FR-RT-05</a>); caches never hold personal answers (<a href="Requirements.html#FR-CA-04">FR-CA-04</a>).</li>
 <li><strong>Privacy:</strong> PII masked in logs (<a href="Requirements.html#FR-RT-06">FR-RT-06</a>); 30-day retention with a purge job (<a href="Requirements.html#NFR-SEC-04">NFR-SEC-04</a>); secrets in <code>.env</code>/Secret Manager (<a href="Requirements.html#NFR-SEC-02">NFR-SEC-02</a>).</li>
 </ul>
+<p><strong>Threat model (BS-31).</strong> What we protect: customer and contract records, staff accounts, the knowledge base and graph that answers rest on, model budget.</p>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Control</th>
+<th>Tested in</th>
+<th>What remains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A customer reads another customer's records</td>
+<td>Customer id only from the server; every tool query is filtered by it; a foreign record looks like a missing one</td>
+<td><code>test_adversarial.py</code> (every record, other customers), <code>test_tools_db.py</code></td>
+<td>Demo personas let anyone act as a customer: synthetic data only (D-038)</td>
+</tr>
+<tr>
+<td>Prompt injection or bulk export in a message</td>
+<td>Guardrail refuses before any model or tool runs; disguises (invisible or look-alike letters, spaced words, split lines) are undone first</td>
+<td><code>test_adversarial.py</code></td>
+<td>Pattern-based: new phrasings and other languages can pass it. The tool scope above still holds</td>
+</tr>
+<tr>
+<td>Instructions hidden in a document</td>
+<td>Evidence is neutralised and passed as data; model-proposed graph facts must be in the text or wait for a person (D-045)</td>
+<td><code>test_adversarial.py</code>, <code>test_uploads.py</code></td>
+<td>An admin can upload wrong facts</td>
+</tr>
+<tr>
+<td>Model-written query changes or reads too much</td>
+<td>Text2Cypher guard, READ transactions, 2 s limit, row cap; no SQL from models; tool allow-list with typed arguments</td>
+<td><code>test_text2cypher_guard.py</code>, <code>test_retention_and_roles.py</code></td>
+<td>AuraDB Free has no read-only user (OD-003)</td>
+</tr>
+<tr>
+<td>Wrong person uses staff functions</td>
+<td>Google sign-in, allow-list per request, 5-minute API tokens, role per route; a route without a decision fails the tests</td>
+<td><code>test_rbac.py</code>, <code>tests/auth.test.ts</code></td>
+<td>Google client not configured yet (BS-32)</td>
+</tr>
+<tr>
+<td>Debug route reachable from the internet</td>
+<td>Off unless set explicitly; never on by default on Cloud Run</td>
+<td><code>test_rbac.py</code></td>
+<td>None known: the build running on Cloud Run on 2026-11-25 has health routes only</td>
+</tr>
+<tr>
+<td>Data kept too long</td>
+<td>Daily purge of conversations, traces, job payloads, demo mail and feedback after <code>RETENTION_DAYS</code></td>
+<td><code>test_retention_and_roles.py</code></td>
+<td>Tickets, quotes and leads are business records and stay; uploaded files stay until deleted</td>
+</tr>
+<tr>
+<td>Secrets in code or logs</td>
+<td>Secret Manager, gitleaks in CI, masking in logs and traces</td>
+<td>CI, <code>test_guardrails.py</code></td>
+<td>CI scans the tree, not the git history</td>
+</tr>
+<tr>
+<td>Flooding or cost abuse</td>
+<td>E-mail form limit per process, request size limits, turn lease per chat, instance cap</td>
+<td>API tests</td>
+<td>No shared rate limit and none on chat turns (BS-32); uploads aren't virus-scanned</td>
+</tr>
+</tbody>
+</table>
 <h2 id="HLD-5">5. Deployment architecture</h2>
 <p>Everything runs on Google Cloud; developers need only <code>gcloud</code>, Python 3.12 (uv) and Node 20 (pnpm) — <strong>no local Docker</strong> (D-015, <a href="Requirements.html#NFR-DEP-01">NFR-DEP-01</a>). Two environments share one design: <strong>dev</strong> (cheap tiers, used while building) and <strong>demo</strong> (sized and warmed for presentations). Images are built remotely by Cloud Build (<a href="Requirements.html#NFR-DEP-02">NFR-DEP-02</a>); <code>make seed</code> loads mock data into the dev services (<a href="Requirements.html#FR-KB-06">FR-KB-06</a>).</p>
 <p><strong>Dev loop (no Docker):</strong></p>

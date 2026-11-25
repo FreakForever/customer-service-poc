@@ -183,7 +183,7 @@ def test_purge_expired_deletes_only_expired_rows_and_children(db):
     db.execute(text("INSERT INTO spans (trace_id, node) VALUES (:o, 'router')"), {"o": old})
 
     counts = db.execute(text("SELECT * FROM purge_expired()")).one()   # default 30 days
-    assert tuple(counts) == (1, 1)
+    assert tuple(counts)[:2] == (1, 1)
     assert scalar(db, "SELECT count(*) FROM conversations WHERE id IN (:a, :b)", a=expired, b=live) == 1
     assert scalar(db, "SELECT count(*) FROM messages WHERE conversation_id = :c", c=expired) == 0
     assert scalar(db, "SELECT count(*) FROM spans WHERE trace_id = :o", o=old) == 0
@@ -194,9 +194,9 @@ def test_purge_expired_deletes_only_expired_rows_and_children(db):
 def test_purge_retention_comes_from_argument_or_setting(db):
     db.execute(text("INSERT INTO traces (id, created_at) VALUES (:i, now() - interval '10 days')"),
                {"i": uuid.uuid4()})
-    assert tuple(db.execute(text("SELECT * FROM purge_expired(30)")).one()) == (0, 0)
+    assert tuple(db.execute(text("SELECT * FROM purge_expired(30)")).one())[:2] == (0, 0)
     db.execute(text("SET LOCAL mcs.retention_days = '7'"))
-    assert tuple(db.execute(text("SELECT * FROM purge_expired()")).one()) == (0, 1)
+    assert tuple(db.execute(text("SELECT * FROM purge_expired()")).one())[:2] == (0, 1)
 
 
 # ---------- read-only role ----------

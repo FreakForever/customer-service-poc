@@ -2,6 +2,7 @@
 
 import asyncio
 import logging
+import os
 import uuid
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
@@ -80,7 +81,8 @@ def create_app() -> FastAPI:
     from app.api.kb import router as kb_router
 
     app.include_router(kb_router)
-    if settings.debug_api if settings.debug_api is not None else settings.env == "dev":
+    # never by default on Cloud Run (K_SERVICE): the dev API is reachable from the internet and this route acts for any customer
+    if settings.debug_api if settings.debug_api is not None else settings.env == "dev" and not os.environ.get("K_SERVICE"):
         from app.api.debug import router as debug_router
 
         app.include_router(debug_router)

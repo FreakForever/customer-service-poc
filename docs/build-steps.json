@@ -1103,11 +1103,11 @@
       "verify": [
         "pytest services/agent/tests/security"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
-      "completed": null,
-      "notes": ""
+      "status": "done",
+      "progress_pct": 100,
+      "started": "2026-11-25",
+      "completed": "2026-11-25",
+      "notes": "Verify: pytest services/agent/tests/security: all offline tests passed; its database tests passed together with test_schema (19). RBAC covers every API route without, with a wrong and with a lower role; every ticket, asset and contract tried as other customers (over 2000 calls, no leak); mcs_ro has no write privilege on any table and its real login is refused; Neo4j refuses writes in READ transactions. Full runs: 741 backend passed, 1 timing check (T-STOCK p95 62 ms against 50 ms on shared AuraDB, query unchanged) failed once and passed 3 of 3 re-runs; 41 browser passed. Git history searched for key patterns: none. Migration 0008 applied to dev; the purge itself hasn't run on dev. Found and fixed: /v1/debug/run would have been public on a dev deployment (it acts for any customer id); the build now on Cloud Run has health routes only, so it was not exposed. D-047. Gaps: pattern-based guardrails; no shared rate limit; gitleaks scans the tree only; no CSP; AuraDB Free has no read-only user (OD-003)."
     },
     {
       "id": "BS-32",

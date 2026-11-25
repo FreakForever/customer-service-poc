@@ -1624,7 +1624,7 @@
         "Unit tests for scope checks"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-4.4"
@@ -2543,7 +2543,7 @@
         "Write attempt via Text2Cypher fails at DB level (READ access-mode transaction; read-only user where the Neo4j hosting supports RBAC)"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-4.4"
@@ -2573,7 +2573,7 @@
         "Purge job deletes expired rows in test"
       ],
       "verification": "test",
-      "status": "in_progress",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-4.4"

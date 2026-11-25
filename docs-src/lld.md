@@ -628,7 +628,7 @@ Base URL `/v1`. Auth: staff routes need a NextAuth session JWT forwarded as `Aut
 | `GET /console/traces/{trace_id}` | agent | AI trace | → `{trace, spans[], evidence[], verification}` |
 | `POST /console/messages/{id}/promote-faq` | agent | Promote to cache | `{question, answer, source_doc}` → `{faq_id}` |
 | `GET /console/tickets` / `PATCH /console/tickets/{id}` | agent | Tickets | filters / `{status, assigned_engineer, scheduled_visit}` |
-| `POST /debug/run` | dev only (`DEBUG_API`, default on when `ENV=dev`) | Run a message through the orchestrator (BS-11) | `{text, channel?, customer_id?, meta?, persist?}` → `{trace{spans[]}, path[], response, persisted}`; traces stored with `mode='debug'` |
+| `POST /debug/run` | dev only (`DEBUG_API`, default on when `ENV=dev` outside Cloud Run) | Run a message through the orchestrator (BS-11) | `{text, channel?, customer_id?, meta?, persist?}` → `{trace{spans[]}, path[], response, persisted}`; traces stored with `mode='debug'` |
 | `POST /admin/documents` | admin | Upload doc | multipart → `{doc_id, version, job_id}` |
 | `GET /admin/documents` / `DELETE /admin/documents/{doc_id}` | admin | Manage | → list / `{job_id}` |
 | `POST /admin/documents/{doc_id}/reindex` | admin | Reindex | → `{job_id}` |
@@ -711,6 +711,8 @@ CI runs on Cloud Build (`infra/gcp/cloudbuild.ci.yaml`) ([NFR-DEP-02](Requiremen
 Implementation notes (BS-06, D-022): triggers `mcs-ci` (push to `main`) and `mcs-ci-pr` (PRs into `main`) on the Cloud Build GitHub connection `mcs-github` (asia-south1), running as `mcs-build`. Steps: `traceability` and `gitleaks` (`detect --no-git`; trigger checkouts have no `.git`) fail fast in parallel with `python` (`uv sync --frozen`, ruff, mypy on `app/`, unit tests) and `web` (eslint `--max-warnings 0`, `tsc --noEmit`); `integration` waits for `pgvector/pgvector:pg16` and `neo4j:5.26` on the `cloudbuild` network, loads the KG and runs `tests/integration` (migrations, seed, templates). `make ci` submits the same config manually with `infra/gcp/ci.gcloudignore` (keeps `docs/` and `mock-data/data/`, which the deploy `.gcloudignore` drops). CI builds no images; images are built and SHA-tagged by `cloudbuild.deploy.yaml`.
 | Eval / perf | benchmark and latency | eval/run.py, scripts/perf.py | manual / nightly |
 
+Implementation notes (BS-31, D-047): `tests/security/` — `test_rbac.py` (every API route is classified and called without, with a wrong and with a lower role), `test_adversarial.py` (attack list, tool scope over all records, typed arguments), `test_retention_and_roles.py` (purge, `mcs_ro`), `test_text2cypher_guard.py`, `test_guardrails.py`. `guardrails.fold` undoes disguises before matching. The worker queues job `purge` once in 24 hours (advisory lock) and runs `purge_expired(RETENTION_DAYS)` (migration 0008: also finished jobs, demo mailbox, feedback; less than one day is refused); no Cloud Scheduler job is needed. `/v1/debug/run` is off by default on Cloud Run.
+
 Each requirement has test id `TC-<REQ-ID>`; tests carry `@pytest.mark.req("FR-KG-03")` so a report can list requirement coverage.
 
 ## 18. Deployment and runbook {#LLD-18}
@@ -729,7 +731,7 @@ Each requirement has test id `TC-<REQ-ID>`; tests carry `@pytest.mark.req("FR-KG
 | Secret Manager | `mcs-<env>-db-password`, `-db-ro-password`, `-neo4j-{uri,user,password,database}`, `-nextauth-secret`; later Google OAuth client, Gmail token | same names with `mcs-demo-` prefix |
 | Service accounts | `mcs-api@`, `mcs-worker@` (Cloud SQL client, Vertex user, secret accessor, storage object admin, log writer); `mcs-web@` (log writer only); `mcs-build@` (Cloud Build deployer: run admin, SA user, Artifact Registry writer, Cloud SQL client) | same |
 | Cloud Run | `mcs-web`, `mcs-agent-api`, `mcs-agent-worker` (scale to zero) | same, API and worker min 1, CPU always allocated |
-| Pub/Sub + Scheduler | `mcs-gmail` topic (if Gmail enabled) | + jobs: purge (daily), audit (hourly), gmail-watch-renew (daily) |
+| Pub/Sub + Scheduler | `mcs-gmail` topic (if Gmail enabled) | + gmail-watch-renew (daily); purge and audit are scheduled by the worker itself (D-047) |
 | Budget alert | when `BUDGET_AMOUNT` is set (billing account currency; 50/90/100 % thresholds) | yes |
 
 Region `asia-south1`. Cloud Run services connect to Cloud SQL through the built-in Cloud SQL connector (`--add-cloudsql-instances`).

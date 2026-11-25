@@ -13,6 +13,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from threading import Thread
 
 from app.config.settings import get_settings
+from app.jobs.purge import make_purge_handler, schedule_purge
 from app.jobs.queue import run_once
 from app.obs.health import check_all
 
@@ -55,6 +56,11 @@ async def run() -> None:
         if time.monotonic() >= next_beat:
             log.info("heartbeat %s", await check_all(settings))
             next_beat = time.monotonic() + HEARTBEAT_S
+            if engine is not None:
+                try:
+                    await schedule_purge(engine)
+                except Exception:
+                    log.exception("purge not scheduled")
         job = None
         if engine is not None:
             try:
@@ -109,7 +115,7 @@ def _handlers(settings):
     engine = create_async_engine(url, pool_pre_ping=True)
     ingest = make_ingest_handler(engine, get_embedder())
     return engine, {"ingest_document": ingest, "reindex_document": ingest, "extract_graph": make_extract_handler(engine, get_llm),
-                    "audit_sample": make_audit_handler(engine, get_llm),
+                    "audit_sample": make_audit_handler(engine, get_llm), "purge": make_purge_handler(engine, settings.retention_days),
                     "delete_document": make_delete_handler(engine), "email_reply": make_reply_handler(engine),
                     "gmail_sync": make_gmail_sync_handler(engine), "gmail_watch": make_gmail_watch_handler(engine)}
 

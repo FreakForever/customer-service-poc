@@ -8,6 +8,7 @@ oos          → polite redirect (strong off-topic patterns with no product/acco
 """
 
 import re
+import unicodedata
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
@@ -41,7 +42,18 @@ OOS = re.compile(
     r"\bwrite (me )?(an? )?(essay|code|program|script)|\btranslate\b|\bcapital of\b|\bwho (is|was) the president\b|"
     r"\bdate me\b|\bgirlfriend|\bboyfriend", re.IGNORECASE)
 
+_LOOKALIKE = str.maketrans("АВЕКМНОРСТХаеорсухіѕјΑΒΕΖΗΙΚΜΝΟΡΤΥΧο", "ABEKMHOPCTXaeopcyxisjABEZHIKMNOPTYXo")
 InjectionClassifier = Callable[[str], float]
+
+
+_INVISIBLE = re.compile("[\u00ad\u200b-\u200f\u202a-\u202e\u2060-\u2064\ufeff]")
+_SPACED = re.compile(r"(?<![^\W_])(?:[^\W\d_][ .\-_*]){2,}[^\W\d_](?![^\W_])")
+
+
+def fold(text: str) -> str:
+    """Undo cheap disguises before matching: full-width letters, look-alike Cyrillic/Greek, invisible characters, s p a c e d words."""
+    t = _INVISIBLE.sub("", unicodedata.normalize("NFKC", text)).translate(_LOOKALIKE)
+    return _SPACED.sub(lambda m: re.sub(r"[ .\-_*]", "", m.group(0)), t)
 
 
 @dataclass
@@ -53,18 +65,20 @@ class GuardrailResult:
 def check(text: str, ents: Entities, *, own_company: str | None = None, companies: set[str] | None = None,
           classifier: InjectionClassifier | None = None, classifier_threshold: float = 0.8) -> GuardrailResult:
     res = GuardrailResult()
+    text = fold(text)
     if (m := SAFETY.search(text)) and not _NOT_SAFETY.search(text):
         res.flags.add("safety")
         res.reasons["safety"] = m.group(0)
+    flat = " ".join(text.split())                          # phrases split over lines
     for p in INJECTION:
-        if m := p.search(text):
+        if m := p.search(text) or p.search(flat):
             res.flags.add("injection")
             res.reasons["injection"] = m.group(0)[:80]
             break
     if "injection" not in res.flags and classifier is not None and classifier(text) >= classifier_threshold:
         res.flags.add("injection")
         res.reasons["injection"] = "classifier"
-    if m := _BULK.search(text):
+    if m := _BULK.search(flat):
         res.flags.add("exfiltration")
         res.reasons["exfiltration"] = m.group(0)[:80]
     elif companies and _ACCOUNT_WORDS.search(text):
