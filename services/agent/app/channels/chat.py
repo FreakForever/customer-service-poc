@@ -19,6 +19,7 @@ from app.orchestrator.graph import run_turn, session_of
 from app.orchestrator.nodes.degrade import HANDOFF_TEXT
 from app.orchestrator.policies import get_policy
 from app.orchestrator.state import CustomerRef, Envelope, TurnState
+from app.verify import audit
 
 log = logging.getLogger("mcs.chat")
 Event = tuple[str, dict[str, Any] | list[dict[str, Any]]]
@@ -93,6 +94,8 @@ async def _turn(engine: AsyncEngine, sid: uuid.UUID, conv: dict[str, Any], messa
     try:
         async with engine.begin() as conn:
             await save_trace(conn, rec)
+            if final and audit.wanted(final, get_policy("chat"), rec.trace_id):
+                await audit.request(conn, final, rec.trace_id)      # with the trace or not at all; never delays the answer
     except Exception:
         log.exception("trace not saved")
     out["latency_ms"] = rec.latency_ms

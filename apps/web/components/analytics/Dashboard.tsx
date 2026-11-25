@@ -79,7 +79,7 @@ function Overview({ s, q }: { s: Summary; q: string }) {
               <li key={f.trace_id} className="py-2 text-sm">
                 <p><span className="font-semibold">{f.reasons.join(", ")}</span> <span className="text-steel">· {f.tier} · {f.channel} · {new Date(f.created_at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" })}</span></p>
                 {f.answer && <p className="break-words">{f.answer}</p>}{f.reason && <p className="text-steel">Customer: {f.reason}</p>}
-                {f.conversation_id && <Link className="inline-flex min-h-6 items-center text-blue underline" href={`/console/c/${f.conversation_id}`}>Open conversation</Link>}
+                {f.conversation_id && <Link className="inline-flex min-h-6 items-center text-blue underline" href={`/console/c/${f.conversation_id}?trace=${f.trace_id}`}>Open AI trace</Link>}
               </li>
             ))}
           </ul>

@@ -1037,11 +1037,11 @@
       "verify": [
         "make eval (report written to reports/eval-<date>.html)"
       ],
-      "status": "todo",
-      "progress_pct": 0,
-      "started": null,
+      "status": "in_progress",
+      "progress_pct": 50,
+      "started": "2026-11-25",
       "completed": null,
-      "notes": ""
+      "notes": "Built and tested: metrics, report template, async audit job (3 of 6). Written but never run: runner, combined judge, ReAct baseline (imports and --help only). The verify command `make eval` has NOT been run: it was blocked by the permission system and the user chose not to run it now (2026-11-25). So there are no benchmark results, NFR-QUAL-01..03 are unmeasured and the Benchmark tab is still empty. Tests: 682 backend, 41 browser, web unit green; audit 5 (scripted judge). To finish: `make proxy`, then `make eval` (about 1500-2000 free-tier calls, resumable; add ARGS=--uploads for the after-upload half, which uploads and removes the samples on dev), fix what shows up, record the results. D-046."
     },
     {
       "id": "BS-30",

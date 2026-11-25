@@ -45,8 +45,9 @@ test.describe("analytics", () => {
     await expect(page.getByText(/T4 person \d/).first()).toBeVisible();
     await page.getByText("Show as table").first().click();
     await expect(page.getByRole("region", { name: "Answers by tier per day as a table" })).toBeVisible();
-    await flagged.getByRole("link", { name: "Open conversation" }).first().click();
-    await expect(page).toHaveURL(/\/console\/c\//);
+    await flagged.getByRole("link", { name: "Open AI trace" }).first().click();
+    await expect(page).toHaveURL(/\/console\/c\/.+trace=/);
+    await expect(page.getByRole("tab", { name: "AI trace" })).toHaveAttribute("aria-selected", "true");
   });
   test("filters", async ({ page }) => {
     await signIn(page, "agent", "/analytics");

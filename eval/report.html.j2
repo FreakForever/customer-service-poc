@@ -1,0 +1,23 @@
+{%- macro p(v) -%}{% if v is none or v is undefined %}–{% else %}{{ "%.1f"|format(v * 100) }}%{% endif %}{%- endmacro -%}
+{%- macro n(v, d=0) -%}{% if v is none or v is undefined %}–{% else %}{{ "%.*f"|format(d, v) }}{% endif %}{%- endmacro -%}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Matsui CS benchmark {{ meta.date }}</title>
+<style>body{font:15px/1.5 system-ui,sans-serif;color:#0a2540;background:#f7f9fc;max-width:72rem;margin:0 auto;padding:1.5rem}table{border-collapse:collapse;background:#fff;margin:.5rem 0 1.5rem}
+th,td{border:1px solid #d9e1ea;padding:.35rem .6rem;text-align:left;vertical-align:top}th{background:#eaf2fb}td.n{text-align:right;font-variant-numeric:tabular-nums}.ok{color:#1a7a36}.no{color:#c62828}.s{color:#52606f}.w{overflow-x:auto}</style></head><body>
+<h1>Benchmark {{ meta.date }}</h1>
+<p>Status: <b>{{ status }}</b>. {{ meta.questions }} questions{% if meta.limit %} (a sample, not the full set){% endif %}. Answer model {{ meta.model }}, judge {{ meta.judge }}, embeddings {{ meta.embedder }}, commit {{ meta.commit }}.</p>
+<p class="s">The judge is a model{% if meta.judge == meta.model %}, the same one that writes the answers{% endif %}; treat differences of a few points as noise. Time limits were widened and calls paced for the free tier: latency is from the machine that ran this, not the production figure. Cost is a list-price estimate; embeddings aren't counted.</p>
+<h2>Requirement targets</h2><div class="w"><table><tr><th>Requirement</th><th>Measure (production mode)</th><th>Result</th><th>Target</th><th>Met</th></tr>
+{% for x in gates %}<tr><td>{{ x.req }}</td><td>{{ x.what }}</td><td class="n">{% if x.shown %}{{ "–" if x.value is none else x.value }} ({{ x.shown }}){% else %}{{ p(x.value) }}{% endif %}</td><td class="n">{% if x.shown %}0{% else %}{{ "+" if "minus" in x.what }}{{ p(x.target) }}{% endif %}</td><td>{% if x.met is none %}not measured{% elif x.met %}<b class="ok">yes</b>{% else %}<b class="no">no</b>{% endif %}</td></tr>
+{% endfor %}</table></div>
+<h2>By mode</h2><div class="w"><table><tr><th>Mode</th><th>Questions</th><th>Correct</th><th>Correct on multi-hop, aggregation, comparison</th><th>Grounded (n)</th><th>Right documents cited</th><th>Abstained</th><th>p50 ms</th><th>p95 ms</th><th>First token p50 ms</th><th>Tokens</th><th>Cost $</th><th>Not scored</th></tr>
+{% for m, x in modes.items() %}<tr><td>{{ m }}</td><td class="n">{{ x.n }}</td><td class="n">{{ p(x.correctness) }}</td><td class="n">{{ p(x.hard_correctness) }} of {{ x.hard_n }}</td><td class="n">{{ n(x.groundedness, 2) }} ({{ x.grounded_n }})</td><td class="n">{{ p(x.citations_ok) }}</td><td class="n">{{ x.abstained }}</td><td class="n">{{ n(x.p50_ms) }}</td><td class="n">{{ n(x.p95_ms) }}</td><td class="n">{{ n(x.first_token_p50_ms) }}</td><td class="n">{{ x.tokens }}</td><td class="n">{{ n(x.cost_usd, 4) }}</td><td class="n">{{ x.provider_failed|length }}</td></tr>
+{% endfor %}</table></div>
+<h2>Correctness by question type</h2><div class="w"><table><tr><th>Type</th>{% for m in modes %}<th>{{ m }}</th>{% endfor %}</tr>
+{% for t in types %}<tr><td>{{ t }}</td>{% for x in modes.values() %}<td class="n">{% if t in x.by_type %}{{ p(x.by_type[t].correctness) }} of {{ x.by_type[t].n }}{% else %}–{% endif %}</td>{% endfor %}</tr>
+{% endfor %}</table></div>
+<h2>Tier: expected and actual (hybrid)</h2><div class="w"><table><tr><th>Expected</th><th>Actual</th><th>Count</th></tr>{% for a, b, c in tiers %}<tr><td>{{ a }}</td><td>{{ b }}</td><td class="n">{{ c }}</td></tr>{% endfor %}</table></div>
+<h2>Intent confusion matrix (hybrid)</h2><p class="s">Misrouted: {{ misrouted }}. Intents aren't labelled in the question set; they follow from each item's type, and an item can accept several.</p><div class="w"><table><tr><th>Accepted</th><th>Routed to</th><th>Count</th></tr>
+{% for a, b, c in intents %}<tr><td>{{ a }}</td><td>{% if b in a.split("|") %}{{ b }}{% else %}<b class="no">{{ b }} (wrong)</b>{% endif %}</td><td class="n">{{ c }}</td></tr>{% endfor %}</table></div>
+<h2>Answers not fully correct ({{ wrong|length }})</h2><div class="w"><table><tr><th>Mode</th><th>Item</th><th>Question</th><th>Gold</th><th>Answer</th><th>Score</th><th>Judge</th></tr>
+{% for r in wrong %}<tr><td>{{ r.mode }}</td><td>{{ r.id }} {{ r.phase }}</td><td>{{ r.question }}</td><td>{{ r.gold }}</td><td>{{ r.text[:400] }}</td><td class="n">{{ r.correctness }}</td><td>{{ r.judge }}</td></tr>
+{% endfor %}</table></div></body></html>

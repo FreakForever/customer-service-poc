@@ -11,10 +11,10 @@ import { ReplyEditor } from "./ReplyEditor";
 import { TraceTimeline } from "./TraceTimeline";
 
 /** Centre and right panes (FR-UI-04). */
-export function Workspace({ id, me }: { id: string; me: string }) {
+export function Workspace({ id, me, traceId = null }: { id: string; me: string; traceId?: string | null }) {
   const { data: d, error, reload } = usePoll<Detail>(`console/conversations/${id}`, 2000);
-  const [tab, setTab] = useState<"customer" | "trace">("customer");
-  const [picked, setPicked] = useState<string | null>(null);
+  const [tab, setTab] = useState<"customer" | "trace">(traceId ? "trace" : "customer");
+  const [picked, setPicked] = useState<string | null>(traceId);
   const traced = d?.messages.filter((m) => m.trace_id && m.role === "assistant") ?? [];
   const tid = picked ?? traced.at(-1)?.trace_id ?? null;
   const { data: trace, error: traceError } = usePoll<Trace>(tid ? `console/traces/${tid}` : null, 60_000);

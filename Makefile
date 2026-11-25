@@ -32,7 +32,7 @@ test:         ; cd services/agent && uv run pytest -q && pnpm -C apps/web test
 ci:           ; gcloud builds submit --config infra/gcp/cloudbuild.ci.yaml --region asia-south1 --ignore-file=infra/gcp/ci.gcloudignore .
 deploy-dev:   ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=dev,_TAG=$(TAG) .
 deploy-demo:  ; gcloud builds submit --config infra/gcp/cloudbuild.deploy.yaml --region asia-south1 --substitutions=_ENV=demo,_TAG=$(TAG) .
-eval:         ; uv run python eval/run.py --mode all
+eval:         ; cd services/agent && uv run python ../../eval/run.py $(ARGS)
 demo-emails:  ; cd services/agent && uv run python ../../scripts/demo_emails.py
 demo-upload:  ; cd services/agent && uv run python ../../scripts/demo_upload.py ../../mock-data/upload-samples $(ARGS)
 docs:         ; uv run --no-project --with-requirements tools/requirements.txt python tools/sync_docs.py

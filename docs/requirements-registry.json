@@ -1453,7 +1453,7 @@
         "Report HTML/CSV produced by `make eval`"
       ],
       "verification": "analysis",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.5"
@@ -1766,7 +1766,7 @@
         "Flagged answers listed with trace link"
       ],
       "verification": "test",
-      "status": "proposed",
+      "status": "implemented",
       "trace": {
         "hld": [
           "HLD-3.6"
@@ -2399,7 +2399,7 @@
         "Eval report"
       ],
       "verification": "analysis",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.6"
@@ -2427,7 +2427,7 @@
         "Eval report with confusion matrix"
       ],
       "verification": "analysis",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.3"
@@ -2455,7 +2455,7 @@
         "Benchmark table in eval report"
       ],
       "verification": "analysis",
-      "status": "proposed",
+      "status": "in_progress",
       "trace": {
         "hld": [
           "HLD-3.5"

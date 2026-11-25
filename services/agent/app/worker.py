@@ -104,10 +104,12 @@ def _handlers(settings):
     from app.ingest.manage import make_delete_handler
     from app.ingest.pipeline import make_ingest_handler
     from app.providers import get_embedder, get_llm
+    from app.verify.audit import make_audit_handler
 
     engine = create_async_engine(url, pool_pre_ping=True)
     ingest = make_ingest_handler(engine, get_embedder())
     return engine, {"ingest_document": ingest, "reindex_document": ingest, "extract_graph": make_extract_handler(engine, get_llm),
+                    "audit_sample": make_audit_handler(engine, get_llm),
                     "delete_document": make_delete_handler(engine), "email_reply": make_reply_handler(engine),
                     "gmail_sync": make_gmail_sync_handler(engine), "gmail_watch": make_gmail_watch_handler(engine)}
 
